@@ -93,7 +93,7 @@
           //Date picker
           $('#fechaNacimiento').datepicker({
             autoclose: true,
-            format: 'yyyy/mm/dd'
+            format: 'dd/mm/yyyy'
           });
           $('#fechaIngreso').datepicker({
             autoclose: true,
@@ -109,6 +109,20 @@
           });
         });
       </script>
+
+    <script type="text/javascript">
+        (function(){
+            var insertEdad = function(){
+            var fechaNac = document.getElementById("fechaNacimiento").value;
+            var fechaHoy = new Date();
+            var anioNac = parseInt(fechaNac.substring(fechaNac.lastIndexOf('/')+1));
+            var edad = parseInt(fechaHoy.getFullYear())-anioNac;
+                if(edad) document.getElementById("edad").value=edad;
+              }
+            var input = document.getElementById("fechaNacimiento");
+            input.addEventListener("transitionend",insertEdad);
+        }())
+    </script>
 
     <script type="text/javascript">
       function mostrarReferencia(){

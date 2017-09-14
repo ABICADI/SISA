@@ -26,10 +26,10 @@ public function __construct() {
     	$last = DB::table('users')->latest()->first();
         $user = User::find($last->id);
 
-        $rols = Rol::all();
-        $departamentos = Departamento::all();
-        $municipios = Municipio::all();
-        $terapias = Terapia::all();
+        $rols = Rol::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+        $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+        $municipios = Municipio::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+        $terapias = Terapia::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $userdiasemanas = DB::table('userdiasemanas')
         ->leftJoin('diasemanas', 'userdiasemanas.diasemana_id', '=', 'diasemanas.id')
         ->select('userdiasemanas.*', 'diasemanas.nombre as diasemanas_nombre')
@@ -38,13 +38,9 @@ public function __construct() {
     }
 
     public function store(Request $request){
-        //Datos para la Bitacora
-        date_default_timezone_set('asia/ho_chi_minh');
-        $format = 'd/m/Y';
-        $now = date($format);
-        $log = $request->User()->username;
         $last = DB::table('users')->latest()->first();
         $user = User::find($last->id);
+        $this->validateInput($request);
         $terapias = $request->terapia;
 
         foreach ($terapias as $terapia) {
@@ -56,6 +52,12 @@ public function __construct() {
             }
         }
         return redirect()->intended('/user-management');
+    }
+
+    private function validateInput($request) {
+        $this->validate($request, [
+        'terapia_id' => 'required'
+        ]);
     }
 
     public function createTerpiaUsuario($request, $terapia, $user){

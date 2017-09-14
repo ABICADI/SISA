@@ -54,7 +54,7 @@
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
-                        <a href="{{ route('user-management.edit', ['id' => $user->id]) }}" class="btn btn-warning col-sm-2 col-xs-3 btn-margin"><i class="fa fa-edit"></i> 
+                        <a href="{{ route('dia-terapia-user-management.edit', ['id' => $user->id]) }}" class="btn btn-warning col-sm-2 col-xs-3 btn-margin"><i class="fa fa-edit"></i> 
                         </a>
                         @endif
                         @if (4 != Auth::user()->rol_id)

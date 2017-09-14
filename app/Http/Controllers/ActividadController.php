@@ -80,7 +80,6 @@ class ActividadController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        //Falta agregar Bitacora
         $actividad = Actividad::findOrFail($id);
 
          if ($actividad->descripcion != $request['descripcion']) {

@@ -7,10 +7,13 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Actualizar Empleado</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('user-management.update', ['id' => $user->id]) }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('dia-terapia-user-management.update', ['id' => $user->id]) }}">
                         <input type="hidden" name="_method" value="PATCH">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
+            <div div id="desdeotro" style="display:none;">
+                <input id="user" type="text" class="form-control" name="user" value="{{ Auth::user()->username }}" disabled="help-block">
+            </div>
 
             <div class="form-group{{ $errors->has('dpi') ? ' has-error' : '' }}">
                 <label for="dpi" class="col-md-4 control-label"><label style="color:red">*</label> DPI</label>
@@ -320,7 +323,71 @@
             </tr>
         </table>
         @endcomponent
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="col-md-47 col-md-offset-0">
+            <div class="panel panel-default">
+                @component('layouts.esconder_info', ['title' => 'Dias a Laborar'])
+                <div class="panel-body">
+                        <div class="form-group">
+                            <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <table id="example2" class="table table-responsive" role="grid" aria-describedby="example2_info">
+                                            <tr>
+                                            @foreach ($diasemanas as $diasemana)
+                                            @foreach ($userdiasemanas as $userdiasemana)
+                                            @if($userdiasemana->diasemana_id != $diasemana->id)
+                            <td role="row"><input type="checkbox" id="numero1" name="diasemana[]" value="{{$diasemana->id}}">  {{ $diasemana->nombre }}</td>
+                                            @elseif($userdiasemana->diasemana_id == $diasemana->id)
+                            <td role="row"><input type="checkbox" id="numero1" name="diasemana[]" value="{{$diasemana->id}}" checked>  {{ $diasemana->nombre }}</td>
+                                            @endif
+                                            @endforeach
+                                            @endforeach 
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                @endcomponent
+            </div>
+        </div>
+    </div> 
+
+    <div class="row">
+        <div class="col-md-47 col-md-offset-0">
+            <div class="panel panel-default">
+                @component('layouts.esconder_info', ['title' => 'Areas a Laborar'])
+                <div class="panel-body">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('terapiausuario-management.store') }}">
+                        {{ csrf_field() }}
+
+                        <div class="form-group">
+                            <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <table id="example2" class="table table-responsive" role="grid" aria-describedby="example2_info">
+                                            <tr>
+                                            @foreach ($terapias as $terapia)
+                            <td role="row"><input type="checkbox" id="inlineCheckbox1" name="terapia[]" value="{{$terapia->id}}">  {{ $terapia->nombre }}</td>
+                                            @endforeach 
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                @endcomponent
+            </div>
+        </div>
+    </div>
                         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
@@ -331,10 +398,6 @@
                         </div>
                         @endif
                     </form>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 @endsection
 @endif

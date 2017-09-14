@@ -24,16 +24,17 @@ class DiaSemanaUsuarioController extends Controller {
     	$last = DB::table('users')->latest()->first();
         $user = User::find($last->id);
 
-        $rols = Rol::all();
-        $departamentos = Departamento::all();
-        $municipios = Municipio::all();
-        $diasemanas = DiaSemana::all();
+        $rols = Rol::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+        $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+        $municipios = Municipio::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+        $diasemanas = DiaSemana::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         return view('diasemanausuario-mgmt/create', ['user' => $user, 'rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios, 'diasemanas' => $diasemanas]);
     }
 
     public function store(Request $request){
         $last = DB::table('users')->latest()->first();
         $user = User::find($last->id);
+        $this->validateInput($request);
         $diasemanas = $request->diasemana;
 
         foreach ($diasemanas as $diasemana) {
@@ -46,6 +47,12 @@ class DiaSemanaUsuarioController extends Controller {
         }
         
         return redirect()->intended('/terapiausuario-management');
+    }
+
+    private function validateInput($request) {
+        $this->validate($request, [
+        'diasemana_id' => 'required'
+        ]);
     }
 
     public function createDiaSemanaUsuarioBitacora ($request, $diasemana, $user){
