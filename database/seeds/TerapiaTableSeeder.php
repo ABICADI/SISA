@@ -6,6 +6,11 @@ class TerapiaTableSeeder extends Seeder {
 
     public function run() {
 
+        $terapia = factory(App\Terapia::class)->create([
+            'nombre' => 'Ninguna',
+            'descripcion' => 'Ninguna'
+        ]);
+
 		$terapia = factory(App\Terapia::class)->create([
             'nombre' => 'Fisioterapia',
             'descripcion' => 'Esta es una área de terapia física, los pacientes aprenden a levantarse, gatear, rodar, sentarse y sostener el peso.'

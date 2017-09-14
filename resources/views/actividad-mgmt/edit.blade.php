@@ -11,7 +11,9 @@
                         <input type="hidden" name="_method" value="PATCH">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-
+            <div div id="desdeotro" style="display:none;">
+                <input id="username" type="text" class="form-control" name="username" value="{{ Auth::user()->username }}" disabled="help-block">
+            </div>
 
             <div class="form-group">
                 <label class="col-md-2 control-label"><label style="color:red">*</label> Encargado</label>

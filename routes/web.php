@@ -29,7 +29,7 @@ Route::post('user-management/search', 'UserManagementController@search')->name('
 Route::resource('user-management', 'UserManagementController');
 
 Route::resource('diasemanausuario-management', 'DiaSemanaUsuarioController');
-Route::resource('user-management/terapia-usuario', 'TerapiaUsuarioController');
+Route::resource('terapiausuario-management', 'TerapiaUsuarioController');
 
 Route::post('actividad-management/search', 'ActividadController@search')->name('actividad-management.search');
 Route::resource('actividad-management', 'ActividadController');

@@ -12,6 +12,7 @@ use App\Departamento;
 use App\Municipio;
 use App\DiaSemana;
 use App\Terapia;
+use App\UsuarioDia;
 
 class UserManagementController extends Controller {
 
@@ -24,13 +25,14 @@ class UserManagementController extends Controller {
     public function index() {
         $users = DB::table('users')
         ->leftJoin('rols', 'users.rol_id', '=', 'rols.id')
-        ->select('users.*', 'rols.nombre as rols_nombre', 'rols.id as rols_id')->where('users.estado_id','!=','2')
-        ->orWhere('users.rol_id', '!=', '1')
+        ->leftJoin('estados', 'users.estado_id', '=', 'estados.id')
+        ->select('users.*', 'rols.nombre as rols_nombre', 'estados.id as estado_id')
+        ->where('users.estado_id','!=','2')
+        ->where('users.id','!=','1')
         ->paginate(10);
 
         return view('users-mgmt/index', ['users' => $users]);
     }
-
 
     public function create() {
         $rols = Rol::select('id', 'nombre')->where('rols.id','!=','1')->get();
@@ -43,19 +45,7 @@ class UserManagementController extends Controller {
     }
 
     public function store(Request $request){
-        //Datos para la Bitacora
-        date_default_timezone_set('asia/ho_chi_minh');
-        $format = 'd/m/Y';
-        $now = date($format);
-        $log = $request->User()->username;
         $estado_id = '1';
-        
-        $departamento = Departamento::findOrFail($request['departamento_id']);
-        $municipio = Departamento::findOrFail($request['departamento_id']);
-        $rol = Rol::findOrFail($request['rol_id']);
-        $estado = Estado::findOrFail($estado_id);
-
-        $data = 'DPI: ' . $request->dpi . ', Nombre Completo: ' . $request->nombre1 . $request->nombre2 . $request->nombre3 . $request->apellido1 . $request->apellido2 . $request->apellido3 . ', Datos de Usuario: ' . $request->username . $request->email . ', Direccion: ' . $departamento->nombre . $municipio->nombre . $request->direccion . ', Datos Personales: ' . $request->fecha_nacimiento . $request->telefono . ', Fecha de Ingreso: ' . $request->fecha_ingreso . ', Puesto Encargado: ' . $rol->nombre . ', Estado: ' . $estado->nombre;
 
         $this->validateInput($request);
         $user = new User();
@@ -79,22 +69,9 @@ class UserManagementController extends Controller {
         $user->estado_id = $estado_id;
 
         if($user->save()){
-            $bitacora = new Bitacora();
-            $bitacora->usuario = $log;
-            $bitacora->nombre_tabla = 'EMPLEADO';
-            $bitacora->actividad = 'CREAR';
-            $bitacora->anterior = '';
-            $bitacora->nuevo = $data;
-            $bitacora->fecha = $now;
-            if($bitacora->save()){
-                return redirect()->intended('/diasemanausuario-management');
-            }
+            $this->crearEmpleadoBitacora($request);
+            return redirect()->intended('/diasemanausuario-management');
         } 
-    }
-    //proceso no funciona
-    public function myformAjax($id){
-        $municipios = DB::table("municipios")->where("departamento_id",$id)->lists("nombre","id");
-        return json_encode($municipios);
     }
 
     public function show($id) {
@@ -102,18 +79,31 @@ class UserManagementController extends Controller {
     }
 
     public function view($id) {
+
         $user = User::find($id);
         if ($user == null || count($user) == 0) {
             return redirect()->intended('/user-management');
         }
 
-        $rols = Rol::select('id', 'nombre')->where('rols.id','!=','1')->get();
+        $userdiasemanas = DB::table('userdiasemanas')
+        ->leftJoin('diasemanas', 'userdiasemanas.diasemana_id', '=', 'diasemanas.id')
+        ->select('userdiasemanas.*', 'diasemanas.nombre as diasemana_nombre')
+        ->where('userdiasemanas.user_id', '=', $id)->get();
+
+        $usuarioterapias = DB::table('userterapias')
+        ->leftJoin('terapias', 'userterapias.terapia_id', '=', 'terapias.id')
+        ->select('userterapias.*', 'terapias.nombre as terapia_nombre')
+        ->where('userterapias.user_id', '=', $id)->get();
+        
+        $rols = Rol::all();
         $departamentos = Departamento::all();
         $municipios = Municipio::all();
-        return view('users-mgmt/view', ['user' => $user, 'rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios]);
+        $estados = Estado::all();
+        return view('users-mgmt/view', ['user' => $user, 'rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios, 'estados' => $estados, 'userdiasemanas' => $userdiasemanas, 'usuarioterapias' => $usuarioterapias]);
     }
 
     public function edit($id) {
+        
         $user = User::find($id);
         if ($user == null || count($user) == 0) {
             return redirect()->intended('/user-management');
@@ -122,11 +112,11 @@ class UserManagementController extends Controller {
         $rols = Rol::select('id', 'nombre')->where('rols.id','!=','1')->get();
         $departamentos = Departamento::all();
         $municipios = Municipio::all();
-        return view('users-mgmt/edit', ['user' => $user, 'rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios]);
+        $estados = Estado::all();
+        return view('users-mgmt/edit', ['user' => $user, 'rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios, 'estados' => $estados]);
     }
 
     public function update(Request $request, $id) {
-
 
         $user = User::findOrFail($id);
         $this->validateUpdate($request);
@@ -152,41 +142,26 @@ class UserManagementController extends Controller {
         $user->fecha_ingreso = $request['fecha_ingreso'];
         $user->telefono = $request['telefono'];
         $user->rol_id = $request['rol_id'];
-        $user->estado_id = '1';
+        $user->estado_id = $request['estado_id'];
 
         if($user->save()){
-           return redirect()->intended('/user-management'); 
+           return redirect()->intended('/diasemanausuario-management'); 
         }
         
     }
 
     public function destroy($id) {
-        //Datos para la Bitacora
         date_default_timezone_set('asia/ho_chi_minh');
         $format = 'd/m/Y';
         $now = date($format);
-        $log = Auth::User()->username;
-        $userB = User::findOrFail($id);
-
-        $data = 'Nombre y Apellido: ' . $userB->nombre1 . $userB->nombre2 . $userB->nombre3 . $userB->apellido1 . $userB->apellido2 . $userB->apellido3;
-        
+       
         $user = User::findOrFail($id);
         $user->fecha_egreso = $now;
         $user->estado_id = '2';
 
         if($user->save()){
-            $bitacora = new Bitacora();
-            $bitacora->usuario = $log;
-            $bitacora->nombre_tabla = 'EMPLEADO';
-            $bitacora->actividad = 'ELIMINAR';
-            $bitacora->anterior = '';
-            $bitacora->nuevo = $data;
-            $bitacora->fecha = $now;
-            if($bitacora->save()){
-                return redirect()->intended('/user-management');
-            }
-        }else{
-            return redirect()->intended('error');
+            $this->eliminarEmpleadoBitacora($id);
+            return redirect()->intended('/user-management');
         }
     }
 
@@ -255,5 +230,48 @@ class UserManagementController extends Controller {
             'telefono' => 'digits:8|nullable',
             'rol_id' => 'required',
         ]);
+    }
+
+    private function crearEmpleadoBitacora(Request $request){
+        date_default_timezone_set('asia/ho_chi_minh');
+        $format = 'd/m/Y';
+        $now = date($format);
+        $log = $request->User()->username;
+        $estado_id = '1';
+        
+        $departamento = Departamento::findOrFail($request['departamento_id']);
+        $municipio = Departamento::findOrFail($request['departamento_id']);
+        $rol = Rol::findOrFail($request['rol_id']);
+        $estado = Estado::findOrFail($estado_id);
+
+        $data = 'DPI: ' . $request->dpi . ', Nombre Completo: ' . $request->nombre1 .' '. $request->nombre2 .' '. $request->nombre3 . $request->apellido1 .' '. $request->apellido2 .' '. $request->apellido3 . ', Datos de Usuario: ' . $request->username . $request->email . ', Direccion: ' . $departamento->nombre .' '. $municipio->nombre .' '. $request->direccion . ', Datos Personales: ' . $request->fecha_nacimiento .' '. $request->telefono . ', Fecha de Ingreso: ' . $request->fecha_ingreso . ', Puesto Encargado: ' . $rol->nombre . ', Estado: ' . $estado->nombre;
+
+            $bitacora = new Bitacora();
+            $bitacora->usuario = $log;
+            $bitacora->nombre_tabla = 'EMPLEADO';
+            $bitacora->actividad = 'CREAR';
+            $bitacora->anterior = '';
+            $bitacora->nuevo = $data;
+            $bitacora->fecha = $now;
+            $bitacora->save();
+    }
+
+    private function eliminarEmpleadoBitacora($id){
+        //Datos para la Bitacora
+        date_default_timezone_set('asia/ho_chi_minh');
+        $format = 'd/m/Y';
+        $now = date($format);
+        $userB = User::findOrFail($id);
+
+        $data = 'Nombre y Apellido: ' . $userB->nombre1 .' '. $userB->nombre2 .' '. $userB->nombre3 .' '. $userB->apellido1 .' '. $userB->apellido2 .' '. $userB->apellido3;
+        
+            $bitacora = new Bitacora();
+            $bitacora->usuario = 'Administrador';
+            $bitacora->nombre_tabla = 'EMPLEADO';
+            $bitacora->actividad = 'ELIMINAR';
+            $bitacora->anterior = '';
+            $bitacora->nuevo = $data;
+            $bitacora->fecha = $now;
+            $bitacora->save();
     }
 }

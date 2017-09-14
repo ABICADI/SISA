@@ -1,5 +1,5 @@
 @extends('diasemanausuario-mgmt.base')
-
+@if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
 @section('action-content')
 <div class="container">
     <div class="row">
@@ -239,15 +239,7 @@
             </tr>
         </table>
         @endcomponent
-                        @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary" disabled><i class="glyphicon glyphicon-floppy-disk"></i> 
-                                    Guardar
-                                </button>
-                            </div>
-                        </div>
-                        @endif
+ 
                 </div>
             </div>
         </div>
@@ -284,7 +276,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i> 
-                                    Asignar
+                                    Siguiente
                                 </button>
                             </div>
                         </div>
@@ -297,3 +289,4 @@
     </div> 
 </div>
 @endsection
+@endif

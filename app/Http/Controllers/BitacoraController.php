@@ -13,8 +13,7 @@ class BitacoraController extends Controller {
     }
 
     public function index() {
-        $bitacoras = Bitacora::paginate(10);
-
+        $bitacoras = DB::table('bitacoras')->orderBy('fecha', 'asc')->paginate(10);
         return view('system-mgmt/bitacora/index', ['bitacoras' => $bitacoras]);
     }
 

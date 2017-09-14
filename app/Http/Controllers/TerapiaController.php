@@ -15,7 +15,7 @@ class TerapiaController extends Controller {
 
     public function index() {
         $terapias = DB::table('terapias')
-        ->select('terapias.id', 'terapias.nombre', 'terapias.descripcion')->paginate(10);
+        ->select('terapias.*')->paginate(10);
         return view('system-mgmt/terapia/index', ['terapias' => $terapias]);
     }
 
@@ -24,13 +24,6 @@ class TerapiaController extends Controller {
     }
 
     public function store(Request $request) {
-        //Datos para la Bitacora
-        date_default_timezone_set('asia/ho_chi_minh');
-        $format = 'd/m/Y';
-        $now = date($format);
-        $user = $request->User()->username;
-        $data = 'Nombre: ' . $request->nombre . ', Descripción: ' . $request->descripcion;
-
         //Validamos Campos del Formulario
         $this->validateInput($request);
 
@@ -41,16 +34,8 @@ class TerapiaController extends Controller {
 
         //Si la terapia se guarda, se crea un registro en la Bitacora
         if($terapia->save()) {
-            $bitacora = new Bitacora();
-            $bitacora->usuario = $user;
-            $bitacora->nombre_tabla = 'TERAPIA';
-            $bitacora->actividad = 'CREAR';
-            $bitacora->anterior = '';
-            $bitacora->nuevo = $data;
-            $bitacora->fecha = $now;
-            if($bitacora->save()){
-                return redirect()->intended('system-management/terapia');
-            }
+            $this->crearTerapiaBitacora($request);
+            return redirect()->intended('system-management/terapia');
         }
     }
 
@@ -66,33 +51,15 @@ class TerapiaController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        //Datos para la Bitacora
-        date_default_timezone_set('asia/ho_chi_minh');
-        $format = 'd/m/Y';
-        $now = date($format);
-        $user = $request->User()->username;
-        $terapia1 = Terapia::findOrFail($id);
-
         //Nueva Forma de Insertar Datos
         $terapia = Terapia::findOrFail($id);
         //Validamos Datos del Formulario
         $this->validateUpdate($request);
         $terapia->descripcion = $request["descripcion"];
-        //$terapia->save();
-        //return redirect()->intended('system-management/terapia');
+
+        $this->updateTerapiaBitacora($request, $id);
         if($terapia->save()){
-            if ($terapia1->descripcion != $request["descripcion"]) {
-                $bitacora = new Bitacora();
-                $bitacora->usuario = $user;
-                $bitacora->nombre_tabla = 'TERAPIA';
-                $bitacora->actividad = 'ACTUALIZAR';
-                $bitacora->anterior = 'Descripción: ' . $terapia1->descripcion;
-                $bitacora->nuevo = 'Descripción: ' . $request["descripcion"];
-                $bitacora->fecha = $now;
-                if($bitacora->save()){
-                    return redirect()->intended('system-management/terapia');
-                }
-            }   
+            return redirect()->intended('system-management/terapia'); 
         }   
     }
 
@@ -130,5 +97,43 @@ class TerapiaController extends Controller {
         $this->validate($request, [
         'descripcion' => 'max:500'
         ]);
+    }
+
+    private function crearTerapiaBitacora(Request $request){
+        //Datos para la Bitacora
+        date_default_timezone_set('asia/ho_chi_minh');
+        $format = 'd/m/Y';
+        $now = date($format);
+        $user = $request->User()->username;
+        $data = 'Nombre: ' . $request->nombre . ', Descripción: ' . $request->descripcion;
+
+            $bitacora = new Bitacora();
+            $bitacora->usuario = $user;
+            $bitacora->nombre_tabla = 'TERAPIA';
+            $bitacora->actividad = 'CREAR';
+            $bitacora->anterior = '';
+            $bitacora->nuevo = $data;
+            $bitacora->fecha = $now;
+            $bitacora->save();
+    }
+
+    private function updateTerapiaBitacora($request, $id){
+        //Datos para la Bitacora
+        date_default_timezone_set('asia/ho_chi_minh');
+        $format = 'd/m/Y';
+        $now = date($format);
+        $user = $request->User()->username;
+        $terapia1 = Terapia::find($id);
+
+            if ($terapia1->descripcion != ['descripcion']) {
+                $bitacora = new Bitacora();
+                $bitacora->usuario = $user;
+                $bitacora->nombre_tabla = 'TERAPIA';
+                $bitacora->actividad = 'ACTUALIZAR';
+                $bitacora->anterior = 'Descripción: ' . $terapia1->descripcion;
+                $bitacora->nuevo = 'Descripción: ' . $request->descripcion;
+                $bitacora->fecha = $now;
+                $bitacora->save();
+            }
     }
 }

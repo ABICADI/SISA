@@ -13,8 +13,7 @@ use App\Municipio;
 use App\DiaSemana;
 use App\UsuarioDia;
 
-class DiaSemanaUsuarioController extends Controller
-{
+class DiaSemanaUsuarioController extends Controller {
 	    protected $redirectTo = '/diasemanausuario-management';
 
     public function __construct() {
@@ -25,19 +24,14 @@ class DiaSemanaUsuarioController extends Controller
     	$last = DB::table('users')->latest()->first();
         $user = User::find($last->id);
 
-        $rols = Rol::select('id', 'nombre')->where('rols.id','!=','1')->get();
+        $rols = Rol::all();
         $departamentos = Departamento::all();
         $municipios = Municipio::all();
         $diasemanas = DiaSemana::all();
-        return view('diasemanausuario-mgmt/index', ['user' => $user, 'rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios, 'diasemanas' => $diasemanas]);
+        return view('diasemanausuario-mgmt/create', ['user' => $user, 'rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios, 'diasemanas' => $diasemanas]);
     }
 
     public function store(Request $request){
-        //Datos para la Bitacora
-        date_default_timezone_set('asia/ho_chi_minh');
-        $format = 'd/m/Y';
-        $now = date($format);
-        $log = $request->User()->username;
         $last = DB::table('users')->latest()->first();
         $user = User::find($last->id);
         $diasemanas = $request->diasemana;
@@ -46,7 +40,31 @@ class DiaSemanaUsuarioController extends Controller
         	$diausuario = new UsuarioDia();
         	$diausuario->diasemana_id = $diasemana;
         	$diausuario->user_id = $user->id;
-        	$diausuario->save();
-        } 
+        	if($diausuario->save()){
+                $this->createDiaSemanaUsuarioBitacora($request, $diasemana, $user);
+            }
+        }
+        
+        return redirect()->intended('/terapiausuario-management');
+    }
+
+    public function createDiaSemanaUsuarioBitacora ($request, $diasemana, $user){
+        //Datos para la Bitacora
+        date_default_timezone_set('asia/ho_chi_minh');
+        $format = 'd/m/Y';
+        $now = date($format);
+        $log = $request->User()->username;
+        $dia = DiaSemana::find($diasemana);
+
+             $data = 'Usuario: ' . $user->nombre1 .' '. $user->nombre2 .' '. $user->nombre3 .' '. $user->apellido1 .' '. $user->apellido2 .' '. $user->apellido3 . ' , Dia: ' . $dia->nombre;  
+
+            $bitacora = new Bitacora();
+            $bitacora->usuario = $log;
+            $bitacora->nombre_tabla = 'USUARIO DIA SEMANA';
+            $bitacora->actividad = 'CREAR';
+            $bitacora->anterior = '';
+            $bitacora->nuevo = $data;
+            $bitacora->fecha = $now;
+            $bitacora->save();
     }
 }

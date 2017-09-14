@@ -93,7 +93,7 @@
           //Date picker
           $('#fechaNacimiento').datepicker({
             autoclose: true,
-            format: 'dd/mm/yyyy'
+            format: 'yyyy/mm/dd'
           });
           $('#fechaIngreso').datepicker({
             autoclose: true,

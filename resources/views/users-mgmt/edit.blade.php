@@ -1,5 +1,5 @@
 @extends('users-mgmt.base')
-
+@if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
 @section('action-content')
 <div class="container">
     <div class="row">
@@ -218,7 +218,7 @@
                 <label for="direccion" class="col-md-3 control-label">Dirección</label>
 
                     <div class="col-md-8">
-                        <input id="direccion" type="direccion" class="form-control" name="direccion" value="{{ $user->direccion }}" autofocus>
+                        <input id="direccion" type="text" class="form-control" name="direccion" value="{{ $user->direccion }}" autofocus>
 
                             @if ($errors->has('direccion'))
                                 <span class="help-block">
@@ -252,7 +252,7 @@
                 <label for="edad" class="col-md-3 control-label">Edad</label>
 
                     <div class="col-md-3">
-                        <input id="edad" type="edad" class="form-control" name="edad" disabled="">
+                        <input id="edad" type="text" class="form-control" name="edad" disabled="">
                     </div>
             </div>
             </td>
@@ -303,6 +303,20 @@
                     </div>
             </div>
             </td>
+            <td>
+            @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
+            <div class="form-group">
+                <label class="col-md-5 control-label"><label style="color:red">*</label> Estado</label>
+                    <div class="col-md-7">
+                        <select class="form-control" name="estado_id">
+                            @foreach ($estados as $estado)
+                                <option value="{{$estado->id}}" {{$estado->id == $user->estado_id ? 'selected' : ''}}>{{$estado->nombre}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+            </div>
+            @endif
+            </td>
             </tr>
         </table>
         @endcomponent
@@ -323,3 +337,4 @@
     </div>
 </div>
 @endsection
+@endif

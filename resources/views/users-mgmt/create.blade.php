@@ -1,5 +1,5 @@
 @extends('users-mgmt.base')
-
+@if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
 @section('action-content')
 <div class="container">
     <div class="row">
@@ -222,7 +222,7 @@
                 <label for="direccion" class="col-md-3 control-label">Dirección</label>
 
                     <div class="col-md-9">
-                        <input id="direccion" type="direccion" class="form-control" placeholder="colonia/barrio" name="direccion" value="{{ old('direccion') }}" autofocus>
+                        <input id="direccion" type="text" class="form-control" placeholder="colonia/barrio" name="direccion" value="{{ old('direccion') }}" autofocus>
 
                             @if ($errors->has('direccion'))
                                 <span class="help-block">
@@ -240,6 +240,7 @@
         <table id="example2" class="table table-responsive">
             <tr>
             <td>
+            <form method="post" id="alumno">
             <div class="form-group">
                 <label class="col-md-5 control-label"><label style="color:red">*</label> Fecha de Nacimiento</label>
                     <div class="col-md-5">
@@ -247,7 +248,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" value="{{ old('fecha_nacimiento') }}" placeholder="30/01/1990" name="fecha_nacimiento" class="form-control pull-right" id="fechaNacimiento" required>
+                            <input type="text" value="{{ old('fecha_nacimiento') }}" placeholder="30/01/1990" name="fecha_nacimiento" class="form-control pull-right" id="fechaNacimiento" onblur="calcular_edad(this.value)" required>
                         </div>
                     </div>
             </div>
@@ -256,16 +257,17 @@
                 <label for="edad" class="col-md-3 control-label">Edad</label>
 
                     <div class="col-md-3">
-                        <input id="edad" type="edad" class="form-control" name="edad" disabled="">
+                        <input id="edad" type="text" class="form-control" name="edad"/>
                     </div>
             </div>
             </td>
+            </form>
             <td>
             <div class="form-group{{ $errors->has('telefono') ? ' has-error' : '' }}">
                 <label for="telefono" class="col-md-4 control-label">Teléfono</label>
 
                     <div class="col-md-6">
-                        <input id="telefono" type="telefono" class="form-control" placeholder="00000000" name="telefono" value="{{ old('telefono') }}" autofocus>
+                        <input id="telefono" type="text" class="form-control" placeholder="00000000" name="telefono" value="{{ old('telefono') }}" autofocus>
 
                             @if ($errors->has('telefono'))
                                 <span class="help-block">
@@ -327,3 +329,4 @@
     </div> 
 </div>
 @endsection
+@endif

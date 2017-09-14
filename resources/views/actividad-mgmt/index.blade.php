@@ -57,8 +57,10 @@
                         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
                         <a href="{{ route('actividad-management.edit', ['id' => $actividad->id]) }}" class="btn btn-warning col-sm-3 col-xs-2 btn-margin"><i class="fa fa-edit"></i></a>
                         @endif
-                        @if (2 != Auth::user()->rol_id)
+                        @if(2 != Auth::user()->rol_id)
+                        @if($actividad->users_username == Auth::user()->username)
                         <a href="{{ route('actividad-management.view', ['id' => $actividad->id]) }}" class="btn btn-default col-sm-3 col-xs-2 btn-margin" style="background-color:#009e0f"><i class="fa fa-eye"></i></a>
+                        @endif
                         @endif
                         @if (1 == Auth::user()->rol_id)
                          <button type="submit" class="btn btn-danger col-sm-3 col-xs-2 btn-margin"><i class="fa fa-trash-o"></i> 

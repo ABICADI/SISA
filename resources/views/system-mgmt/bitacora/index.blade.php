@@ -1,4 +1,5 @@
 @extends('system-mgmt.bitacora.base')
+@if (1 == Auth::user()->rol_id)
 @section('action-content')
     <!-- Main content -->
     <section class="content">
@@ -86,3 +87,4 @@
     <!-- /.content -->
   </div>
 @endsection
+@endif

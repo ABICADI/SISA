@@ -1,5 +1,5 @@
 @extends('system-mgmt.terapia.base')
-
+@if (1 == Auth::user()->rol_id)
 @section('action-content')
 <div class="container">
     <div class="row">
@@ -54,3 +54,4 @@
     </div>
 </div>
 @endsection
+@endif
