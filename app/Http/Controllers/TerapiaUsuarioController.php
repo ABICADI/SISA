@@ -40,7 +40,6 @@ public function __construct() {
     public function store(Request $request){
         $last = DB::table('users')->latest()->first();
         $user = User::find($last->id);
-        $this->validateInput($request);
         $terapias = $request->terapia;
 
         foreach ($terapias as $terapia) {
@@ -52,12 +51,6 @@ public function __construct() {
             }
         }
         return redirect()->intended('/user-management');
-    }
-
-    private function validateInput($request) {
-        $this->validate($request, [
-        'terapia_id' => 'required'
-        ]);
     }
 
     public function createTerpiaUsuario($request, $terapia, $user){

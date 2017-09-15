@@ -28,12 +28,12 @@ class CreateUsersTable extends Migration
             $table->integer('departamento_id');
             $table->integer('municipio_id');
             $table->string('direccion')->nullable();
-            $table->date('fecha_nacimiento');
-            $table->date('fecha_ingreso');
+            $table->string('fecha_nacimiento');
+            $table->string('fecha_ingreso');
             $table->string('telefono')->nullable();
             //$table->string('foto')->nullable();
             $table->integer('rol_id');
-            $table->date('fecha_egreso')->nullable();
+            $table->string('fecha_egreso')->nullable();
             $table->integer('estado_id');
             $table->foreign('departamento_id')->references('id')->on('departamentos')->onUpdate('cascade');
             $table->foreign('municipio_id')->references('id')->on('municipios')->onUpdate('cascade');

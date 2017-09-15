@@ -35,6 +35,7 @@ Route::resource('terapiausuario-management', 'TerapiaUsuarioController');
 
 Route::post('actividad-management/search', 'ActividadController@search')->name('actividad-management.search');
 Route::resource('actividad-management', 'ActividadController');
+Route::resource('actividad-descripcion-management', 'ActividadDescripcionController');
 
 Route::post('system-management/terapia/search', 'TerapiaController@search')->name('terapia.search');
 Route::resource('system-management/terapia', 'TerapiaController');

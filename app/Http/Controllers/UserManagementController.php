@@ -35,7 +35,6 @@ class UserManagementController extends Controller {
         $rols = Rol::select('id', 'nombre')->where('rols.id','!=','1')->orderBy('nombre', 'asc')->get();
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $municipios = Municipio::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-
         return view('users-mgmt/create', ['rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios]);
     }
 
@@ -82,12 +81,12 @@ class UserManagementController extends Controller {
         $userdiasemanas = DB::table('userdiasemanas')
         ->leftJoin('diasemanas', 'userdiasemanas.diasemana_id', '=', 'diasemanas.id')
         ->select('userdiasemanas.*', 'diasemanas.nombre as diasemana_nombre')
-        ->where('userdiasemanas.user_id', '=', $id)->get();
+        ->where('userdiasemanas.user_id', '=', $id)->orderBy('diasemana_id','asc')->get();
 
         $usuarioterapias = DB::table('userterapias')
         ->leftJoin('terapias', 'userterapias.terapia_id', '=', 'terapias.id')
         ->select('userterapias.*', 'terapias.nombre as terapia_nombre')
-        ->where('userterapias.user_id', '=', $id)->get();
+        ->where('userterapias.user_id', '=', $id)->orderBy('terapias.nombre','asc')->get();
         
         $rols = Rol::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();

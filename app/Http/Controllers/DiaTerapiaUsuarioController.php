@@ -27,7 +27,7 @@ class DiaTerapiaUsuarioController extends Controller {
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $municipios = Municipio::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $estados = Estado::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        $diasemanas = DiaSemana::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+        $diasemanas = DiaSemana::all();
         $terapias = Terapia::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
 
         $userdiasemanas = DB::table('userdiasemanas')

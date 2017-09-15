@@ -195,7 +195,7 @@
             <div class="form-group">
                 <label class="col-md-5 control-label"><label style="color:red">*</label> Departamento</label>
                     <div class="col-md-7">
-                        <select class="form-control" name="departamento_id" required autofocus>
+                        <select class="form-control" name="departamento_id" id="departamento_id" required autofocus>
                             <option value="" selected disabled>seleccione departamento</option>
                             @foreach ($departamentos as $departamento)
                                 <option value="{{$departamento->id}}">{{$departamento->nombre}}</option>

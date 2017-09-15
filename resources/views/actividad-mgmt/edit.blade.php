@@ -39,12 +39,12 @@
                         @endif
                     </div>
             </div>
-
+            @if (2 != Auth::user()->rol_id)
             <div class="form-group{{ $errors->has('descripcion') ? ' has-error' : '' }}">
                 <label for="descripcion" class="col-md-2 control-label">Descripcion</label>
 
                     <div class="col-md-6">
-                        <textarea id="descripcion" class="form-control" name="descripcion" placeholder="descripcion" cols="50" rows="10"  type="text" value="{{ $actividad->descripcion }}" autofocus disabled="">{{ $actividad->descripcion }}</textarea>
+                        <textarea id="descripcion" class="form-control" name="descripcion" placeholder="descripcion" cols="50" rows="10"  type="text" value="{{ $actividad->descripcion }}" autofocus>{{ $actividad->descripcion }}</textarea>
 
                             @if ($errors->has('descripcion'))
                                 <span class="help-block">
@@ -53,6 +53,7 @@
                             @endif
                     </div>
             </div>
+            @endif
 
         <table id="example2" class="table table-responsive">
             <tr>

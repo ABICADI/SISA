@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Ver Actividad</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('actividad-management.update', ['id' => $actividad->id]) }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('actividad-descripcion-management.update', ['id' => $actividad->id]) }}">
                         <input type="hidden" name="_method" value="PATCH">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 

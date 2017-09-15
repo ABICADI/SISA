@@ -82,27 +82,18 @@ class ActividadController extends Controller {
     public function update(Request $request, $id) {
         $actividad = Actividad::findOrFail($id);
 
-         if ($actividad->descripcion != $request['descripcion']) {
-                $this->validateDes($request);
-                $actividad->descripcion = $request['descripcion'];
-                $this->updateActividadBitacora($request, $id);
-                if($actividad->save()){
-                    return redirect()->intended('/actividad-management'); 
-                }
-        }elseif ($actividad->descripcion == $request['descripcion']) {
-                $this->validateUpdate($request);
-                $actividad->nombre = $request['nombre'];
-                $actividad->direccion = $request['direccion'];
-                $actividad->descripcion = $request['descripcion'];
-                $actividad->fecha = $request['fecha'];
-                $actividad->user_id = $request['user_id'];
-                $actividad->departamento_id = $request['departamento_id'];
-                $actividad->municipio_id = $request['municipio_id'];
-                $this->updateActividadBitacora($request, $id);
-                if($actividad->save()){
-                    return redirect()->intended('/actividad-management'); 
-                }
-        }        
+        $this->validateUpdate($request);
+        $actividad->nombre = $request['nombre'];
+        $actividad->direccion = $request['direccion'];
+        $actividad->descripcion = $request['descripcion'];
+        $actividad->fecha = $request['fecha'];
+        $actividad->user_id = $request['user_id'];
+        $actividad->departamento_id = $request['departamento_id'];
+        $actividad->municipio_id = $request['municipio_id'];
+        $this->updateActividadBitacora($request, $id);
+            if($actividad->save()){
+                return redirect()->intended('/actividad-management'); 
+            }      
     }
 
     public function destroy($id) {
@@ -161,12 +152,6 @@ class ActividadController extends Controller {
         ]);
     }
 
-    private function validateDes($request) {
-        $this->validate($request, [
-            'descripcion' => 'max:250',
-        ]);
-    }
-
     private function createActividadBitacora($request){
         //Datos para la Bitacora
         date_default_timezone_set('asia/ho_chi_minh');
@@ -189,18 +174,18 @@ class ActividadController extends Controller {
             $bitacora->save(); 
     }
 
-    private function updateActividadBitacora(Request $request, $id){
+    private function updateActividadBitacora($request, $id){
         date_default_timezone_set('asia/ho_chi_minh');
         $format = 'd/m/Y';
         $now = date($format);
         $log = $request->User()->username;
         $actividad = Actividad::findOrFail($id);
-        $departamentonew = Departamento::findOrFail($request['departamento_id']);
-        $departamentoold = Departamento::findOrFail($actividad->departamento_id);
-        $municipionew = Municipio::findOrFail($request['municipio_id']);
-        $municipioold = Municipio::findOrFail($actividad->municipio_id);
-        $usernew = User::findOrFail($request['user_id']);
-        $userold = User::findOrFail($actividad->user_id);
+        $departamentonew = Departamento::find($request['departamento_id']);
+        $departamentoold = Departamento::find($actividad->departamento_id);
+        $municipionew = Municipio::find($request['municipio_id']);
+        $municipioold = Municipio::find($actividad->municipio_id);
+        $usernew = User::find($request['user_id']);
+        $userold = User::find($actividad->user_id);
 
         if($actividad->user_id != ['user_id']){
             $bitacora = new Bitacora();
