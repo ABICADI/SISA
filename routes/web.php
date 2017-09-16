@@ -20,7 +20,7 @@ Auth::routes();
 //Nuestras Rutas
 Route::get('/dashboard', 'DashboardController@index');
 Route::get('/error', 'ErrorController@index');
-Route::get('/profile', 'ProfileController@index');
+Route::resource('profile', 'ProfileController');
 
 Route::post('system-management/bitacora/search', 'BitacoraController@search')->name('bitacora.search');
 Route::resource('system-management/bitacora', 'BitacoraController');

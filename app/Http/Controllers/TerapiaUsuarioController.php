@@ -61,7 +61,7 @@ public function __construct() {
         $log = $request->User()->username;
         $terapiauser = Terapia::find($terapia);
 
-             $data = 'Usuario: ' . $user->nombre1 .' '. $user->nombre2 .' '. $user->nombre3 .' '. $user->apellido1 .' '. $user->apellido2 .' '. $user->apellido3 . ' , Dia: ' . $terapiauser->nombre;  
+             $data = 'Usuario: ' . $user->nombre1 .' '. $user->nombre2 .' '. $user->nombre3 .' '. $user->apellido1 .' '. $user->apellido2 .' '. $user->apellido3 . ' , Terapia: ' . $terapiauser->nombre;  
 
             $bitacora = new Bitacora();
             $bitacora->usuario = $log;
