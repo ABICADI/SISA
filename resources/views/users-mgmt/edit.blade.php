@@ -18,7 +18,7 @@
             <div class="form-group{{ $errors->has('dpi') ? ' has-error' : '' }}">
                 <label for="dpi" class="col-md-4 control-label"><label style="color:red">*</label> DPI</label>
                     <div class="col-md-6">
-                        <input id="dpi" type="text" class="form-control" name="dpi" value="{{ $user->dpi }}" required>
+                        <input id="dpi" type="text" class="form-control" name="dpi" value="{{ $user->dpi }}" onkeypress="return numeros(event)" minlength="13" maxlength="13" required>
 
                         @if ($errors->has('dpi'))
                             <span class="help-block">
@@ -35,7 +35,7 @@
             <div class="form-group{{ $errors->has('nombre1') ? ' has-error' : '' }}">
                 <label for="nombre1" class="col-md-6 control-label"><label style="color:red">*</label> Primer Nombre</label>
                     <div class="col-md-5">
-                        <input id="nombre1" type="text" class="form-control" placeholder="primer nombre" name="nombre1" value="{{ $user->nombre1 }}" required autofocus>
+                        <input id="nombre1" type="text" class="form-control" placeholder="primer nombre" name="nombre1" value="{{ $user->nombre1 }}" onkeypress="return letras(event)" maxlength="30" required autofocus>
 
                         @if ($errors->has('nombre1'))
                             <span class="help-block">
@@ -50,7 +50,7 @@
                 <label for="nombre2" class="col-md-6 control-label">Segundo Nombre</label>
 
                     <div class="col-md-5">
-                        <input id="nombre2" type="text" class="form-control" placeholder="segundo nombre" name="nombre2" value="{{ $user->nombre2 }}"">
+                        <input id="nombre2" type="text" class="form-control" placeholder="segundo nombre" name="nombre2" value="{{ $user->nombre2 }}" onkeypress="return letras(event)" maxlength="30" autofocus>
 
                             @if ($errors->has('nombre2'))
                                 <span class="help-block">
@@ -65,7 +65,7 @@
                 <label for="nombre3" class="col-md-6 control-label">Tercer Nombre</label>
 
                     <div class="col-md-5">
-                        <input id="nombre3" type="text" class="form-control" placeholder="tercer nombre" name="nombre3" value="{{ $user->nombre3 }}">
+                        <input id="nombre3" type="text" class="form-control" placeholder="tercer nombre" name="nombre3" value="{{ $user->nombre3 }}" onkeypress="return letras(event)" maxlength="30" autofocus>
 
                             @if ($errors->has('nombre3'))
                                 <span class="help-block">
@@ -81,7 +81,7 @@
             <div class="form-group{{ $errors->has('apellido1') ? ' has-error' : '' }}">
                 <label for="apellido1" class="col-md-6 control-label"><label style="color:red">*</label> Primer Apellido</label>
                     <div class="col-md-5">
-                        <input id="apellido1" type="text" class="form-control" placeholder="primer apellido" name="apellido1" value="{{ $user->apellido1 }}" required autofocus>
+                        <input id="apellido1" type="text" class="form-control" placeholder="primer apellido" name="apellido1" value="{{ $user->apellido1 }}" onkeypress="return letras(event)" maxlength="30" required autofocus>
 
                         @if ($errors->has('apellido1'))
                             <span class="help-block">
@@ -96,7 +96,7 @@
                 <label for="apellido2" class="col-md-6 control-label">Segundo Apellido</label>
 
                     <div class="col-md-5">
-                        <input id="apellido2" type="text" class="form-control" placeholder="segundo apellido" name="apellido2" value="{{ $user->apellido2 }}" autofocus>
+                        <input id="apellido2" type="text" class="form-control" placeholder="segundo apellido" name="apellido2" value="{{ $user->apellido2 }}" onkeypress="return letras(event)" maxlength="30" autofocus>
 
                             @if ($errors->has('apellido2'))
                                 <span class="help-block">
@@ -111,7 +111,7 @@
                 <label for="apellido3" class="col-md-6 control-label">Tercer Apellido</label>
 
                     <div class="col-md-5">
-                        <input id="apellido3" type="text" class="form-control" placeholder="tercer apellido" name="apellido3" value="{{ $user->apellido3 }}" autofocus>
+                        <input id="apellido3" type="text" class="form-control" placeholder="tercer apellido" name="apellido3" value="{{ $user->apellido3 }}" onkeypress="return letras(event)" maxlength="30" autofocus>
 
                             @if ($errors->has('apellido3'))
                                 <span class="help-block">
@@ -134,7 +134,7 @@
                 <label for="username" class="col-md-4 control-label"><label style="color:red">*</label> Usuario</label>
 
                     <div class="col-md-6">
-                        <input id="username" type="text" class="form-control" placeholder="usuario" name="username" value="{{ $user->username }}" required autofocus>
+                        <input id="username" type="text" class="form-control" placeholder="usuario" name="username" value="{{ $user->username }}" onkeypress="return letrasynumeros(event)" minlength="6" maxlength="30" required autofocus>
 
                             @if ($errors->has('username'))
                                 <span class="help-block">
@@ -149,7 +149,7 @@
                 <label for="email" class="col-md-4 control-label">Correo Electrónico</label>
 
                     <div class="col-md-6">
-                        <input id="email" type="email" class="form-control" name="email" value="{{ $user->email }}" autofocus>
+                        <input id="email" type="email" class="form-control" name="email" value="{{ $user->email }}" onkeypress="return letrasynumeros(event)" maxlength="125" autofocus>
 
                             @if ($errors->has('email'))
                                 <span class="help-block">
@@ -221,7 +221,7 @@
                 <label for="direccion" class="col-md-3 control-label">Dirección</label>
 
                     <div class="col-md-8">
-                        <input id="direccion" type="text" class="form-control" name="direccion" value="{{ $user->direccion }}" autofocus>
+                        <input id="direccion" type="text" class="form-control" name="direccion" value="{{ $user->direccion }}" maxlength="75" autofocus>
 
                             @if ($errors->has('direccion'))
                                 <span class="help-block">
@@ -246,7 +246,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" value="{{ $user->fecha_nacimiento }}" name="fecha_nacimiento" class="form-control pull-right" id="fechaNacimiento" required>
+                            <input type="text" value="{{ $user->fecha_nacimiento }}" name="fecha_nacimiento" class="form-control pull-right" id="fechaNacimiento" onblur="calcular_edad(this.value)" required>
                         </div>
                     </div>
             </div>
@@ -264,7 +264,7 @@
                 <label for="telefono" class="col-md-4 control-label">Teléfono</label>
 
                     <div class="col-md-6">
-                        <input id="telefono" type="telefono" class="form-control" placeholder="00000000" name="telefono" value="{{ $user->telefono }}" autofocus>
+                        <input id="telefono" type="telefono" class="form-control" placeholder="00000000" name="telefono" value="{{ $user->telefono }}" onkeypress="return numeros(event)" minlength="8" maxlength="8" autofocus autofocus>
 
                             @if ($errors->has('telefono'))
                                 <span class="help-block">

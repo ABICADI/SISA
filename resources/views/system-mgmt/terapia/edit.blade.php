@@ -18,7 +18,7 @@
                         <div class="form-group{{ $errors->has('nombre') ? ' has-error' : '' }}">
                             <label for="nombre" class="col-md-4 control-label"><label style="color:red">*</label> Nombre</label>
                             <div class="col-md-6">
-                                <input id="nombre" type="text" class="form-control" name="nombre" value="{{ $terapia->nombre }}" required autofocus disabled="">
+                                <input id="nombre" type="text" class="form-control" name="nombre" value="{{ $terapia->nombre }}" onkeypress="return letras(event)" maxlength="30" required autofocus disabled>
 
                                 @if ($errors->has('nombre'))
                                     <span class="help-block">
@@ -32,7 +32,7 @@
                 <label for="descripcion" class="col-md-4 control-label">Descripcion</label>
 
                     <div class="col-md-6">
-                        <textarea id="descripcion" class="form-control" name="descripcion" placeholder="descripcion" cols="50" rows="10"  type="text" value="{{ $terapia->descripcion }}" autofocus>{{ $terapia->descripcion }}</textarea>
+                        <textarea id="descripcion" class="form-control" name="descripcion" placeholder="descripcion" cols="50" rows="10"  type="text" value="{{ $terapia->descripcion }}" maxlength="500" autofocus>{{ $terapia->descripcion }}</textarea>
 
                             @if ($errors->has('descripcion'))
                                 <span class="help-block">

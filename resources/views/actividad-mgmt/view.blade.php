@@ -28,7 +28,7 @@
             <div class="form-group{{ $errors->has('nombre') ? ' has-error' : '' }}">
                 <label for="nombre" class="col-md-2 control-label"><label style="color:red">*</label> Nombre Actividad</label>
                     <div class="col-md-6">
-                        <input id="nombre" type="text" class="form-control" placeholder="nombre" name="nombre" value="{{ $actividad->nombre }}" disabled="">
+                        <input id="nombre" type="text" class="form-control" placeholder="nombre" name="nombre" value="{{ $actividad->nombre }}" onkeypress="return letras(event)" maxlength="50" disabled>
 
                         @if ($errors->has('nombre'))
                             <span class="help-block">
@@ -42,7 +42,7 @@
                 <label for="descripcion" class="col-md-2 control-label">Descripcion</label>
 
                     <div class="col-md-6">
-                        <textarea id="descripcion" class="form-control" name="descripcion" placeholder="descripcion" cols="50" rows="10"  type="text" value="{{ $actividad->descripcion }}" autofocus>{{ $actividad->descripcion }}</textarea>
+                        <textarea id="descripcion" class="form-control" name="descripcion" placeholder="descripcion" cols="50" rows="10"  type="text" value="{{ $actividad->descripcion }}" maxlength="500" autofocus>{{ $actividad->descripcion }}</textarea>
 
                             @if ($errors->has('descripcion'))
                                 <span class="help-block">
@@ -58,7 +58,7 @@
             <div class="form-group">
                 <label class="col-md-3 control-label"><label style="color:red">*</label> Departamento</label>
                     <div class="col-md-7">
-                        <select class="form-control" name="departamento_id" autofocus disabled="">
+                        <select class="form-control" name="departamento_id" autofocus disabled>
                             <option value="" selected disabled>seleccione departamento</option>
                             @foreach ($departamentos as $departamento)
                                 <option value="{{$departamento->id}}" {{$departamento->id == $actividad->departamento_id ? 'selected' : ''}}>{{$departamento->nombre}}</option>
@@ -71,7 +71,7 @@
             <div class="form-group">
                 <label class="col-md-3 control-label"><label style="color:red">*</label> Municipio</label>
                     <div class="col-md-7">
-                        <select class="form-control" name="municipio_id" autofocus disabled="">
+                        <select class="form-control" name="municipio_id" autofocus disabled>
                             <option value="" selected disabled>seleccione municipio</option>
                             @foreach ($municipios as $municipio)
                                 <option value="{{$municipio->id}}" {{$municipio->id == $actividad->municipio_id ? 'selected' : ''}}>{{$municipio->nombre}}</option>
@@ -87,7 +87,7 @@
                 <label for="direccion" class="col-md-2 control-label">Dirección</label>
 
                     <div class="col-md-6">
-                        <input id="direccion" type="direccion" class="form-control" placeholder="colonia/barrio" name="direccion" value="{{ $actividad->direccion }}" autofocus disabled="">
+                        <input id="direccion" type="direccion" class="form-control" placeholder="colonia/barrio" name="direccion" value="{{ $actividad->direccion }}" maxlength="75" autofocus disabled>
 
                             @if ($errors->has('direccion'))
                                 <span class="help-block">
@@ -104,7 +104,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" value="{{ $actividad->fecha }}" placeholder="30/01/1990" name="fecha" class="form-control pull-right" id="fechaNacimiento" disabled="">
+                            <input type="text" value="{{ $actividad->fecha }}" placeholder="30/01/1990" name="fecha" class="form-control pull-right" id="fechaNacimiento" disabled>
                         </div>
                     </div>
             </div>

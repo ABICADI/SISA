@@ -29,7 +29,7 @@
             <div class="form-group{{ $errors->has('nombre') ? ' has-error' : '' }}">
                 <label for="nombre" class="col-md-2 control-label"><label style="color:red">*</label> Nombre Actividad</label>
                     <div class="col-md-6">
-                        <input id="nombre" type="text" class="form-control" placeholder="nombre" name="nombre" value="{{ old('nombre') }}" required>
+                        <input id="nombre" type="text" class="form-control" placeholder="nombre" name="nombre" value="{{ old('nombre') }}"  onkeypress="return letras(event)" maxlength="50" required>
 
                         @if ($errors->has('nombre'))
                             <span class="help-block">
@@ -43,7 +43,7 @@
                 <label for="descripcion" class="col-md-2 control-label">Descripcion</label>
 
                     <div class="col-md-6">
-                        <textarea id="descripcion" class="form-control" name="descripcion" placeholder="descripcion" cols="50" rows="10"  type="text" value="{{ old('descripcion') }}" autofocus disabled=""></textarea>
+                        <textarea id="descripcion" class="form-control" name="descripcion" placeholder="descripcion" cols="50" rows="10"  type="text" value="{{ old('descripcion') }}" maxlength="500" autofocus disabled></textarea>
 
                             @if ($errors->has('descripcion'))
                                 <span class="help-block">
@@ -88,7 +88,7 @@
                 <label for="direccion" class="col-md-2 control-label">Dirección</label>
 
                     <div class="col-md-6">
-                        <input id="direccion" type="direccion" class="form-control" placeholder="colonia/barrio" name="direccion" value="{{ old('direccion') }}" autofocus>
+                        <input id="direccion" type="direccion" class="form-control" placeholder="colonia/barrio" name="direccion" value="{{ old('direccion') }}" maxlength="75" autofocus>
 
                             @if ($errors->has('direccion'))
                                 <span class="help-block">

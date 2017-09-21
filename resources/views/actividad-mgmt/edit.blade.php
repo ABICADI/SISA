@@ -30,7 +30,7 @@
             <div class="form-group{{ $errors->has('nombre') ? ' has-error' : '' }}">
                 <label for="nombre" class="col-md-2 control-label"><label style="color:red">*</label> Nombre Actividad</label>
                     <div class="col-md-6">
-                        <input id="nombre" type="text" class="form-control" placeholder="nombre" name="nombre" value="{{ $actividad->nombre }}" required>
+                        <input id="nombre" type="text" class="form-control" placeholder="nombre" name="nombre" value="{{ $actividad->nombre }}" onkeypress="return letras(event)" maxlength="50" required>
 
                         @if ($errors->has('nombre'))
                             <span class="help-block">
@@ -44,7 +44,7 @@
                 <label for="descripcion" class="col-md-2 control-label">Descripcion</label>
 
                     <div class="col-md-6">
-                        <textarea id="descripcion" class="form-control" name="descripcion" placeholder="descripcion" cols="50" rows="10"  type="text" value="{{ $actividad->descripcion }}" autofocus>{{ $actividad->descripcion }}</textarea>
+                        <textarea id="descripcion" class="form-control" name="descripcion" placeholder="descripcion" cols="50" rows="10"  type="text" value="{{ $actividad->descripcion }}" maxlength="500" autofocus>{{ $actividad->descripcion }}</textarea>
 
                             @if ($errors->has('descripcion'))
                                 <span class="help-block">
@@ -90,7 +90,7 @@
                 <label for="direccion" class="col-md-2 control-label">Dirección</label>
 
                     <div class="col-md-6">
-                        <input id="direccion" type="direccion" class="form-control" placeholder="colonia/barrio" name="direccion" value="{{ $actividad->direccion }}" autofocus>
+                        <input id="direccion" type="direccion" class="form-control" placeholder="colonia/barrio" name="direccion" value="{{ $actividad->direccion }}" maxlength="75" autofocus>
 
                             @if ($errors->has('direccion'))
                                 <span class="help-block">
