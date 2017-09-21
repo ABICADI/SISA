@@ -169,7 +169,14 @@
                 <label for="edad" class="col-md-3 control-label">Edad</label>
 
                     <div class="col-md-3">
-                        <input id="edad" type="text" class="form-control" name="edad" disabled>
+                        <input id="edad" type="text" class="form-control" name="edad" disabled="">
+                            <script type="text/javascript">
+                                var fechaNac = document.getElementById("fechaNacimiento").value;
+                                var fechaHoy = new Date();
+                                var anioNac = parseInt(fechaNac.substring(fechaNac.lastIndexOf('/')+1));
+                                var edad = parseInt(fechaHoy.getFullYear())-anioNac;
+                                if(edad) document.getElementById("edad").value=edad;
+                            </script>
                     </div>
             </div>
             </td>

@@ -246,7 +246,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" value="{{ $user->fecha_nacimiento }}" name="fecha_nacimiento" class="form-control pull-right" id="fechaNacimiento" onblur="calcular_edad(this.value)" required>
+                            <input type="text" value="{{ $user->fecha_nacimiento }}" name="fecha_nacimiento" class="form-control pull-right" id="fechaNacimiento" required>
                         </div>
                     </div>
             </div>
@@ -256,6 +256,13 @@
 
                     <div class="col-md-3">
                         <input id="edad" type="text" class="form-control" name="edad" disabled="">
+                            <script type="text/javascript">
+                                var fechaNac = document.getElementById("fechaNacimiento").value;
+                                var fechaHoy = new Date();
+                                var anioNac = parseInt(fechaNac.substring(fechaNac.lastIndexOf('/')+1));
+                                var edad = parseInt(fechaHoy.getFullYear())-anioNac;
+                                if(edad) document.getElementById("edad").value=edad;
+                            </script>
                     </div>
             </div>
             </td>

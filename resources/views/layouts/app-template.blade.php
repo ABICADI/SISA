@@ -122,7 +122,6 @@
               }
             var input = document.getElementById("fechaNacimiento");
             input.addEventListener("transitionend",insertEdad);
-            input.addEventListener("change",insertEdad);
         }())
     </script>
     
