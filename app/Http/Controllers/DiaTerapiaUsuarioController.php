@@ -12,7 +12,7 @@ use App\Departamento;
 use App\Municipio;
 use App\DiaSemana;
 use App\Terapia;
-use App\UsuariaDia;
+use App\UsuarioDia;
 use App\UsuarioTerapia;
 
 class DiaTerapiaUsuarioController extends Controller {
@@ -32,13 +32,14 @@ class DiaTerapiaUsuarioController extends Controller {
 
         $userdiasemanas = DB::table('userdiasemanas')
         ->leftJoin('diasemanas', 'userdiasemanas.diasemana_id', '=', 'diasemanas.id')
-        ->select('userdiasemanas.*', 'diasemanas.id as diasemana_id')
+        ->select('userdiasemanas.*', 'diasemanas.id as diasemana_id', 'diasemanas.nombre as nombre_dia')
         ->where('userdiasemanas.user_id', '=', $id)->get();
 
         $usuarioterapias = DB::table('userterapias')
         ->leftJoin('terapias', 'userterapias.terapia_id', '=', 'terapias.id')
-        ->select('userterapias.*', 'terapias.nombre as terapia_nombre')
+        ->select('userterapias.*', 'terapias.nombre as terapia_nombre', 'terapias.id as terapia_id')
         ->where('userterapias.user_id', '=', $id)->get();
+
 
         return view('users-mgmt/edit', ['user' => $user, 'rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios, 'estados' => $estados, 'diasemanas' => $diasemanas, 'terapias' => $terapias, 'userdiasemanas' => $userdiasemanas, 'usuarioterapias' => $usuarioterapias]);
     }
@@ -46,6 +47,14 @@ class DiaTerapiaUsuarioController extends Controller {
     public function update(Request $request, $id) {
         $user = User::findOrFail($id);
         $this->validateUpdate($request);
+
+        $deleteDia = DB::table('userdiasemanas')
+        ->select('userdiasemanas.*')->where('userdiasemanas.user_id','=',$user->id);
+        $deleteDia->delete();
+
+        $deleteTerapia = DB::table('userterapias')
+        ->select('userterapias.*')->where('userterapias.user_id','=',$user->id);
+        $deleteTerapia->delete();
 
         $user->dpi = $request['dpi'];
         $user->username = $request['username'];
@@ -69,6 +78,22 @@ class DiaTerapiaUsuarioController extends Controller {
         $user->telefono = $request['telefono'];
         $user->rol_id = $request['rol_id'];
         $user->estado_id = $request['estado_id'];
+
+        $terapias = $request->terapia;
+        foreach ($terapias as $terapia) {
+            $terapiausuario = new UsuarioTerapia();
+            $terapiausuario->terapia_id = $terapia;
+            $terapiausuario->user_id = $user->id;
+            $terapiausuario->save();
+        }
+
+        $diasemanas = $request->diasemana;
+        foreach ($diasemanas as $diasemana) {
+            $diausuario = new UsuarioDia();
+            $diausuario->diasemana_id = $diasemana;
+            $diausuario->user_id = $user->id;
+            $diausuario->save();
+        }
 
         if($user->save()){
            return redirect()->intended('/user-management');

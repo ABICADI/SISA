@@ -347,13 +347,19 @@
                                         <table id="example2" class="table table-responsive" role="grid" aria-describedby="example2_info">
                                             <tr>
                                             @foreach ($diasemanas as $diasemana)
+                                            <?php $cont = 0; ?>
                                             @foreach ($userdiasemanas as $userdiasemana)
-                                            @if($userdiasemana->diasemana_id != $diasemana->id)
-                            <td role="row"><input type="checkbox" id="numero1" name="diasemana[]" value="{{$diasemana->id}}">  {{ $diasemana->nombre }}</td>
-                                            @elseif($userdiasemana->diasemana_id == $diasemana->id)
-                            <td role="row"><input type="checkbox" id="numero1" name="diasemana[]" value="{{$diasemana->id}}" checked>  {{ $diasemana->nombre }}</td>
+                                            
+                                            @if($diasemana->id == $userdiasemana->diasemana_id)
+                                            <td role="row"><input type="checkbox" id="{{$diasemana->id}}" name="diasemana[]" value="{{$diasemana->id}}" checked>  {{ $userdiasemana->nombre_dia }}</td>
+                                            <?php $cont = 1; ?>
                                             @endif
                                             @endforeach
+                                            <?php if($cont < 1) {?>
+                                            @if($diasemana->id != $userdiasemana->diasemana_id)
+                                            <td role="row"><input type="checkbox" id="{{$diasemana->id}}" name="diasemana[]" value="{{$diasemana->id}}">  {{ $diasemana->nombre }}</td>
+                                            @endif
+                                            <?php }?>
                                             @endforeach 
                                             </tr>
                                         </table>
@@ -382,7 +388,19 @@
                                         <table id="example2" class="table table-responsive" role="grid" aria-describedby="example2_info">
                                             <tr>
                                             @foreach ($terapias as $terapia)
-                            <td role="row"><input type="checkbox" id="inlineCheckbox1" name="terapia[]" value="{{$terapia->id}}">  {{ $terapia->nombre }}</td>
+                                            <?php $cont = 0; ?>
+                                            @foreach ($usuarioterapias as $usuarioterapia)
+                                            
+                                            @if($terapia->id == $usuarioterapia->terapia_id)
+                                            <td role="row"><input type="checkbox" id="{{$terapia->id}}" name="terapia[]" value="{{$terapia->id}}" checked>  {{ $usuarioterapia->terapia_nombre }}</td>
+                                            <?php $cont = 1; ?>
+                                            @endif
+                                            @endforeach
+                                            <?php if($cont < 1) {?>
+                                            @if($terapia->id != $usuarioterapia->terapia_id)
+                                            <td role="row"><input type="checkbox" id="{{$terapia->id}}" name="terapia[]" value="{{$terapia->id}}">  {{ $terapia->nombre }}</td>
+                                            @endif
+                                            <?php }?>
                                             @endforeach 
                                             </tr>
                                         </table>
