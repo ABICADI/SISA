@@ -164,7 +164,7 @@ class UserManagementController extends Controller {
         $estado_id = '1';
         
         $departamento = Departamento::findOrFail($request['departamento_id']);
-        $municipio = Departamento::findOrFail($request['departamento_id']);
+        $municipio = Municipio::findOrFail($request['municipio_id']);
         $rol = Rol::findOrFail($request['rol_id']);
         $estado = Estado::findOrFail($estado_id);
 

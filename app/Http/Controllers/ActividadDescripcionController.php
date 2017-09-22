@@ -36,7 +36,7 @@ class ActividadDescripcionController extends Controller {
         $log = $request->User()->username;
         $actividad = Actividad::findOrFail($id);
 
-        if($actividad->descripcion != ['descripcion']){
+        if($actividad->descripcion != $request['descripcion']){
             $bitacora = new Bitacora();
             $bitacora->usuario = $log;
             $bitacora->nombre_tabla = 'ACTIVIDAD';

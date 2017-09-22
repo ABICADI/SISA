@@ -187,7 +187,7 @@ class ActividadController extends Controller {
         $usernew = User::find($request['user_id']);
         $userold = User::find($actividad->user_id);
 
-        if($actividad->user_id != ['user_id']){
+        if($actividad->user_id != $request['user_id']){
             $bitacora = new Bitacora();
             $bitacora->usuario = $log;
             $bitacora->nombre_tabla = 'ACTIVIDAD';
@@ -198,7 +198,7 @@ class ActividadController extends Controller {
             $bitacora->save();
         }
 
-        if($actividad->nombre != ['nombre']){
+        if($actividad->nombre != $request['nombre']){
             $bitacora = new Bitacora();
             $bitacora->usuario = $log;
             $bitacora->nombre_tabla = 'ACTIVIDAD';
@@ -209,7 +209,7 @@ class ActividadController extends Controller {
             $bitacora->save();
         }
 
-        if($actividad->descripcion != ['descripcion']){
+        if($actividad->descripcion != $request['descripcion']){
             $bitacora = new Bitacora();
             $bitacora->usuario = $log;
             $bitacora->nombre_tabla = 'ACTIVIDAD';
@@ -220,7 +220,7 @@ class ActividadController extends Controller {
             $bitacora->save();
         }
 
-        if($actividad->departamento_id != ['departamento_id']){
+        if($actividad->departamento_id != $request['departamento_id']){
             $bitacora = new Bitacora();
             $bitacora->usuario = $log;
             $bitacora->nombre_tabla = 'ACTIVIDAD';
@@ -231,7 +231,7 @@ class ActividadController extends Controller {
             $bitacora->save();
         }
 
-        if($actividad->municipio_id != ['municipio_id']){
+        if($actividad->municipio_id != $request['municipio_id']){
             $bitacora = new Bitacora();
             $bitacora->usuario = $log;
             $bitacora->nombre_tabla = 'ACTIVIDAD';
@@ -242,7 +242,7 @@ class ActividadController extends Controller {
             $bitacora->save();
         }
         
-        if($actividad->direccion != ['direccion']){
+        if($actividad->direccion != $request['direccion']){
             $bitacora = new Bitacora();
             $bitacora->usuario = $log;
             $bitacora->nombre_tabla = 'ACTIVIDAD';
@@ -253,7 +253,7 @@ class ActividadController extends Controller {
             $bitacora->save();
         }
 
-        if($actividad->fecha != ['fecha']){
+        if($actividad->fecha != $request['fecha']){
             $bitacora = new Bitacora();
             $bitacora->usuario = $log;
             $bitacora->nombre_tabla = 'ACTIVIDAD';

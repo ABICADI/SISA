@@ -125,7 +125,7 @@ class TerapiaController extends Controller {
         $user = $request->User()->username;
         $terapia1 = Terapia::find($id);
 
-            if ($terapia1->descripcion != ['descripcion']) {
+            if ($terapia1->descripcion != $request['descripcion']) {
                 $bitacora = new Bitacora();
                 $bitacora->usuario = $user;
                 $bitacora->nombre_tabla = 'TERAPIA';
