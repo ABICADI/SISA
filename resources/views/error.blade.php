@@ -60,16 +60,45 @@ desired effect
   <!-- Sidebar -->
   @include('layouts.sidebar')
 
-  <!-- Content Wrapper. Contains page content -->
+<!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+    <!-- Main content -->
     <section class="content">
-      <div class="col-md-14 col-md-offset-4">
-        <h1 class="headline text-red">¡Ha Ocurrido un Error!</h1>
-      </div>
-    </section>
-    <!-- /.content -->
+      
+  <div>
+    <table class="table responsive">
+      <tr>
+        <td>
+          <div>
+              <h1 style ="background: rgba(203,96,179,1);" align="center">Misión</h1>
+                  <p style="background:#B0E0E6 " align="center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis magni quisquam reiciendis obcaecati amet ea dolorum ut eaque hic, architecto blanditiis voluptates alias repellendus tempore ducimus, suscipit quo nam doloremque!</p>
+          </div>
+        </td>
+        <td>
+          <div>
+              <h1 style ="background:#009f1d"; align="center">Visión</h1>
+                  <p style="background:#B0E0E6 " align="center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis magni quisquam reiciendis obcaecati amet ea dolorum ut eaque hic, architecto blanditiis voluptates alias repellendus tempore ducimus, suscipit quo nam doloremque!</p>
+          </div>
+        </td>
+        </tr>
+        <tr>
+        <td>
+          <div>
+              <h1 style="background:#ff3713;" align="center">Objetivos</h1>
+                  <p style="background:#B0E0E6 " align="center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad possimus eum accusamus, recusandae deleniti quas delectus repellendus esse similique eveniet reiciendis unde ipsa eos minima natus adipisci odio assumenda repudiandae!</p>
+          </div>
+        </td>
+        <td>
+          <div>
+              <p align="center"><img src="{{ asset("/bower_components/AdminLTE/dist/img/LOGO ABICADI 3.png") }}" alt="No Disponible" width="200" height="200"/></p>
+          </div>
+        </td>
+        </tr>
+    </table>
   </div>
-  <!-- /.content-wrapper -->
+  </section>
+</div>
+    <!-- /.content-wrapper -->
 
   <!-- Footer -->
   @include('layouts.footer')

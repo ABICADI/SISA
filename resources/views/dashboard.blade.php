@@ -24,7 +24,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
         apply the skin class to the body tag so the changes take effect.
   -->
    <link href="{{ asset("/bower_components/AdminLTE/dist/css/skins/skin-blue.min.css")}}" rel="stylesheet" type="text/css" />
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -64,6 +63,27 @@ desired effect
   <div class="content-wrapper">
     <!-- Main content -->
     <section class="content">
+      
+      <!-- Fila Contenido -->
+      <div class="row">
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3>{{$count}}</h3>
+              <p>Empleados Ingresados</p>
+            </div>
+            <div class="icon">
+              <a href="{{ route('user-management.create') }}"><i class="ion ion-person-add"></i></a>
+            </div>
+            <a href="{{ route('user-management.index') }}" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+      <!-- /.row -->
+      <!-- Main row -->
+
+  <div>
     <table class="table responsive">
       <tr>
         <td>
@@ -92,7 +112,16 @@ desired effect
           </div>
         </td>
         </tr>
-  </table>
+    </table>
+  </div>
+
+  <div class="row">
+<div class="card">
+<div class="col l7 offset-l1 m12 s12">
+<div id="calendar"></div>
+</div>
+</div>
+</div>
   </section>
 </div>
     <!-- /.content-wrapper -->

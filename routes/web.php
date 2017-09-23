@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('dashboard');
+    return view('error');
 })->middleware('auth');
 
 Auth::routes();

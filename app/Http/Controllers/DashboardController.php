@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\User;
 
 class DashboardController extends Controller {
 
@@ -11,6 +13,8 @@ class DashboardController extends Controller {
     }
 
     public function index() {
-        return view('dashboard');
+    	$count = User::where('estado_id', '!=', 2)->count();
+  
+        return view('dashboard', ['count' => $count]);
     }
 }
