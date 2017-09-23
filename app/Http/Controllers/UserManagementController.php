@@ -34,7 +34,7 @@ class UserManagementController extends Controller {
     public function create() {
         $rols = Rol::select('id', 'nombre')->where('rols.id','!=','1')->orderBy('nombre', 'asc')->get();
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        $municipios = Municipio::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+        $municipios = Municipio::select('id', 'nombre','departamento_id')->orderBy('nombre', 'asc')->get();
         return view('users-mgmt/create', ['rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios]);
     }
 
@@ -68,8 +68,19 @@ class UserManagementController extends Controller {
         } 
     }
 
-    public function show($id) {
+    public function selectAjax(Request $request) {
+        if($request->ajax()){
+            $municipios = DB::table('municipios')->where('departamento_id',$request->departamento_id)->pluck("nombre","id")->all();
+            //$data = view('users-mgmt/ajax-select',compact('municipios'))->render();
+            //return response()->json(['options'=>$data]);
+            return view('users-mgmt/create', ['municipios' => $municipios]);
+            //dd($municipios);
+        }
+    }
 
+    public function show($id) {
+        //dd($id);
+        return view('users-mgmt/index', []);
     }
 
     public function view($id) {

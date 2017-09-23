@@ -48,6 +48,7 @@ class DiaTerapiaUsuarioController extends Controller {
         $user = User::findOrFail($id);
         $this->validateUpdate($request);
         $this->updatediaBitacora($request, $id);
+        $this->updateterapiaBitacora($request, $id);
 
         $deleteDia = DB::table('userdiasemanas')
         ->select('userdiasemanas.*')->where('userdiasemanas.user_id','=',$user->id);
@@ -352,22 +353,56 @@ class DiaTerapiaUsuarioController extends Controller {
 
         $cadena1 = '';
         foreach ($userdiasemanas as $userdiasemana) {
-            $cadena1 = $cadena1.' '.$userdiasemana->nombre_dia;
+            $cadena1 = $cadena1.' , '.$userdiasemana->nombre_dia;
         }
 
         $diasemanas = $request->diasemana;
         $cadena = '';
         foreach ($diasemanas as $diasemana) {
             $nombredia=DiaSemana::findOrFail($diasemana);
-            $cadena = $cadena.' '.$nombredia->nombre;
+            $cadena = $cadena.' , '.$nombredia->nombre;
         }
 
                 $bitacora = new Bitacora();
                 $bitacora->usuario = $log;
-                $bitacora->nombre_tabla = 'EMPLEADO';
+                $bitacora->nombre_tabla = 'USUARIO DIA SEMANA';
                 $bitacora->actividad = 'ACTUALIZAR';
                 $bitacora->anterior = 'Dias Anteriores: ' . $cadena1;
                 $bitacora->nuevo = 'Dias Actuales: ' . $cadena;
+                $bitacora->fecha = $now;
+                $bitacora->save();
+    }
+
+    public function updateterapiaBitacora($request, $id){
+        date_default_timezone_set('asia/ho_chi_minh');
+        $format = 'd/m/Y';
+        $now = date($format);
+        $log = $request->User()->username;
+        $user = User::findOrFail($id);
+
+        $usuarioterapias = DB::table('userterapias')
+        ->leftJoin('terapias', 'userterapias.terapia_id', '=', 'terapias.id')
+        ->select('userterapias.*', 'terapias.nombre as terapia_nombre', 'terapias.id as terapia_id')
+        ->where('userterapias.user_id', '=', $id)->get();
+
+        $cadena1 = '';
+        foreach ($usuarioterapias as $usuarioterapia) {
+            $cadena1 = $cadena1.' , '.$usuarioterapia->terapia_nombre;
+        }
+
+        $terapias = $request->terapia;
+        $cadena = '';
+        foreach ($terapias as $terapia) {
+            $nombreterapia=Terapia::findOrFail($terapia);
+            $cadena = $cadena.' , '.$nombreterapia->nombre;
+        }
+
+                $bitacora = new Bitacora();
+                $bitacora->usuario = $log;
+                $bitacora->nombre_tabla = 'USUARIO TERAPIA';
+                $bitacora->actividad = 'ACTUALIZAR';
+                $bitacora->anterior = 'Terapias Anteriores: ' . $cadena1;
+                $bitacora->nuevo = 'Terapias Actuales: ' . $cadena;
                 $bitacora->fecha = $now;
                 $bitacora->save();
     }

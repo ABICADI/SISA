@@ -59,9 +59,15 @@ public function __construct() {
         $format = 'd/m/Y';
         $now = date($format);
         $log = $request->User()->username;
-        $terapiauser = Terapia::find($terapia);
 
-             $data = 'Usuario: ' . $user->nombre1 .' '. $user->nombre2 .' '. $user->nombre3 .' '. $user->apellido1 .' '. $user->apellido2 .' '. $user->apellido3 . ' , Terapia: ' . $terapiauser->nombre;  
+        $terapias = $request->terapia;
+        $cadena = '';
+        foreach ($terapias as $terapia) {
+            $nombreterapia=Terapia::findOrFail($terapia);
+            $cadena = $cadena.' , '.$nombreterapia->nombre;
+        }
+
+             $data = 'Usuario: ' . $user->nombre1 .' '. $user->nombre2 .' '. $user->nombre3 .' '. $user->apellido1 .' '. $user->apellido2 .' '. $user->apellido3 . ' , Terapia: ' . $cadena;  
 
             $bitacora = new Bitacora();
             $bitacora->usuario = $log;

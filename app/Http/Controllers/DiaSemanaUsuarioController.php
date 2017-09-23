@@ -40,9 +40,8 @@ class DiaSemanaUsuarioController extends Controller {
         	$diausuario = new UsuarioDia();
         	$diausuario->diasemana_id = $diasemana;
         	$diausuario->user_id = $user->id;
-        	if($diausuario->save()){
-                $this->createDiaSemanaUsuarioBitacora($request, $diasemana, $user);
-            }
+        	$this->createDiaSemanaUsuarioBitacora($request, $diasemana, $user);
+            $diausuario->save();
         }
         
         return redirect()->intended('/terapiausuario-management');
@@ -54,9 +53,15 @@ class DiaSemanaUsuarioController extends Controller {
         $format = 'd/m/Y';
         $now = date($format);
         $log = $request->User()->username;
-        $dia = DiaSemana::find($diasemana);
 
-             $data = 'Usuario: ' . $user->nombre1 .' '. $user->nombre2 .' '. $user->nombre3 .' '. $user->apellido1 .' '. $user->apellido2 .' '. $user->apellido3 . ' , Dia: ' . $dia->nombre;  
+        $diasemanas = $request->diasemana;
+        $cadena = '';
+        foreach ($diasemanas as $diasemana) {
+            $nombredia=DiaSemana::findOrFail($diasemana);
+            $cadena = $cadena.' , '.$nombredia->nombre;
+        }
+
+             $data = 'Usuario: ' . $user->nombre1 .' '. $user->nombre2 .' '. $user->nombre3 .' '. $user->apellido1 .' '. $user->apellido2 .' '. $user->apellido3 . ' , Dia: ' . $cadena;  
 
             $bitacora = new Bitacora();
             $bitacora->usuario = $log;
