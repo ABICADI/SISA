@@ -13,7 +13,9 @@ class DashboardController extends Controller {
     }
 
     public function index() {
-    	$count = User::where('estado_id', '!=', 2)->count();
+    	$count = User::where('estado_id', '!=', 2)->where('id', '!=', 1)->count();
+
+    	//dd($count);
   
         return view('dashboard', ['count' => $count]);
     }
