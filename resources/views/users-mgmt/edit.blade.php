@@ -260,8 +260,14 @@
                                 var fechaNac = document.getElementById("fechaNacimiento").value;
                                 var fechaHoy = new Date();
                                 var anioNac = parseInt(fechaNac.substring(fechaNac.lastIndexOf('/')+1));
+                                var mesNac = parseInt(fechaNac.substr(fechaNac.indexOf('/')+1,fechaNac.lastIndexOf('/')+1));
+                                var diaNac = parseInt(fechaNac.substr(0,fechaNac.lastIndexOf('/')+1));    
                                 var edad = parseInt(fechaHoy.getFullYear())-anioNac;
-                                if(edad) document.getElementById("edad").value=edad;
+                                if(edad)
+                                    if(mesNac<=parseInt(fechaHoy.getMonth()+1))
+                                        document.getElementById("edad").value=edad;
+                                    else
+                                        document.getElementById("edad").value=edad-1;
                             </script>
                     </div>
             </div>
