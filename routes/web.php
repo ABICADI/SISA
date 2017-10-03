@@ -28,6 +28,9 @@ Route::resource('system-management/bitacora', 'BitacoraController');
 Route::post('user-management/search', 'UserManagementController@search')->name('user-management.search');
 Route::resource('user-management', 'UserManagementController');
 
+Route::post('paciente-management/search', 'PacienteController@search')->name('paciente-management.search');
+Route::resource('paciente-management', 'PacienteController');
+
 Route::resource('dia-terapia-user-management', 'DiaTerapiaUsuarioController');
 
 Route::resource('diasemanausuario-management', 'DiaSemanaUsuarioController');
@@ -40,6 +43,7 @@ Route::resource('actividad-descripcion-management', 'ActividadDescripcionControl
 Route::post('system-management/terapia/search', 'TerapiaController@search')->name('terapia.search');
 Route::resource('system-management/terapia', 'TerapiaController');
 
+Route::post('medico-management/search', 'ActividadController@search')->name('actividad-management.search');
 Route::post('system-management/medico/search', 'MedicoController@search')->name('medico.search');
 Route::resource('system-management/medico', 'MedicoController');
 

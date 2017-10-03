@@ -4,38 +4,37 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\User;
+use App\Paciente;
 use App\Bitacora;
-use App\Rol;
+use App\Medico;
 use App\Estado;
 use App\Departamento;
 use App\Municipio;
 
-class UserManagementController extends Controller {
 
-    protected $redirectTo = '/user-management';
+class PacienteController extends Controller {
+    
+    protected $redirectTo = '/paciente-management';
 
     public function __construct() {
         $this->middleware('auth');
     }
 
     public function index() {
-        $users = DB::table('users')
-        ->leftJoin('rols', 'users.rol_id', '=', 'rols.id')
-        ->leftJoin('estados', 'users.estado_id', '=', 'estados.id')
-        ->select('users.*', 'rols.nombre as rols_nombre', 'estados.id as estado_id')
-        ->where('users.estado_id','!=','2')
-        ->where('users.id','!=','1')
+        $pacientes = DB::table('pacientes')
+        ->leftJoin('estados', 'pacientes.estado_id', '=', 'estados.id')
+        ->select('pacientes.*', 'estados.id as estado_id', 'estados.nombre as estado_nombre')
+        ->where('pacientes.estado_id','!=','2')
+        ->where('pacientes.id','!=','1')
         ->paginate(10);
 
-        return view('users-mgmt/index', ['users' => $users]);
+        return view('paciente-mgmt/index', ['pacientes' => $pacientes]);
     }
 
     public function create() {
-        $rols = Rol::select('id', 'nombre')->where('rols.id','!=','1')->orderBy('nombre', 'asc')->get();
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $municipios = Municipio::select('id', 'nombre','departamento_id')->orderBy('nombre', 'asc')->get();
-        return view('users-mgmt/create', ['rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios]);
+        return view('paciente-mgmt/create', ['departamentos' => $departamentos, 'municipios' => $municipios]);
     }
 
     public function store(Request $request){
@@ -154,48 +153,5 @@ class UserManagementController extends Controller {
             'telefono' => 'digits:8|nullable',
             'rol_id' => 'required',
         ]);
-    }
-
-    private function crearEmpleadoBitacora(Request $request){
-        date_default_timezone_set('asia/ho_chi_minh');
-        $format = 'd/m/Y';
-        $now = date($format);
-        $log = $request->User()->username;
-        $estado_id = '1';
-        
-        $departamento = Departamento::findOrFail($request['departamento_id']);
-        $municipio = Municipio::findOrFail($request['municipio_id']);
-        $rol = Rol::findOrFail($request['rol_id']);
-        $estado = Estado::findOrFail($estado_id);
-
-        $data = 'DPI: ' . $request->dpi . ', Nombre Completo: ' . $request->nombre1 .' '. $request->nombre2 .' '. $request->nombre3 . $request->apellido1 .' '. $request->apellido2 .' '. $request->apellido3 . ', Datos de Usuario: ' . $request->username . $request->email . ', Direccion: ' . $departamento->nombre .' '. $municipio->nombre .' '. $request->direccion . ', Datos Personales: ' . $request->fecha_nacimiento .' '. $request->telefono . ', Fecha de Ingreso: ' . $request->fecha_ingreso . ', Puesto Encargado: ' . $rol->nombre . ', Estado: ' . $estado->nombre;
-
-            $bitacora = new Bitacora();
-            $bitacora->usuario = $log;
-            $bitacora->nombre_tabla = 'EMPLEADO';
-            $bitacora->actividad = 'CREAR';
-            $bitacora->anterior = '';
-            $bitacora->nuevo = $data;
-            $bitacora->fecha = $now;
-            $bitacora->save();
-    }
-
-    private function eliminarEmpleadoBitacora($id){
-        //Datos para la Bitacora
-        date_default_timezone_set('asia/ho_chi_minh');
-        $format = 'd/m/Y';
-        $now = date($format);
-        $userB = User::findOrFail($id);
-
-        $data = 'Nombre y Apellido: ' . $userB->nombre1 .' '. $userB->nombre2 .' '. $userB->nombre3 .' '. $userB->apellido1 .' '. $userB->apellido2 .' '. $userB->apellido3;
-        
-            $bitacora = new Bitacora();
-            $bitacora->usuario = 'Administrador';
-            $bitacora->nombre_tabla = 'EMPLEADO';
-            $bitacora->actividad = 'ELIMINAR';
-            $bitacora->anterior = '';
-            $bitacora->nuevo = $data;
-            $bitacora->fecha = $now;
-            $bitacora->save();
     }
 }

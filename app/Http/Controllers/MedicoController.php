@@ -7,12 +7,14 @@ use App\Http\Controllers\Controller;
 
 class MedicoController extends Controller
 {
+	protected $redirectTo = '/medico-management';
+
     public function __construct() {
         $this->middleware('auth');
     }
 
     public function index() {
-        $terapias = DB::table('medicos')
+        $medicos = DB::table('medicos')
         ->select('medicos.*')->paginate(10);
         return view('medico-mgmt/index', ['medicos' => $medicos]);
     }
