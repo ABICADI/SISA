@@ -28,6 +28,9 @@ Route::resource('system-management/bitacora', 'BitacoraController');
 Route::post('user-management/search', 'UserManagementController@search')->name('user-management.search');
 Route::resource('user-management', 'UserManagementController');
 
+Route::post('paciente-management/search', 'PacienteController@search')->name('paciente-management.search');
+Route::resource('paciente-management', 'PacienteController');
+
 Route::resource('dia-terapia-user-management', 'DiaTerapiaUsuarioController');
 
 Route::resource('diasemanausuario-management', 'DiaSemanaUsuarioController');
