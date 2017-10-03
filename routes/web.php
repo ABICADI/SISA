@@ -40,6 +40,9 @@ Route::resource('actividad-descripcion-management', 'ActividadDescripcionControl
 Route::post('system-management/terapia/search', 'TerapiaController@search')->name('terapia.search');
 Route::resource('system-management/terapia', 'TerapiaController');
 
+Route::post('system-management/medico/search', 'MedicoController@search')->name('medico.search');
+Route::resource('system-management/medico', 'MedicoController');
+
 
 //Route::get('system-management/report', 'ReportController@index');
 //Route::post('system-management/report/search', 'ReportController@search')->name('report.search');
