@@ -21,7 +21,7 @@ class ActividadController extends Controller {
         ->paginate(10);
 
         return view('actividad-mgmt/index', ['actividades' => $actividades]);
-    } 
+    }
 
     public function create() {
         $users = User::select('id', 'nombre1', 'nombre2', 'nombre3', 'apellido1', 'apellido2', 'apellido3')
@@ -30,7 +30,7 @@ class ActividadController extends Controller {
         $municipios = Municipio::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
 
         return view('actividad-mgmt/create', ['users' => $users, 'departamentos' => $departamentos, 'municipios' => $municipios]);
-    }   
+    }
 
     public function store(Request $request){
         $this->validateInput($request);
@@ -92,8 +92,8 @@ class ActividadController extends Controller {
         $actividad->municipio_id = $request['municipio_id'];
         $this->updateActividadBitacora($request, $id);
             if($actividad->save()){
-                return redirect()->intended('/actividad-management'); 
-            }      
+                return redirect()->intended('/actividad-management');
+            }
     }
 
     public function destroy($id) {
@@ -171,7 +171,7 @@ class ActividadController extends Controller {
             $bitacora->anterior = '';
             $bitacora->nuevo = $data;
             $bitacora->fecha = $now;
-            $bitacora->save(); 
+            $bitacora->save();
     }
 
     private function updateActividadBitacora($request, $id){
@@ -241,7 +241,7 @@ class ActividadController extends Controller {
             $bitacora->fecha = $now;
             $bitacora->save();
         }
-        
+
         if($actividad->direccion != $request['direccion']){
             $bitacora = new Bitacora();
             $bitacora->usuario = $log;

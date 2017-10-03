@@ -4,20 +4,18 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMedicosTable extends Migration {
+class CreatePagosTable extends Migration {
 
     public function up() {
-        Schema::create('medicos', function (Blueprint $table) {
+        Schema::create('pagos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('colegiado',10);
-            $table->string('nombre')->nullabel();
-            $table->string('telefono',8)->nullabel();
+            $table->string('nombre',50);
             $table->timestamps();
             $table->softDeletes();
         });
     }
 
     public function down() {
-        Schema::dropIfExists('medicos');
+        Schema::dropIfExists('pagos');
     }
 }

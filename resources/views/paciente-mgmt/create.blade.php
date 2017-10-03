@@ -132,7 +132,7 @@
             <div class="form-group">
                 <label class="col-md-5 control-label"><label style="color:red">*</label> Departamento</label>
                     <div class="col-md-7">
-                        <select class="form-control" name="departamento_id" id="departamento_id" onchange="javascript:handleSelect(this)" required autofocus>
+                        <select class="form-control" name="departamento_id" id="departamento_id" required autofocus>
                             <option value="" selected disabled>seleccione departamento</option>
                             @foreach ($departamentos as $departamento)
                                 <option value="{{$departamento->id}}">{{$departamento->nombre}}</option>
@@ -141,18 +141,12 @@
                     </div>
             </div>
             </td>
-            <script type="text/javascript">
-                    function handleSelect(elm) {
-                    var resultado 
-                    resultado = elm.value;
-                    return resultado;
-                    }
-            </script>
             <td>
             <div class="form-group">
                 <label class="col-md-4 control-label"><label style="color:red">*</label> Municipio</label>
                     <div class="col-md-7">
                         <select class="form-control" name="municipio_id" id='municipio_id' required autofocus>
+                            <option value="" selected disabled>seleccione municipio</option>
                             @foreach ($municipios as $municipio)
                                 <option value="{{$municipio->id}}">{{$municipio->nombre}}</option>
                             @endforeach
@@ -208,9 +202,9 @@
             <tr>
             <td>
             <div class="form-group{{ $errors->has('encargado') ? ' has-error' : '' }}">
-                <label for="encargado" class="col-md-4 control-label">Encargado</label>
+                <label for="encargado" class="col-md-3 control-label">Encargado</label>
 
-                    <div class="col-md-6">
+                    <div class="col-md-9">
                         <input id="encargado" type="text" class="form-control" placeholder="nombre completo" name="encargado" value="{{ old('encargado') }}" onkeypress="return letras(event)" maxlength="100" autofocus>
 
                             @if ($errors->has('encargado'))
@@ -223,9 +217,9 @@
             </td>
             <td>
             <div class="form-group{{ $errors->has('telefono') ? ' has-error' : '' }}">
-                <label for="telefono" class="col-md-4 control-label">Teléfono</label>
+                <label for="telefono" class="col-md-3 control-label">Teléfono</label>
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <input id="telefono" type="text" class="form-control" placeholder="00000000" name="telefono" value="{{ old('telefono') }}" onkeypress="return numeros(event)" minlength="8" maxlength="8" autofocus>
 
                             @if ($errors->has('telefono'))
@@ -257,24 +251,11 @@
             </div>
             </td>
             <td>
-            <div class="form-group">
-                <label class="col-md-4 control-label"><label style="color:red">*</label> Médico</label>
-                    <div class="col-md-6">
-                        <select class="form-control" name="medico_id" required autofocus>
-                            <option value="" selected disabled>seleccione un médico</option>
-                            @foreach ($medicos as $medico)
-                                <option value="{{$medico->id}}">{{$medico->nombre}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-            </div>
-            </td>
-            <td>
             <div class="form-group{{ $errors->has('seguro_social') ? ' has-error' : '' }}">
-                <label for="seguro_social" class="col-md-4 control-label">Encargado</label>
+                <label for="seguro_social" class="col-md-3 control-label">No. Social</label>
 
-                    <div class="col-md-6">
-                        <input id="seguro_social" type="text" class="form-control" placeholder="0000" name="seguro_social" value="{{ old('seguro_social') }}" onkeypress="return letras(event)" maxlength="10" autofocus>
+                    <div class="col-md-4">
+                        <input id="seguro_social" type="text" class="form-control" placeholder="0000" name="seguro_social" value="{{ old('seguro_social') }}" onkeypress="return numeros(event)" maxlength="10" autofocus>
 
                             @if ($errors->has('seguro_social'))
                                 <span class="help-block">
@@ -286,12 +267,22 @@
             </td>
             </tr>
         </table>
-
+            <div class="form-group">
+                <label class="col-md-4 control-label"><label style="color:red">*</label> Médico</label>
+                    <div class="col-md-6">
+                        <select class="form-control" name="medico_id" id='municipio_id' required autofocus>
+                            <option value="" selected disabled>seleccione médico</option>
+                            @foreach ($medicos as $medico)
+                                <option value="{{$medico->id}}">{{$medico->colegiado}} {{$medico->nombre}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+            </div>
             <div class="form-group{{ $errors->has('observacion') ? ' has-error' : '' }}">
                 <label for="observacion" class="col-md-2 control-label">Observaciones</label>
 
                     <div class="col-md-6">
-                        <textarea id="observacion" class="form-control" name="observacion" placeholder="observacion" cols="50" rows="10"  type="text" value="{{ old('observacion') }}" maxlength="500" autofocus disabled></textarea>
+                        <textarea id="observacion" class="form-control" name="observacion" placeholder="observacion" cols="50" rows="10"  type="text" value="{{ old('observacion') }}" maxlength="500" autofocus></textarea>
 
                             @if ($errors->has('observacion'))
                                 <span class="help-block">
