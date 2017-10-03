@@ -3,6 +3,7 @@
 @section('action-content')
 <div class="container">
     <div class="row">
+      hjhjhjhj
         <div class="col-md-47 col-md-offset-0">
             <div class="panel panel-default">
                 <div class="panel-heading">Nuevo Paciente</div>
@@ -30,7 +31,7 @@
         @component('layouts.esconder_info', ['title' => 'Nombre y Apellido'])
         <table id="example2" class="table table-responsive">
             <tr>
-            <td>   
+            <td>
             <div class="form-group{{ $errors->has('nombre1') ? ' has-error' : '' }}">
                 <label for="nombre1" class="col-md-6 control-label"><label style="color:red">*</label> Primer Nombre</label>
                     <div class="col-md-5">
@@ -59,7 +60,7 @@
                     </div>
             </div>
             </td>
-            <td>           
+            <td>
             <div class="form-group{{ $errors->has('nombre3') ? ' has-error' : '' }}">
                 <label for="nombre3" class="col-md-6 control-label">Tercer Nombre</label>
 
@@ -72,11 +73,11 @@
                                 </span>
                             @endif
                     </div>
-            </div> 
+            </div>
             </td>
-            </tr> 
+            </tr>
             <tr>
-            <td> 
+            <td>
             <div class="form-group{{ $errors->has('apellido1') ? ' has-error' : '' }}">
                 <label for="apellido1" class="col-md-6 control-label"><label style="color:red">*</label> Primer Apellido</label>
                     <div class="col-md-5">
@@ -105,7 +106,7 @@
                     </div>
             </div>
             </td>
-            <td>           
+            <td>
             <div class="form-group{{ $errors->has('apellido3') ? ' has-error' : '' }}">
                 <label for="apellido3" class="col-md-6 control-label">Tercer Apellido</label>
 
@@ -122,7 +123,7 @@
             </td>
             </tr>
         </div>
-        </table>   
+        </table>
         @endcomponent
 
         @component('layouts.esconder_info', ['title' => 'Dirección'])
@@ -143,7 +144,7 @@
             </td>
             <script type="text/javascript">
                     function handleSelect(elm) {
-                    var resultado 
+                    var resultado
                     resultado = elm.value;
                     return resultado;
                     }
@@ -304,7 +305,7 @@
                         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i> 
+                                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>
                                     Siguiente
                                 </button>
                             </div>
@@ -314,7 +315,7 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 </div>
 @endsection
 @endif
