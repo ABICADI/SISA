@@ -32,13 +32,14 @@ class PacienteController extends Controller {
     }
 
     public function create() {
+    	$medicos = Medico::select('id', 'colegiado', 'nombre')->orderBy('nombre', 'asc')->get();
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $municipios = Municipio::select('id', 'nombre','departamento_id')->orderBy('nombre', 'asc')->get();
-        return view('paciente-mgmt/create', ['departamentos' => $departamentos, 'municipios' => $municipios]);
+        return view('paciente-mgmt/create', ['medicos' => $medicos, 'departamentos' => $departamentos, 'municipios' => $municipios]);
     }
 
     public function store(Request $request){
-        $estado_id = '1';
+        /*$estado_id = '1';
 
         $this->validateInput($request);
         $user = new User();
@@ -64,7 +65,8 @@ class PacienteController extends Controller {
         if($user->save()){
             $this->crearEmpleadoBitacora($request);
             return redirect()->intended('/diasemanausuario-management');
-        } 
+        } */
+        dd($request->all());
     }
 
     public function show($id) {
