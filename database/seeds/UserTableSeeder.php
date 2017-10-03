@@ -19,7 +19,7 @@ class UserTableSeeder extends Seeder {
             'departamento_id' => '1',
             'municipio_id' => '1',
             'direccion' => 'admin',
-            'fecha_nacimiento' => '01/01/2017',
+            'fecha_nacimiento' => '01/01/2000',
             'fecha_ingreso' => '01/01/2017',
             'telefono' => '00000000',
             'rol_id' => '1',

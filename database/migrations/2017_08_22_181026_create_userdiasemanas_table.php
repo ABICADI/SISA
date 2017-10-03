@@ -4,15 +4,9 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserdiasemanasTable extends Migration
-{
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
+class CreateUserdiasemanasTable extends Migration {
+
+    public function up() {
         Schema::create('userdiasemanas', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('diasemana_id');
@@ -24,13 +18,7 @@ class CreateUserdiasemanasTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
+    public function down() {
         Schema::dropIfExists('userdiasemanas');
     }
 }
