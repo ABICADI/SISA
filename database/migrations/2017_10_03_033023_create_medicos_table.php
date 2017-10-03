@@ -11,7 +11,7 @@ class CreateMedicosTable extends Migration {
             $table->increments('id');
             $table->string('colegiado',10);
             $table->string('nombre')->nullabel();
-            $table->string('telefono')->nullabel();
+            $table->string('telefono',8)->nullabel();
             $table->timestamps();
             $table->softDeletes();
         });

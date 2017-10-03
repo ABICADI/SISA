@@ -140,7 +140,7 @@
           function letras(e) {
               tecla = (document.all) ? e.keyCode : e.which;
               if (tecla==8) return true;
-              patron =/[A-Za-z-á-é-í-ó-ú]/;
+              patron =/[A-Za-z-á-é-í-ó-ú-==]/;
               te = String.fromCharCode(tecla);
               return patron.test(te);
           }

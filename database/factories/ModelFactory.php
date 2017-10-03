@@ -102,3 +102,37 @@
             'user_id' => null,
         ];
     });
+
+    $factory->define(App\Medico::class, function (Faker\Generator $faker) {
+
+        return [
+            'colegiado' => null,
+            'nombre' => null,
+            'telefono' => null,
+        ];
+    });
+
+    $factory->define(App\Paciente::class, function (Faker\Generator $faker) {
+
+        return [
+            'cui' => null,
+            'nombre1' => null,
+            'nombre2' => null,
+            'nombre3' => null,
+            'apellido1' => null,
+            'apellido2' => null,
+            'apellido3' => null,
+            'departamento_id' => null,
+            'municipio_id' => null,
+            'direccion' => null,
+            'fecha_nacimiento' => null,
+            'encargado' => null,
+            'fecha_ingreso' => null,
+            'telefono' => null,
+            'fecha_egreso' => null,
+            'medico_id' => null,
+            'seguro_social' => null,
+            'observacion' => null,
+            'estado_id' => null,
+        ];
+    });

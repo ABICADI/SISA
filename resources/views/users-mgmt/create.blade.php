@@ -195,7 +195,7 @@
             <div class="form-group">
                 <label class="col-md-5 control-label"><label style="color:red">*</label> Departamento</label>
                     <div class="col-md-7">
-                        <select class="form-control" name="departamento_id" id="departamento_id" onchange="javascript:handleSelect(this)" required autofocus>
+                        <select class="form-control" name="departamento_id" id="departamento_id" required autofocus>
                             <option value="" selected disabled>seleccione departamento</option>
                             @foreach ($departamentos as $departamento)
                                 <option value="{{$departamento->id}}">{{$departamento->nombre}}</option>
@@ -204,17 +204,11 @@
                     </div>
             </div>
             </td>
-            <script type="text/javascript">
-                    function handleSelect(elm) {
-                    var resultado 
-                    resultado = elm.value;
-                    return resultado;
-                    }
-            </script>
             <td>
             <div class="form-group">
                 <label class="col-md-4 control-label"><label style="color:red">*</label> Municipio</label>
                     <div class="col-md-7">
+                        <option value="" selected disabled>seleccione municipio</option>
                         <select class="form-control" name="municipio_id" id='municipio_id' required autofocus>
                             @foreach ($municipios as $municipio)
                                 <option value="{{$municipio->id}}">{{$municipio->nombre}}</option>
