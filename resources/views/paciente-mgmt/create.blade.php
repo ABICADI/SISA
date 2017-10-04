@@ -17,7 +17,7 @@
             <div class="form-group{{ $errors->has('cui') ? ' has-error' : '' }}">
                 <label for="cui" class="col-md-2 control-label"><label style="color:red">*</label> CUI</label>
                     <div class="col-md-3">
-                        <input id="cui" type="text" class="form-control" placeholder="0000000000000" name="cui" value="{{ old('cui') }}" onkeypress="return numeros(event)" minlength="13" maxlength="13" required autofocus>
+                        <input id="cui" type="text" class="form-control" placeholder="0000000000000" name="cui" value="{{ old('cui') }}" onkeypress="return numeros(event)" minlength="13" maxlength="13" autofocus>
 
                         @if ($errors->has('cui'))
                             <span class="help-block">
@@ -30,7 +30,7 @@
         @component('layouts.esconder_info', ['title' => 'Nombre y Apellido'])
         <table id="example2" class="table table-responsive">
             <tr>
-            <td>   
+            <td>
             <div class="form-group{{ $errors->has('nombre1') ? ' has-error' : '' }}">
                 <label for="nombre1" class="col-md-6 control-label"><label style="color:red">*</label> Primer Nombre</label>
                     <div class="col-md-5">
@@ -59,7 +59,7 @@
                     </div>
             </div>
             </td>
-            <td>           
+            <td>
             <div class="form-group{{ $errors->has('nombre3') ? ' has-error' : '' }}">
                 <label for="nombre3" class="col-md-6 control-label">Tercer Nombre</label>
 
@@ -72,11 +72,11 @@
                                 </span>
                             @endif
                     </div>
-            </div> 
+            </div>
             </td>
-            </tr> 
+            </tr>
             <tr>
-            <td> 
+            <td>
             <div class="form-group{{ $errors->has('apellido1') ? ' has-error' : '' }}">
                 <label for="apellido1" class="col-md-6 control-label"><label style="color:red">*</label> Primer Apellido</label>
                     <div class="col-md-5">
@@ -105,7 +105,7 @@
                     </div>
             </div>
             </td>
-            <td>           
+            <td>
             <div class="form-group{{ $errors->has('apellido3') ? ' has-error' : '' }}">
                 <label for="apellido3" class="col-md-6 control-label">Tercer Apellido</label>
 
@@ -122,7 +122,7 @@
             </td>
             </tr>
         </div>
-        </table>   
+        </table>
         @endcomponent
 
         @component('layouts.esconder_info', ['title' => 'Dirección'])
@@ -254,7 +254,7 @@
             <div class="form-group{{ $errors->has('seguro_social') ? ' has-error' : '' }}">
                 <label for="seguro_social" class="col-md-3 control-label">No. Social</label>
 
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <input id="seguro_social" type="text" class="form-control" placeholder="0000" name="seguro_social" value="{{ old('seguro_social') }}" onkeypress="return numeros(event)" maxlength="10" autofocus>
 
                             @if ($errors->has('seguro_social'))
@@ -267,10 +267,13 @@
             </td>
             </tr>
         </table>
+        <table id="example2" class="table table-responsive">
+            <tr>
+            <td>
             <div class="form-group">
                 <label class="col-md-4 control-label"><label style="color:red">*</label> Médico</label>
-                    <div class="col-md-6">
-                        <select class="form-control" name="medico_id" id='municipio_id' required autofocus>
+                    <div class="col-md-8">
+                        <select class="form-control" name="medico_id" id='medico_id' required autofocus>
                             <option value="" selected disabled>seleccione médico</option>
                             @foreach ($medicos as $medico)
                                 <option value="{{$medico->id}}">{{$medico->colegiado}} {{$medico->nombre}}</option>
@@ -278,6 +281,22 @@
                         </select>
                     </div>
             </div>
+            </td>
+            <td>
+            <div class="form-group">
+                <label class="col-md-4 control-label"><label style="color:red">*</label> Tipo de Pago</label>
+                    <div class="col-md-4">
+                        <select class="form-control" name="pago_id" id='pago_id' required autofocus>
+                            <option value="" selected disabled>seleccione pago</option>
+                            @foreach ($pagos as $pago)
+                                <option value="{{$pago->id}}">{{$pago->nombre}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+            </div>
+            </td>
+            </tr>
+        </table>
             <div class="form-group{{ $errors->has('observacion') ? ' has-error' : '' }}">
                 <label for="observacion" class="col-md-2 control-label">Observaciones</label>
 
@@ -295,8 +314,8 @@
                         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i> 
-                                    Siguiente
+                                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>
+                                    Guardar
                                 </button>
                             </div>
                         </div>
@@ -305,7 +324,7 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 </div>
 @endsection
 @endif
