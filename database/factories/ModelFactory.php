@@ -112,6 +112,13 @@
         ];
     });
 
+    $factory->define(App\Pago::class, function (Faker\Generator $faker) {
+
+        return [
+            'nombre' => null,
+        ];
+    });
+
     $factory->define(App\Paciente::class, function (Faker\Generator $faker) {
 
         return [
@@ -129,10 +136,9 @@
             'encargado' => null,
             'fecha_ingreso' => null,
             'telefono' => null,
-            'fecha_egreso' => null,
             'medico_id' => null,
             'seguro_social' => null,
             'observacion' => null,
-            'estado_id' => null,
+            'pago_id' => null,
         ];
     });

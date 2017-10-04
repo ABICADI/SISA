@@ -13,7 +13,7 @@ use App\Municipio;
 
 
 class PacienteController extends Controller {
-    
+
     protected $redirectTo = '/paciente-management';
 
     public function __construct() {
@@ -22,17 +22,13 @@ class PacienteController extends Controller {
 
     public function index() {
         $pacientes = DB::table('pacientes')
-        ->leftJoin('estados', 'pacientes.estado_id', '=', 'estados.id')
-        ->select('pacientes.*', 'estados.id as estado_id', 'estados.nombre as estado_nombre')
-        ->where('pacientes.estado_id','!=','2')
-        ->where('pacientes.id','!=','1')
-        ->paginate(10);
+        ->select('pacientes.*')->paginate(10);
 
         return view('paciente-mgmt/index', ['pacientes' => $pacientes]);
     }
 
     public function create() {
-    	$medicos = Medico::select('id', 'colegiado', 'nombre')->orderBy('nombre', 'asc')->get();
+    	  $medicos = Medico::select('id', 'colegiado', 'nombre')->orderBy('nombre', 'asc')->get();
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $municipios = Municipio::select('id', 'nombre','departamento_id')->orderBy('nombre', 'asc')->get();
         return view('paciente-mgmt/create', ['medicos' => $medicos, 'departamentos' => $departamentos, 'municipios' => $municipios]);
@@ -88,7 +84,7 @@ class PacienteController extends Controller {
         ->leftJoin('terapias', 'userterapias.terapia_id', '=', 'terapias.id')
         ->select('userterapias.*', 'terapias.nombre as terapia_nombre')
         ->where('userterapias.user_id', '=', $id)->orderBy('terapias.nombre','asc')->get();
-        
+
         $rols = Rol::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $municipios = Municipio::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
@@ -100,7 +96,7 @@ class PacienteController extends Controller {
         date_default_timezone_set('asia/ho_chi_minh');
         $format = 'd/m/Y';
         $now = date($format);
-       
+
         $user = User::findOrFail($id);
         $user->fecha_egreso = $now;
         $user->estado_id = '2';
@@ -134,7 +130,7 @@ class PacienteController extends Controller {
         }
         return $query->paginate(10);
     }
-    
+
     private function validateInput($request) {
         $this->validate($request, [
             'username' => 'required|min:6|max:20|unique:users',

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use App\Bitacora;
+use App\Medico;
 
-class MedicoController extends Controller
-{
+class MedicoController extends Controller {
+
 	protected $redirectTo = '/medico-management';
 
     public function __construct() {
@@ -32,7 +34,7 @@ class MedicoController extends Controller
         $medico->colegiado = $request["colegiado"];
         $medico->nombre = $request["nombre"];
         $medico->telefono = $request["telefono"];
-        
+
 
         //Si la terapia se guarda, se crea un registro en la Bitacora
         if($medico->save()) {
@@ -41,8 +43,8 @@ class MedicoController extends Controller
         }
     }
 
-    public function edit($id) { 
-        //Capturamos el ID seleccionado para la Actualizacion     
+    public function edit($id) {
+        //Capturamos el ID seleccionado para la Actualizacion
         $medico = Medico::find($id);
 
         //Si la terapia seleccionada no tiene datos redireccionamos a la pagina principal de la Terapia
@@ -63,18 +65,18 @@ class MedicoController extends Controller
 
         $this->updateMedicoBitacora($request, $id);
         if($terapia->save()){
-            return redirect()->intended('system-management/medico'); 
-        }   
+            return redirect()->intended('system-management/medico');
+        }
     }
 
     public function search(Request $request) {
         $constraints = [
-            'colegiado' => $request['colegiado']
+            'colegiado' => $request['colegiado'],
             'nombre' => $request['nombre']
             ];
 
        $medicos = $this->doSearchingQuery($constraints);
-       return view('medico-mgmt/index', ['medico' => $medicos, 'searchingVals' => $constraints]);
+       return view('medico-mgmt/index', ['medicos' => $medicos, 'searchingVals' => $constraints]);
     }
 
     private function doSearchingQuery($constraints) {
@@ -113,7 +115,7 @@ class MedicoController extends Controller
         $format = 'd/m/Y';
         $now = date($format);
         $user = $request->User()->username;
-        $data = 'Colegiado: '$request->colegiado.', Nombre: ' . $request->nombre . ', Teléfono: ' . $request->telefono;
+        $data = 'Colegiado: ' . $request->colegiado.', Nombre: ' . $request->nombre . ', Teléfono: ' . $request->telefono;
 
             $bitacora = new Bitacora();
             $bitacora->usuario = $user;

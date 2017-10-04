@@ -31,6 +31,9 @@ Route::resource('user-management', 'UserManagementController');
 Route::post('paciente-management/search', 'PacienteController@search')->name('paciente-management.search');
 Route::resource('paciente-management', 'PacienteController');
 
+Route::post('medico-management/search', 'MedicoController@search')->name('medico-management.search');
+Route::resource('medico-management', 'MedicoController');
+
 Route::resource('dia-terapia-user-management', 'DiaTerapiaUsuarioController');
 
 Route::resource('diasemanausuario-management', 'DiaSemanaUsuarioController');
@@ -43,17 +46,9 @@ Route::resource('actividad-descripcion-management', 'ActividadDescripcionControl
 Route::post('system-management/terapia/search', 'TerapiaController@search')->name('terapia.search');
 Route::resource('system-management/terapia', 'TerapiaController');
 
-Route::post('medico-management/search', 'ActividadController@search')->name('actividad-management.search');
-Route::post('system-management/medico/search', 'MedicoController@search')->name('medico.search');
-Route::resource('system-management/medico', 'MedicoController');
-
-
 //Route::get('system-management/report', 'ReportController@index');
 //Route::post('system-management/report/search', 'ReportController@search')->name('report.search');
 //Route::post('system-management/report/excel', 'ReportController@exportExcel')->name('report.excel');
 //Route::post('system-management/report/pdf', 'ReportController@exportPDF')->name('report.pdf');
 
 //Route::get('avatars/{name}', 'EmployeeManagementController@load');
-
-
-
