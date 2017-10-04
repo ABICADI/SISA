@@ -49,9 +49,9 @@ class MedicoController extends Controller {
 
         //Si la terapia seleccionada no tiene datos redireccionamos a la pagina principal de la Terapia
         if ($medico == null || count($medico) == 0) {
-            return redirect()->intended('/system-management/medico');
+            return redirect()->intended('/medico-management');
         }
-        return view('system-mgmt/medico/edit', ['medico' => $medico]);
+        return view('medico-mgmt/edit', ['medico' => $medico]);
     }
 
     public function update(Request $request, $id) {

@@ -110,15 +110,15 @@ class PacienteController extends Controller {
     public function search(Request $request) {
         $constraints = [
             'nombre1' => $request['nombre1'],
-            'dpi' => $request['dpi']
+            'cui' => $request['cui']
         ];
 
-       $users = $this->doSearchingQuery($constraints);
-       return view('users-mgmt/index', ['users' => $users, 'searchingVals' => $constraints]);
+       $pacientes = $this->doSearchingQuery($constraints);
+       return view('paciente-mgmt/index', ['pacientes' => $pacientes, 'searchingVals' => $constraints]);
     }
 
     private function doSearchingQuery($constraints) {
-        $query = User::query();
+        $query = Paciente::query();
         $fields = array_keys($constraints);
         $index = 0;
         foreach ($constraints as $constraint) {
