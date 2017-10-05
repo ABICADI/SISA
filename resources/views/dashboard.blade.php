@@ -63,7 +63,7 @@ desired effect
   <div class="content-wrapper">
     <!-- Main content -->
     <section class="content">
-      
+
       <!-- Fila Contenido -->
       <div class="row">
         <!-- ./col -->
@@ -71,13 +71,41 @@ desired effect
           <!-- small box -->
           <div class="small-box bg-yellow">
             <div class="inner">
-              <h3>{{$count}}</h3>
+              <h3>{{$count_user}}</h3>
               <p>Empleados Ingresados</p>
             </div>
             <div class="icon">
-              <a href="{{ route('user-management.create') }}"><i class="ion ion-person-add"></i></a>
+              <a href="{{ route('user-management.create') }}"><i class="fa fa-users"></i></a>
             </div>
             <a href="{{ route('user-management.index') }}" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3>{{$count_paci}}</h3>
+              <p>Pacientes Ingresados</p>
+            </div>
+            <div class="icon">
+              <a href="{{ route('paciente-management.create') }}"><i class="fa fa-user"></i></a>
+            </div>
+            <a href="{{ route('paciente-management.index') }}" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3>{{$count_medi}}</h3>
+              <p>Médicos Ingresados</p>
+            </div>
+            <div class="icon">
+              <a href="{{ route('medico-management.create') }}"><i class="fa fa-user-md"></i></a>
+            </div>
+            <a href="{{ route('medico-management.index') }}" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
       <!-- /.row -->
@@ -128,7 +156,7 @@ desired effect
 
   <!-- Footer -->
   @include('layouts.footer')
-  
+
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->

@@ -7,7 +7,7 @@
   <div class="box-header">
     <div class="row">
         <div class="col-sm-8">
-          <h3 class="box-title">Mostrar Medico</h3>
+          <h3 class="box-title">Mostrar Médico</h3>
         </div>
         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
         <div class="col-sm-4">
