@@ -30,7 +30,7 @@
         @component('layouts.esconder_info', ['title' => 'Nombre y Apellido'])
         <table id="example2" class="table table-responsive">
             <tr>
-            <td>   
+            <td>
             <div class="form-group{{ $errors->has('nombre1') ? ' has-error' : '' }}">
                 <label for="nombre1" class="col-md-6 control-label"><label style="color:red">*</label> Primer Nombre</label>
                     <div class="col-md-5">
@@ -59,7 +59,7 @@
                     </div>
             </div>
             </td>
-            <td>           
+            <td>
             <div class="form-group{{ $errors->has('nombre3') ? ' has-error' : '' }}">
                 <label for="nombre3" class="col-md-6 control-label">Tercer Nombre</label>
 
@@ -72,11 +72,11 @@
                                 </span>
                             @endif
                     </div>
-            </div> 
+            </div>
             </td>
-            </tr> 
+            </tr>
             <tr>
-            <td> 
+            <td>
             <div class="form-group{{ $errors->has('apellido1') ? ' has-error' : '' }}">
                 <label for="apellido1" class="col-md-6 control-label"><label style="color:red">*</label> Primer Apellido</label>
                     <div class="col-md-5">
@@ -105,7 +105,7 @@
                     </div>
             </div>
             </td>
-            <td>           
+            <td>
             <div class="form-group{{ $errors->has('apellido3') ? ' has-error' : '' }}">
                 <label for="apellido3" class="col-md-6 control-label">Tercer Apellido</label>
 
@@ -122,13 +122,13 @@
             </td>
             </tr>
         </div>
-        </table>   
+        </table>
         @endcomponent
 
         @component('layouts.esconder_info', ['title' => 'Datos de la Cuenta'])
         <table id="example2" class="table table-responsive">
             <tr>
-            <td>   
+            <td>
             <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
                 <label for="username" class="col-md-4 control-label"><label style="color:red">*</label> Usuario</label>
 
@@ -208,9 +208,14 @@
             <div class="form-group">
                 <label class="col-md-4 control-label"><label style="color:red">*</label> Municipio</label>
                     <div class="col-md-7">
+<<<<<<< HEAD
                         
                         <select class="form-control" name="municipio_id" id='municipio_id' required autofocus>
                             <option value="" selected disabled>seleccione municipio</option>
+=======
+                        <select class="form-control" name="municipio_id" id='municipio_id' required autofocus>
+                          <option value="" selected disabled>seleccione municipio</option>
+>>>>>>> c26818bd04afdd4863009a3e187320833e0537ac
                             @foreach ($municipios as $municipio)
                                 <option value="{{$municipio->id}}">{{$municipio->nombre}}</option>
                             @endforeach
@@ -318,7 +323,7 @@
                         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i> 
+                                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>
                                     Siguiente
                                 </button>
                             </div>
@@ -328,7 +333,7 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 </div>
 @endsection
 @endif
