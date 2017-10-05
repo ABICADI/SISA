@@ -1,7 +1,8 @@
 @extends('actividad-mgmt.base')
 
 @section('action-content')
-<div class="container">
+
+<div class="container">  
     <div class="row">
         <div class="col-md-35 col-md-offset-0">
             <div class="panel panel-default">
@@ -17,7 +18,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label"><label style="color:red">*</label> Encargado</label>
                     <div class="col-md-6">
-                        <select class="form-control" name="user_id" required autofocus>
+                        <select class="form-control" name="user_id" onKeyUp="this.value=this.value.toUpperCase();" required autofocus>
                             <option value="" selected disabled>seleccione encargado</option>
                             @foreach ($users as $user)
                                 <option value="{{$user->id}}">{{$user->nombre1}} {{$user->nombre2}} {{$user->nombre3}} {{$user->apellido1}} {{$user->apellido2}} {{$user->apellido3}}</option>
@@ -29,7 +30,7 @@
             <div class="form-group{{ $errors->has('nombre') ? ' has-error' : '' }}">
                 <label for="nombre" class="col-md-2 control-label"><label style="color:red">*</label> Nombre Actividad</label>
                     <div class="col-md-6">
-                        <input id="nombre" type="text" class="form-control" placeholder="nombre" name="nombre" value="{{ old('nombre') }}"  onkeypress="return letras(event)" maxlength="50" required>
+                        <input id="nombre" type="text" class="form-control" placeholder="nombre" name="nombre" value="{{ old('nombre') }}"  onkeypress="return letras(event)" maxlength="50" onKeyUp="this.value=this.value.toUpperCase();" required>
 
                         @if ($errors->has('nombre'))
                             <span class="help-block">
@@ -88,7 +89,7 @@
                 <label for="direccion" class="col-md-2 control-label">Dirección</label>
 
                     <div class="col-md-6">
-                        <input id="direccion" type="direccion" class="form-control" placeholder="colonia/barrio" name="direccion" value="{{ old('direccion') }}" maxlength="75" autofocus>
+                        <input id="direccion" type="direccion" class="form-control" placeholder="colonia/barrio" name="direccion" value="{{ old('direccion') }}" maxlength="75" onKeyUp="this.value=this.value.toUpperCase();" autofocus>
 
                             @if ($errors->has('direccion'))
                                 <span class="help-block">

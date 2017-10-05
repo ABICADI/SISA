@@ -23,9 +23,10 @@
       </div>
       <form method="POST" action="{{ route('actividad-management.search') }}">
          {{ csrf_field() }}
+
          @component('layouts.search', ['title' => 'Buscar'])
-          @component('layouts.two-cols-search-row', ['items' => ['Nombre de la Actividad'], 
-          'oldVals' => [isset($searchingVals) ? $searchingVals['nombre'] : '']])
+          @component('layouts.two-cols-search-row', ['items' => ['Nombre'], 
+          'oldVals' => [isset($searchingVals) ? strtoupper($searchingVals['nombre']) : '']])
           @endcomponent
         @endcomponent
       </form>

@@ -18,7 +18,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label"><label style="color:red">*</label> Encargado</label>
                     <div class="col-md-6">
-                        <select class="form-control" name="user_id" required autofocus>
+                        <select class="form-control" name="user_id" onKeyUp="this.value=this.value.toUpperCase();" required autofocus>
                             <option value="" selected disabled>seleccione encargado</option>
                             @foreach ($users as $user)
                                 <option value="{{$user->id}}" {{$user->id == $actividad->user_id ? 'selected' : ''}}>{{$user->nombre1}} {{$user->nombre2}} {{$user->nombre3}} {{$user->apellido1}} {{$user->apellido2}} {{$user->apellido3}}</option>
@@ -61,7 +61,7 @@
             <div class="form-group">
                 <label class="col-md-3 control-label"><label style="color:red">*</label> Departamento</label>
                     <div class="col-md-7">
-                        <select class="form-control" name="departamento_id" required autofocus>
+                        <select class="form-control" name="departamento_id" onKeyUp="this.value=this.value.toUpperCase();" required autofocus>
                             <option value="" selected disabled>seleccione departamento</option>
                             @foreach ($departamentos as $departamento)
                                 <option value="{{$departamento->id}}" {{$departamento->id == $actividad->departamento_id ? 'selected' : ''}}>{{$departamento->nombre}}</option>
@@ -74,7 +74,7 @@
             <div class="form-group">
                 <label class="col-md-3 control-label"><label style="color:red">*</label> Municipio</label>
                     <div class="col-md-7">
-                        <select class="form-control" name="municipio_id" required autofocus>
+                        <select class="form-control" name="municipio_id" onKeyUp="this.value=this.value.toUpperCase();" required autofocus>
                             <option value="" selected disabled>seleccione municipio</option>
                             @foreach ($municipios as $municipio)
                                 <option value="{{$municipio->id}}" {{$municipio->id == $actividad->municipio_id ? 'selected' : ''}}>{{$municipio->nombre}}</option>
@@ -90,7 +90,7 @@
                 <label for="direccion" class="col-md-2 control-label">Dirección</label>
 
                     <div class="col-md-6">
-                        <input id="direccion" type="direccion" class="form-control" placeholder="colonia/barrio" name="direccion" value="{{ $actividad->direccion }}" maxlength="75" autofocus>
+                        <input id="direccion" type="direccion" class="form-control" placeholder="colonia/barrio" name="direccion" value="{{ $actividad->direccion }}" maxlength="75" onKeyUp="this.value=this.value.toUpperCase();" autofocus>
 
                             @if ($errors->has('direccion'))
                                 <span class="help-block">

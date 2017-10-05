@@ -107,7 +107,7 @@ class ActividadController extends Controller {
 
     public function search(Request $request) {
         $constraints = [
-            'nombre' => $request['nombre1']
+            'nombre' => $request['nombre']
         ];
 
        $actividades = $this->doSearchingQuery($constraints);

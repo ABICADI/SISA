@@ -6,7 +6,7 @@ class UserTableSeeder extends Seeder {
 
     public function run() {
         $user = factory(App\User::class)->create([
-            'username' => 'admin',
+            'username' => 'ADMIN',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('admin'),
             'dpi' => '000000000000',
