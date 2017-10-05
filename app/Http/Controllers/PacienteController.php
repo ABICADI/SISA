@@ -8,7 +8,6 @@ use App\Paciente;
 use App\Bitacora;
 use App\Medico;
 use App\Pago;
-use App\Estado;
 use App\Departamento;
 use App\Municipio;
 
@@ -69,41 +68,46 @@ class PacienteController extends Controller {
 
     }
 
-    public function view($id) {
-        $user = User::find($id);
-        if ($user == null || count($user) == 0) {
-            return redirect()->intended('/user-management');
+    public function edit($id) {
+
+        $paciente = Paciente::find($id);
+        if ($paciente == null || count($paciente) == 0) {
+            return redirect()->intended('/paciente-management');
         }
 
-        $userdiasemanas = DB::table('userdiasemanas')
-        ->leftJoin('diasemanas', 'userdiasemanas.diasemana_id', '=', 'diasemanas.id')
-        ->select('userdiasemanas.*', 'diasemanas.nombre as diasemana_nombre')
-        ->where('userdiasemanas.user_id', '=', $id)->orderBy('diasemana_id','asc')->get();
-
-        $usuarioterapias = DB::table('userterapias')
-        ->leftJoin('terapias', 'userterapias.terapia_id', '=', 'terapias.id')
-        ->select('userterapias.*', 'terapias.nombre as terapia_nombre')
-        ->where('userterapias.user_id', '=', $id)->orderBy('terapias.nombre','asc')->get();
-
-        $rols = Rol::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+        $medicos = Medico::select('id', 'colegiado', 'nombre')->orderBy('nombre', 'asc')->get();
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        $municipios = Municipio::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        $estados = Estado::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        return view('users-mgmt/view', ['user' => $user, 'rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios, 'estados' => $estados, 'userdiasemanas' => $userdiasemanas, 'usuarioterapias' => $usuarioterapias]);
+        $municipios = Municipio::select('id', 'nombre','departamento_id')->orderBy('nombre', 'asc')->get();
+        $pagos = Pago::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+        return view('paciente-mgmt/edit', ['paciente' => $paciente, 'medicos' => $medicos, 'departamentos' => $departamentos, 'municipios' => $municipios, 'pagos' => $pagos]);
     }
 
-    public function destroy($id) {
-        date_default_timezone_set('asia/ho_chi_minh');
-        $format = 'd/m/Y';
-        $now = date($format);
+    public function update(Request $request, $id) {
+        $paciente = Paciente::findOrFail($id);
 
-        $user = User::findOrFail($id);
-        $user->fecha_egreso = $now;
-        $user->estado_id = '2';
+        $this->validateUpdate($request);
+        $paciente->cui = $request['cui'];
+        $paciente->nombre1 = $request['nombre1'];
+        $paciente->nombre2 = $request['nombre2'];
+        $paciente->nombre3 = $request['nombre3'];
+        $paciente->apellido1 = $request['apellido1'];
+        $paciente->apellido2 = $request['apellido2'];
+        $paciente->apellido3 = $request['apellido3'];
+        $paciente->departamento_id = $request['departamento_id'];
+        $paciente->municipio_id = $request['municipio_id'];
+        $paciente->direccion = $request['direccion'];
+        $paciente->fecha_nacimiento = $request['fecha_nacimiento'];
+        $paciente->encargado = $request['encargado'];
+        $paciente->fecha_ingreso = $request['fecha_ingreso'];
+        $paciente->telefono = $request['telefono'];
+        $paciente->medico_id = $request['medico_id'];
+        $paciente->seguro_social = $request['seguro_social'];
+        $paciente->observacion = $request['observacion'];
+        $paciente->pago_id = $request['pago_id'];
+        $this->updatePacienteBitacora($request, $id);
 
-        if($user->save()){
-            $this->eliminarEmpleadoBitacora($id);
-            return redirect()->intended('/user-management');
+        if($paciente->save()) {
+          return redirect()->intended('/paciente-management');
         }
     }
 
@@ -154,6 +158,29 @@ class PacienteController extends Controller {
         ]);
     }
 
+    private function validateUpdate($request) {
+        $this->validate($request, [
+            'cui' => 'min:13|max:13|unique:pacientes|nullable',
+            'nombre1' => 'required|max:30',
+            'nombre2' => 'max:30',
+            'nombre3' => 'max:30',
+            'apellido1' => 'required|max:30',
+            'apellido2' => 'max:30',
+            'apellido3' => 'max:30',
+            'departamento_id' => 'required',
+            'municipio_id' => 'required',
+            'direccion' => 'max:75',
+            'fecha_nacimiento' => 'required',
+            'encargado' => 'max:100',
+            'fecha_ingreso' => 'required',
+            'telefono' => 'digits:8|nullable',
+            'medico_id' => 'required',
+            'seguro_social' => 'max:10|unique:pacientes|nullable',
+            'observacion' => 'max:500',
+            'pago_id' => 'required',
+        ]);
+    }
+
     private function crearPacienteBitacora(Request $request){
         date_default_timezone_set('asia/ho_chi_minh');
         $format = 'd/m/Y';
@@ -176,4 +203,221 @@ class PacienteController extends Controller {
             $bitacora->fecha = $now;
             $bitacora->save();
     }
+
+    private function updatePacienteBitacora($request, $id){
+      //Datos para la Bitacora
+      date_default_timezone_set('asia/ho_chi_minh');
+      $format = 'd/m/Y';
+      $now = date($format);
+      $user = $request->User()->username;
+      $paciente = Paciente::findOrFail($id);
+
+      $departamentonew = Departamento::find($request['departamento_id']);
+      $departamentoold = Departamento::find($paciente->departamento_id);
+      $municipionew = Municipio::find($request['municipio_id']);
+      $municipioold = Municipio::find($paciente->municipio_id);
+      $mediconew = Medico::find($request['medico_id']);
+      $medicoold = Medico::find($paciente->medico_id);
+      $pagonew = Pago::find($request['pago_id']);
+      $pagoold = Pago::find($paciente->pago_id);
+
+          if ($paciente->cui != $request['cui']) {
+              $bitacora = new Bitacora();
+              $bitacora->usuario = $user;
+              $bitacora->nombre_tabla = 'PACIENTE';
+              $bitacora->actividad = 'ACTUALIZAR';
+              $bitacora->anterior = 'CUI: ' . $paciente->cui;
+              $bitacora->nuevo = 'CUI: ' . $request->cui;
+              $bitacora->fecha = $now;
+              $bitacora->save();
+          }
+
+          if ($paciente->nombre1 != $request['nombre1']) {
+              $bitacora = new Bitacora();
+              $bitacora->usuario = $user;
+              $bitacora->nombre_tabla = 'PACIENTE';
+              $bitacora->actividad = 'ACTUALIZAR';
+              $bitacora->anterior = 'Primer Nombre: ' . $paciente->nombre1;
+              $bitacora->nuevo = 'Primer Nombre: ' . $request->nombre1;
+              $bitacora->fecha = $now;
+              $bitacora->save();
+          }
+
+          if ($paciente->nombre2 != $request['nombre2']) {
+              $bitacora = new Bitacora();
+              $bitacora->usuario = $user;
+              $bitacora->nombre_tabla = 'PACIENTE';
+              $bitacora->actividad = 'ACTUALIZAR';
+              $bitacora->anterior = 'Segundo Nombre: ' . $paciente->nombre2;
+              $bitacora->nuevo = 'Segundo Nombre: ' . $request->nombre2;
+              $bitacora->fecha = $now;
+              $bitacora->save();
+          }
+
+          if ($paciente->nombre3 != $request['nombre3']) {
+              $bitacora = new Bitacora();
+              $bitacora->usuario = $user;
+              $bitacora->nombre_tabla = 'PACIENTE';
+              $bitacora->actividad = 'ACTUALIZAR';
+              $bitacora->anterior = 'Tercer Nombre: ' . $paciente->nombre3;
+              $bitacora->nuevo = 'Tercer Nombre: ' . $request->nombre3;
+              $bitacora->fecha = $now;
+              $bitacora->save();
+          }
+
+          if ($paciente->apellido1 != $request['apellido1']) {
+              $bitacora = new Bitacora();
+              $bitacora->usuario = $user;
+              $bitacora->nombre_tabla = 'PACIENTE';
+              $bitacora->actividad = 'ACTUALIZAR';
+              $bitacora->anterior = 'Primer Apellido: ' . $paciente->apellido1;
+              $bitacora->nuevo = 'Primer Apellido: ' . $request->apellido1;
+              $bitacora->fecha = $now;
+              $bitacora->save();
+          }
+
+          if ($paciente->apellido2 != $request['apellido2']) {
+              $bitacora = new Bitacora();
+              $bitacora->usuario = $user;
+              $bitacora->nombre_tabla = 'PACIENTE';
+              $bitacora->actividad = 'ACTUALIZAR';
+              $bitacora->anterior = 'Segundo Apellido: ' . $paciente->apellido2;
+              $bitacora->nuevo = 'Segundo Apellido: ' . $request->apellido2;
+              $bitacora->fecha = $now;
+              $bitacora->save();
+          }
+
+          if ($paciente->apellido3 != $request['apellido3']) {
+              $bitacora = new Bitacora();
+              $bitacora->usuario = $user;
+              $bitacora->nombre_tabla = 'PACIENTE';
+              $bitacora->actividad = 'ACTUALIZAR';
+              $bitacora->anterior = 'Tercer Apellido: ' . $paciente->apellido3;
+              $bitacora->nuevo = 'Tercer Apellido: ' . $request->apellido3;
+              $bitacora->fecha = $now;
+              $bitacora->save();
+          }
+
+          if ($paciente->departamento_id != $request['departamento_id']) {
+              $bitacora = new Bitacora();
+              $bitacora->usuario = $user;
+              $bitacora->nombre_tabla = 'PACIENTE';
+              $bitacora->actividad = 'ACTUALIZAR';
+              $bitacora->anterior = 'Departamento: ' . $departamentoold->nombre;
+              $bitacora->nuevo = 'Departamento: ' . $departamentonew->nombre;
+              $bitacora->fecha = $now;
+              $bitacora->save();
+          }
+
+          if ($paciente->municipio_id != $request['municipio_id']) {
+              $bitacora = new Bitacora();
+              $bitacora->usuario = $user;
+              $bitacora->nombre_tabla = 'PACIENTE';
+              $bitacora->actividad = 'ACTUALIZAR';
+              $bitacora->anterior = 'Municipio: ' . $municipioold->nombre;
+              $bitacora->nuevo = 'Municipio: ' . $municipionew->nombre;
+              $bitacora->fecha = $now;
+              $bitacora->save();
+          }
+
+          if ($paciente->direccion != $request['direccion']) {
+              $bitacora = new Bitacora();
+              $bitacora->usuario = $user;
+              $bitacora->nombre_tabla = 'PACIENTE';
+              $bitacora->actividad = 'ACTUALIZAR';
+              $bitacora->anterior = 'Dirección: ' . $paciente->direccion;
+              $bitacora->nuevo = 'Dirección: ' . $request->direccion;
+              $bitacora->fecha = $now;
+              $bitacora->save();
+          }
+
+          if ($paciente->fecha_nacimiento != $request['fecha_nacimiento']) {
+              $bitacora = new Bitacora();
+              $bitacora->usuario = $user;
+              $bitacora->nombre_tabla = 'PACIENTE';
+              $bitacora->actividad = 'ACTUALIZAR';
+              $bitacora->anterior = 'Fecha de Nacimiento: ' . $paciente->fecha_nacimiento;
+              $bitacora->nuevo = 'Fecha de Nacimiento: ' . $request->fecha_nacimiento;
+              $bitacora->fecha = $now;
+              $bitacora->save();
+          }
+
+          if ($paciente->encargado != $request['encargado']) {
+              $bitacora = new Bitacora();
+              $bitacora->usuario = $user;
+              $bitacora->nombre_tabla = 'PACIENTE';
+              $bitacora->actividad = 'ACTUALIZAR';
+              $bitacora->anterior = 'Encargado: ' . $paciente->encargado;
+              $bitacora->nuevo = 'Encargado: ' . $request->encargado;
+              $bitacora->fecha = $now;
+              $bitacora->save();
+          }
+
+          if ($paciente->fecha_ingreso != $request['fecha_ingreso']) {
+              $bitacora = new Bitacora();
+              $bitacora->usuario = $user;
+              $bitacora->nombre_tabla = 'PACIENTE';
+              $bitacora->actividad = 'ACTUALIZAR';
+              $bitacora->anterior = 'Fecha de Ingreso: ' . $paciente->fecha_ingreso;
+              $bitacora->nuevo = 'Fecha de Ingreso: ' . $request->fecha_ingreso;
+              $bitacora->fecha = $now;
+              $bitacora->save();
+          }
+
+          if ($paciente->telefono != $request['telefono']) {
+              $bitacora = new Bitacora();
+              $bitacora->usuario = $user;
+              $bitacora->nombre_tabla = 'PACIENTE';
+              $bitacora->actividad = 'ACTUALIZAR';
+              $bitacora->anterior = 'Teléfono: ' . $paciente->telefono;
+              $bitacora->nuevo = 'Teléfono: ' . $request->telefono;
+              $bitacora->fecha = $now;
+              $bitacora->save();
+          }
+
+          if ($paciente->medico_id != $request['medico_id']) {
+              $bitacora = new Bitacora();
+              $bitacora->usuario = $user;
+              $bitacora->nombre_tabla = 'PACIENTE';
+              $bitacora->actividad = 'ACTUALIZAR';
+              $bitacora->anterior = 'Médico: ' . $medicoold->colegiado . ' ' . $medicoold->nombre;
+              $bitacora->nuevo = 'Médico: ' . $mediconew->colegiado . ' ' . $mediconew->nombre;
+              $bitacora->fecha = $now;
+              $bitacora->save();
+          }
+
+          if ($paciente->seguro_social != $request['seguro_social']) {
+              $bitacora = new Bitacora();
+              $bitacora->usuario = $user;
+              $bitacora->nombre_tabla = 'PACIENTE';
+              $bitacora->actividad = 'ACTUALIZAR';
+              $bitacora->anterior = 'No. Seguro Social: ' . $paciente->seguro_social;
+              $bitacora->nuevo = 'No. Seguro Social: ' . $request->seguro_social;
+              $bitacora->fecha = $now;
+              $bitacora->save();
+          }
+
+          if ($paciente->observacion != $request['observacion']) {
+              $bitacora = new Bitacora();
+              $bitacora->usuario = $user;
+              $bitacora->nombre_tabla = 'PACIENTE';
+              $bitacora->actividad = 'ACTUALIZAR';
+              $bitacora->anterior = 'Observación: ' . $paciente->observacion;
+              $bitacora->nuevo = 'Observación: ' . $request->observacion;
+              $bitacora->fecha = $now;
+              $bitacora->save();
+          }
+
+          if ($paciente->pago_id != $request['pago_id']) {
+              $bitacora = new Bitacora();
+              $bitacora->usuario = $user;
+              $bitacora->nombre_tabla = 'PACIENTE';
+              $bitacora->actividad = 'ACTUALIZAR';
+              $bitacora->anterior = 'Tipo de Pago: ' . $pagoold->nombre;
+              $bitacora->nuevo = 'Tipo de Pago: ' . $pagonew->nombre;
+              $bitacora->fecha = $now;
+              $bitacora->save();
+          }
+  }
+
 }
