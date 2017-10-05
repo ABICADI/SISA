@@ -28,7 +28,7 @@
             <div class="form-group">
                 <label for="nombre1" class="col-md-6 control-label"><label style="color:red">*</label> Primer Nombre</label>
                     <div class="col-md-5">
-                        <input id="nombre1" type="text" class="form-control" placeholder="primer nombre" name="nombre1" value="{{ $user->nombre1 }}" required autofocus disabled>
+                        <input id="nombre1" type="text" class="form-control" placeholder="primer nombre" name="nombre1" value="{{ $user->nombre1 }}" onKeyUp="this.value=this.value.toUpperCase();" required autofocus disabled>
                     </div>
             </div>
             </td>

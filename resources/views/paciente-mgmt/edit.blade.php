@@ -35,7 +35,7 @@
             <div class="form-group{{ $errors->has('nombre1') ? ' has-error' : '' }}">
                 <label for="nombre1" class="col-md-6 control-label"><label style="color:red">*</label> Primer Nombre</label>
                     <div class="col-md-5">
-                        <input id="nombre1" type="text" class="form-control" placeholder="primer nombre" name="nombre1" value="{{ $paciente->nombre1 }}" onkeypress="return letras(event)" maxlength="30" required autofocus>
+                        <input id="nombre1" type="text" class="form-control" placeholder="primer nombre" name="nombre1" value="{{ $paciente->nombre1 }}" onkeypress="return letras(event)" maxlength="30" onKeyUp="this.value=this.value.toUpperCase();" required autofocus>
 
                         @if ($errors->has('nombre1'))
                             <span class="help-block">
@@ -50,7 +50,7 @@
                 <label for="nombre2" class="col-md-6 control-label">Segundo Nombre</label>
 
                     <div class="col-md-5">
-                        <input id="nombre2" type="text" class="form-control" placeholder="segundo nombre" name="nombre2" value="{{ $paciente->nombre2 }}" onkeypress="return letras(event)" maxlength="30" autofocus>
+                        <input id="nombre2" type="text" class="form-control" placeholder="segundo nombre" name="nombre2" value="{{ $paciente->nombre2 }}" onkeypress="return letras(event)" maxlength="30" onKeyUp="this.value=this.value.toUpperCase();" autofocus>
 
                             @if ($errors->has('nombre2'))
                                 <span class="help-block">
@@ -65,7 +65,7 @@
                 <label for="nombre3" class="col-md-6 control-label">Tercer Nombre</label>
 
                     <div class="col-md-5">
-                        <input id="nombre3" type="text" class="form-control" placeholder="tercer nombre" name="nombre3" value="{{ $paciente->nombre3 }}" onkeypress="return letras(event)" maxlength="30" autofocus>
+                        <input id="nombre3" type="text" class="form-control" placeholder="tercer nombre" name="nombre3" value="{{ $paciente->nombre3 }}" onkeypress="return letras(event)" maxlength="30" onKeyUp="this.value=this.value.toUpperCase();" autofocus>
 
                             @if ($errors->has('nombre3'))
                                 <span class="help-block">
@@ -81,7 +81,7 @@
             <div class="form-group{{ $errors->has('apellido1') ? ' has-error' : '' }}">
                 <label for="apellido1" class="col-md-6 control-label"><label style="color:red">*</label> Primer Apellido</label>
                     <div class="col-md-5">
-                        <input id="apellido1" type="text" class="form-control" placeholder="primer apellido" name="apellido1" value="{{ $paciente->apellido1 }}" onkeypress="return letras(event)" maxlength="30" required autofocus>
+                        <input id="apellido1" type="text" class="form-control" placeholder="primer apellido" name="apellido1" value="{{ $paciente->apellido1 }}" onkeypress="return letras(event)" maxlength="30" onKeyUp="this.value=this.value.toUpperCase();" required autofocus>
 
                         @if ($errors->has('apellido1'))
                             <span class="help-block">
@@ -96,7 +96,7 @@
                 <label for="apellido2" class="col-md-6 control-label">Segundo Apellido</label>
 
                     <div class="col-md-5">
-                        <input id="apellido2" type="text" class="form-control" placeholder="segundo apellido" name="apellido2" value="{{ $paciente->apellido2 }}" onkeypress="return letras(event)" maxlength="30" autofocus>
+                        <input id="apellido2" type="text" class="form-control" placeholder="segundo apellido" name="apellido2" value="{{ $paciente->apellido2 }}" onkeypress="return letras(event)" maxlength="30" onKeyUp="this.value=this.value.toUpperCase();" autofocus>
 
                             @if ($errors->has('apellido2'))
                                 <span class="help-block">
@@ -111,7 +111,7 @@
                 <label for="apellido3" class="col-md-6 control-label">Tercer Apellido</label>
 
                     <div class="col-md-5">
-                        <input id="apellido3" type="text" class="form-control" placeholder="tercer apellido" name="apellido3" value="{{ $paciente->apellido3 }}" onkeypress="return letras(event)" maxlength="30" autofocus>
+                        <input id="apellido3" type="text" class="form-control" placeholder="tercer apellido" name="apellido3" value="{{ $paciente->apellido3 }}" onkeypress="return letras(event)" maxlength="30" onKeyUp="this.value=this.value.toUpperCase();" autofocus>
 
                             @if ($errors->has('apellido3'))
                                 <span class="help-block">
@@ -158,7 +158,7 @@
                 <label for="direccion" class="col-md-3 control-label">Dirección</label>
 
                     <div class="col-md-9">
-                        <input id="direccion" type="text" class="form-control" placeholder="colonia/barrio" name="direccion" value="{{ $paciente->direccion }}" maxlength="75" autofocus>
+                        <input id="direccion" type="text" class="form-control" placeholder="colonia/barrio" name="direccion" value="{{ $paciente->direccion }}" maxlength="75" onKeyUp="this.value=this.value.toUpperCase();" autofocus>
 
                             @if ($errors->has('direccion'))
                                 <span class="help-block">
@@ -217,7 +217,7 @@
                 <label for="encargado" class="col-md-3 control-label">Encargado</label>
 
                     <div class="col-md-9">
-                        <input id="encargado" type="text" class="form-control" placeholder="nombre completo" name="encargado" value="{{ $paciente->encargado }}" onkeypress="return letras(event)" maxlength="100" autofocus>
+                        <input id="encargado" type="text" class="form-control" placeholder="nombre completo" name="encargado" value="{{ $paciente->encargado }}" onkeypress="return letras(event)" maxlength="100" onKeyUp="this.value=this.value.toUpperCase();" autofocus>
 
                             @if ($errors->has('encargado'))
                                 <span class="help-block">

@@ -18,7 +18,7 @@
                             <label for="nombre" class="col-md-4 control-label"><label style="color:red">*</label> Nombre</label>
 
                             <div class="col-md-6">
-                                <input id="nombre" type="text" placeholder="nombre" class="form-control" name="nombre" value="{{ old('nombre') }}" onkeypress="return letras(event)" maxlength="30" required autofocus>
+                                <input id="nombre" type="text" placeholder="nombre"  onKeyUp="this.value=this.value.toUpperCase();"class="form-control" name="nombre" value="{{ old('nombre') }}" onkeypress="return letras(event)" maxlength="30" required autofocus>
 
                                 @if ($errors->has('nombre'))
                                     <span class="help-block">
@@ -31,7 +31,7 @@
                             <label for="descripcion" class="col-md-4 control-label">Descripcion</label>
 
                             <div class="col-md-6">
-                                <textarea id="descripcion" class="form-control" name="descripcion" placeholder="descripcion" cols="50" rows="10"  type="text" value="{{ old('descripcion') }}" maxlength="500" autofocus></textarea>
+                                <textarea id="descripcion" class="form-control" name="descripcion" placeholder="descripcion" cols="50" rows="10"  type="text" value="{{ old('descripcion') }}" maxlength="500" onKeyUp="this.value=this.value.toUpperCase();" autofocus></textarea>
 
                                 @if ($errors->has('descripcion'))
                                     <span class="help-block">

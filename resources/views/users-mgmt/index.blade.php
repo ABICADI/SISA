@@ -26,7 +26,7 @@
          {{ csrf_field() }}
          @component('layouts.search', ['title' => 'Buscar'])
           @component('layouts.two-cols-search-row', ['items' => ['Nombre1', 'DPI'], 
-          'oldVals' => [isset($searchingVals) ? $searchingVals['nombre1'] : '', isset($searchingVals) ? $searchingVals['dpi'] : '']])
+          'oldVals' => [isset($searchingVals) ? strtoupper($searchingVals['nombre1']) : '', isset($searchingVals) ? $searchingVals['dpi'] : '']])
           @endcomponent
         @endcomponent
       </form>

@@ -17,7 +17,7 @@
                             <label for="username" class="col-md-4 control-label">Usuario</label>
 
                             <div class="col-md-6">
-                                <input id="username" type="text" placeholder="usuario" class="form-control" name="username" value="{{ old('username') }}" required autofocus>
+                                <input id="username" type="text" placeholder="usuario" class="form-control" name="username" value="{{ old('username') }}" onKeyUp="this.value=this.value.toUpperCase();" required autofocus>
 
                                 @if ($errors->has('username'))
                                     <span class="help-block">
