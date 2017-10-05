@@ -65,11 +65,15 @@ class UserManagementController extends Controller {
         if($user->save()){
             $this->crearEmpleadoBitacora($request);
             return redirect()->intended('/diasemanausuario-management');
-        } 
+        }
     }
 
     public function show($id) {
-        return view('users-mgmt/index', []);
+      $user = User::findOrFail($id);
+
+      if($user->delete()){
+          return redirect()->intended('/user-management');
+      }
     }
 
     public function view($id) {
@@ -87,7 +91,7 @@ class UserManagementController extends Controller {
         ->leftJoin('terapias', 'userterapias.terapia_id', '=', 'terapias.id')
         ->select('userterapias.*', 'terapias.nombre as terapia_nombre')
         ->where('userterapias.user_id', '=', $id)->orderBy('terapias.nombre','asc')->get();
-        
+
         $rols = Rol::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $municipios = Municipio::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
@@ -99,7 +103,7 @@ class UserManagementController extends Controller {
         date_default_timezone_set('asia/ho_chi_minh');
         $format = 'd/m/Y';
         $now = date($format);
-       
+
         $user = User::findOrFail($id);
         $user->fecha_egreso = $now;
         $user->estado_id = '2';
@@ -133,7 +137,7 @@ class UserManagementController extends Controller {
         }
         return $query->paginate(10);
     }
-    
+
     private function validateInput($request) {
         $this->validate($request, [
             'username' => 'required|min:6|max:20|unique:users',
@@ -162,7 +166,7 @@ class UserManagementController extends Controller {
         $now = date($format);
         $log = $request->User()->username;
         $estado_id = '1';
-        
+
         $departamento = Departamento::findOrFail($request['departamento_id']);
         $municipio = Municipio::findOrFail($request['municipio_id']);
         $rol = Rol::findOrFail($request['rol_id']);
@@ -188,7 +192,7 @@ class UserManagementController extends Controller {
         $userB = User::findOrFail($id);
 
         $data = 'Nombre y Apellido: ' . $userB->nombre1 .' '. $userB->nombre2 .' '. $userB->nombre3 .' '. $userB->apellido1 .' '. $userB->apellido2 .' '. $userB->apellido3;
-        
+
             $bitacora = new Bitacora();
             $bitacora->usuario = 'Administrador';
             $bitacora->nombre_tabla = 'EMPLEADO';

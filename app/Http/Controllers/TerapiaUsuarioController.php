@@ -23,7 +23,7 @@ public function __construct() {
     }
 
     public function index() {
-    	$last = DB::table('users')->latest()->first();
+    		$last = DB::table('users')->latest()->first();
         $user = User::find($last->id);
 
         $rols = Rol::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
@@ -34,7 +34,8 @@ public function __construct() {
         ->leftJoin('diasemanas', 'userdiasemanas.diasemana_id', '=', 'diasemanas.id')
         ->select('userdiasemanas.*', 'diasemanas.nombre as diasemanas_nombre')
         ->where('userdiasemanas.user_id', '=', $user->id)->get();
-        return view('terapiausuario-mgmt/create', ['user' => $user, 'rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios, 'terapias' => $terapias, 'userdiasemanas' => $userdiasemanas]);
+				$message = '';
+        return view('terapiausuario-mgmt/create', ['user' => $user, 'rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios, 'terapias' => $terapias, 'userdiasemanas' => $userdiasemanas, 'message' => $message]);
     }
 
     public function store(Request $request){
@@ -42,15 +43,33 @@ public function __construct() {
         $user = User::find($last->id);
         $terapias = $request->terapia;
 
-        foreach ($terapias as $terapia) {
-        	$terapiausuario = new UsuarioTerapia();
-        	$terapiausuario->terapia_id = $terapia;
-        	$terapiausuario->user_id = $user->id;
-        	if($terapiausuario->save()){
-                $this->createTerpiaUsuario($request, $terapia, $user);
-            }
-        }
-        return redirect()->intended('/user-management');
+				if($terapias != ''){
+	        foreach ($terapias as $terapia) {
+	        	$terapiausuario = new UsuarioTerapia();
+	        	$terapiausuario->terapia_id = $terapia;
+	        	$terapiausuario->user_id = $user->id;
+	        	if($terapiausuario->save()){
+	                $this->createTerpiaUsuario($request, $terapia, $user);
+	            }
+	        }
+	        return redirect()->intended('/user-management');
+				}
+
+				if($terapias == ''){
+						$last = DB::table('users')->latest()->first();
+		        $user = User::find($last->id);
+
+		        $rols = Rol::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+		        $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+		        $municipios = Municipio::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+		        $terapias = Terapia::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+		        $userdiasemanas = DB::table('userdiasemanas')
+		        ->leftJoin('diasemanas', 'userdiasemanas.diasemana_id', '=', 'diasemanas.id')
+		        ->select('userdiasemanas.*', 'diasemanas.nombre as diasemanas_nombre')
+		        ->where('userdiasemanas.user_id', '=', $user->id)->get();
+						$message = 'Seleccionar una o más Terapias, caso contrario seleccionar Ninguno';
+		        return view('terapiausuario-mgmt/create', ['user' => $user, 'rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios, 'terapias' => $terapias, 'userdiasemanas' => $userdiasemanas, 'message' => $message]);
+				}
     }
 
     public function createTerpiaUsuario($request, $terapia, $user){
@@ -67,7 +86,7 @@ public function __construct() {
             $cadena = $cadena.' , '.$nombreterapia->nombre;
         }
 
-             $data = 'Usuario: ' . $user->nombre1 .' '. $user->nombre2 .' '. $user->nombre3 .' '. $user->apellido1 .' '. $user->apellido2 .' '. $user->apellido3 . ' , Terapia: ' . $cadena;  
+             $data = 'Usuario: ' . $user->nombre1 .' '. $user->nombre2 .' '. $user->nombre3 .' '. $user->apellido1 .' '. $user->apellido2 .' '. $user->apellido3 . ' , Terapia: ' . $cadena;
 
             $bitacora = new Bitacora();
             $bitacora->usuario = $log;

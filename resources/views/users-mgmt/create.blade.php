@@ -317,8 +317,8 @@
                         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>
-                                    Siguiente
+                                <button type="submit" class="btn btn-primary">
+                                    Siguiente <i class="fa fa-chevron-right"></i>
                                 </button>
                             </div>
                         </div>

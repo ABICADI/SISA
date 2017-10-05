@@ -22,10 +22,10 @@
                         <input id="dpi" type="text" class="form-control" placeholder="0000000000000" name="dpi" value="{{ $user->dpi }}" required disabled>
                     </div>
             </div>
-            </td>    
+            </td>
             </tr>
             <tr>
-            <td>   
+            <td>
             <div class="form-group">
                 <label for="nombre1" class="col-md-6 control-label"><label style="color:red">*</label> Primer Nombre</label>
                     <div class="col-md-5">
@@ -42,18 +42,18 @@
                     </div>
             </div>
             </td>
-            <td>           
+            <td>
             <div class="form-group">
                 <label for="nombre3" class="col-md-6 control-label">Tercer Nombre</label>
 
                     <div class="col-md-5">
                         <input id="nombre3" type="text" class="form-control" placeholder="tercer nombre" name="nombre3" value="{{ $user->nombre3 }}" disabled>
                     </div>
-            </div> 
+            </div>
             </td>
-            </tr> 
+            </tr>
             <tr>
-            <td> 
+            <td>
             <div class="form-group">
                 <label for="apellido1" class="col-md-6 control-label"><label style="color:red">*</label> Primer Apellido</label>
                     <div class="col-md-5">
@@ -70,7 +70,7 @@
                     </div>
             </div>
             </td>
-            <td>           
+            <td>
             <div class="form-group">
                 <label for="apellido3" class="col-md-6 control-label">Tercer Apellido</label>
 
@@ -81,13 +81,13 @@
             </td>
             </tr>
         </div>
-        </table>   
+        </table>
         @endcomponent
 
         @component('layouts.esconder_info', ['title' => 'Datos de la Cuenta'])
         <table id="example2" class="table table-responsive">
             <tr>
-            <td>   
+            <td>
             <div class="form-group">
                 <label for="username" class="col-md-4 control-label"><label style="color:red">*</label> Usuario</label>
 
@@ -182,7 +182,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" value="{{ $user->fecha_nacimiento }}" placeholder="30/01/1990" name="fecha_nacimiento" class="form-control pull-right" id="fechaNacimiento" required disabled> 
+                            <input type="text" value="{{ $user->fecha_nacimiento }}" placeholder="30/01/1990" name="fecha_nacimiento" class="form-control pull-right" id="fechaNacimiento" required disabled>
                         </div>
                     </div>
             </div>
@@ -261,7 +261,7 @@
                                                     @foreach ($userdiasemanas as $userdiasemanas)
                                     <td role="row"><label id="label1" name="userdiasemanas[]" disabled>{{ $userdiasemanas->diasemanas_nombre }}</label></td>
                                                     @endforeach
-                                                    </tr> 
+                                                    </tr>
                                                 </table>
                                             </div>
                                         </div>
@@ -271,9 +271,9 @@
                         @endcomponent
                     </div>
                 </div>
-            </div> 
+            </div>
 
-    
+
     <div class="row">
         <div class="col-md-47 col-md-offset-0">
             <div class="panel panel-default">
@@ -281,7 +281,7 @@
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('terapiausuario-management.store') }}">
                         {{ csrf_field() }}
-
+                    <label style="color:red">{{ $message }}</label>
             <div div id="desdeotro" style="display:none;">
                 <input id="user" type="text" class="form-control" name="user" value="{{ Auth::user()->username }}" disabled="help-block">
             </div>
@@ -293,28 +293,35 @@
                                             <tr>
                                             @foreach ($terapias as $terapia)
                             <td role="row"><input type="checkbox" id="inlineCheckbox1" name="terapia[]" value="{{$terapia->id}}">  {{ $terapia->nombre }}</td>
-                                            @endforeach 
+                                            @endforeach
                                             </tr>
                                         </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i> 
-                                    Guardar
-                                </button>
-                            </div>
-                        </div>
-                        @endif
-                    </form>
                 </div>
                 @endcomponent
+                <table id="example2" class="table table-responsive">
+                <tr>
+                <td>
+                @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
+                    <div class="col-md-4 col-md-offset-4">
+                        <button type="submit" class="btn btn-primary">
+                            Siguiente <i class="fa fa-chevron-right"></i>
+                        </button>
+
+                        <a href="{{ route('diasemanausuario-management.show', ['id' => $user->id]) }}" class="btn btn-danger col-sm-6 col-xs-6 btn-margin"><i class="fa fa-user-times"></i> Cancelar Proceso
+                        </a>
+                    </div>
+                @endif
+                </tr>
+                </tr>
+                </table>
+            </form>
             </div>
         </div>
-    </div> 
+    </div>
 </div>
 @endsection
 @endif
