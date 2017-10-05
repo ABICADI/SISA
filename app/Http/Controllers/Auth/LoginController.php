@@ -5,34 +5,12 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-class LoginController extends Controller
-{
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
+class LoginController extends Controller {
 
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
     protected $redirectTo = '/dashboard';
 
-     /**
-     * Determine if the user has too many failed login attempts.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return bool
-     */
     protected function hasTooManyLoginAttempts ($request) {
         $maxLoginAttempts = 2;
         $lockoutTime = 1; // 1 minuto
@@ -40,13 +18,8 @@ class LoginController extends Controller
             $this->throttleKey($request), $maxLoginAttempts, $lockoutTime
         );
     }
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
+
+    public function __construct() {
         $this->middleware('guest', ['except' => 'logout']);
     }
 }

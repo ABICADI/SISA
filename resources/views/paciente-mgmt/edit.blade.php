@@ -5,19 +5,20 @@
     <div class="row">
         <div class="col-md-47 col-md-offset-0">
             <div class="panel panel-default">
-                <div class="panel-heading">Nuevo Paciente</div>
+                <div class="panel-heading">Actualizar Paciente</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('paciente-management.store') }}">
-                        {{ csrf_field() }}
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('paciente-management.update', ['id' => $paciente->id]) }}">
+                        <input type="hidden" name="_method" value="PATCH">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
             <div div id="desdeotro" style="display:none;">
                 <input id="user" type="text" class="form-control" name="user" value="{{ Auth::user()->username }}" disabled="help-block">
             </div>
 
-            <div class="form-group{{ $errors->has('cui') ? ' has-error' : '' }}">
+						<div class="form-group{{ $errors->has('cui') ? ' has-error' : '' }}">
                 <label for="cui" class="col-md-2 control-label"><label style="color:red">*</label> CUI</label>
                     <div class="col-md-3">
-                        <input id="cui" type="text" class="form-control" placeholder="0000000000000" name="cui" value="{{ old('cui') }}" onkeypress="return numeros(event)" minlength="13" maxlength="13" autofocus>
+                        <input id="cui" type="text" class="form-control" placeholder="0000000000000" name="cui" value="{{ $paciente->cui }}" onkeypress="return numeros(event)" minlength="13" maxlength="13" autofocus>
 
                         @if ($errors->has('cui'))
                             <span class="help-block">
@@ -34,7 +35,7 @@
             <div class="form-group{{ $errors->has('nombre1') ? ' has-error' : '' }}">
                 <label for="nombre1" class="col-md-6 control-label"><label style="color:red">*</label> Primer Nombre</label>
                     <div class="col-md-5">
-                        <input id="nombre1" type="text" class="form-control" placeholder="primer nombre" name="nombre1" value="{{ old('nombre1') }}" onkeypress="return letras(event)" maxlength="30" required autofocus>
+                        <input id="nombre1" type="text" class="form-control" placeholder="primer nombre" name="nombre1" value="{{ $paciente->nombre1 }}" onkeypress="return letras(event)" maxlength="30" required autofocus>
 
                         @if ($errors->has('nombre1'))
                             <span class="help-block">
@@ -49,7 +50,7 @@
                 <label for="nombre2" class="col-md-6 control-label">Segundo Nombre</label>
 
                     <div class="col-md-5">
-                        <input id="nombre2" type="text" class="form-control" placeholder="segundo nombre" name="nombre2" value="{{old('nombre2') }}" onkeypress="return letras(event)" maxlength="30" autofocus>
+                        <input id="nombre2" type="text" class="form-control" placeholder="segundo nombre" name="nombre2" value="{{ $paciente->nombre2 }}" onkeypress="return letras(event)" maxlength="30" autofocus>
 
                             @if ($errors->has('nombre2'))
                                 <span class="help-block">
@@ -64,7 +65,7 @@
                 <label for="nombre3" class="col-md-6 control-label">Tercer Nombre</label>
 
                     <div class="col-md-5">
-                        <input id="nombre3" type="text" class="form-control" placeholder="tercer nombre" name="nombre3" value="{{ old('nombre3') }}" onkeypress="return letras(event)" maxlength="30" autofocus>
+                        <input id="nombre3" type="text" class="form-control" placeholder="tercer nombre" name="nombre3" value="{{ $paciente->nombre3 }}" onkeypress="return letras(event)" maxlength="30" autofocus>
 
                             @if ($errors->has('nombre3'))
                                 <span class="help-block">
@@ -80,7 +81,7 @@
             <div class="form-group{{ $errors->has('apellido1') ? ' has-error' : '' }}">
                 <label for="apellido1" class="col-md-6 control-label"><label style="color:red">*</label> Primer Apellido</label>
                     <div class="col-md-5">
-                        <input id="apellido1" type="text" class="form-control" placeholder="primer apellido" name="apellido1" value="{{ old('apellido1') }}" onkeypress="return letras(event)" maxlength="30" required autofocus>
+                        <input id="apellido1" type="text" class="form-control" placeholder="primer apellido" name="apellido1" value="{{ $paciente->apellido1 }}" onkeypress="return letras(event)" maxlength="30" required autofocus>
 
                         @if ($errors->has('apellido1'))
                             <span class="help-block">
@@ -95,7 +96,7 @@
                 <label for="apellido2" class="col-md-6 control-label">Segundo Apellido</label>
 
                     <div class="col-md-5">
-                        <input id="apellido2" type="text" class="form-control" placeholder="segundo apellido" name="apellido2" value="{{ old('apellido2') }}" onkeypress="return letras(event)" maxlength="30" autofocus>
+                        <input id="apellido2" type="text" class="form-control" placeholder="segundo apellido" name="apellido2" value="{{ $paciente->apellido2 }}" onkeypress="return letras(event)" maxlength="30" autofocus>
 
                             @if ($errors->has('apellido2'))
                                 <span class="help-block">
@@ -110,7 +111,7 @@
                 <label for="apellido3" class="col-md-6 control-label">Tercer Apellido</label>
 
                     <div class="col-md-5">
-                        <input id="apellido3" type="text" class="form-control" placeholder="tercer apellido" name="apellido3" value="{{ old('apellido3') }}" onkeypress="return letras(event)" maxlength="30" autofocus>
+                        <input id="apellido3" type="text" class="form-control" placeholder="tercer apellido" name="apellido3" value="{{ $paciente->apellido3 }}" onkeypress="return letras(event)" maxlength="30" autofocus>
 
                             @if ($errors->has('apellido3'))
                                 <span class="help-block">
@@ -133,9 +134,8 @@
                 <label class="col-md-5 control-label"><label style="color:red">*</label> Departamento</label>
                     <div class="col-md-7">
                         <select class="form-control" name="departamento_id" id="departamento_id" required autofocus>
-                            <option value="" selected disabled>seleccione departamento</option>
                             @foreach ($departamentos as $departamento)
-                                <option value="{{$departamento->id}}">{{$departamento->nombre}}</option>
+                                <option value="{{$departamento->id}}" {{$departamento->id == $paciente->departamento_id ? 'selected' : ''}}>{{$departamento->nombre}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -146,9 +146,8 @@
                 <label class="col-md-4 control-label"><label style="color:red">*</label> Municipio</label>
                     <div class="col-md-7">
                         <select class="form-control" name="municipio_id" id='municipio_id' required autofocus>
-                            <option value="" selected disabled>seleccione municipio</option>
                             @foreach ($municipios as $municipio)
-                                <option value="{{$municipio->id}}">{{$municipio->nombre}}</option>
+                                <option value="{{$municipio->id}}" {{$municipio->id == $paciente->municipio_id ? 'selected' : ''}}>{{$municipio->nombre}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -159,7 +158,7 @@
                 <label for="direccion" class="col-md-3 control-label">Dirección</label>
 
                     <div class="col-md-9">
-                        <input id="direccion" type="text" class="form-control" placeholder="colonia/barrio" name="direccion" value="{{ old('direccion') }}" maxlength="75" autofocus>
+                        <input id="direccion" type="text" class="form-control" placeholder="colonia/barrio" name="direccion" value="{{ $paciente->direccion }}" maxlength="75" autofocus>
 
                             @if ($errors->has('direccion'))
                                 <span class="help-block">
@@ -184,7 +183,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" value="{{ old('fecha_nacimiento') }}" placeholder="30/01/1990" name="fecha_nacimiento" class="form-control pull-right" id="fechaNacimiento" required>
+                            <input type="text" value="{{ $paciente->fecha_nacimiento }}" placeholder="30/01/1990" name="fecha_nacimiento" class="form-control pull-right" id="fechaNacimiento" required>
                         </div>
                     </div>
             </div>
@@ -194,7 +193,20 @@
                     <label for="edad" class="col-md-3 control-label">Edad</label>
 
                         <div class="col-md-3">
-                            <input id="edad" type="text" class="form-control" name="edad" disabled />
+													<input id="edad" type="text" class="form-control" name="edad" disabled="">
+	                            <script type="text/javascript">
+	                                var fechaNac = document.getElementById("fechaNacimiento").value;
+	                                var fechaHoy = new Date();
+	                                var anioNac = parseInt(fechaNac.substring(fechaNac.lastIndexOf('/')+1));
+	                                var mesNac = parseInt(fechaNac.substr(fechaNac.indexOf('/')+1,fechaNac.lastIndexOf('/')+1));
+	                                var diaNac = parseInt(fechaNac.substr(0,fechaNac.lastIndexOf('/')+1));
+	                                var edad = parseInt(fechaHoy.getFullYear())-anioNac;
+	                                if(edad)
+	                                    if(mesNac<=parseInt(fechaHoy.getMonth()+1))
+	                                        document.getElementById("edad").value=edad;
+	                                    else
+	                                        document.getElementById("edad").value=edad-1;
+	                            </script>
                         </div>
                 </div>
             </td>
@@ -205,7 +217,7 @@
                 <label for="encargado" class="col-md-3 control-label">Encargado</label>
 
                     <div class="col-md-9">
-                        <input id="encargado" type="text" class="form-control" placeholder="nombre completo" name="encargado" value="{{ old('encargado') }}" onkeypress="return letras(event)" maxlength="100" autofocus>
+                        <input id="encargado" type="text" class="form-control" placeholder="nombre completo" name="encargado" value="{{ $paciente->encargado }}" onkeypress="return letras(event)" maxlength="100" autofocus>
 
                             @if ($errors->has('encargado'))
                                 <span class="help-block">
@@ -220,7 +232,7 @@
                 <label for="telefono" class="col-md-3 control-label">Teléfono</label>
 
                     <div class="col-md-4">
-                        <input id="telefono" type="text" class="form-control" placeholder="00000000" name="telefono" value="{{ old('telefono') }}" onkeypress="return numeros(event)" minlength="8" maxlength="8" autofocus>
+                        <input id="telefono" type="text" class="form-control" placeholder="00000000" name="telefono" value="{{ $paciente->telefono }}" onkeypress="return numeros(event)" minlength="8" maxlength="8" autofocus>
 
                             @if ($errors->has('telefono'))
                                 <span class="help-block">
@@ -245,7 +257,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" value="{{ old('fecha_ingreso') }}" placeholder="30/01/1990" name="fecha_ingreso" class="form-control pull-right" id="fechaIngreso" required>
+                            <input type="text" value="{{ $paciente->fecha_ingreso }}" placeholder="30/01/1990" name="fecha_ingreso" class="form-control pull-right" id="fechaIngreso" required>
                         </div>
                     </div>
             </div>
@@ -255,7 +267,7 @@
                 <label for="seguro_social" class="col-md-3 control-label">No. Social</label>
 
                     <div class="col-md-6">
-                        <input id="seguro_social" type="text" class="form-control" placeholder="0000" name="seguro_social" value="{{ old('seguro_social') }}" onkeypress="return numeros(event)" maxlength="10" autofocus>
+                        <input id="seguro_social" type="text" class="form-control" placeholder="0000" name="seguro_social" value="{{ $paciente->seguro_social }}" onkeypress="return numeros(event)" maxlength="10" autofocus>
 
                             @if ($errors->has('seguro_social'))
                                 <span class="help-block">
@@ -274,9 +286,8 @@
                 <label class="col-md-4 control-label"><label style="color:red">*</label> Médico</label>
                     <div class="col-md-8">
                         <select class="form-control" name="medico_id" id='medico_id' required autofocus>
-                            <option value="" selected disabled>seleccione médico</option>
                             @foreach ($medicos as $medico)
-                                <option value="{{$medico->id}}">{{$medico->colegiado}} {{$medico->nombre}}</option>
+                                <option value="{{$medico->id}}" {{$medico->id == $paciente->medico_id ? 'selected' : ''}}>{{$medico->colegiado}} {{$medico->nombre}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -287,9 +298,8 @@
                 <label class="col-md-4 control-label"><label style="color:red">*</label> Tipo de Pago</label>
                     <div class="col-md-4">
                         <select class="form-control" name="pago_id" id='pago_id' required autofocus>
-                            <option value="" selected disabled>seleccione pago</option>
                             @foreach ($pagos as $pago)
-                                <option value="{{$pago->id}}">{{$pago->nombre}}</option>
+                                <option value="{{$pago->id}}" {{$pago->id == $paciente->pago_id ? 'selected' : ''}}>{{$pago->nombre}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -301,7 +311,7 @@
                 <label for="observacion" class="col-md-2 control-label">Observaciones</label>
 
                     <div class="col-md-6">
-                        <textarea id="observacion" class="form-control" name="observacion" placeholder="observacion" cols="50" rows="10"  type="text" value="{{ old('observacion') }}" maxlength="500" autofocus></textarea>
+                        <textarea id="observacion" class="form-control" name="observacion" placeholder="observaciones" cols="50" rows="10"  type="text" value="{{ $paciente->observacion }}" maxlength="500" autofocus>{{ $paciente->observacion }}</textarea>
 
                             @if ($errors->has('observacion'))
                                 <span class="help-block">
@@ -311,20 +321,21 @@
                     </div>
             </div>
         @endcomponent
-                        @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>
-                                    Guardar
-                                </button>
-                            </div>
-                        </div>
-                        @endif
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+
+				@if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
+				<div class="form-group">
+						<div class="col-md-6 col-md-offset-4">
+								<button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>
+										Guardar
+								</button>
+						</div>
+				</div>
+				@endif
+		</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 @endsection
 @endif
