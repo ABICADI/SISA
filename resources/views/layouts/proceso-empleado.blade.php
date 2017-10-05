@@ -60,9 +60,9 @@
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
     <!-- Main Header -->
-    @include('layouts.header')
+    @include('layouts.header-empleado')
     <!-- Sidebar -->
-    @include('layouts.sidebar')
+    @include('layouts.sidebar-empleado')
     @yield('content')
 
     <!-- Footer -->
