@@ -74,7 +74,7 @@ public function __construct() {
 
     public function createTerpiaUsuario($request, $terapia, $user){
         //Datos para la Bitacora
-        date_default_timezone_set('asia/ho_chi_minh');
+        date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
         $log = $request->User()->username;

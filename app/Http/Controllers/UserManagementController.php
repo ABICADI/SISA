@@ -161,7 +161,7 @@ class UserManagementController extends Controller {
     }
 
     private function crearEmpleadoBitacora(Request $request){
-        date_default_timezone_set('asia/ho_chi_minh');
+        date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
         $log = $request->User()->username;
@@ -186,7 +186,7 @@ class UserManagementController extends Controller {
 
     private function eliminarEmpleadoBitacora($id){
         //Datos para la Bitacora
-        date_default_timezone_set('asia/ho_chi_minh');
+        date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
         $userB = User::findOrFail($id);

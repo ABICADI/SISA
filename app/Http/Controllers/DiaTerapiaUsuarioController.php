@@ -63,7 +63,7 @@ class DiaTerapiaUsuarioController extends Controller {
         if ($request['password'] != null && strlen($request['password']) > 0) {
             $request['password'] = 'required|min:8|confirmed';
             $user->password = bcrypt($request['password']);
-        } 
+        }
         $user->dpi = $request['dpi'];
         $user->nombre1 = $request['nombre1'];
         $user->nombre2 = $request['nombre2'];
@@ -100,7 +100,7 @@ class DiaTerapiaUsuarioController extends Controller {
         if($user->save()){
            return redirect()->intended('/user-management');
         }
-        
+
     }
 
     private function validateUpdate($request) {
@@ -125,12 +125,12 @@ class DiaTerapiaUsuarioController extends Controller {
     }
 
     private function updateBitacora($request, $id){
-        date_default_timezone_set('asia/ho_chi_minh');
+        date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
         $log = $request->User()->username;
         $user = User::findOrFail($id);
-        
+
         $departamentonew = Departamento::find($request['departamento_id']);
         $departamentoold = Departamento::find($user->departamento_id);
         $municipionew = Municipio::find($request['municipio_id']);
@@ -340,7 +340,7 @@ class DiaTerapiaUsuarioController extends Controller {
     }
 
     public function updatediaBitacora($request, $id){
-        date_default_timezone_set('asia/ho_chi_minh');
+        date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
         $log = $request->User()->username;
@@ -374,7 +374,7 @@ class DiaTerapiaUsuarioController extends Controller {
     }
 
     public function updateterapiaBitacora($request, $id){
-        date_default_timezone_set('asia/ho_chi_minh');
+        date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
         $log = $request->User()->username;

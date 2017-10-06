@@ -81,7 +81,7 @@ class DiaSemanaUsuarioController extends Controller {
 
     public function createDiaSemanaUsuarioBitacora ($request, $diasemana, $user){
         //Datos para la Bitacora
-        date_default_timezone_set('asia/ho_chi_minh');
+        date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
         $log = $request->User()->username;

@@ -160,7 +160,7 @@ class PacienteController extends Controller {
 
     private function validateUpdate($request) {
         $this->validate($request, [
-            'cui' => 'min:13|max:13|unique:pacientes|nullable',
+            'cui' => 'min:13|max:13|nullable',
             'nombre1' => 'required|max:30',
             'nombre2' => 'max:30',
             'nombre3' => 'max:30',
@@ -175,14 +175,14 @@ class PacienteController extends Controller {
             'fecha_ingreso' => 'required',
             'telefono' => 'digits:8|nullable',
             'medico_id' => 'required',
-            'seguro_social' => 'max:10|unique:pacientes|nullable',
+            'seguro_social' => 'max:10|nullable',
             'observacion' => 'max:500',
             'pago_id' => 'required',
         ]);
     }
 
     private function crearPacienteBitacora(Request $request){
-        date_default_timezone_set('asia/ho_chi_minh');
+        date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
         $log = $request->User()->username;
@@ -206,7 +206,7 @@ class PacienteController extends Controller {
 
     private function updatePacienteBitacora($request, $id){
       //Datos para la Bitacora
-      date_default_timezone_set('asia/ho_chi_minh');
+      date_default_timezone_set('america/guatemala');
       $format = 'd/m/Y';
       $now = date($format);
       $user = $request->User()->username;

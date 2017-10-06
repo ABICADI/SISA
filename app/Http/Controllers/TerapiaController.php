@@ -39,8 +39,8 @@ class TerapiaController extends Controller {
         }
     }
 
-    public function edit($id) { 
-        //Capturamos el ID seleccionado para la Actualizacion     
+    public function edit($id) {
+        //Capturamos el ID seleccionado para la Actualizacion
         $terapia = Terapia::find($id);
 
         //Si la terapia seleccionada no tiene datos redireccionamos a la pagina principal de la Terapia
@@ -59,8 +59,8 @@ class TerapiaController extends Controller {
 
         $this->updateTerapiaBitacora($request, $id);
         if($terapia->save()){
-            return redirect()->intended('system-management/terapia'); 
-        }   
+            return redirect()->intended('system-management/terapia');
+        }
     }
 
     public function search(Request $request) {
@@ -101,7 +101,7 @@ class TerapiaController extends Controller {
 
     private function crearTerapiaBitacora(Request $request){
         //Datos para la Bitacora
-        date_default_timezone_set('asia/ho_chi_minh');
+        date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
         $user = $request->User()->username;
@@ -119,7 +119,7 @@ class TerapiaController extends Controller {
 
     private function updateTerapiaBitacora($request, $id){
         //Datos para la Bitacora
-        date_default_timezone_set('asia/ho_chi_minh');
+        date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
         $user = $request->User()->username;

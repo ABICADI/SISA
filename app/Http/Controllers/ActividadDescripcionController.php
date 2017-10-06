@@ -11,15 +11,15 @@ use App\Municipio;
 use App\User;
 
 class ActividadDescripcionController extends Controller {
-   
+
     public function update(Request $request, $id) {
         $actividad = Actividad::findOrFail($id);
-        
+
         $this->validateDes($request);
         $actividad->descripcion = $request['descripcion'];
         $this->updateDesActividadBitacora($request, $id);
             if($actividad->save()){
-                return redirect()->intended('/actividad-management'); 
+                return redirect()->intended('/actividad-management');
             }
     }
 
@@ -30,7 +30,7 @@ class ActividadDescripcionController extends Controller {
     }
 
     private function updateDesActividadBitacora($request, $id){
-        date_default_timezone_set('asia/ho_chi_minh');
+        date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
         $log = $request->User()->username;

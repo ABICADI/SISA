@@ -103,15 +103,15 @@ class MedicoController extends Controller {
 
     private function validateUpdate($request) {
         $this->validate($request, [
-        'colegiado' => 'required|max:10|unique:medicos',
-        'nombre' => 'required|max:150|unique:medicos',
+        'colegiado' => 'required|max:10',
+        'nombre' => 'required|max:150',
         'telefono' => 'max:8'
         ]);
     }
 
     private function crearMedicoBitacora(Request $request){
         //Datos para la Bitacora
-        date_default_timezone_set('asia/ho_chi_minh');
+        date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
         $user = $request->User()->username;
@@ -129,7 +129,7 @@ class MedicoController extends Controller {
 
     private function updateTerapiaBitacora($request, $id){
         //Datos para la Bitacora
-        date_default_timezone_set('asia/ho_chi_minh');
+        date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
         $user = $request->User()->username;

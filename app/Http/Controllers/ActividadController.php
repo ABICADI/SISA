@@ -154,7 +154,7 @@ class ActividadController extends Controller {
 
     private function createActividadBitacora($request){
         //Datos para la Bitacora
-        date_default_timezone_set('asia/ho_chi_minh');
+        date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
         $log = $request->User()->username;
@@ -175,7 +175,7 @@ class ActividadController extends Controller {
     }
 
     private function updateActividadBitacora($request, $id){
-        date_default_timezone_set('asia/ho_chi_minh');
+        date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
         $log = $request->User()->username;
@@ -267,7 +267,7 @@ class ActividadController extends Controller {
 
     private function deleteActividadBitacora($id){
         //Datos para la Bitacora
-        date_default_timezone_set('asia/ho_chi_minh');
+        date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
         $actividadfin = Actividad::find($id);

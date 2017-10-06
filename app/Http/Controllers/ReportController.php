@@ -16,10 +16,10 @@ class ReportController extends Controller {
     }
 
     public function index() {
-        date_default_timezone_set('asia/ho_chi_minh');
+        date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
-        $to = date($format);
+        $to = date($format, strtotime("+366 days"));
         //$to = date($format, strtotime("+30 days"));
         $constraints = [
             'from' => $now,
