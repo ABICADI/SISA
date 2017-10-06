@@ -39,7 +39,7 @@ class MedicoController extends Controller {
         //Si la terapia se guarda, se crea un registro en la Bitacora
         if($medico->save()) {
             $this->crearMedicoBitacora($request);
-            return redirect()->intended('system-management/medico');
+            return redirect()->intended('/medico-management');
         }
     }
 
@@ -64,8 +64,8 @@ class MedicoController extends Controller {
         $medico->telefono = $request["telefono"];
 
         $this->updateMedicoBitacora($request, $id);
-        if($terapia->save()){
-            return redirect()->intended('system-management/medico');
+        if($medico->save()){
+            return redirect()->intended('/medico-management');
         }
     }
 
@@ -127,7 +127,7 @@ class MedicoController extends Controller {
             $bitacora->save();
     }
 
-    private function updateTerapiaBitacora($request, $id){
+    private function updateMedicoBitacora($request, $id){
         //Datos para la Bitacora
         date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
@@ -135,12 +135,12 @@ class MedicoController extends Controller {
         $user = $request->User()->username;
         $medico1 = Medico::find($id);
 
-            if ($terapia1->descripcion != $request['colegiado']) {
+            if ($medico1->descripcion != $request['colegiado']) {
                 $bitacora = new Bitacora();
                 $bitacora->usuario = $user;
                 $bitacora->nombre_tabla = 'MEDICO';
                 $bitacora->actividad = 'ACTUALIZAR';
-                $bitacora->anterior = 'Colegiado: ' . $Mmedico1->colegiado;
+                $bitacora->anterior = 'Colegiado: ' . $medico1->colegiado;
                 $bitacora->nuevo = 'Colegiado: ' . $request->colegiado;
                 $bitacora->fecha = $now;
                 $bitacora->save();

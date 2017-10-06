@@ -16,10 +16,10 @@
             </div>
 
             <div class="form-group{{ $errors->has('colegiado') ? ' has-error' : '' }}">
-                <label for="nombre" class="col-md-2 control-label"><label style="color:red">*</label> Colegiado</label>
-                    <div class="col-md-6">
-                        <input id="nombre" type="text" class="form-control" placeholder="nombre" name="nombre" value="{{ $medico->colegiado }}" onkeypress="return numeros(event)" maxlength="10" required>
-                        
+                <label for="dpi" class="col-md-4 control-label"><label style="color:red">*</label> Colegiado</label>
+                    <div class="col-md-4">
+                        <input id="colegiado" type="text" class="form-control" name="colegiado" value="{{ $medico->colegiado }}" onkeypress="return numeros(event)" minlength="2" maxlength="8" required>
+
                         @if ($errors->has('colegiado'))
                             <span class="help-block">
                             <strong>{{ $errors->first('colegiado') }}</strong>
@@ -29,9 +29,9 @@
             </div>
 
 						<div class="form-group{{ $errors->has('nombre') ? ' has-error' : '' }}">
-                <label for="nombre" class="col-md-2 control-label">Nombre</label>
+                <label for="nombre" class="col-md-2 control-label"><label style="color:red">*</label> Nombre</label>
                     <div class="col-md-6">
-                        <input id="nombre" type="text" class="form-control" placeholder="nombre" name="nombre" value="{{ $medico->nombre }}" onkeypress="return letras(event)" maxlength="125">
+                        <input id="nombre" type="text" class="form-control" placeholder="nombre" name="nombre" value="{{ $medico->nombre }}" onkeypress="return letras(event)" maxlength="125" onKeyUp="this.value=this.value.toUpperCase();" required>
 
                         @if ($errors->has('nombre'))
                             <span class="help-block">
@@ -44,7 +44,7 @@
 						<div class="form-group{{ $errors->has('telefono') ? ' has-error' : '' }}">
                 <label for="nombre" class="col-md-2 control-label">Teléfono</label>
                     <div class="col-md-6">
-                        <input id="nombre" type="text" class="form-control" placeholder="nombre" name="nombre" value="{{ $medico->telefono }}" onkeypress="return numeros(event)" minlength="8" maxlength="8">
+                        <input id="telefono" type="text" class="form-control" placeholder="telefono" name="telefono" value="{{ $medico->telefono }}" onkeypress="return numeros(event)" minlength="8" maxlength="8">
 
                         @if ($errors->has('telefono'))
                             <span class="help-block">
