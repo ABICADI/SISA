@@ -129,7 +129,7 @@ desired effect
   <table class="table responsive">
     <tr>
       <td>
-        {!! $grafica_registro->render() !!}
+        {!! $grafica_pacientesdia->render() !!}
       </td>
       </tr>
   </table>

@@ -34,13 +34,13 @@ class DashboardController extends Controller {
           ->responsive(true)
           ->groupBy('fecha');
 
-      $grafica_registro = Charts::multiDatabase('line', 'material')
+      $grafica_pacientesdia = Charts::multiDatabase('line', 'material')
           ->title('Gráfica de Empleado, Paciente y Médico registrados en SISA')
         ->dataset('Empleados', User::all())
         ->dataset('Pacientes', Paciente::all())
         ->dataset('Médicos', Medico::all())
         ->groupByMonth(2017, true);
 
-      return view('dashboard', ['count_user' => $count_user, 'count_paci' => $count_paci, 'count_medi' => $count_medi, 'grafica_actividades' => $grafica_actividades, 'grafica_registro' => $grafica_registro]);
+      return view('dashboard', ['count_user' => $count_user, 'count_paci' => $count_paci, 'count_medi' => $count_medi, 'grafica_actividades' => $grafica_actividades, 'grafica_pacientesdia' => $grafica_pacientesdia]);
     }
 }
