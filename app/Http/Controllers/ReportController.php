@@ -19,7 +19,8 @@ class ReportController extends Controller {
         date_default_timezone_set('asia/ho_chi_minh');
         $format = 'd/m/Y';
         $now = date($format);
-        $to = date($format, strtotime("+30 days"));
+        $to = date($format);
+        //$to = date($format, strtotime("+30 days"));
         $constraints = [
             'from' => $now,
             'to' => $to
