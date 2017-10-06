@@ -20,31 +20,57 @@ class ReportController extends Controller {
         $format = 'd/m/Y';
         $now = date($format);
         $to = date($format, strtotime("+366 days"));
-        //$to = date($format, strtotime("+30 days"));
         $constraints = [
             'from' => $now,
             'to' => $to
         ];
 
-        $actividades = $this->getHiredAcitividad($constraints);
-        return view('system-mgmt/report-actividad/index', ['actividades' => $actividades, 'searchingVals' => $constraints]);
+        $actividades = $this->getRangoAcitividad($constraints);
+        $message = '';
+        return view('system-mgmt/report-actividad/index', ['actividades' => $actividades, 'searchingVals' => $constraints, 'message' => $message]);
     }
 
     public function search(Request $request) {
-        $constraints = [
-            'from' => $request['from'],
-            'to' => $request['to']
-        ];
 
-        $actividades = $this->getHiredAcitividad($constraints);
-        return view('system-mgmt/report-actividad/index', ['actividades' => $actividades, 'searchingVals' => $constraints]);
+        if($request->from != '' && $request->to != ''){
+          $constraints = [
+              'from' => $request['from'],
+              'to' => $request['to']
+          ];
+
+          $actividades = $this->getRangoAcitividad($constraints);
+          $message = '';
+          return view('system-mgmt/report-actividad/index', ['actividades' => $actividades, 'searchingVals' => $constraints, 'message' => $message]);
+        }
+
+        if($request->from == '' || $request->to == ''){
+          $constraints = [
+              'from' => $request['from'],
+              'to' => $request['to']
+          ];
+          $actividades = $this->getRangoAcitividad($constraints);
+          $message = 'Rango de Fecha inválido';
+          return view('system-mgmt/report-actividad/index', ['actividades' => $actividades, 'searchingVals' => $constraints, 'message' => $message]);
+        }
+
+
     }
 
-    private function getHiredAcitividad($constraints) {
+    private function getRangoAcitividad($constraints) {
+
+        if($constraints['from'] == '' || $constraints['to'] == ''){
+          $actividades = Actividad::where('fecha', '>=', '01/01/1850')
+                          ->where('fecha', '<=', '01/01/1850')
+                          ->get();
+          return $actividades;
+        }
+
+        if($constraints['from'] != '' && $constraints['to'] != ''){
         $actividades = Actividad::where('fecha', '>=', $constraints['from'])
                         ->where('fecha', '<=', $constraints['to'])
                         ->get();
         return $actividades;
+        }
     }
 
     public function exportExcel(Request $request) {
@@ -68,18 +94,12 @@ class ReportController extends Controller {
         $actividades = $this->getExportingData(['from'=> $request['from'], 'to' => $request['to']]);
         return Excel::create('reporte_del_'. $request['from'].'_al_'.$request['to'], function($excel) use($actividades, $request, $author) {
 
-        // Set the title
-        $excel->setTitle('Reporte de Actividades del '. $request['from'].' al '. $request['to']);
 
-        // Chain the setters
+        $excel->setTitle('Reporte de Actividades del '. $request['from'].' al '. $request['to']);
         $excel->setCreator($author)
             ->setCompany('HoaDang');
-
-        // Call them separately
         $excel->setDescription('Listado de Actividades');
-
         $excel->sheet('Reporte', function($sheet) use($actividades) {
-
         $sheet->fromArray($actividades);
             });
         });

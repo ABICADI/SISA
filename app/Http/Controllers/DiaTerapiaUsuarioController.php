@@ -14,6 +14,7 @@ use App\DiaSemana;
 use App\Terapia;
 use App\UsuarioDia;
 use App\UsuarioTerapia;
+use Auth;
 
 class DiaTerapiaUsuarioController extends Controller {
 
@@ -128,7 +129,7 @@ class DiaTerapiaUsuarioController extends Controller {
         date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
-        $log = $request->User()->username;
+        $log = Auth::user()->username;
         $user = User::findOrFail($id);
 
         $departamentonew = Departamento::find($request['departamento_id']);

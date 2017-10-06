@@ -11,10 +11,6 @@
                         <input type="hidden" name="_method" value="PATCH">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-            <div div id="desdeotro" style="display:none;">
-                <input id="username" type="text" class="form-control" name="username" value="{{ Auth::user()->username }}" disabled="help-block">
-            </div>
-
             <div class="form-group">
                 <label class="col-md-2 control-label"><label style="color:red">*</label> Encargado</label>
                     <div class="col-md-6">
@@ -114,7 +110,7 @@
                         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i> 
+                                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>
                                     Guardar
                                 </button>
                             </div>

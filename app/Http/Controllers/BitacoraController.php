@@ -13,7 +13,7 @@ class BitacoraController extends Controller {
     }
 
     public function index() {
-        $bitacoras = DB::table('bitacoras')->orderBy('fecha', 'des')->paginate(10);
+        $bitacoras = DB::table('bitacoras')->orderBy('fecha', 'DES')->paginate(10);
         return view('system-mgmt/bitacora/index', ['bitacoras' => $bitacoras]);
     }
 
@@ -22,8 +22,8 @@ class BitacoraController extends Controller {
             'usuario' => $request['usuario'],
             'actividad' => $request['actividad'],
             ];
-       
-            
+
+
        $bitacoras = $this->doSearchingQuery($constraints);
        return view('system-mgmt/bitacora/index', ['bitacoras' => $bitacoras, 'searchingVals' => $constraints]);
     }

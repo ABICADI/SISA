@@ -12,6 +12,7 @@ use App\Departamento;
 use App\Municipio;
 use App\DiaSemana;
 use App\UsuarioDia;
+use Auth;
 
 class DiaSemanaUsuarioController extends Controller {
 	    protected $redirectTo = '/diasemanausuario-management';
@@ -84,7 +85,7 @@ class DiaSemanaUsuarioController extends Controller {
         date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
-        $log = $request->User()->username;
+        $log = Auth::user()->username;
 
         $diasemanas = $request->diasemana;
         $cadena = '';

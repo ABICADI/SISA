@@ -11,10 +11,6 @@
                         <input type="hidden" name="_method" value="PATCH">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-            <div div id="desdeotro" style="display:none;">
-                <input id="user" type="text" class="form-control" name="user" value="{{ Auth::user()->username }}" disabled="help-block">
-            </div>
-
             <div class="form-group{{ $errors->has('dpi') ? ' has-error' : '' }}">
                 <label for="dpi" class="col-md-4 control-label"><label style="color:red">*</label> DPI</label>
                     <div class="col-md-6">
@@ -31,7 +27,7 @@
         @component('layouts.esconder_info', ['title' => 'Nombre y Apellido'])
         <table id="example2" class="table table-responsive">
             <tr>
-            <td>   
+            <td>
             <div class="form-group{{ $errors->has('nombre1') ? ' has-error' : '' }}">
                 <label for="nombre1" class="col-md-6 control-label"><label style="color:red">*</label> Primer Nombre</label>
                     <div class="col-md-5">
@@ -60,7 +56,7 @@
                     </div>
             </div>
             </td>
-            <td>           
+            <td>
             <div class="form-group{{ $errors->has('nombre3') ? ' has-error' : '' }}">
                 <label for="nombre3" class="col-md-6 control-label">Tercer Nombre</label>
 
@@ -73,11 +69,11 @@
                                 </span>
                             @endif
                     </div>
-            </div> 
+            </div>
             </td>
-            </tr> 
+            </tr>
             <tr>
-            <td> 
+            <td>
             <div class="form-group{{ $errors->has('apellido1') ? ' has-error' : '' }}">
                 <label for="apellido1" class="col-md-6 control-label"><label style="color:red">*</label> Primer Apellido</label>
                     <div class="col-md-5">
@@ -106,7 +102,7 @@
                     </div>
             </div>
             </td>
-            <td>           
+            <td>
             <div class="form-group{{ $errors->has('apellido3') ? ' has-error' : '' }}">
                 <label for="apellido3" class="col-md-6 control-label">Tercer Apellido</label>
 
@@ -123,13 +119,13 @@
             </td>
             </tr>
         </div>
-        </table>   
+        </table>
         @endcomponent
 
         @component('layouts.esconder_info', ['title' => 'Datos de la Cuenta'])
         <table id="example2" class="table table-responsive">
             <tr>
-            <td>   
+            <td>
             <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
                 <label for="username" class="col-md-4 control-label"><label style="color:red">*</label> Usuario</label>
 
@@ -261,7 +257,7 @@
                                 var fechaHoy = new Date();
                                 var anioNac = parseInt(fechaNac.substring(fechaNac.lastIndexOf('/')+1));
                                 var mesNac = parseInt(fechaNac.substr(fechaNac.indexOf('/')+1,fechaNac.lastIndexOf('/')+1));
-                                var diaNac = parseInt(fechaNac.substr(0,fechaNac.lastIndexOf('/')+1));    
+                                var diaNac = parseInt(fechaNac.substr(0,fechaNac.lastIndexOf('/')+1));
                                 var edad = parseInt(fechaHoy.getFullYear())-anioNac;
                                 if(edad)
                                     if(mesNac<=parseInt(fechaHoy.getMonth()+1))
@@ -355,7 +351,7 @@
                                             @foreach ($diasemanas as $diasemana)
                                             <?php $cont = 0; ?>
                                             @foreach ($userdiasemanas as $userdiasemana)
-                                            
+
                                             @if($diasemana->id == $userdiasemana->diasemana_id)
                                             <td role="row"><input type="checkbox" id="{{$diasemana->id}}" name="diasemana[]" value="{{$diasemana->id}}" checked>  {{ $userdiasemana->nombre_dia }}</td>
                                             <?php $cont = 1; ?>
@@ -366,7 +362,7 @@
                                             <td role="row"><input type="checkbox" id="{{$diasemana->id}}" name="diasemana[]" value="{{$diasemana->id}}">  {{ $diasemana->nombre }}</td>
                                             @endif
                                             <?php }?>
-                                            @endforeach 
+                                            @endforeach
                                             </tr>
                                         </table>
                                     </div>
@@ -377,7 +373,7 @@
                 @endcomponent
             </div>
         </div>
-    </div> 
+    </div>
 
     <div class="row">
         <div class="col-md-47 col-md-offset-0">
@@ -396,7 +392,7 @@
                                             @foreach ($terapias as $terapia)
                                             <?php $cont = 0; ?>
                                             @foreach ($usuarioterapias as $usuarioterapia)
-                                            
+
                                             @if($terapia->id == $usuarioterapia->terapia_id)
                                             <td role="row"><input type="checkbox" id="{{$terapia->id}}" name="terapia[]" value="{{$terapia->id}}" checked>  {{ $usuarioterapia->terapia_nombre }}</td>
                                             <?php $cont = 1; ?>
@@ -407,7 +403,7 @@
                                             <td role="row"><input type="checkbox" id="{{$terapia->id}}" name="terapia[]" value="{{$terapia->id}}">  {{ $terapia->nombre }}</td>
                                             @endif
                                             <?php }?>
-                                            @endforeach 
+                                            @endforeach
                                             </tr>
                                         </table>
                                     </div>
@@ -422,7 +418,7 @@
                         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i> 
+                                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>
                                     Guardar
                                 </button>
                             </div>

@@ -44,6 +44,8 @@
           @endcomponent
          @endcomponent
       </form>
+      {{ csrf_field() }}
+      <label style="color:red">{{ $message }}</label>
     <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
       <div class="row">
         <div class="col-sm-12">

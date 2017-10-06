@@ -10,10 +10,6 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('user-management.store') }}">
                         {{ csrf_field() }}
 
-            <div div id="desdeotro" style="display:none;">
-                <input id="user" type="text" class="form-control" name="user" value="{{ Auth::user()->username }}" disabled="help-block">
-            </div>
-
             <div class="form-group{{ $errors->has('dpi') ? ' has-error' : '' }}">
                 <label for="dpi" class="col-md-2 control-label"><label style="color:red">*</label> DPI</label>
                     <div class="col-md-3">

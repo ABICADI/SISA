@@ -9,7 +9,7 @@ class CreatePacientesTable extends Migration {
     public function up() {
         Schema::create('pacientes', function (Blueprint $table) {
           $table->increments('id');
-          $table->string('cui',15)->nullabel();
+          $table->string('cui',15)->nullable();
           $table->string('nombre1');
           $table->string('nombre2')->nullable();
           $table->string('nombre3')->nullable();
@@ -25,7 +25,7 @@ class CreatePacientesTable extends Migration {
           $table->string('telefono')->nullable();
           $table->integer('medico_id');
           $table->string('seguro_social',10)->nullable();
-          $table->string('observacion',500);
+          $table->string('observacion',500)->nullable();
           $table->integer('pago_id');
           $table->foreign('departamento_id')->references('id')->on('departamentos')->onUpdate('cascade');
           $table->foreign('municipio_id')->references('id')->on('municipios')->onUpdate('cascade');

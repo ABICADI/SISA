@@ -9,6 +9,7 @@ use App\Bitacora;
 use App\User;
 use App\Departamento;
 use App\Municipio;
+use Auth;
 
 class ActividadController extends Controller {
 
@@ -157,7 +158,7 @@ class ActividadController extends Controller {
         date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
-        $log = $request->User()->username;
+        $log = Auth::user()->username;
         $departamento = Departamento::findOrFail($request['departamento_id']);
         $municipio = Municipio::findOrFail($request['municipio_id']);
         $user = User::findOrFail($request['user_id']);
@@ -178,7 +179,7 @@ class ActividadController extends Controller {
         date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
-        $log = $request->User()->username;
+        $log = Auth::user()->username;
         $actividad = Actividad::findOrFail($id);
         $departamentonew = Departamento::find($request['departamento_id']);
         $departamentoold = Departamento::find($actividad->departamento_id);

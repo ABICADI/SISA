@@ -14,6 +14,7 @@ use App\Municipio;
 use App\Terapia;
 use App\UsuarioDia;
 use App\UsuarioTerapia;
+use Auth;
 
 class TerapiaUsuarioController extends Controller {
 		    protected $redirectTo = '/terapiausuario-management'; //redirecciona la ruta
@@ -77,7 +78,7 @@ public function __construct() {
         date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
-        $log = $request->User()->username;
+        $log = Auth::user()->username;
 
         $terapias = $request->terapia;
         $cadena = '';

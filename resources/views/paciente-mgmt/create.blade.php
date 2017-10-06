@@ -10,12 +10,8 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('paciente-management.store') }}">
                         {{ csrf_field() }}
 
-            <div div id="desdeotro" style="display:none;">
-                <input id="user" type="text" class="form-control" name="user" value="{{ Auth::user()->username }}" disabled="help-block">
-            </div>
-
             <div class="form-group{{ $errors->has('cui') ? ' has-error' : '' }}">
-                <label for="cui" class="col-md-2 control-label"><label style="color:red">*</label> CUI</label>
+                <label for="cui" class="col-md-2 control-label">CUI</label>
                     <div class="col-md-3">
                         <input id="cui" type="text" class="form-control" placeholder="0000000000000" name="cui" value="{{ old('cui') }}" onkeypress="return numeros(event)" minlength="13" maxlength="13" autofocus>
 

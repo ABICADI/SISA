@@ -9,6 +9,7 @@ use App\Bitacora;
 use App\Departamento;
 use App\Municipio;
 use App\User;
+use Auth;
 
 class ActividadDescripcionController extends Controller {
 
@@ -33,7 +34,7 @@ class ActividadDescripcionController extends Controller {
         date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
-        $log = $request->User()->username;
+        $log = Auth::user()->username;
         $actividad = Actividad::findOrFail($id);
 
         if($actividad->descripcion != $request['descripcion']){

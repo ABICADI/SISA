@@ -10,6 +10,7 @@ use App\Medico;
 use App\Pago;
 use App\Departamento;
 use App\Municipio;
+use Auth;
 
 
 class PacienteController extends Controller {
@@ -153,7 +154,7 @@ class PacienteController extends Controller {
             'telefono' => 'digits:8|nullable',
             'medico_id' => 'required',
             'seguro_social' => 'max:10|unique:pacientes|nullable',
-            'observacion' => 'max:500',
+            'observacion' => 'max:500|nullable',
             'pago_id' => 'required',
         ]);
     }
@@ -185,7 +186,7 @@ class PacienteController extends Controller {
         date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
-        $log = $request->User()->username;
+        $log = Auth::user()->username;
 
         $departamento = Departamento::findOrFail($request['departamento_id']);
         $municipio = Municipio::findOrFail($request['municipio_id']);
@@ -209,7 +210,7 @@ class PacienteController extends Controller {
       date_default_timezone_set('america/guatemala');
       $format = 'd/m/Y';
       $now = date($format);
-      $user = $request->User()->username;
+      $user = Auth::user()->username;
       $paciente = Paciente::findOrFail($id);
 
       $departamentonew = Departamento::find($request['departamento_id']);

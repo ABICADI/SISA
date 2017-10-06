@@ -253,9 +253,6 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('diasemanausuario-management.store') }}">
                         {{ csrf_field() }}
                     <label style="color:red">{{ $message }}</label>
-            <div div id="desdeotro" style="display:none;">
-                <input id="user" type="text" class="form-control" name="user" value="{{ Auth::user()->username }}" disabled="help-block">
-            </div>
 
                         <div class="form-group">
                             <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">

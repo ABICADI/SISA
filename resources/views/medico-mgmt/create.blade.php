@@ -11,10 +11,6 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('medico-management.store') }}">
                         {{ csrf_field() }}
 
-            <div div id="desdeotro" style="display:none;">
-                <input id="user" type="text" class="form-control" name="user" value="{{ Auth::user()->username }}" disabled="help-block">
-            </div>
-
             <div class="form-group{{ $errors->has('colegiado') ? ' has-error' : '' }}">
                 <label for="cui" class="col-md-2 control-label"><label style="color:red">*</label> Colegiado</label>
                     <div class="col-md-3">

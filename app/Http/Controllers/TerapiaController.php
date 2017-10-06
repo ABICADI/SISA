@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Terapia;
 use App\Bitacora;
+use Auth;
 
 class TerapiaController extends Controller {
 
@@ -104,7 +105,7 @@ class TerapiaController extends Controller {
         date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
-        $user = $request->User()->username;
+        $user = Auth::user()->username;
         $data = 'Nombre: ' . $request->nombre . ', Descripción: ' . $request->descripcion;
 
             $bitacora = new Bitacora();
@@ -122,7 +123,7 @@ class TerapiaController extends Controller {
         date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
-        $user = $request->User()->username;
+        $user = Auth::user()->username;
         $terapia1 = Terapia::find($id);
 
             if ($terapia1->descripcion != $request['descripcion']) {

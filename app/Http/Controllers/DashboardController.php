@@ -36,10 +36,8 @@ class DashboardController extends Controller {
           // ->colors(['#2196F3', '#F44336', '#FFC107'])
           // Setup the diferent datasets (this is a multi chart)
           ->dataset('Element 1', [5,20,100])
-          ->dataset('Element 2', [15,30,80])
-          ->dataset('Element 3', [25,10,40])
           // Setup what the values mean
-          ->labels(['One', 'Two', 'Three']);
+          ->labels(['Actividades']);
 
       return view('dashboard', ['count_user' => $count_user, 'count_paci' => $count_paci, 'count_medi' => $count_medi, 'chart' => $chart]);
     }

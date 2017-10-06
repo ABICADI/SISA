@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Bitacora;
 use App\Medico;
+use Auth;
 
 class MedicoController extends Controller {
 
@@ -114,7 +115,7 @@ class MedicoController extends Controller {
         date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
-        $user = $request->User()->username;
+        $user = Auth::user()->username;
         $data = 'Colegiado: ' . $request->colegiado.', Nombre: ' . $request->nombre . ', Teléfono: ' . $request->telefono;
 
             $bitacora = new Bitacora();
@@ -132,7 +133,7 @@ class MedicoController extends Controller {
         date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
-        $user = $request->User()->username;
+        $user = Auth::user()->username;
         $medico1 = Medico::find($id);
 
             if ($medico1->descripcion != $request['colegiado']) {

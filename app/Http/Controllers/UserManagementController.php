@@ -10,6 +10,7 @@ use App\Rol;
 use App\Estado;
 use App\Departamento;
 use App\Municipio;
+use Auth;
 
 class UserManagementController extends Controller {
 
@@ -164,7 +165,7 @@ class UserManagementController extends Controller {
         date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
-        $log = $request->User()->username;
+        $log = Auth::user()->username;
         $estado_id = '1';
 
         $departamento = Departamento::findOrFail($request['departamento_id']);
@@ -194,7 +195,7 @@ class UserManagementController extends Controller {
         $data = 'Nombre y Apellido: ' . $userB->nombre1 .' '. $userB->nombre2 .' '. $userB->nombre3 .' '. $userB->apellido1 .' '. $userB->apellido2 .' '. $userB->apellido3;
 
             $bitacora = new Bitacora();
-            $bitacora->usuario = 'Administrador';
+            $bitacora->usuario = 'ADMIN';
             $bitacora->nombre_tabla = 'EMPLEADO';
             $bitacora->actividad = 'ELIMINAR';
             $bitacora->anterior = '';

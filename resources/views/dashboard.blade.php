@@ -115,10 +115,13 @@ desired effect
       <!-- /.row -->
       <!-- Main row -->
   <!-- /Inicio Grafica Actividad -->
-
-  <center>
-      {!! $chart->render() !!}
-  </center>
+  <table class="table responsive">
+    <tr>
+      <td>
+        {!! $chart->render() !!}
+      </td>
+      </tr>
+  </table>
   <!-- /Fin Grafica Actividad -->
 
   <div>
