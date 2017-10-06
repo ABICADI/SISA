@@ -109,6 +109,10 @@
             autoclose: true,
             format: 'dd/mm/yyyy'
           });
+          $('#fecha').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy'
+          });
         });
       </script>
 

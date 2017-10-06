@@ -8,6 +8,7 @@ use App\Actividad;
 use App\User;
 use App\Paciente;
 use App\Medico;
+use App\Departamento;
 use Charts;
 
 class DashboardController extends Controller {
@@ -25,20 +26,21 @@ class DashboardController extends Controller {
       $count_paci = Paciente::where('id', '!=', 1)->count();
       $count_medi = Medico::where('id', '!=', 1)->count();
 
-      $chart = Charts::multi('bar', 'material')
-          // Setup the chart settings
-          ->title("My Cool Chart")
-          // A dimension of 0 means it will take 100% of the space
-          ->dimensions(0, 400) // Width x Height
-          // This defines a preset of colors already done:)
-          ->template("material")
-          // You could always set them manually
-          // ->colors(['#2196F3', '#F44336', '#FFC107'])
-          // Setup the diferent datasets (this is a multi chart)
-          ->dataset('Element 1', [5,20,100])
-          // Setup what the values mean
-          ->labels(['Actividades']);
+      $grafica_actividades = Charts::database(Actividad::all(), 'bar', 'highcharts')
+          ->title('Actividades')
+          ->template('teal-material')
+          ->elementLabel("Total")
+          ->dimensions(5, 5)
+          ->responsive(true)
+          ->groupBy('fecha');
 
-      return view('dashboard', ['count_user' => $count_user, 'count_paci' => $count_paci, 'count_medi' => $count_medi, 'chart' => $chart]);
+      $grafica_pacientesdia = Charts::multiDatabase('line', 'material')
+          ->title('Gráfica de Empleado, Paciente y Médico registrados en SISA')
+        ->dataset('Empleados', User::all())
+        ->dataset('Pacientes', Paciente::all())
+        ->dataset('Médicos', Medico::all())
+        ->groupByMonth(2017, true);
+
+      return view('dashboard', ['count_user' => $count_user, 'count_paci' => $count_paci, 'count_medi' => $count_medi, 'grafica_actividades' => $grafica_actividades, 'grafica_pacientesdia' => $grafica_pacientesdia]);
     }
 }

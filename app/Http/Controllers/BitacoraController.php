@@ -13,6 +13,7 @@ class BitacoraController extends Controller {
     }
 
     public function index() {
+
         $bitacoras = DB::table('bitacoras')->orderBy('fecha', 'DES')->paginate(10);
         return view('system-mgmt/bitacora/index', ['bitacoras' => $bitacoras]);
     }
@@ -21,18 +22,13 @@ class BitacoraController extends Controller {
         $constraints = [
             'usuario' => $request['usuario'],
             'actividad' => $request['actividad'],
+            'fecha' => $request['fecha'],
+            'nombre_tabla' => $request['nombre_tabla'],
             ];
 
 
        $bitacoras = $this->doSearchingQuery($constraints);
        return view('system-mgmt/bitacora/index', ['bitacoras' => $bitacoras, 'searchingVals' => $constraints]);
-    }
-
-    private function getHiredBitacoras($constraints) {
-        $bitacoras = Bitacora::where('fecha', '>=', $constraints['from'])
-                        ->where('fecha', '<=', $constraints['to'])
-                        ->get();
-        return $bitacoras;
     }
 
     private function doSearchingQuery($constraints) {

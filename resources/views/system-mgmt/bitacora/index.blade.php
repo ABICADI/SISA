@@ -22,8 +22,11 @@
       <form method="POST" action="{{ route('bitacora.search') }}">
          {{ csrf_field() }}
          @component('layouts.search', ['title' => 'Buscar'])
-          @component('layouts.two-cols-search-row', ['items' => ['Usuario', 'Actividad'], 
-          'oldVals' => [isset($searchingVals) ? strtoupper($searchingVals['usuario']) : '', isset($searchingVals) ? strtoupper($searchingVals['actividad']) : '']])
+          @component('layouts.two-cols-search-row', ['items' => ['Usuario', 'Actividad', 'Nombre_Tabla'],
+          'oldVals' => [isset($searchingVals) ? strtoupper($searchingVals['usuario']) : '', isset($searchingVals) ? strtoupper($searchingVals['actividad']) : '', isset($searchingVals) ? strtoupper($searchingVals['nombre_tabla']) : '']])
+          @endcomponent
+          @component('layouts.two-cols-date-search-row', ['items' => ['Fecha'],
+          'oldVals' => [isset($searchingVals) ? $searchingVals['fecha'] : '']])
           @endcomponent
         @endcomponent
       </form>

@@ -114,11 +114,22 @@ desired effect
         @endif
       <!-- /.row -->
       <!-- Main row -->
+
   <!-- /Inicio Grafica Actividad -->
   <table class="table responsive">
     <tr>
       <td>
-        {!! $chart->render() !!}
+        {!! $grafica_actividades->render() !!}
+      </td>
+      </tr>
+  </table>
+  <!-- /Fin Grafica Actividad -->
+
+  <!-- /Inicio Grafica Actividad -->
+  <table class="table responsive">
+    <tr>
+      <td>
+        {!! $grafica_pacientesdia->render() !!}
       </td>
       </tr>
   </table>
