@@ -50,19 +50,15 @@
           <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
             <thead>
               <tr role="row">
-                <th width = "20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Nombre: activate to sort column ascending">Nombre</th>
-                <th width = "20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Encargado: activate to sort column ascending">Encargado</th>
-                <th width = "40%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Dirección: activate to sort column ascending">Dirección</th>
+                <th width = "30%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Nombre: activate to sort column ascending">Nombre de la Actividad</th>
                 <th width = "20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Fecha: activate to sort column ascending">Fecha</th>
               </tr>
             </thead>
             <tbody>
             @foreach ($actividades as $actividad)
                 <tr role="row" class="odd">
-                  <td>{{ $actividad->direccion }}</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                  <td>{{ $actividad['nombre'] }}</td>
+                  <td>{{ $actividad['fecha'] }}</td>
               </tr>
             @endforeach
             </tbody>
