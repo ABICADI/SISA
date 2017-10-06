@@ -29,8 +29,18 @@
             <li><a href="{{ url('system-management/terapia') }}"><i class="fa fa-bank"></i> Terapia</a></li>
             @if (1 == Auth::user()->rol_id)
             <li><a href="{{ url('system-management/bitacora') }}"><i class="glyphicon glyphicon-zoom-out"></i> Bitacora</a></li>
-            <!--<li><a href="{{ url('system-management/report') }}"><i class="fa fa-archive"></i> Report</a></li>-->
             @endif
+          </ul>
+        </li>
+
+        <li class="treeview">
+          <a href="#"><i class="glyphicon glyphicon-hdd"></i> <span>Reportería</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ url('system-management/report-actividad') }}"><i class="fa fa-file"></i> Reporte Actividad</a></li>
           </ul>
         </li>
         @endif

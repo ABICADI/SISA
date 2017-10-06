@@ -208,14 +208,10 @@
             <div class="form-group">
                 <label class="col-md-4 control-label"><label style="color:red">*</label> Municipio</label>
                     <div class="col-md-7">
-<<<<<<< HEAD
-                        
-                        <select class="form-control" name="municipio_id" id='municipio_id' required autofocus>
-                            <option value="" selected disabled>seleccione municipio</option>
-=======
+
                         <select class="form-control" name="municipio_id" id='municipio_id' required autofocus>
                           <option value="" selected disabled>seleccione municipio</option>
->>>>>>> c26818bd04afdd4863009a3e187320833e0537ac
+
                             @foreach ($municipios as $municipio)
                                 <option value="{{$municipio->id}}">{{$municipio->nombre}}</option>
                             @endforeach

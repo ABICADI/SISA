@@ -46,9 +46,9 @@ Route::resource('actividad-descripcion-management', 'ActividadDescripcionControl
 Route::post('system-management/terapia/search', 'TerapiaController@search')->name('terapia.search');
 Route::resource('system-management/terapia', 'TerapiaController');
 
-//Route::get('system-management/report', 'ReportController@index');
-//Route::post('system-management/report/search', 'ReportController@search')->name('report.search');
-//Route::post('system-management/report/excel', 'ReportController@exportExcel')->name('report.excel');
-//Route::post('system-management/report/pdf', 'ReportController@exportPDF')->name('report.pdf');
+Route::get('system-management/report-actividad', 'ReportController@index');
+Route::post('system-management/report-actividad/search', 'ReportController@search')->name('report-actividad.search');
+Route::post('system-management/report-actividad/excel', 'ReportController@exportExcel')->name('report-actividad.excel');
+Route::post('system-management/report-actividad/pdf', 'ReportController@exportPDF')->name('report-actividad.pdf');
 
 //Route::get('avatars/{name}', 'EmployeeManagementController@load');

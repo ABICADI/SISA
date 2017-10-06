@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Actividad;
 use App\Bitacora;
+use App\User;
 use App\Departamento;
 use App\Municipio;
-use App\User;
 
 class ActividadController extends Controller {
 

@@ -3,21 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Employee;
-use Excel;
 use Illuminate\Support\Facades\DB;
+use App\Actividad;
+use Excel;
 use Auth;
 use PDF;
 
-class ReportController extends Controller
-{
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
+class ReportController extends Controller {
+
+    public function __construct() {
         $this->middleware('auth');
     }
 
@@ -31,46 +25,8 @@ class ReportController extends Controller
             'to' => $to
         ];
 
-        $employees = $this->getHiredEmployees($constraints);
-        return view('system-mgmt/report/index', ['employees' => $employees, 'searchingVals' => $constraints]);
-    }
-
-    public function exportExcel(Request $request) {
-        $this->prepareExportingData($request)->export('xlsx');
-        redirect()->intended('system-management/report');
-    }
-
-    public function exportPDF(Request $request) {
-         $constraints = [
-            'from' => $request['from'],
-            'to' => $request['to']
-        ];
-        $employees = $this->getExportingData($constraints);
-        $pdf = PDF::loadView('system-mgmt/report/pdf', ['employees' => $employees, 'searchingVals' => $constraints]);
-        return $pdf->download('report_from_'. $request['from'].'_to_'.$request['to'].'pdf');
-        // return view('system-mgmt/report/pdf', ['employees' => $employees, 'searchingVals' => $constraints]);
-    }
-    
-    private function prepareExportingData($request) {
-        $author = Auth::user()->username;
-        $employees = $this->getExportingData(['from'=> $request['from'], 'to' => $request['to']]);
-        return Excel::create('report_from_'. $request['from'].'_to_'.$request['to'], function($excel) use($employees, $request, $author) {
-
-        // Set the title
-        $excel->setTitle('List of hired employees from '. $request['from'].' to '. $request['to']);
-
-        // Chain the setters
-        $excel->setCreator($author)
-            ->setCompany('HoaDang');
-
-        // Call them separately
-        $excel->setDescription('The list of hired employees');
-
-        $excel->sheet('Hired_Employees', function($sheet) use($employees) {
-
-        $sheet->fromArray($employees);
-            });
-        });
+        $actividades = $this->getHiredAcitividad($constraints);
+        return view('system-mgmt/report-actividad/index', ['actividades' => $actividades, 'searchingVals' => $constraints]);
     }
 
     public function search(Request $request) {
@@ -79,33 +35,67 @@ class ReportController extends Controller
             'to' => $request['to']
         ];
 
-        $employees = $this->getHiredEmployees($constraints);
-        return view('system-mgmt/report/index', ['employees' => $employees, 'searchingVals' => $constraints]);
+        $actividades = $this->getHiredAcitividad($constraints);
+        return view('system-mgmt/report-actividad/index', ['actividades' => $actividades, 'searchingVals' => $constraints]);
     }
 
-    private function getHiredEmployees($constraints) {
-        $employees = Employee::where('date_hired', '>=', $constraints['from'])
-                        ->where('date_hired', '<=', $constraints['to'])
+    private function getHiredAcitividad($constraints) {
+        $actividades = Actividad::where('fecha', '>=', $constraints['from'])
+                        ->where('fecha', '<=', $constraints['to'])
                         ->get();
-        return $employees;
+        return $actividades;
+    }
+
+    public function exportExcel(Request $request) {
+        $this->prepareExportingData($request)->export('xlsx');
+        redirect()->intended('system-management/report-actividad');
+    }
+
+    public function exportPDF(Request $request) {
+         $constraints = [
+            'from' => $request['from'],
+            'to' => $request['to']
+        ];
+        $actividades = $this->getExportingData($constraints);
+        $pdf = PDF::loadView('system-mgmt/report-actividad/pdf', ['actividades' => $actividades, 'searchingVals' => $constraints]);
+        return $pdf->download('reporte_del_'. $request['from'].'_al_'.$request['to'].'.pdf');
+        return view('system-mgmt/report-actividad/pdf', ['actividades' => $actividades, 'searchingVals' => $constraints]);
+    }
+
+    private function prepareExportingData($request) {
+        $author = Auth::user()->username;
+        $actividades = $this->getExportingData(['from'=> $request['from'], 'to' => $request['to']]);
+        return Excel::create('reporte_del_'. $request['from'].'_al_'.$request['to'], function($excel) use($actividades, $request, $author) {
+
+        // Set the title
+        $excel->setTitle('Reporte de Actividades del '. $request['from'].' al '. $request['to']);
+
+        // Chain the setters
+        $excel->setCreator($author)
+            ->setCompany('HoaDang');
+
+        // Call them separately
+        $excel->setDescription('Listado de Actividades');
+
+        $excel->sheet('Reporte', function($sheet) use($actividades) {
+
+        $sheet->fromArray($actividades);
+            });
+        });
     }
 
     private function getExportingData($constraints) {
-        return DB::table('employees')
-        ->leftJoin('city', 'employees.city_id', '=', 'city.id')
-        ->leftJoin('department', 'employees.department_id', '=', 'department.id')
-        ->leftJoin('state', 'employees.state_id', '=', 'state.id')
-        ->leftJoin('country', 'employees.country_id', '=', 'country.id')
-        ->leftJoin('division', 'employees.division_id', '=', 'division.id')
-        ->select('employees.firstname', 'employees.middlename', 'employees.lastname', 
-        'employees.age','employees.birthdate', 'employees.address', 'employees.zip', 'employees.date_hired',
-        'department.name as department_name', 'division.name as division_name')
-        ->where('date_hired', '>=', $constraints['from'])
-        ->where('date_hired', '<=', $constraints['to'])
+        return DB::table('actividades')
+        ->leftJoin('users', 'actividades.user_id', '=', 'users.id')
+        ->leftJoin('departamentos', 'actividades.departamento_id', '=', 'departamentos.id')
+        ->leftJoin('municipios', 'actividades.municipio_id', '=', 'municipios.id')
+        ->select('actividades.nombre as Nombre_Actividad', 'users.nombre1 as Primer_Nombre', 'users.nombre2 as Segundo_Nombre','users.nombre3 as Tercer_Nombre', 'users.apellido1 as Primer_Apellido', 'users.apellido2 as Segundo_Apellido', 'users.apellido3 as Tercer_Apellido', 'users.telefono as Teléfono', 'departamentos.nombre as Departamento', 'municipios.nombre as Municipio', 'actividades.direccion as Dirección', 'actividades.fecha as Fecha', 'actividades.descripcion as Descripción')
+        ->where('fecha', '>=', $constraints['from'])
+        ->where('fecha', '<=', $constraints['to'])
         ->get()
         ->map(function ($item, $key) {
         return (array) $item;
         })
         ->all();
     }
-}
+  }

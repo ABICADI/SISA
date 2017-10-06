@@ -67,6 +67,7 @@ desired effect
       <!-- Fila Contenido -->
       <div class="row">
         <!-- ./col -->
+        @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box bg-yellow">
@@ -108,6 +109,7 @@ desired effect
             <a href="{{ route('medico-management.index') }}" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
+        @endif
       <!-- /.row -->
       <!-- Main row -->
 
