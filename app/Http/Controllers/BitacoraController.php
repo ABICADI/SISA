@@ -14,7 +14,7 @@ class BitacoraController extends Controller {
 
     public function index() {
 
-        $bitacoras = DB::table('bitacoras')->orderBy('fecha', 'DES')->paginate(10);
+        $bitacoras = DB::table('bitacoras')->orderBy('fecha', 'DESC')->paginate(10);
         return view('system-mgmt/bitacora/index', ['bitacoras' => $bitacoras]);
     }
 

@@ -9,6 +9,7 @@ use App\User;
 use App\Paciente;
 use App\Medico;
 use App\Departamento;
+use App\Municipio;
 use Charts;
 
 class DashboardController extends Controller {
@@ -26,14 +27,6 @@ class DashboardController extends Controller {
       $count_paci = Paciente::all()->count();
       $count_medi = Medico::all()->count();
 
-      $grafica_actividades = Charts::database(Actividad::all(), 'bar', 'highcharts')
-          ->title('Actividades')
-          ->template('teal-material')
-          ->elementLabel("Total")
-          ->dimensions(5, 5)
-          ->responsive(true)
-          ->groupBy('fecha');
-
       $grafica_registro = Charts::multiDatabase('line', 'highcharts')
           ->title('Gráfica de Empleado, Paciente y Médico registrados en SISA')
           ->dataset('Empleados', User::all()->where('estado_id', '!=', 2)->where('id', '!=', 1))
@@ -43,6 +36,6 @@ class DashboardController extends Controller {
           ->elementLabel("Cantidad")
           ->groupByMonth(2017, true);
 
-      return view('dashboard', ['count_user' => $count_user, 'count_paci' => $count_paci, 'count_medi' => $count_medi, 'grafica_actividades' => $grafica_actividades, 'grafica_registro' => $grafica_registro]);
+      return view('dashboard', ['count_user' => $count_user, 'count_paci' => $count_paci, 'count_medi' => $count_medi, 'grafica_registro' => $grafica_registro]);
     }
 }
