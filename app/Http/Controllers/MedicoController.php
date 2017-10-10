@@ -97,16 +97,16 @@ class MedicoController extends Controller {
     private function validateInput($request) {
         $this->validate($request, [
         'colegiado' => 'required|max:10|unique:medicos',
-        'nombre' => 'required|max:150|unique:medicos',
-        'telefono' => 'max:8'
+        'nombre' => 'max:150|unique:medicos',
+        'telefono' => 'max:8|min:8'
         ]);
     }
 
     private function validateUpdate($request) {
         $this->validate($request, [
         'colegiado' => 'required|max:10',
-        'nombre' => 'required|max:150',
-        'telefono' => 'max:8'
+        'nombre' => 'max:150',
+        'telefono' => 'max:8|min:8'
         ]);
     }
 
@@ -134,15 +134,37 @@ class MedicoController extends Controller {
         $format = 'd/m/Y';
         $now = date($format);
         $user = Auth::user()->username;
-        $medico1 = Medico::find($id);
+        $medico = Medico::find($id);
 
-            if ($medico1->descripcion != $request['colegiado']) {
+            if ($medico->colegiado != $request['colegiado']) {
                 $bitacora = new Bitacora();
                 $bitacora->usuario = $user;
                 $bitacora->nombre_tabla = 'MEDICO';
                 $bitacora->actividad = 'ACTUALIZAR';
-                $bitacora->anterior = 'Colegiado: ' . $medico1->colegiado;
+                $bitacora->anterior = 'Colegiado: ' . $medico->colegiado;
                 $bitacora->nuevo = 'Colegiado: ' . $request->colegiado;
+                $bitacora->fecha = $now;
+                $bitacora->save();
+            }
+
+						if ($medico->nombre != $request['nombre']) {
+                $bitacora = new Bitacora();
+                $bitacora->usuario = $user;
+                $bitacora->nombre_tabla = 'MEDICO';
+                $bitacora->actividad = 'ACTUALIZAR';
+                $bitacora->anterior = 'Nombre: ' . $medico->nombre;
+                $bitacora->nuevo = 'Nombre: ' . $request->nombre;
+                $bitacora->fecha = $now;
+                $bitacora->save();
+            }
+
+						if ($medico->telefono != $request['telefono']) {
+                $bitacora = new Bitacora();
+                $bitacora->usuario = $user;
+                $bitacora->nombre_tabla = 'MEDICO';
+                $bitacora->actividad = 'ACTUALIZAR';
+                $bitacora->anterior = 'Teléfono: ' . $medico->telefono;
+                $bitacora->nuevo = 'Teléfono: ' . $request->telefono;
                 $bitacora->fecha = $now;
                 $bitacora->save();
             }

@@ -25,7 +25,7 @@
             </div>
 
             <div class="form-group{{ $errors->has('nombre') ? ' has-error' : '' }}">
-                <label for="nombre" class="col-md-2 control-label"><label style="color:red">*</label> Nombre completo</label>
+                <label for="nombre" class="col-md-2 control-label">Nombre completo</label>
                     <div class="col-md-5">
                         <input id="nombre" type="text" class="form-control" placeholder="Nombre completo" name="nombre" value="{{ old('nombre') }}" onkeypress="return letras(event)" maxlength="150" onKeyUp="this.value=this.value.toUpperCase();" required autofocus>
 
@@ -38,7 +38,7 @@
             </div>
 
             <div class="form-group{{ $errors->has('telefono') ? ' has-error' : '' }}">
-                <label for="cui" class="col-md-2 control-label"><label style="color:red">*</label> Teléfono</label>
+                <label for="cui" class="col-md-2 control-label">Teléfono</label>
                     <div class="col-md-3">
                         <input id="telefono" type="text" class="form-control" placeholder="78840000" name="telefono" value="{{ old('telefono') }}" onkeypress="return numeros(event)" minlength="8" maxlength="8" required autofocus>
 
