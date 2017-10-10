@@ -23,8 +23,8 @@ class DashboardController extends Controller {
       $now = date($format);
 
     	$count_user = User::where('estado_id', '!=', 2)->where('id', '!=', 1)->count();
-      $count_paci = Paciente::where('id', '!=', 1)->count();
-      $count_medi = Medico::where('id', '!=', 1)->count();
+      $count_paci = Paciente::all()->count();
+      $count_medi = Medico::all()->count();
 
       $grafica_actividades = Charts::database(Actividad::all(), 'bar', 'highcharts')
           ->title('Actividades')
@@ -36,7 +36,7 @@ class DashboardController extends Controller {
 
       $grafica_registro = Charts::multiDatabase('line', 'highcharts')
           ->title('Gráfica de Empleado, Paciente y Médico registrados en SISA')
-          ->dataset('Empleados', User::all())
+          ->dataset('Empleados', User::all()->where('estado_id', '!=', 2)->where('id', '!=', 1))
           ->dataset('Pacientes', Paciente::all())
           ->dataset('Médicos', Medico::all())
           ->responsive(true)
