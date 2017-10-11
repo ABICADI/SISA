@@ -61,10 +61,6 @@ class DiaTerapiaUsuarioController extends Controller {
 
         $user->username = $request['username'];
         $user->email = $request['email'];
-        if ($request['password'] != null && strlen($request['password']) > 0) {
-            $request['password'] = 'required|min:8|confirmed';
-            $user->password = bcrypt($request['password']);
-        }
         $user->dpi = $request['dpi'];
         $user->nombre1 = $request['nombre1'];
         $user->nombre2 = $request['nombre2'];
@@ -97,6 +93,11 @@ class DiaTerapiaUsuarioController extends Controller {
             $diausuario->save();
         }
 
+        if ($request['password'] != null && strlen($request['password']) > 0) {
+            $this->validatePassword($request);
+            $user->password = bcrypt($request['password']);
+        }
+
         $this->updateBitacora($request, $id);
         if($user->save()){
            return redirect()->intended('/user-management');
@@ -122,6 +123,12 @@ class DiaTerapiaUsuarioController extends Controller {
             'fecha_ingreso' => 'required',
             'telefono' => 'digits:8|nullable',
             'rol_id' => 'required',
+        ]);
+    }
+
+    private function validatePassword($request) {
+        $this->validate($request, [
+            'password' => 'required|min:8|confirmed',
         ]);
     }
 
