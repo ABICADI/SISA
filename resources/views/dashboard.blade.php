@@ -111,11 +111,10 @@ desired effect
             <a href="{{ route('medico-management.index') }}" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
-
       <!-- /.row -->
       <!-- Main row -->
 
-  <!-- /Inicio Grafica Empleado, Paciente y Médico -->
+  <!-- /Inicio Grafica Empledo, Paciente y Médico -->
   <table class="table responsive">
     <tr>
       <td>
@@ -123,9 +122,9 @@ desired effect
       </td>
       </tr>
   </table>
-  <!-- /Fin Grafica Empleado, Paciente y Médico -->
+  <!-- /Fin Grafica Grafica Empledo, Paciente y Médico -->
   @endif
-  
+
   <div>
     <table class="table responsive">
       <tr>

@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Actividad;
 use App\User;
 use App\Paciente;
 use App\Medico;
-use App\Departamento;
-use App\Municipio;
 use Charts;
 
 class DashboardController extends Controller {
