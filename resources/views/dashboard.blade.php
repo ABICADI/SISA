@@ -25,7 +25,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
         apply the skin class to the body tag so the changes take effect.
   -->
    <link href="{{ asset("/bower_components/AdminLTE/dist/css/skins/skin-blue.min.css")}}" rel="stylesheet" type="text/css" />
+
    {!! Charts::assets() !!}
+
+   <!-- Calendario Inicio -->
+   <link href="{{ asset("/bower_components/fullcalendario/bootstrap/css/bootstrap.min.css")}}" rel="stylesheet" type="text/css" />
+   <link href="{{ asset("/bower_components/fullcalendario/fullcalendar/fullcalendar.min.css")}}" rel="stylesheet" type="text/css" />
+   <link href="{{ asset("/bower_components/fullcalendario/bootstrap-datetimepicker/css/bootstrap-material-datetimepicker.css")}}" rel="stylesheet" type="text/css" />
+   <link href="{{ asset("/bower_components/fullcalendario/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css")}}" rel="stylesheet" type="text/css" />
+   <!-- Calendario Fin -->
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -66,54 +74,63 @@ desired effect
     <!-- Main content -->
     <section class="content">
 
-      <!-- Fila Contenido -->
-      <div class="row">
-        <!-- ./col -->
-        @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-yellow">
-            <div class="inner">
-              <h3>{{$count_user}}</h3>
-              <p>Empleados Ingresados</p>
-            </div>
-            <div class="icon">
-              <a href="{{ route('user-management.create') }}"><i class="fa fa-users"></i></a>
-            </div>
-            <a href="{{ route('user-management.index') }}" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
+  <!-- Calendario Inicio -->
+  <table class="table responsive">
+    <tr>
+      <td>
+      <div id='calendar'></div>
+    </td>
+    </tr>
+</table>
+  <!-- Calendario Fin -->
 
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-green">
-            <div class="inner">
-              <h3>{{$count_paci}}</h3>
-              <p>Pacientes Ingresados</p>
-            </div>
-            <div class="icon">
-              <a href="{{ route('paciente-management.create') }}"><i class="fa fa-user"></i></a>
-            </div>
-            <a href="{{ route('paciente-management.index') }}" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
+  <!-- Fila Contenido -->
+  <div class="row">
+    <!-- ./col -->
+    @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-yellow">
+        <div class="inner">
+          <h3>{{$count_user}}</h3>
+          <p>Empleados Ingresados</p>
         </div>
-
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box bg-red">
-            <div class="inner">
-              <h3>{{$count_medi}}</h3>
-              <p>Médicos Ingresados</p>
-            </div>
-            <div class="icon">
-              <a href="{{ route('medico-management.create') }}"><i class="fa fa-user-md"></i></a>
-            </div>
-            <a href="{{ route('medico-management.index') }}" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
+        <div class="icon">
+          <a href="{{ route('user-management.create') }}"><i class="fa fa-users"></i></a>
         </div>
-      <!-- /.row -->
-      <!-- Main row -->
+        <a href="{{ route('user-management.index') }}" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
 
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-green">
+        <div class="inner">
+          <h3>{{$count_paci}}</h3>
+          <p>Pacientes Ingresados</p>
+        </div>
+        <div class="icon">
+          <a href="{{ route('paciente-management.create') }}"><i class="fa fa-user"></i></a>
+        </div>
+        <a href="{{ route('paciente-management.index') }}" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-red">
+        <div class="inner">
+          <h3>{{$count_medi}}</h3>
+          <p>Médicos Ingresados</p>
+        </div>
+        <div class="icon">
+          <a href="{{ route('medico-management.create') }}"><i class="fa fa-user-md"></i></a>
+        </div>
+        <a href="{{ route('medico-management.index') }}" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+  <!-- /.row -->
+  <!-- Main row -->
   <!-- /Inicio Grafica Empledo, Paciente y Médico -->
   <table class="table responsive">
     <tr>
@@ -156,14 +173,6 @@ desired effect
         </tr>
     </table>
   </div>
-
-  <div class="row">
-<div class="card">
-<div class="col l7 offset-l1 m12 s12">
-<div id="calendar"></div>
-</div>
-</div>
-</div>
   </section>
 </div>
     <!-- /.content-wrapper -->
@@ -189,4 +198,85 @@ desired effect
      user experience. Slimscroll is required when using the
      fixed layout. -->
 </body>
+<!-- Calendario Inicio JS-->
+  <script src="{{ asset ("/bower_components/fullcalendario/jquery.min.js") }}"></script>
+  <script src="{{ asset ("/bower_components/fullcalendario/bootstrap/js/bootstrap.min.js") }}"></script>
+  <script src="{{ asset ("/bower_components/fullcalendario/fullcalendar/lib/moment.min.js") }}"></script>
+  <script src="{{ asset ("/bower_components/fullcalendario/fullcalendar/fullcalendar.min.js") }}"></script>
+  <script src="{{ asset ("/bower_components/fullcalendario/fullcalendar/bootstrap-datetimepicker/js/bootstrap-material-datetimepicker.js") }}"></script>
+  <script src="{{ asset ("/bower_components/fullcalendario/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js") }}"></script>
+<!-- Calendario Fin -->
+
+<script>
+    var BASEURL = "{{ url('/') }}";
+    $(document).ready(function() {
+
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month,basicWeek,basicDay'
+      },
+      navLinks: true, // can click day/week names to navigate views
+      editable: true,
+            selectable: true,
+            selectHelper: true,
+
+            select: function(start){
+                start = moment(start.format());
+                $('#date_start').val(start.format('DD-MM-YYYY'));
+                $('#responsive-modal').modal('show');
+            },
+
+      events: BASEURL + '/events',
+
+            eventClick: function(event, jsEvent, view){
+                var date_start = $.fullCalendar.moment(event.start).format('YYYY-MM-DD');
+                var time_start = $.fullCalendar.moment(event.start).format('hh:mm:ss');
+                var date_end = $.fullCalendar.moment(event.end).format('YYYY-MM-DD hh:mm:ss');
+                $('#modal-event #delete').attr('data-id', event.id);
+                $('#modal-event #_title').val(event.title);
+                $('#modal-event #_date_start').val(date_start);
+                $('#modal-event #_time_start').val(time_start);
+                $('#modal-event #_date_end').val(date_end);
+                $('#modal-event #_color').val(event.color);
+                $('#modal-event').modal('show');
+            }
+    });
+
+  });
+
+    $('.colorpicker').colorpicker('#14eebb');
+
+    $('#time_start').bootstrapMaterialDatePicker({
+        date: false,
+        shortTime: false,
+        format: 'HH:mm:ss'
+    });
+
+    $('#date_end').bootstrapMaterialDatePicker({
+        date: true,
+        shortTime: false,
+        format: 'YYYY-MM-DD HH:mm:ss'
+    });
+
+    $('#delete').on('click', function(){
+        var x = $(this);
+        var delete_url = x.attr('data-href')+'/'+x.attr('data-id');
+
+        $.ajax({
+            url: delete_url,
+            type: 'DELETE',
+            success: function(result){
+                $('#modal-event').modal('hide');
+                alert(result.message);
+            },
+            error: function(result){
+                $('#modal-event').modal('hide');
+                alert(result.message);
+            }
+        });
+    });
+
+</script>
 </html>
