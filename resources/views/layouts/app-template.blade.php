@@ -29,13 +29,6 @@
     <link href="{{ asset('css/app-template.css') }}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 
-    <!-- Calendario Inicio -->
-    <link href="{{ asset("/bower_components/fullcalendario/bootstrap/css/bootstrap.min.css")}}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset("/bower_components/fullcalendario/fullcalendar/fullcalendar.min.css")}}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset("/bower_components/fullcalendario/bootstrap-datetimepicker/css/bootstrap-material-datetimepicker.css")}}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset("/bower_components/fullcalendario/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css")}}" rel="stylesheet" type="text/css" />
-    <!-- Calendario Fin -->
-
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -149,7 +142,7 @@
           function letras(e) {
               tecla = (document.all) ? e.keyCode : e.which;
               if (tecla==8) return true;
-              patron =/[A-Za-z-á-é-í-ó-ú- ]/;
+              patron =/[A-Za-záéíóú ]/;
               te = String.fromCharCode(tecla);
               return patron.test(te);
           }
@@ -169,7 +162,7 @@
           function letrasynumeros(e) {
               tecla = (document.all) ? e.keyCode : e.which;
               if (tecla==8) return true;
-              patron =/[A-Za-z-á-é-í-ó-ú-0-9]+/;
+              patron =/[A-Za-záéíóú-0-9 ]+/;
               te = String.fromCharCode(tecla);
               return patron.test(te);
           }
@@ -185,12 +178,4 @@
       }
     </script>
   </body>
-  <!-- Calendario Inicio JS-->
-    <script src="{{ asset ("/bower_components/fullcalendario/jquery.min.js") }}"></script>
-    <script src="{{ asset ("/bower_components/fullcalendario/bootstrap/js/bootstrap.min.js") }}"></script>
-    <script src="{{ asset ("/bower_components/fullcalendario/fullcalendar/lib/moment.min.js") }}"></script>
-    <script src="{{ asset ("/bower_components/fullcalendario/fullcalendar/fullcalendar.min.js") }}"></script>
-    <script src="{{ asset ("/bower_components/fullcalendario/fullcalendar/bootstrap-datetimepicker/js/bootstrap-material-datetimepicker.js") }}"></script>
-    <script src="{{ asset ("/bower_components/fullcalendario/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js") }}"></script>
-  <!-- Calendario Fin -->
 </html>
