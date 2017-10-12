@@ -36,6 +36,23 @@
                                 @endif
                             </div>
                         </div>
+
+                        <div class="form-group{{ $errors->has('color') ? ' has-error' : '' }}">
+                            <label for="nombre" class="col-md-4 control-label"><label style="color:red">*</label> Color</label>
+
+                            <div class="input-group colorpicker col-md-6">
+                                <input id="color" type="text" class="form-control" name="color" value="{{ old('color') }}" required autofocus>
+                                <span class="input-group-addon">
+                                    <i></i>
+                                </span>
+
+                                @if ($errors->has('color'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('color') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
                         @if (1 == Auth::user()->rol_id)
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">

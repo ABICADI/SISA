@@ -29,11 +29,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
    {!! Charts::assets() !!}
 
    <!-- Calendario Inicio -->
-   <link href="{{ asset("/bower_components/fullcalendario/bootstrap/css/bootstrap.min.css")}}" rel="stylesheet" type="text/css" />
    <link href="{{ asset("/bower_components/fullcalendario/fullcalendar/fullcalendar.min.css")}}" rel="stylesheet" type="text/css" />
-   <link href="{{ asset("/bower_components/fullcalendario/bootstrap-datetimepicker/css/bootstrap-material-datetimepicker.css")}}" rel="stylesheet" type="text/css" />
    <link href="{{ asset("/bower_components/fullcalendario/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css")}}" rel="stylesheet" type="text/css" />
    <!-- Calendario Fin -->
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -196,7 +195,6 @@ desired effect
 <!-- Calendario Inicio JS-->
 <script src="{{ asset ("/bower_components/fullcalendario/fullcalendar/lib/moment.min.js") }}"></script>
 <script src="{{ asset ("/bower_components/fullcalendario/fullcalendar/fullcalendar.min.js") }}"></script>
-<script src="{{ asset ("/bower_components/fullcalendario/fullcalendar/bootstrap-datetimepicker/js/bootstrap-material-datetimepicker.js") }}"></script>
 <script src="{{ asset ("/bower_components/fullcalendario/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js") }}"></script>
 <!-- Calendario Fin -->
 

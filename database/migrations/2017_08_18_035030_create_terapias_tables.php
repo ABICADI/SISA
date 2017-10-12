@@ -11,6 +11,7 @@ class CreateTerapiasTables extends Migration {
             $table->increments('id');
             $table->string('nombre');
             $table->string('descripcion', 500)->nullabel();
+            $table->string('color', 8);
             $table->timestamps();
             $table->softDeletes();
         });

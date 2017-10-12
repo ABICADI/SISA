@@ -25,7 +25,7 @@
       <form method="POST" action="{{ route('terapia.search') }}">
          {{ csrf_field() }}
          @component('layouts.search', ['title' => 'Buscar'])
-          @component('layouts.two-cols-search-row', ['items' => ['Nombre'], 
+          @component('layouts.two-cols-search-row', ['items' => ['Nombre'],
           'oldVals' => [isset($searchingVals) ? strtoupper($searchingVals['nombre']) : '']])
           @endcomponent
         @endcomponent
@@ -38,6 +38,7 @@
               <tr role="row">
                 <th width="20%" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="terapia: activate to sort column ascending">Nombre</th>
                 <th width="20%" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="terapia: activate to sort column ascending">Descripcion</th>
+                <th width="20%" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="terapia: activate to sort column ascending">Color</th>
                 <th tabindex="0" aria-controls="example2" rowspan="1" colspan="2" aria-label="Action: activate to sort column ascending">Opciones</th>
               </tr>
             </thead>
@@ -47,6 +48,7 @@
                 <tr role="row" class="odd">
                   <td>{{ $terapia->nombre }}</td>
                   <td>{{ $terapia->descripcion }}</td>
+                  <td><a class="btn btn-warning col-sm-4 col-xs-5 btn-margin" style="background-color:{{ $terapia->color }}"><i class="fa fa-paint-brush"></i></a></td>
                   <td>
                       @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
                         <a href="{{ route('terapia.edit', ['id' => $terapia->id]) }}" class="btn btn-warning col-sm-2 col-xs-5 btn-margin"><i class="fa fa-edit"></i></a>

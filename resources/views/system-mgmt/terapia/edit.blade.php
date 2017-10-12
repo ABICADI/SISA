@@ -10,7 +10,7 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('terapia.update', ['id' => $terapia->id]) }}">
                         <input type="hidden" name="_method" value="PATCH">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        
+
                         <div class="form-group{{ $errors->has('nombre') ? ' has-error' : '' }}">
                             <label for="nombre" class="col-md-4 control-label"><label style="color:red">*</label> Nombre</label>
                             <div class="col-md-6">
@@ -36,6 +36,23 @@
                                 </span>
                             @endif
                     </div>
+            </div>
+
+            <div class="form-group{{ $errors->has('color') ? ' has-error' : '' }}">
+                <label for="nombre" class="col-md-4 control-label"><label style="color:red">*</label> Color</label>
+
+                <div class="input-group colorpicker col-md-6">
+                    <input id="color" type="text" class="form-control" name="color" value="{{ $terapia->color }}" required autofocus>
+                    <span class="input-group-addon">
+                        <i></i>
+                    </span>
+
+                    @if ($errors->has('color'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('color') }}</strong>
+                        </span>
+                    @endif
+                </div>
             </div>
                         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
                         <div class="form-group">

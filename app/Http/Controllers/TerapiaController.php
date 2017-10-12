@@ -16,7 +16,7 @@ class TerapiaController extends Controller {
 
     public function index() {
         $terapias = DB::table('terapias')
-        ->select('terapias.*')->paginate(10);
+        ->select('terapias.*')->orderBy('nombre', 'asc')->paginate(10);
         return view('system-mgmt/terapia/index', ['terapias' => $terapias]);
     }
 
@@ -32,6 +32,7 @@ class TerapiaController extends Controller {
         $terapia = new Terapia();
         $terapia->nombre = $request["nombre"];
         $terapia->descripcion = $request["descripcion"];
+        $terapia->color = $request["color"];
 
         //Si la terapia se guarda, se crea un registro en la Bitacora
         if($terapia->save()) {
@@ -57,6 +58,7 @@ class TerapiaController extends Controller {
         //Validamos Datos del Formulario
         $this->validateUpdate($request);
         $terapia->descripcion = $request["descripcion"];
+        $terapia->color = $request["color"];
 
         $this->updateTerapiaBitacora($request, $id);
         if($terapia->save()){
@@ -90,13 +92,15 @@ class TerapiaController extends Controller {
     private function validateInput($request) {
         $this->validate($request, [
         'nombre' => 'required|max:30|unique:terapias',
-        'descripcion' => 'max:500'
+        'descripcion' => 'max:500',
+        'color' => 'required|unique:terapias'
         ]);
     }
 
     private function validateUpdate($request) {
         $this->validate($request, [
-        'descripcion' => 'max:500'
+        'descripcion' => 'max:500',
+        'color' => 'required'
         ]);
     }
 

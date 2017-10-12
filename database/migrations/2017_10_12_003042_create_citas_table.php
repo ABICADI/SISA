@@ -21,6 +21,7 @@ class CreateCitasTable extends Migration
             $table->integer('tratamiento_id');
             $table->foreign('tratamiento_id')->references('id')->on('tratamientos')->onUpdate('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -62,6 +62,7 @@
         return [
             'nombre' => null,
             'descripcion' => null,
+            'color' => null,
         ];
     });
 
