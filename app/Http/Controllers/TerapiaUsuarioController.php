@@ -17,9 +17,10 @@ use App\UsuarioTerapia;
 use Auth;
 
 class TerapiaUsuarioController extends Controller {
-		    protected $redirectTo = '/terapiausuario-management'; //redirecciona la ruta
 
-public function __construct() {
+		protected $redirectTo = '/terapiausuario-management'; //redirecciona la ruta
+
+		public function __construct() {
         $this->middleware('auth');
     }
 

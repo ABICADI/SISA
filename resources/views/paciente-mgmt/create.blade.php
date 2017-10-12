@@ -267,19 +267,6 @@
             <tr>
             <td>
             <div class="form-group">
-                <label class="col-md-4 control-label"><label style="color:red">*</label> Médico</label>
-                    <div class="col-md-8">
-                        <select class="form-control" name="medico_id" id='medico_id' required autofocus>
-                            <option value="" selected disabled>seleccione médico</option>
-                            @foreach ($medicos as $medico)
-                                <option value="{{$medico->id}}">{{$medico->colegiado}} {{$medico->nombre}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-            </div>
-            </td>
-            <td>
-            <div class="form-group">
                 <label class="col-md-4 control-label"><label style="color:red">*</label> Tipo de Pago</label>
                     <div class="col-md-4">
                         <select class="form-control" name="pago_id" id='pago_id' required autofocus>

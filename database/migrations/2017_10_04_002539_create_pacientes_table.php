@@ -23,13 +23,11 @@ class CreatePacientesTable extends Migration {
           $table->string('encargado')->nullable();
           $table->string('fecha_ingreso');
           $table->string('telefono')->nullable();
-          $table->integer('medico_id');
           $table->string('seguro_social',10)->nullable();
           $table->string('observacion',500)->nullable();
           $table->integer('pago_id');
           $table->foreign('departamento_id')->references('id')->on('departamentos')->onUpdate('cascade');
           $table->foreign('municipio_id')->references('id')->on('municipios')->onUpdate('cascade');
-          $table->foreign('medico_id')->references('id')->on('medicos')->onUpdate('cascade');
           $table->foreign('pago_id')->references('id')->on('pagos')->onUpdate('cascade');
           $table->timestamps();
           $table->softDeletes();

@@ -137,7 +137,6 @@
             'encargado' => null,
             'fecha_ingreso' => null,
             'telefono' => null,
-            'medico_id' => null,
             'seguro_social' => null,
             'observacion' => null,
             'pago_id' => null,

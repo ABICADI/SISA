@@ -31,6 +31,9 @@ Route::resource('user-management', 'UserManagementController');
 Route::post('paciente-management/search', 'PacienteController@search')->name('paciente-management.search');
 Route::resource('paciente-management', 'PacienteController');
 
+Route::post('tratamiento-management/search', 'TratamientoController@search')->name('tratamiento-management.search');
+Route::resource('tratamiento-management', 'TratamientoController');
+
 Route::post('medico-management/search', 'MedicoController@search')->name('medico-management.search');
 Route::resource('medico-management', 'MedicoController');
 

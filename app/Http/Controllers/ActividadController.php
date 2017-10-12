@@ -13,6 +13,12 @@ use Auth;
 
 class ActividadController extends Controller {
 
+    protected $redirectTo = '/actividad-management';
+
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     public function index() {
         $actividades = DB::table('actividades')
         ->leftJoin('users', 'actividades.user_id', '=', 'users.id')

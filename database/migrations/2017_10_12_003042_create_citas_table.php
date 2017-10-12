@@ -19,7 +19,7 @@ class CreateCitasTable extends Migration
             $table->string('asistencia')->nullable();
             $table->string('observacion')->nullable();
             $table->integer('tratamiento_id');
-            $table->foreign('tratamiento_id')->references('id')->on('tratamientos')->onUpdate('cascade');
+            $table->foreign('tratamiento_id')->references('id')->on('tratamientos')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

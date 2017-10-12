@@ -20,7 +20,6 @@ class PacienteTableSeeder extends Seeder {
             'encargado' => 'El primero en llegar',
             'fecha_ingreso' => '02/10/2017',
             'telefono' => '00000000',
-            'medico_id' => '1',
             'seguro_social' => '5698',
             'observacion' => 'Ninguna por el momento',
             'pago_id' => '1'
