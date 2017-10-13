@@ -54,4 +54,5 @@ Route::post('system-management/report-actividad/search', 'ReportController@searc
 Route::post('system-management/report-actividad/excel', 'ReportController@exportExcel')->name('report-actividad.excel');
 Route::post('system-management/report-actividad/pdf', 'ReportController@exportPDF')->name('report-actividad.pdf');
 
+Route::resource('agregar-cita', 'CalendarioController');
 //Route::get('avatars/{name}', 'EmployeeManagementController@load');

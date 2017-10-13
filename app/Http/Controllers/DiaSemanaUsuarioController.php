@@ -37,8 +37,6 @@ class DiaSemanaUsuarioController extends Controller {
         $last = DB::table('users')->latest()->first();
         $user = User::find($last->id);
         $diasemanas = $request->diasemana;
-				$p = "si";
-				$r = "no";
 
 				if($diasemanas != ''){
 					foreach ($diasemanas as $diasemana) {

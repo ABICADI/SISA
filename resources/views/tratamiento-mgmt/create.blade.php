@@ -12,18 +12,18 @@
 
                         <div class="form-group">
                             <label class="col-md-2 control-label"><label style="color:red">*</label> Paciente</label>
-                                <div class="col-md-5">
+                                <div class="col-md-6">
                                     <select class="form-control" name="paciente_id" id="paciente_id" required autofocus>
                                         <option value="" selected disabled>seleccione paciente</option>
                                         @foreach ($pacientes as $paciente)
-                                            <option value="{{$paciente->id}}">{{$paciente->nombre1}}</option>
+                                            <option value="{{$paciente->id}}">{{$paciente->nombre1}} {{$paciente->nombre2}} {{$paciente->nombre3}} {{$paciente->apellido1}} {{$paciente->apellido2}} {{$paciente->apellido3}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-2 control-label"><label style="color:red">*</label> Medico</label>
-                                <div class="col-md-5">
+                                <div class="col-md-6">
                                     <select class="form-control" name="medico_id" id="medico_id" required autofocus>
                                         <option value="" selected disabled>seleccione medico</option>
                                         @foreach ($medicos as $medico)
@@ -34,7 +34,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-md-2 control-label"><label style="color:red">*</label> Terapia</label>
-                                <div class="col-md-5">
+                                <div class="col-md-6">
                                     <select class="form-control" name="terapia_id" id="terapia_id" required autofocus>
                                         <option value="" selected disabled>seleccione terapia</option>
                                         @foreach ($terapias as $terapia)

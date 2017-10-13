@@ -59,7 +59,7 @@ class TratamientoController extends Controller {
 
         if($tratamiento->save()){
           $this->insertBitacoraTratamiento($request);
-          return redirect()->intended('/tratamiento-management');
+          return redirect()->intended('/agregar-cita');
         }
     }
 
