@@ -26,8 +26,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
   -->
    <link href="{{ asset("/bower_components/AdminLTE/dist/css/skins/skin-blue.min.css")}}" rel="stylesheet" type="text/css" />
 
-   {!! Charts::assets() !!}
-
    <!-- Calendario Inicio -->
    <link href="{{ asset("/bower_components/fullcalendario/fullcalendar/fullcalendar.min.css")}}" rel="stylesheet" type="text/css" />
    <link href="{{ asset("/bower_components/fullcalendario/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css")}}" rel="stylesheet" type="text/css" />
@@ -130,15 +128,6 @@ desired effect
     </div>
   <!-- /.row -->
   <!-- Main row -->
-  <!-- /Inicio Grafica Empledo, Paciente y Médico -->
-  <table class="table responsive">
-    <tr>
-      <td>
-        {!! $grafica_registro->render() !!}
-      </td>
-      </tr>
-  </table>
-  <!-- /Fin Grafica Grafica Empledo, Paciente y Médico -->
   @endif
 
   <div>

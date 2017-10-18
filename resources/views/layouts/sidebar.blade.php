@@ -33,7 +33,6 @@
             @endif
           </ul>
         </li>
-
         <li class="treeview">
           <a href="#"><i class="glyphicon glyphicon-hdd"></i> <span>Reportería</span>
             <span class="pull-right-container">
@@ -42,6 +41,20 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ url('system-management/report-actividad') }}"><i class="fa fa-file"></i> Reporte Actividad</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#"><i class="glyphicon glyphicon-stats"></i> <span>Gráficas</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{ url('grafica-management/cita') }}"><i class="fa fa-bar-chart"></i> Gráfica Cita</a></li>
+            <li><a href="{{ url('grafica-management/empleado') }}"><i class="fa fa-bar-chart"></i> Gráfica Empleado</a></li>
+            <li><a href="{{ url('grafica-management/medico') }}"><i class="fa fa-bar-chart"></i> Gráfica Médico</a></li>
+            <li><a href="{{ url('grafica-management/paciente') }}"><i class="fa fa-bar-chart"></i> Gráfica Paciente</a></li>
+            <li><a href="{{ url('grafica-management/tratamiento') }}"><i class="fa fa-bar-chart"></i> Gráfica Tratamiento</a></li>
           </ul>
         </li>
         @endif

@@ -15,7 +15,8 @@ class CreateCitasTable extends Migration
     {
         Schema::create('citas', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('fecha');
+            $table->date('start');
+            $table->date('end');
             $table->string('asistencia')->nullable();
             $table->string('observacion')->nullable();
             $table->integer('tratamiento_id');

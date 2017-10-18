@@ -22,6 +22,7 @@ Route::get('/dashboard', 'DashboardController@index');
 Route::get('/error', 'ErrorController@index');
 Route::resource('profile', 'ProfileController');
 
+//Rutas de CRUD de todo el Sistema
 Route::post('system-management/bitacora/search', 'BitacoraController@search')->name('bitacora.search');
 Route::resource('system-management/bitacora', 'BitacoraController');
 
@@ -49,10 +50,24 @@ Route::resource('actividad-descripcion-management', 'ActividadDescripcionControl
 Route::post('system-management/terapia/search', 'TerapiaController@search')->name('terapia.search');
 Route::resource('system-management/terapia', 'TerapiaController');
 
+//Rutas de Reporteria de todo el Sistema
 Route::get('system-management/report-actividad', 'ReportController@index');
 Route::post('system-management/report-actividad/search', 'ReportController@search')->name('report-actividad.search');
 Route::post('system-management/report-actividad/excel', 'ReportController@exportExcel')->name('report-actividad.excel');
 Route::post('system-management/report-actividad/pdf', 'ReportController@exportPDF')->name('report-actividad.pdf');
 
-Route::resource('agregar-cita', 'CalendarioController');
+Route::get('system-management/report-paciente', 'ReportPacienteController@index');
+Route::post('system-management/report-paciente/search', 'ReportPacienteController@search')->name('report-paciente.search');
+Route::post('system-management/report-paciente/excel', 'ReportPacienteController@exportExcel')->name('report-paciente.excel');
+Route::post('system-management/report-paciente/pdf', 'ReportPacienteController@exportPDF')->name('report-paciente.pdf');
+
+//Rutas de Graficas
+Route::get('grafica-management/cita', 'GraficaCitaController@index');
+Route::get('grafica-management/empleado', 'GraficaEmpleadoController@index');
+Route::get('grafica-management/medico', 'GraficaMedicoController@index');
+Route::get('grafica-management/paciente', 'GraficaPacienteController@index');
+Route::get('grafica-management/tratamiento', 'GraficaTratamientoController@index');
+
+Route::resource('calendario', 'CalendarioController');
+Route::resource('agregar-cita', 'CitaController');
 //Route::get('avatars/{name}', 'EmployeeManagementController@load');

@@ -72,6 +72,7 @@
                 </div>
             </div>
             <div id='calendar'></div>
+
           </div>
         </div>
       </td>
@@ -103,7 +104,7 @@
 </body>
 
 <script>
-    var BASEURL = "{{ url('/') }}";
+    var BASEURL = "{{ url('/calendario') }}";
     $(document).ready(function() {
 
     $('#calendar').fullCalendar({
@@ -114,8 +115,8 @@
       },
       navLinks: true, // can click day/week names to navigate views
       editable: true,
-            selectable: true,
-            selectHelper: true,
+      selectable: true,
+      selectHelper: true,
 
             select: function(start){
                 start = moment(start.format());

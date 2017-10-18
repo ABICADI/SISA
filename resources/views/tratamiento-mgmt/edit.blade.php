@@ -62,6 +62,8 @@
 								<button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>
 										Guardar
 								</button>
+                <a href="{{ route('calendario.index', ['id' => $tratamiento->id]) }}" class="btn btn-warning col-sm-2 col-xs-2 btn-margin"><i class="fa fa-edit"></i>
+                </a>
 						</div>
 				</div>
 				@endif
