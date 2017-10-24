@@ -78,7 +78,7 @@ desired effect
       <div id='calendar'></div>
     </td>
     </tr>
-  </table>
+</table>
   <!-- Calendario Fin -->
 
   <!-- Fila Contenido -->
