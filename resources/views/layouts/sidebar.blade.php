@@ -41,6 +41,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{ url('system-management/report-actividad') }}"><i class="fa fa-file"></i> Reporte Actividad</a></li>
+            <li><a href="{{ url('system-management/report-paciente') }}"><i class="fa fa-file"></i> Reporte Paciente</a></li>
           </ul>
         </li>
         <li class="treeview">

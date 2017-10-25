@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Paciente;
+use App\Departamento;
+use App\Municipio;
+use App\Pago;
 use Excel;
 use Auth;
 use PDF;
@@ -20,56 +23,67 @@ class ReportPacienteController extends Controller {
 	        date_default_timezone_set('america/guatemala');
 	        $format = 'd/m/Y';
 	        $now = date($format);
-	        $to = date($format, strtotime("+366 days"));
+	        $to = date($format, strtotime("-366 days"));
 	        $constraints = [
-	            'from' => $now,
-	            'to' => $to
+		            'from' => $to,
+		            'to' => $now,
+								'departamento' => 0,
+								'municipio' => 0,
+								'pago' => 0
 	        ];
-
+					$departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+	        $municipios = Municipio::select('id', 'nombre','departamento_id')->orderBy('nombre', 'asc')->get();
+	        $pagos = Pago::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
 	        $pacientes = $this->getRangoPaciente($constraints);
 	        $message = '';
-	        return view('system-mgmt/report-paciente/index', ['pacientes' => $pacientes, 'searchingVals' => $constraints, 'message' => $message]);
+	        return view('system-mgmt/report-paciente/index', ['pacientes' => $pacientes, 'departamentos' => $departamentos, 'municipios' => $municipios, 'pagos' => $pagos, 'searchingVals' => $constraints, 'message' => $message]);
 	    }
 
 	    public function search(Request $request) {
+					$departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+					$municipios = Municipio::select('id', 'nombre','departamento_id')->orderBy('nombre', 'asc')->get();
+					$pagos = Pago::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
 
-	        if($request->from != '' && $request->to != ''){
-	          $constraints = [
-	              'from' => $request['from'],
-	              'to' => $request['to']
-	          ];
-
-	          $pacientes = $this->getRangoPaciente($constraints);
+					if($request->from != '' && $request->to != ''){
+						$constraints = [
+									'from' => $request['from'],
+									'to' =>$request['to'],
+									'departamento' => $request['departamento_id'],
+									'municipio' => $request['municipio_id'],
+									'pago' => $request['pago_id']
+						];
+						$pacientes = $this->getRangoPaciente($constraints);
 	          $message = '';
-	          return view('system-mgmt/report-paciente/index', ['pacientes' => $pacientes, 'searchingVals' => $constraints, 'message' => $message]);
+	          return view('system-mgmt/report-paciente/index', ['pacientes' => $pacientes, 'departamentos' => $departamentos, 'municipios' => $municipios, 'pagos' => $pagos, 'searchingVals' => $constraints, 'message' => $message]);
 	        }
 
 	        if($request->from == '' || $request->to == ''){
-	          $constraints = [
-	              'from' => $request['from'],
-	              'to' => $request['to']
-	          ];
+						$constraints = [
+									'from' => $request['from'],
+									'to' =>$request['to'],
+									'departamento' => $request['departamento_id'],
+									'municipio' => $request['municipio_id'],
+									'pago' => $request['pago_id']
+						];
 	          $pacientes = $this->getRangoPaciente($constraints);
 	          $message = 'Rango de Fecha inválido';
-	          return view('system-mgmt/report-actividad/index', ['pacientes' => $pacientes, 'searchingVals' => $constraints, 'message' => $message]);
+	          return view('system-mgmt/report-paciente/index', ['pacientes' => $pacientes, 'departamentos' => $departamentos, 'municipios' => $municipios, 'pagos' => $pagos, 'searchingVals' => $constraints, 'message' => $message]);
 	        }
 	    }
 
 	    private function getRangoPaciente($constraints) {
 
-	        if($constraints['from'] == '' || $constraints['to'] == ''){
-	          $pacientes = Paciente::where('fecha_nacimiento', '>=', '01/01/1850')
-	                          ->where('fecha_nacimiento', '<=', '01/01/1850')
-	                          ->get();
-	          return $pacientes;
-	        }
+					if($constraints['from'] == '' && $constraints['to'] == ''){
+						$pacientes = Paciente::where('departamento_id', '=', $constraints['departamento'])->get();
+						return $pacientes;
+					}
 
 	        if($constraints['from'] != '' && $constraints['to'] != ''){
-	        	$pacientes = Paciente::where('fecha_nacimiento', '>=', $constraints['from'])
-	                        ->where('fecha_nacimiento', '<=', $constraints['to'])
+	        	$pacientes = Paciente::where('fecha_ingreso', '>=', $constraints['from'])
+	                        ->where('fecha_ingreso', '<=', $constraints['to'])
 	                        ->get();
-	        return $pacientes;
-	        }
+	        	return $pacientes;
+					}
 	    }
 
 	    public function exportExcel(Request $request) {
