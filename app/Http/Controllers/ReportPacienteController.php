@@ -139,44 +139,315 @@ class ReportPacienteController extends Controller {
 	    }
 
 	    public function exportPDF(Request $request) {
-	         $constraints = [
-	            'from' => $request['from'],
-	            'to' => $request['to']
-	        ];
+					date_default_timezone_set('america/guatemala');
+					$format = 'Y-m-d H:i:s';
+					$now = date($format);
+					$constraints = [
+								'from' => $request['from'],
+								'to' =>$request['to'],
+								'departamento' => $request['departamento_id'],
+								'municipio' => $request['municipio_id'],
+								'pago' => $request['pago_id'],
+					];
 	        $pacientes = $this->getExportingData($constraints);
 	        $pdf = PDF::loadView('system-mgmt/report-paciente/pdf', ['pacientes' => $pacientes, 'searchingVals' => $constraints]);
-	        return $pdf->download('reporte_del_'. $request['from'].'_al_'.$request['to'].'.pdf');
+	        return $pdf->download('reporte_fecha_'. $now .'.pdf');
 	        return view('system-mgmt/report-paciente/pdf', ['pacientes' => $pacientes, 'searchingVals' => $constraints]);
 	    }
 
 	    private function prepareExportingData($request) {
+					date_default_timezone_set('america/guatemala');
+					$format = 'Y-m-d H:i:s';
+					$now = date($format);
 	        $author = Auth::user()->username;
-	        $pacientes = $this->getExportingData(['from'=> $request['from'], 'to' => $request['to']]);
-	        return Excel::create('reporte_del_'. $request['from'].'_al_'.$request['to'], function($excel) use($pacientes, $request, $author) {
-
-
-	        $excel->setTitle('Reporte de Pacientes del '. $request['from'].' al '. $request['to']);
-	        $excel->setCreator($author)
-	            ->setCompany('HoaDang');
-	        $excel->setDescription('Listado de Actividades');
-	        $excel->sheet('Reporte', function($sheet) use($pacientes) {
-	        $sheet->fromArray($pacientes);
-	            });
+	        $pacientes = $this->getExportingData(['from'=> $request['from'],
+																								'to' => $request['to'],
+																								'departamento' => $request['departamento'],
+																								'municipio' => $request['municipio'],
+																								'pago' => $request['pago']]);
+	        return Excel::create('reporte_de_fecha_'. $now, function($excel) use($pacientes, $request, $author) {
+						date_default_timezone_set('america/guatemala');
+						$format = 'Y-m-d H:i:s';
+						$now = date($format);
+		        $excel->setTitle('Reporte de Pacientes del '. $now);
+		        $excel->setCreator($author)->setCompany('HoaDang');
+		        $excel->setDescription('Listado de Pacientes');
+		        $excel->sheet('Reporte', function($sheet) use($pacientes) {
+		        	$sheet->fromArray($pacientes);
+	          });
 	        });
 	    }
 
 	    private function getExportingData($constraints) {
-	        return DB::table('actividades')
-	        ->leftJoin('users', 'actividades.user_id', '=', 'users.id')
-	        ->leftJoin('departamentos', 'actividades.departamento_id', '=', 'departamentos.id')
-	        ->leftJoin('municipios', 'actividades.municipio_id', '=', 'municipios.id')
-	        ->select('actividades.nombre as Nombre_Actividad', 'users.nombre1 as Primer_Nombre', 'users.nombre2 as Segundo_Nombre','users.nombre3 as Tercer_Nombre', 'users.apellido1 as Primer_Apellido', 'users.apellido2 as Segundo_Apellido', 'users.apellido3 as Tercer_Apellido', 'users.telefono as Teléfono', 'departamentos.nombre as Departamento', 'municipios.nombre as Municipio', 'actividades.direccion as Dirección', 'actividades.fecha as Fecha', 'actividades.descripcion as Descripción')
-	        ->where('fecha', '>=', $constraints['from'])
-	        ->where('fecha', '<=', $constraints['to'])
-	        ->get()
-	        ->map(function ($item, $key) {
-	        return (array) $item;
-	        })
-	        ->all();
+				if($constraints['from'] == '' && $constraints['to'] == ''){
+					if($constraints['departamento']!=0 && $constraints['pago']!=0){
+							return DB::table('pacientes')
+			        ->leftJoin('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
+			        ->leftJoin('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+			        ->leftJoin('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+			        ->select('pacientes.cui as CUI',
+												'pacientes.nombre1 as Primer_Nombre',
+												'pacientes.nombre2 as Segundo_Nombre',
+												'pacientes.nombre3 as Tercer_Nombre',
+												'pacientes.apellido1 as Primer_Apellido',
+												'pacientes.apellido2 as Segundo_Apellido',
+												'pacientes.apellido3 as Tercer_Apellido',
+												'departamentos.nombre as Departamento',
+												'municipios.nombre as Municipio',
+												'pacientes.direccion as Dirección',
+												'pacientes.fecha_nacimiento as Fecha_Nacimiento',
+												'pacientes.encargado as Nombre_Encargado',
+												'pacientes.fecha_ingreso as Fecha_Ingreso',
+												'pacientes.telefono as Teléfono',
+												'pacientes.seguro_social as No_Seguro_Social',
+												'pagos.nombre as Tipo_Pago')
+			        ->where('pacientes.departamento_id', '=', $constraints['departamento'])
+			        ->where('pacientes.pago_id', '=', $constraints['pago'])
+			        ->get()
+			        ->map(function ($item, $key) {
+			        return (array) $item;
+			        })
+			        ->all();
+					}
+					if($constraints['municipio']!=0 && $constraints['pago']!=0){
+							return DB::table('pacientes')
+							->leftJoin('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
+							->leftJoin('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+							->leftJoin('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+							->select('pacientes.cui as CUI',
+												'pacientes.nombre1 as Primer_Nombre',
+												'pacientes.nombre2 as Segundo_Nombre',
+												'pacientes.nombre3 as Tercer_Nombre',
+												'pacientes.apellido1 as Primer_Apellido',
+												'pacientes.apellido2 as Segundo_Apellido',
+												'pacientes.apellido3 as Tercer_Apellido',
+												'departamentos.nombre as Departamento',
+												'municipios.nombre as Municipio',
+												'pacientes.direccion as Dirección',
+												'pacientes.fecha_nacimiento as Fecha_Nacimiento',
+												'pacientes.encargado as Nombre_Encargado',
+												'pacientes.fecha_ingreso as Fecha_Ingreso',
+												'pacientes.telefono as Teléfono',
+												'pacientes.seguro_social as No_Seguro_Social',
+												'pagos.nombre as Tipo_Pago')
+							->where('pacientes.municipio_id', '=', $constraints['municipio'])
+							->where('pacientes.pago_id', '=', $constraints['pago'])
+							->get()
+							->map(function ($item, $key) {
+							return (array) $item;
+							})
+							->all();
+					}
+					if($constraints['departamento']!=0){
+							return DB::table('pacientes')
+							->leftJoin('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
+							->leftJoin('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+							->leftJoin('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+							->select('pacientes.cui as CUI',
+												'pacientes.nombre1 as Primer_Nombre',
+												'pacientes.nombre2 as Segundo_Nombre',
+												'pacientes.nombre3 as Tercer_Nombre',
+												'pacientes.apellido1 as Primer_Apellido',
+												'pacientes.apellido2 as Segundo_Apellido',
+												'pacientes.apellido3 as Tercer_Apellido',
+												'departamentos.nombre as Departamento',
+												'municipios.nombre as Municipio',
+												'pacientes.direccion as Dirección',
+												'pacientes.fecha_nacimiento as Fecha_Nacimiento',
+												'pacientes.encargado as Nombre_Encargado',
+												'pacientes.fecha_ingreso as Fecha_Ingreso',
+												'pacientes.telefono as Teléfono',
+												'pacientes.seguro_social as No_Seguro_Social',
+												'pagos.nombre as Tipo_Pago')
+							->where('pacientes.departamento_id', '=', $constraints['departamento'])
+							->get()
+							->map(function ($item, $key) {
+							return (array) $item;
+							})
+							->all();
+					}
+					if($constraints['municipio']!=0){
+							return DB::table('pacientes')
+							->leftJoin('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
+							->leftJoin('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+							->leftJoin('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+							->select('pacientes.cui as CUI',
+												'pacientes.nombre1 as Primer_Nombre',
+												'pacientes.nombre2 as Segundo_Nombre',
+												'pacientes.nombre3 as Tercer_Nombre',
+												'pacientes.apellido1 as Primer_Apellido',
+												'pacientes.apellido2 as Segundo_Apellido',
+												'pacientes.apellido3 as Tercer_Apellido',
+												'departamentos.nombre as Departamento',
+												'municipios.nombre as Municipio',
+												'pacientes.direccion as Dirección',
+												'pacientes.fecha_nacimiento as Fecha_Nacimiento',
+												'pacientes.encargado as Nombre_Encargado',
+												'pacientes.fecha_ingreso as Fecha_Ingreso',
+												'pacientes.telefono as Teléfono',
+												'pacientes.seguro_social as No_Seguro_Social',
+												'pagos.nombre as Tipo_Pago')
+							->where('pacientes.municipio_id', '=', $constraints['municipio'])
+							->get()
+							->map(function ($item, $key) {
+							return (array) $item;
+							})
+							->all();
+					}
+				}
+
+				if($constraints['from'] != '' && $constraints['to'] != ''){
+					if($constraints['departamento']!=0 && $constraints['pago']!=0){
+							return DB::table('pacientes')
+							->leftJoin('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
+							->leftJoin('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+							->leftJoin('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+							->select('pacientes.cui as CUI',
+												'pacientes.nombre1 as Primer_Nombre',
+												'pacientes.nombre2 as Segundo_Nombre',
+												'pacientes.nombre3 as Tercer_Nombre',
+												'pacientes.apellido1 as Primer_Apellido',
+												'pacientes.apellido2 as Segundo_Apellido',
+												'pacientes.apellido3 as Tercer_Apellido',
+												'departamentos.nombre as Departamento',
+												'municipios.nombre as Municipio',
+												'pacientes.direccion as Dirección',
+												'pacientes.fecha_nacimiento as Fecha_Nacimiento',
+												'pacientes.encargado as Nombre_Encargado',
+												'pacientes.fecha_ingreso as Fecha_Ingreso',
+												'pacientes.telefono as Teléfono',
+												'pacientes.seguro_social as No_Seguro_Social',
+												'pagos.nombre as Tipo_Pago')
+						  ->where('pacientes.departamento_id', '=', $constraints['departamento'])
+							->where('pacientes.pago_id', '=', $constraints['pago'])
+							->where('fecha_ingreso', '>=', $constraints['from'])
+							->where('fecha_ingreso', '<=', $constraints['to'])
+							->get()
+							->map(function ($item, $key) {
+							return (array) $item;
+							})
+							->all();
+					}
+					if($constraints['municipio']!=0 && $constraints['pago']!=0){
+							return DB::table('pacientes')
+							->leftJoin('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
+							->leftJoin('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+							->leftJoin('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+							->select('pacientes.cui as CUI',
+												'pacientes.nombre1 as Primer_Nombre',
+												'pacientes.nombre2 as Segundo_Nombre',
+												'pacientes.nombre3 as Tercer_Nombre',
+												'pacientes.apellido1 as Primer_Apellido',
+												'pacientes.apellido2 as Segundo_Apellido',
+												'pacientes.apellido3 as Tercer_Apellido',
+												'departamentos.nombre as Departamento',
+												'municipios.nombre as Municipio',
+												'pacientes.direccion as Dirección',
+												'pacientes.fecha_nacimiento as Fecha_Nacimiento',
+												'pacientes.encargado as Nombre_Encargado',
+												'pacientes.fecha_ingreso as Fecha_Ingreso',
+												'pacientes.telefono as Teléfono',
+												'pacientes.seguro_social as No_Seguro_Social',
+												'pagos.nombre as Tipo_Pago')
+							->where('pacientes.municipio_id', '=', $constraints['municipio'])
+							->where('pacientes.pago_id', '=', $constraints['pago'])
+							->where('fecha_ingreso', '>=', $constraints['from'])
+							->where('fecha_ingreso', '<=', $constraints['to'])
+							->get()
+							->map(function ($item, $key) {
+							return (array) $item;
+							})
+							->all();
+					}
+					if($constraints['departamento']!=0){
+							return DB::table('pacientes')
+							->leftJoin('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
+							->leftJoin('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+							->leftJoin('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+							->select('pacientes.cui as CUI',
+												'pacientes.nombre1 as Primer_Nombre',
+												'pacientes.nombre2 as Segundo_Nombre',
+												'pacientes.nombre3 as Tercer_Nombre',
+												'pacientes.apellido1 as Primer_Apellido',
+												'pacientes.apellido2 as Segundo_Apellido',
+												'pacientes.apellido3 as Tercer_Apellido',
+												'departamentos.nombre as Departamento',
+												'municipios.nombre as Municipio',
+												'pacientes.direccion as Dirección',
+												'pacientes.fecha_nacimiento as Fecha_Nacimiento',
+												'pacientes.encargado as Nombre_Encargado',
+												'pacientes.fecha_ingreso as Fecha_Ingreso',
+												'pacientes.telefono as Teléfono',
+												'pacientes.seguro_social as No_Seguro_Social',
+												'pagos.nombre as Tipo_Pago')
+							->where('pacientes.departamento_id', '=', $constraints['departamento'])
+							->where('fecha_ingreso', '>=', $constraints['from'])
+							->where('fecha_ingreso', '<=', $constraints['to'])
+							->get()
+							->map(function ($item, $key) {
+							return (array) $item;
+							})
+							->all();
+					}
+					if($constraints['municipio']!=0){
+							return DB::table('pacientes')
+							->leftJoin('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
+							->leftJoin('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+							->leftJoin('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+							->select('pacientes.cui as CUI',
+												'pacientes.nombre1 as Primer_Nombre',
+												'pacientes.nombre2 as Segundo_Nombre',
+												'pacientes.nombre3 as Tercer_Nombre',
+												'pacientes.apellido1 as Primer_Apellido',
+												'pacientes.apellido2 as Segundo_Apellido',
+												'pacientes.apellido3 as Tercer_Apellido',
+												'departamentos.nombre as Departamento',
+												'municipios.nombre as Municipio',
+												'pacientes.direccion as Dirección',
+												'pacientes.fecha_nacimiento as Fecha_Nacimiento',
+												'pacientes.encargado as Nombre_Encargado',
+												'pacientes.fecha_ingreso as Fecha_Ingreso',
+												'pacientes.telefono as Teléfono',
+												'pacientes.seguro_social as No_Seguro_Social',
+												'pagos.nombre as Tipo_Pago')
+							->where('pacientes.municipio_id', '=', $constraints['municipio'])
+							->where('fecha_ingreso', '>=', $constraints['from'])
+							->where('fecha_ingreso', '<=', $constraints['to'])
+							->get()
+							->map(function ($item, $key) {
+							return (array) $item;
+							})
+							->all();
+					}
+					if($constraints['municipio']==0 && $constraints['departamento']==0 && $constraints['pago']==0){
+							return DB::table('pacientes')
+			        ->leftJoin('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
+			        ->leftJoin('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+			        ->leftJoin('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+			        ->select('pacientes.cui as CUI',
+												'pacientes.nombre1 as Primer_Nombre',
+												'pacientes.nombre2 as Segundo_Nombre',
+												'pacientes.nombre3 as Tercer_Nombre',
+												'pacientes.apellido1 as Primer_Apellido',
+												'pacientes.apellido2 as Segundo_Apellido',
+												'pacientes.apellido3 as Tercer_Apellido',
+												'departamentos.nombre as Departamento',
+												'municipios.nombre as Municipio',
+												'pacientes.direccion as Dirección',
+												'pacientes.fecha_nacimiento as Fecha_Nacimiento',
+												'pacientes.encargado as Nombre_Encargado',
+												'pacientes.fecha_ingreso as Fecha_Ingreso',
+												'pacientes.telefono as Teléfono',
+												'pacientes.seguro_social as No_Seguro_Social',
+												'pagos.nombre as Tipo_Pago')
+			        ->where('fecha_ingreso', '>=', $constraints['from'])
+			        ->where('fecha_ingreso', '<=', $constraints['to'])
+			        ->get()
+			        ->map(function ($item, $key) {
+			        return (array) $item;
+			        })
+			        ->all();
+					}
+				}
 	    }
 }

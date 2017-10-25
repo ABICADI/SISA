@@ -24,27 +24,29 @@
  </head>
  <body>
 	 <div class="container">
-			 <div><h2>Reporte de Actividades del {{$searchingVals['from']}} al {{$searchingVals['to']}}</h2></div>
+			 <div><h2>Reporte de Pacientes</h2></div>
 			<table id="example2" role="grid">
 					 <thead>
 						 <tr role="row">
-							 <th width="15%">Nombre</th>
-							 <th width="20%">Encargado</th>
-							 <th width="5%">Teléfono</th>
-							 <th width="20%">Dirección</th>
-							 <th width="5%">Fecha</th>
-							 <th width="15%">Descripción</th>
+							 <th width="2%">CUI</th>
+							 <th width="2%">Nombre Completo</th>
+							 <th width="2%">Dirección</th>
+							 <th width="2%">Fec. Nac.</th>
+							 <th width="2%">Encargado y Télefono</th>
+							 <th width="2%">Fecha Ingreso y No. Social</th>
+							 <th width="2%">Tipo Pago</th>
 						 </tr>
 					 </thead>
 					 <tbody>
-					 @foreach ($actividades as $actividad)
+					 @foreach ($pacientes as $paciente)
 							 <tr role="row" class="odd">
-								 <td>{{ $actividad['Nombre_Actividad'] }}</td>
-								 <td>{{ $actividad['Primer_Nombre'] }} {{ $actividad['Segundo_Nombre'] }} {{ $actividad['Tercer_Nombre'] }} {{ $actividad['Primer_Apellido'] }} {{ $actividad['Segundo_Apellido'] }} {{ $actividad['Tercer_Apellido'] }}</td>
-								 <td>{{ $actividad['Teléfono'] }}</td>
-								 <td>{{ $actividad['Departamento'] }}, {{ $actividad['Municipio'] }}, {{ $actividad['Dirección'] }}</td>
-								 <td>{{ $actividad['Fecha'] }}</td>
-								 <td>{{ $actividad['Descripción'] }}</td>
+								 <td>{{ $paciente['CUI'] }}</td>
+								 <td>{{ $paciente['Primer_Nombre'] }} {{ $paciente['Segundo_Nombre'] }} {{ $paciente['Tercer_Nombre'] }} {{ $paciente['Primer_Apellido'] }} {{ $paciente['Segundo_Apellido'] }} {{ $paciente['Tercer_Apellido'] }}</td>
+								 <td>{{ $paciente['Departamento'] }}, {{ $paciente['Municipio'] }}, {{ $paciente['Dirección'] }}</td>
+								 <td>{{ $paciente['Fecha_Nacimiento'] }}</td>
+								 <td>{{ $paciente['Nombre_Encargado'] }} - {{ $paciente['Teléfono'] }}</td>
+								 <td>{{ $paciente['Fecha_Ingreso'] }} - {{ $paciente['No_Seguro_Social'] }}</td>
+								 <td>{{ $paciente['Tipo_Pago'] }}</td>
 						 </tr>
 					 @endforeach
 					 </tbody>
