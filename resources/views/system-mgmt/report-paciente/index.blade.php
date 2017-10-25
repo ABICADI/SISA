@@ -50,7 +50,7 @@
 						 <tr>
 							 <td>
 								 <label class="col-md-2 control-label">De</label>
-								 <div class="col-md-4">
+								 <div class="col-md-5">
 										 <div class="input-group date">
 												 <div class="input-group-addon">
 														 <i class="fa fa-calendar"></i>
@@ -61,7 +61,7 @@
 						 	 </td>
 							 <td>
 								 <label class="col-md-2 control-label">Hasta</label>
-								 <div class="col-md-5">
+								 <div class="col-md-6">
 										 <div class="input-group date">
 												 <div class="input-group-addon">
 														 <i class="fa fa-calendar"></i>
@@ -74,9 +74,9 @@
 						 <tr>
 							 <td>
 								 <label class="col-md-2 control-label">Departamento</label>
-                     <div class="col-md-5">
+                     <div class="col-md-6">
                          <select class="form-control" name="departamento_id" id="departamento_id">
-                             <option value="0" selected>Ningun Departamento Seleccionado</option>
+                             <option value="" selected>Ningun Departamento Seleccionado</option>
                              @foreach ($departamentos as $departamento)
                                  <option value="{{$departamento->id}}">{{$departamento->nombre}}</option>
                              @endforeach
@@ -87,7 +87,7 @@
 								 <label class="col-md-2 control-label">Municipio</label>
                      <div class="col-md-6">
                          <select class="form-control" name="municipio_id" id="municipio_id">
-                             <option value="0" selected>Ningun Municipio Seleccionado</option>
+                             <option value="" selected>Ningun Municipio Seleccionado</option>
                              @foreach ($municipios as $municipio)
                                  <option value="{{$municipio->id}}">{{$municipio->nombre}}</option>
                              @endforeach
@@ -100,7 +100,7 @@
 								 <label class="col-md-2 control-label">Tipo de Pago</label>
                      <div class="col-md-5">
                          <select class="form-control" name="pago_id" id="pago_id">
-                             <option value="0" selected>Ningun Pago Seleccionado</option>
+                             <option value="" selected>Ningun Pago Seleccionado</option>
                              @foreach ($pagos as $pago)
                                  <option value="{{$pago->id}}">{{$pago->nombre}}</option>
                              @endforeach

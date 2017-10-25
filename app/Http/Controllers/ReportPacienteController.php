@@ -27,9 +27,9 @@ class ReportPacienteController extends Controller {
 	        $constraints = [
 		            'from' => $to,
 		            'to' => $now,
-								'departamento' => 0,
-								'municipio' => 0,
-								'pago' => 0
+								'departamento' => '',
+								'municipio' => '',
+								'pago' => ''
 	        ];
 					$departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
 	        $municipios = Municipio::select('id', 'nombre','departamento_id')->orderBy('nombre', 'asc')->get();
@@ -50,7 +50,7 @@ class ReportPacienteController extends Controller {
 									'to' =>$request['to'],
 									'departamento' => $request['departamento_id'],
 									'municipio' => $request['municipio_id'],
-									'pago' => $request['pago_id']
+									'pago' => $request['pago_id'],
 						];
 						$pacientes = $this->getRangoPaciente($constraints);
 	          $message = '';
@@ -63,7 +63,7 @@ class ReportPacienteController extends Controller {
 									'to' =>$request['to'],
 									'departamento' => $request['departamento_id'],
 									'municipio' => $request['municipio_id'],
-									'pago' => $request['pago_id']
+									'pago' => $request['pago_id'],
 						];
 	          $pacientes = $this->getRangoPaciente($constraints);
 	          $message = 'Rango de Fecha inválido';
@@ -72,17 +72,64 @@ class ReportPacienteController extends Controller {
 	    }
 
 	    private function getRangoPaciente($constraints) {
-
 					if($constraints['from'] == '' && $constraints['to'] == ''){
-						$pacientes = Paciente::where('departamento_id', '=', $constraints['departamento'])->get();
-						return $pacientes;
+						if($constraints['departamento']!=0 && $constraints['pago']!=0){
+							$pacientes = Paciente::where('departamento_id', '=', $constraints['departamento'])
+																		->where('pago_id', '=', $constraints['pago'])->get();
+							return $pacientes;
+						}
+						if($constraints['municipio']!=0 && $constraints['pago']!=0){
+							$pacientes = Paciente::where('municipio_id', '=', $constraints['municipio'])
+																		->where('pago_id', '=', $constraints['pago'])->get();
+							return $pacientes;
+						}
+						if($constraints['departamento']!=0){
+							$pacientes = Paciente::where('departamento_id', '=', $constraints['departamento'])->get();
+							return $pacientes;
+						}
+						if($constraints['municipio']!=0){
+							$pacientes = Paciente::where('municipio_id', '=', $constraints['municipio'])->get();
+							return $pacientes;
+						}
 					}
 
 	        if($constraints['from'] != '' && $constraints['to'] != ''){
-	        	$pacientes = Paciente::where('fecha_ingreso', '>=', $constraints['from'])
-	                        ->where('fecha_ingreso', '<=', $constraints['to'])
-	                        ->get();
-	        	return $pacientes;
+						if($constraints['departamento']!=0 && $constraints['pago']!=0){
+							$pacientes = Paciente::where('departamento_id', '=', $constraints['departamento'])
+																		->where('pago_id', '=', $constraints['pago'])
+																		->where('fecha_ingreso', '>=', $constraints['from'])
+													          ->where('fecha_ingreso', '<=', $constraints['to'])
+													          ->get();
+							return $pacientes;
+						}
+						if($constraints['municipio']!=0 && $constraints['pago']!=0){
+							$pacientes = Paciente::where('municipio_id', '=', $constraints['municipio'])
+																		->where('pago_id', '=', $constraints['pago'])
+																		->where('fecha_ingreso', '>=', $constraints['from'])
+													          ->where('fecha_ingreso', '<=', $constraints['to'])
+													          ->get();
+							return $pacientes;
+						}
+						if($constraints['departamento']!=0){
+							$pacientes = Paciente::where('departamento_id', '=', $constraints['departamento'])
+																		->where('fecha_ingreso', '>=', $constraints['from'])
+																		->where('fecha_ingreso', '<=', $constraints['to'])
+																		->get();
+							return $pacientes;
+						}
+						if($constraints['municipio']!=0){
+							$pacientes = Paciente::where('municipio_id', '=', $constraints['municipio'])
+																		->where('fecha_ingreso', '>=', $constraints['from'])
+																		->where('fecha_ingreso', '<=', $constraints['to'])
+																		->get();
+							return $pacientes;
+						}
+						if($constraints['municipio']==0 && $constraints['departamento']==0 && $constraints['pago']==0){
+							$pacientes = Paciente::where('fecha_ingreso', '>=', $constraints['from'])
+																		->where('fecha_ingreso', '<=', $constraints['to'])
+																		->get();
+							return $pacientes;
+						}
 					}
 	    }
 
