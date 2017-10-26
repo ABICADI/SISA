@@ -27,16 +27,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
    <link href="{{ asset("/bower_components/AdminLTE/dist/css/skins/skin-blue.min.css")}}" rel="stylesheet" type="text/css" />
 
    <!-- Calendario Inicio -->
-   <link href="{{ asset("/bower_components/fullcalendario/fullcalendar/fullcalendar.min.css")}}" rel="stylesheet" type="text/css" />
-   <link href="{{ asset("/bower_components/fullcalendario/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css")}}" rel="stylesheet" type="text/css" />
+   <link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
+   <link href="{{ asset("/bower_components/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css")}}" rel="stylesheet" type="text/css" />
    <!-- Calendario Fin -->
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -180,16 +174,11 @@ desired effect
 
 <!-- AdminLTE App -->
 <script src="{{ asset ("/bower_components/AdminLTE/dist/js/app.min.js") }}" type="text/javascript"></script>
+</body>
 
-<!-- Calendario Inicio JS-->
-<script src="{{ asset ("/bower_components/fullcalendario/fullcalendar/lib/moment.min.js") }}"></script>
-<script src="{{ asset ("/bower_components/fullcalendario/fullcalendar/fullcalendar.min.js") }}"></script>
-<script src="{{ asset ("/bower_components/fullcalendario/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js") }}"></script>
-<!-- Calendario Fin -->
-
+<script src='fullcalendar/lib/moment.min.js'></script>
+<script src='fullcalendar/fullcalendar.js'></script>
 <!-- Llamar Calendario Full -->
   @include('calendario-mgmt.calendario_view')
 <!-- ************ -->
-
-</body>
 </html>

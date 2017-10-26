@@ -23,9 +23,8 @@ class CitaController extends Controller {
 	}
 
 	public function index()	{
-			$data = Cita::get(['id', 'start', 'end']);
-
-			return Response()->json($data);
+		$data = Cita::get(['id', 'start', 'end']);
+		return Response()->json($data);
 	}
 
 	public function store(Request $request)	{

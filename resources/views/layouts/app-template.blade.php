@@ -27,8 +27,10 @@
       -->
     <link href="{{ asset("/bower_components/AdminLTE/dist/css/skins/_all-skins.min.css")}}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/app-template.css') }}" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <link href="{{ asset("/bower_components/fullcalendario/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css")}}" rel="stylesheet" type="text/css" />
+      <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>-->
+
+    <link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
+    <link href="{{ asset("/bower_components/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css")}}" rel="stylesheet" type="text/css" />
 
     {!! Charts::assets() !!}
   </head>
@@ -58,6 +60,8 @@
     @include('layouts.header')
     <!-- Sidebar -->
     @include('layouts.sidebar')
+    <script src='fullcalendar/lib/moment.min.js'></script>
+    <script src='fullcalendar/fullcalendar.js'></script>
     @yield('content')
 
     <!-- Footer -->

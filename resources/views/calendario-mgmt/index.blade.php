@@ -24,8 +24,8 @@
    {!! Charts::assets() !!}
 
    <!-- Calendario Inicio -->
-   <link href="{{ asset("/bower_components/fullcalendario/fullcalendar/fullcalendar.min.css")}}" rel="stylesheet" type="text/css" />
-   <link href="{{ asset("/bower_components/fullcalendario/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css")}}" rel="stylesheet" type="text/css" />
+   <link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
+   <link href="{{ asset("/bower_components/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css")}}" rel="stylesheet" type="text/css" />
    <!-- Calendario Fin -->
 </head>
 
@@ -96,17 +96,15 @@
 <!-- AdminLTE App -->
 <script src="{{ asset ("/bower_components/AdminLTE/dist/js/app.min.js") }}" type="text/javascript"></script>
 
-<!-- Calendario Inicio JS-->
-<script src="{{ asset ("/bower_components/fullcalendario/fullcalendar/lib/moment.min.js") }}"></script>
-<script src="{{ asset ("/bower_components/fullcalendario/fullcalendar/fullcalendar.min.js") }}"></script>
-<script src="{{ asset ("/bower_components/fullcalendario/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js") }}"></script>
-<!-- Calendario Fin -->
 </body>
 
-<script>
-    var BASEURL = "{{ url('/calendario') }}";
-    $(document).ready(function() {
+<!-- Calendario Inicio JS-->
+<script src='fullcalendar/lib/moment.min.js'></script>
+<script src='fullcalendar/fullcalendar.js'></script>
+<!-- Calendario Fin -->
 
+<script>
+    $(document).ready(function() {
     $('#calendar').fullCalendar({
       header: {
         left: 'prev,next today',
@@ -123,9 +121,7 @@
                 $('#fecha').val(start.format('DD-MM-YYYY'));
                 $('#responsive-modal').modal('show');
             },
-
-      events: BASEURL + '/agregar-cita',
-
+      events: '/agregar-cita',
             eventClick: function(event, jsEvent, view){
                 var fecha = $.fullCalendar.moment(event.start).format('YYYY-MM-DD');
                 $('#modal-event #delete').attr('data-id', event.id);
@@ -137,15 +133,11 @@
                 $('#modal-event').modal('show');
             }
     });
-
   });
-
-    $('.colorpicker').colorpicker();
 
     $('#delete').on('click', function(){
         var x = $(this);
         var delete_url = x.attr('data-href')+'/'+x.attr('data-id');
-
         $.ajax({
             url: delete_url,
             type: 'DELETE',
