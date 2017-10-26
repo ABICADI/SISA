@@ -5,25 +5,24 @@ use Illuminate\Database\Seeder;
 class RolTableSeeder extends Seeder {
 
     public function run() {
+      $rol = factory(App\Rol::class)->create([
+          'nombre' => 'ADMINISTRADOR',
+          'descripcion' => 'EL ADMINISTRADOR PODRÁ HACER LOS SIGUIENTES PROCESOS: VER, INSERTAR, ELIMINAR, BUSCAR, ACTUALIZAR'
+      ]);
 
-    	$rol = factory(App\Rol::class)->create([
-            'nombre' => 'Administrador',
-            'descripcion' => 'El Administrador podrá hacer los siguientes procesos: Ver, Insertar, Eliminar, Buscar, Actualizar'
-        ]);
+      $rol = factory(App\Rol::class)->create([
+          'nombre' => 'SECRETARIA',
+          'descripcion' => 'LA SECRETARIA PODRÁ HACER LOS SIGUIENTES PROCESOS: VER, INSERTAR, BUSCAR, ACTUALIZAR'
+      ]);
 
-        $rol = factory(App\Rol::class)->create([
-            'nombre' => 'Secretaria',
-            'descripcion' => 'La Secretaria podrá hacer los siguientes procesos: Ver, Insertar, Buscar, Actualizar'
-        ]);
+      $rol = factory(App\Rol::class)->create([
+          'nombre' => 'EMPLEADO',
+          'descripcion' => 'EL EMPLEADO PODRÁ HACER LOS SIGUIENTES PROCESOS: VER, BUSCAR'
+      ]);
 
-        $rol = factory(App\Rol::class)->create([
-            'nombre' => 'Empleado',
-            'descripcion' => 'El Empleado podrá hacer los siguientes procesos: Ver, Buscar'
-        ]);
-
-        $rol = factory(App\Rol::class)->create([
-            'nombre' => 'Voluntario',
-            'descripcion' => 'El Voluntario podrá hacer los siguientes procesos: Ver, Buscar'
-        ]);
+      $rol = factory(App\Rol::class)->create([
+          'nombre' => 'VOLUNTARIO',
+          'descripcion' => 'EL VOLUNTARIO PODRÁ HACER LOS SIGUIENTES PROCESOS: VER, BUSCAR'
+      ]);
     }
 }

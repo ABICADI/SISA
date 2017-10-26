@@ -5,21 +5,20 @@ use Illuminate\Database\Seeder;
 class PagoTableSeeder extends Seeder {
 
     public function run() {
-
       $pago = factory(App\Pago::class)->create([
-          'nombre' => 'Municipalidad',
+          'nombre' => 'MUNICIPALIDAD',
       ]);
 
       $pago = factory(App\Pago::class)->create([
-          'nombre' => 'Apadrinado',
+          'nombre' => 'APADRINADO',
       ]);
 
       $pago = factory(App\Pago::class)->create([
-          'nombre' => 'Prepago',
+          'nombre' => 'PREPAGO',
       ]);
 
       $pago = factory(App\Pago::class)->create([
-          'nombre' => 'Exonerado',
+          'nombre' => 'EXONERADO',
       ]);
     }
 }
