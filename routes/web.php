@@ -61,6 +61,11 @@ Route::post('system-management/report-paciente/search', 'ReportPacienteControlle
 Route::post('system-management/report-paciente/excel', 'ReportPacienteController@exportExcel')->name('report-paciente.excel');
 Route::post('system-management/report-paciente/pdf', 'ReportPacienteController@exportPDF')->name('report-paciente.pdf');
 
+Route::get('system-management/report-tratamiento', 'ReportTratamientoController@index');
+Route::post('system-management/report-tratamiento/search', 'ReportTratamientoController@search')->name('report-tratamiento.search');
+Route::post('system-management/report-tratamiento/excel', 'ReportTratamientoController@exportExcel')->name('report-tratamiento.excel');
+Route::post('system-management/report-tratamiento/pdf', 'ReportTratamientoController@exportPDF')->name('report-tratamiento.pdf');
+
 //Rutas de Graficas
 Route::get('grafica-management/cita', 'GraficaCitaController@index');
 Route::get('grafica-management/empleado', 'GraficaEmpleadoController@index');

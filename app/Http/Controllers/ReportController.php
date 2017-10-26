@@ -85,14 +85,14 @@ class ReportController extends Controller {
         ];
         $actividades = $this->getExportingData($constraints);
         $pdf = PDF::loadView('system-mgmt/report-actividad/pdf', ['actividades' => $actividades, 'searchingVals' => $constraints]);
-        return $pdf->download('reporte_del_'. $request['from'].'_al_'.$request['to'].'.pdf');
+        return $pdf->download('reporte_actividad_del_'. $request['from'].'_al_'.$request['to'].'.pdf');
         return view('system-mgmt/report-actividad/pdf', ['actividades' => $actividades, 'searchingVals' => $constraints]);
     }
 
     private function prepareExportingData($request) {
         $author = Auth::user()->username;
         $actividades = $this->getExportingData(['from'=> $request['from'], 'to' => $request['to']]);
-        return Excel::create('reporte_del_'. $request['from'].'_al_'.$request['to'], function($excel) use($actividades, $request, $author) {
+        return Excel::create('reporte_actividad_del_'. $request['from'].'_al_'.$request['to'], function($excel) use($actividades, $request, $author) {
 
 
         $excel->setTitle('Reporte de Actividades del '. $request['from'].' al '. $request['to']);
