@@ -26,6 +26,7 @@ class CitaController extends Controller {
 	}
 
 	public function store(Request $request)	{
+			$restantes=0;
 			$last = DB::table('tratamientos')->latest()->first();
 			$tratamiento = Tratamiento::find($last->id);
 
@@ -33,16 +34,15 @@ class CitaController extends Controller {
 			$paciente = Paciente::find($tratamiento->paciente_id);
 
 			$cita = new Cita();
-			$cita->title = 'Paciente: ' . $paciente->nombre1 . ' ' . $paciente->apellido1 . ' - Asistencia: ';
+			$cita->title = 'Paciente: ' . $paciente->nombre1 . ' ' . $paciente->apellido1 . ' - Asistencia: Sin evaluar';
 			$cita->start = $request->fecha;
 			$cita->color = $terapia->color;
 			$cita->tratamiento_id = $tratamiento->id;
 
-			$update_cant_citas = Tratamiento::findOrFail($tratamiento->id);
-
-			if($update_cant_citas->restantes){
-				$update_cant_citas->restantes = $tratamiento->restantes-1;
-				$update_cant_citas->save();
+			if($tratamiento->restantes>0){
+				$restantes = $tratamiento->restantes-1;
+				$tratamiento->restantes = $restantes;
+				$tratamiento->save();
 				if($cita->save()){
 					return redirect()->intended('/calendario');
 				}
@@ -61,10 +61,9 @@ class CitaController extends Controller {
                         'terapias.nombre as nombre_terapia',
                         'terapias.color as color')
         ->orderBy('fecha', 'desc')->paginate(10);
-				$message = 'Ya no puede ingresar más citas al calendario, ya asgino las ' . $update_cant_citas->asignados . ' citas al paciente ' . $paciente->nombre1 . ' ' . $paciente->apellido1 . ' para la terapia ' . $terapia->nombre;
+				$message = 'Ya no puede ingresar más citas al calendario, ya asgino las ' . $tratamiento->asignados . ' citas al paciente ' . $paciente->nombre1 . ' ' . $paciente->apellido1 . ' para la terapia ' . $terapia->nombre;
 	          	return view('tratamiento-mgmt/index',['tratamientos' => $tratamientos, 'message' => $message]);
 			}
-          	//return view('calendario-mgmt/index', ['restantes' => $update_cant_citas->restantes]);
 	}
 
 	public function destroy($id){

@@ -11,7 +11,7 @@
                         <input type="hidden" name="_method" value="PATCH">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-			<div class="form-group">
+			     <div class="form-group">
                 <label class="col-md-2 control-label"><label style="color:red">*</label> Paciente</label>
                     <div class="col-md-5">
                         <select class="form-control" name="paciente_id" id="paciente_id" required autofocus>
@@ -41,7 +41,16 @@
                         </select>
                     </div>
             </div>
-
+            <div class="form-group">
+                <label class="col-md-2 control-label">Cantidad de Citas</label>
+                    <div class="col-md-1">
+                        <input value="{{ $tratamiento->asignados }}" class="form-control" type="text" disabled>
+                    </div>
+                <label class="col-md-2 control-label">Incrementar Citas</label>
+                    <div class="col-md-2">
+                        <input  class="form-control" name="asignados" id="asignados" placeholder="agregar más citas" type="text" onkeypress="return numeros(event)" required autofocus>
+                    </div>
+            </div>
             <div class="form-group{{ $errors->has('descripcion') ? ' has-error' : '' }}">
                 <label for="descripcion" class="col-md-2 control-label">Descripcion</label>
 
@@ -62,10 +71,21 @@
 								<button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>
 										Guardar
 								</button>
-                <a href="{{ route('calendario.index', ['id' => $tratamiento->id]) }}" class="btn btn-warning col-sm-2 col-xs-2 btn-margin"><i class="fa fa-edit"></i>
-                </a>
 						</div>
 				</div>
+        @if($tratamiento->restantes>0)
+        <div class="form-group">
+            <div class="form-group">
+              <div class="col-md-12 col-md-offset-1">
+                  <h4><p>La terapia con nombre <label style="color:blue">{{$terapia->nombre}}</label> le faltan <label style="color:red">{{$tratamiento->restantes}}</label> citas por asignar en el calendario</p></h4>
+              </div>
+            </div>
+						<div class="col-md-2 col-md-offset-4">
+                <a href="{{ route('calendario.index', ['id' => $tratamiento->id]) }}" class="btn btn-warning col-sm-6 col-xs-4 btn-margin"><i class="fa fa-edit"></i>
+                 Asignar</a>
+						</div>
+				</div>
+        @endif
 				@endif
 		</form>
 				</div>

@@ -43,10 +43,12 @@
             <thead>
               <tr role="row">
                 <th width="20%" class="sorting" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Paciente</th>
-                <th width="20%" class="sorting" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Terapia</th>
-                <th width="20%" class="hidden-xs" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Medico</th>
-                <th width="20%" class="hidden-xs" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Fecha</th>
-                <th width="20%" class="sorting" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Opciones</th>
+                <th width="10%" class="sorting" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Terapia</th>
+                <th width="10%" class="hidden-xs" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Medico</th>
+                <th width="8%" class="hidden-xs" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Citas Asignadas</th>
+                <th width="8%" class="hidden-xs" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Citas sin Asignar</th>
+                <th width="5%" class="hidden-xs" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Fecha</th>
+                <th width="10%" class="sorting" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Opciones</th>
               </tr>
             </thead>
             <tbody>
@@ -55,6 +57,8 @@
                   <td class="sorting_1">{{ $tratamiento->primer_nombre }} {{ $tratamiento->segundo_nombre }} {{ $tratamiento->tercer_nombre }} {{ $tratamiento->primer_apellido }} {{ $tratamiento->segundo_apellido }} {{ $tratamiento->tercer_apellido }}</td>
                   <td class="sorting_1"><label style="color:{{ $tratamiento->color }}">{{ $tratamiento->nombre_terapia }}</label></td>
                   <td class="hidden-xs">{{ $tratamiento->nombre_medico }}</td>
+                  <td class="hidden-xs">{{ $tratamiento->asignados }}</td>
+                  <td class="hidden-xs">{{ $tratamiento->restantes }}</td>
                   <td class="hidden-xs">{{ $tratamiento->fecha }}</td>
                   <td>
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">

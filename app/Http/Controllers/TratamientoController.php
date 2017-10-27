@@ -88,10 +88,13 @@ class TratamientoController extends Controller {
     }
 
     public function update(Request $request, $id) {
-
-
       $tratamiento = Tratamiento::find($id);
-
+      if($request['asignados']!=0){
+        $new_asignado = $request['asignados'] + $tratamiento->asignados;
+        $new_restante = $request['asignados'] + $tratamiento->restantes;
+        $tratamiento->asignados = $new_asignado;
+        $tratamiento->restantes = $new_restante;
+      }
       $this->validateUpdateTratamiento($request);
       $tratamiento->descripcion = $request['descripcion'];
       $tratamiento->paciente_id = $request['paciente_id'];
