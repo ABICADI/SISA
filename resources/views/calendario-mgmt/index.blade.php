@@ -28,6 +28,7 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
+
   <!-- Main Header -->
   @include('layouts.header')
   <!-- Sidebar -->
@@ -35,9 +36,20 @@
 
 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+
     <!-- Main content -->
     <section class="content">
 
+    <!--<?php //if(!$restantes)
+    { 
+      //'<label style="color:red">"{{$update_cant_citas->restantes}}"</label>'
+      //echo $restantes;
+    } 
+    ?>-->
+      
+
+
+    
   <!-- Calendario Inicio -->
   <table class="table responsive">
     <tr>

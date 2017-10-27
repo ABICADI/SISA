@@ -56,6 +56,8 @@ class TratamientoController extends Controller {
         $tratamiento->paciente_id = $request['paciente_id'];
         $tratamiento->medico_id = $request['medico_id'];
         $tratamiento->terapia_id = $request['terapia_id'];
+        $tratamiento->asignados = $request['asignados'];
+        $tratamiento->restantes = $request['asignados'];
 
         if($tratamiento->save()){
           $this->insertBitacoraTratamiento($request);
@@ -83,6 +85,8 @@ class TratamientoController extends Controller {
     }
 
     public function update(Request $request, $id) {
+
+
       $tratamiento = Tratamiento::find($id);
 
       $this->validateUpdateTratamiento($request);
