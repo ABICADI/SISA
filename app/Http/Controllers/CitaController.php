@@ -47,11 +47,11 @@ class CitaController extends Controller {
 			$cita = Cita::find($id);
 			if($cita == null)
 					return Response()->json([
-							'message'   =>  'error delete.'
+							'message'   =>  'Error al Eliminar la Cita'
 					]);
 			$cita->delete();
 			return Response()->json([
-					'message'   =>  'success delete.'
+					'message'   =>  'Eliminación de la Cita con Éxito'
 			]);
 	}
 }
