@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html>
 <head>
   <meta charset="utf-8">
@@ -20,11 +16,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
    <link href="{{ asset("/bower_components/AdminLTE/dist/css/AdminLTE.min.css")}}" rel="stylesheet" type="text/css" />
-  <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
-        page. However, you can choose any other skin. Make sure you
-        apply the skin class to the body tag so the changes take effect.
-  -->
-   <link href="{{ asset("/bower_components/AdminLTE/dist/css/skins/skin-blue.min.css")}}" rel="stylesheet" type="text/css" />
+   <link href="{{ asset("/bower_components/AdminLTE/dist/css/skins/_all-skins.min.css")}}" rel="stylesheet" type="text/css" />
+   <link href="{{ asset('css/app-template.css') }}" rel="stylesheet">
 
    <!-- Calendario Inicio -->
    <link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
@@ -32,26 +25,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
    <!-- Calendario Fin -->
 
 </head>
-<!--
-BODY TAG OPTIONS:
-=================
-Apply one or more of the following classes to get the
-desired effect
-|---------------------------------------------------------|
-| SKINS         | skin-blue                               |
-|               | skin-black                              |
-|               | skin-purple                             |
-|               | skin-yellow                             |
-|               | skin-red                                |
-|               | skin-green                              |
-|---------------------------------------------------------|
-|LAYOUT OPTIONS | fixed                                   |
-|               | layout-boxed                            |
-|               | layout-top-nav                          |
-|               | sidebar-collapse                        |
-|               | sidebar-mini                            |
-|---------------------------------------------------------|
--->
+
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
@@ -149,7 +123,7 @@ desired effect
         </td>
         <td>
           <div>
-              <p align="center"><img src="{{ asset("/bower_components/AdminLTE/dist/img/LOGO ABICADI 3.png") }}" alt="No Disponible" width="200" height="200"/></p>
+              <p align="center"><img src="{{ asset("/bower_components/AdminLTE/dist/img/abicadi.png") }}" alt="No Disponible" width="200" height="200"/></p>
           </div>
         </td>
         </tr>
@@ -157,14 +131,8 @@ desired effect
   </div>
   </section>
 </div>
-    <!-- /.content-wrapper -->
 
-  <!-- Footer -->
   @include('layouts.footer')
-
-<!-- ./wrapper -->
-
-<!-- REQUIRED JS SCRIPTS -->
 
  <!-- jQuery 2.1.3 -->
 <script src="{{ asset ("/bower_components/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js") }}"></script>
