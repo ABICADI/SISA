@@ -42,4 +42,16 @@ class CitaController extends Controller {
 				return redirect()->intended('/calendario');
 			}
 	}
+
+	public function destroy($id){
+			$cita = Cita::find($id);
+			if($cita == null)
+					return Response()->json([
+							'message'   =>  'error delete.'
+					]);
+			$cita->delete();
+			return Response()->json([
+					'message'   =>  'success delete.'
+			]);
+	}
 }

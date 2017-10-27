@@ -74,6 +74,5 @@ Route::get('grafica-management/paciente', 'GraficaPacienteController@index');
 Route::get('grafica-management/tratamiento', 'GraficaTratamientoController@index');
 
 Route::resource('calendario', 'CalendarioController');
-Route::resource('agregar-cita', 'CitaController');
-
+Route::resource('agregar-cita', 'CitaController',['only' => ['index', 'store', 'update', 'destroy']]);
 //Route::get('avatars/{name}', 'EmployeeManagementController@load');

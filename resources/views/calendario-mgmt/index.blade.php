@@ -15,10 +15,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
    <link href="{{ asset("/bower_components/AdminLTE/dist/css/AdminLTE.min.css")}}" rel="stylesheet" type="text/css" />
-  <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
-        page. However, you can choose any other skin. Make sure you
-        apply the skin class to the body tag so the changes take effect.
-  -->
    <link href="{{ asset("/bower_components/AdminLTE/dist/css/skins/skin-blue.min.css")}}" rel="stylesheet" type="text/css" />
 
    {!! Charts::assets() !!}
@@ -58,7 +54,7 @@
                         <div class="modal-body">
                               <label for="cui" class="col-md-2 control-label">Fecha</label>
                                   <div class="col-md-3">
-                                      <input id="fecha" type="text" class="form-control" name="fecha" value="{{ old('fecha') }}" equired autofocus>
+                                      <input id="fecha" type="text" class="form-control" name="fecha" value="{{ old('fecha') }}"  autofocus>
                                   </div>
                         </div>
                         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
@@ -71,7 +67,57 @@
                     </div>
                 </div>
             </div>
+
             <div id='calendar'></div>
+
+            <div id="modal-event" class="modal fade" tabindex="-1" data-backdrop="static">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Información de la Cita</h4>
+                        </div>
+                        <table class="table responsive">
+                        <tr>
+                          <td>
+                            <div class="form-group">
+                                <div class="form-group">
+                                      <label for="cui" class="col-md-2 control-label">Paciente</label>
+                                          <div class="col-md-8">
+                                              <input id="_title" type="text" class="form-control" name="_title" value="{{ old('_title') }}" autofocus>
+                                          </div>
+                                </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="form-group">
+                                  <label for="cui" class="col-md-2 control-label">Asistencia</label>
+                                      <div class="col-md-8">
+                                            <select class="form-control" id="_asistencia" name="_asistencia">
+                                              <option  selected="selected" value="0">Seleccionar Asistencia</option>
+                                              <option  value="Si">Si</option>
+                                              <option  value="No">No</option>
+                                              <option  value="Permiso">Permiso</option>
+                                            </select>
+                                      </div>
+                            </div>
+                          </td>
+                        </tr>
+                        </table>
+                        @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
+                        <div class="modal-footer">
+                            <div class="modal-footer">
+                              {{ csrf_field() }}
+                              <a id="delete" data-href="{{ url('agregar-cita') }}" data-id="" class="btn btn-danger col-sm-2 col-xs-2 btn-margin">ELIMINAR</a>
+                              <button type="submit" class="btn btn-warning"><i class="fa fa-edit"></i>  ACTUALIZAR</button>
+                              <button type="button" class="btn btn-dafault" data-dismiss="modal">CANCELAR</button>
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
 
           </div>
         </div>
@@ -106,41 +152,38 @@
 
 <script>
     $(document).ready(function() {
-    $('#calendar').fullCalendar({
-      header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'month,basicWeek,basicDay'
-      },
-      navLinks: true, // can click day/week names to navigate views
-      //editable: true,
-      selectable: true,
-      //selectHelper: true,
+        $('#calendar').fullCalendar({
+          header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,basicWeek,basicDay'
+          },
+          navLinks: true, // can click day/week names to navigate views
+          selectable: true,
 
-            select: function(start){
-                start = moment(start.format());
-                $('#fecha').val(start.format('DD-MM-YYYY'));
-                $('#responsive-modal').modal('show');
+                select: function(start){
+                    start = moment(start.format());
+                    $('#fecha').val(start.format('DD-MM-YYYY'));
+                    $('#responsive-modal').modal('show');
 
 
-            },
-      events: '/agregar-cita',
-            eventClick: function(event, jsEvent, view){
-                var fecha = $.fullCalendar.moment(event.start).format('YYYY-MM-DD');
-                $('#modal-event #delete').attr('data-id', event.id);
-                $('#modal-event #_title').val(event.title);
-                $('#modal-event #fecha').val(fecha);
-                $('#modal-event #_time_start').val(time_start);
-                $('#modal-event #_date_end').val(date_end);
-                $('#modal-event #_color').val(event.color);
-                $('#modal-event').modal('show');
-            }
+                },
+          events: '/agregar-cita',
+
+                eventClick: function(event, jsEvent, view){
+                    $('#modal-event #delete').attr('data-id', event.id);
+                    $('#modal-event #_date-start').val(event.start);
+                    $('#modal-event #_title').val(event.title);
+                    $('#modal-event #_color').val(event.color);
+                    $('#modal-event').modal('show');
+                }
+          });
     });
-  });
 
     $('#delete').on('click', function(){
         var x = $(this);
         var delete_url = x.attr('data-href')+'/'+x.attr('data-id');
+
         $.ajax({
             url: delete_url,
             type: 'DELETE',
