@@ -21,27 +21,25 @@ class CitaController extends Controller {
 	}
 
 	public function index()	{
-		$data = Cita::get(['id', 'title', 'start', 'end', 'color']);
+		$data = Cita::get(['id', 'title', 'start', 'color']);
 		return Response()->json($data);
 	}
 
 	public function store(Request $request)	{
-		dd($request->fecha);
-			/*$last = DB::table('tratamientos')->latest()->first();
+			$last = DB::table('tratamientos')->latest()->first();
 			$tratamiento = Tratamiento::find($last->id);
 
 			$terapia = Terapia::find($tratamiento->terapia_id);
 			$paciente = Paciente::find($tratamiento->paciente_id);
 
 			$cita = new Cita();
-			$cita->title = $paciente->nombre1 . $paciente->apellido1;
+			$cita->title = $paciente->nombre1 . ' ' . $paciente->apellido1;
 			$cita->start = $request->fecha;
 			$cita->color = $terapia->color;
 			$cita->tratamiento_id = $tratamiento->id;
 
-			//$cita->color = '#156354';
 			if($cita->save()){
 				return redirect()->intended('/calendario');
-			}*/
+			}
 	}
 }

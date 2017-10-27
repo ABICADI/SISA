@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Terapia;
 use App\Bitacora;
+use App\Cita;
 use Auth;
 
 class TerapiaController extends Controller {
@@ -55,15 +56,23 @@ class TerapiaController extends Controller {
     public function update(Request $request, $id) {
         //Nueva Forma de Insertar Datos
         $terapia = Terapia::findOrFail($id);
+        $citas = DB::table('citas')->select('citas.*')->where('citas.color', '=', $terapia->color)->get();
         //Validamos Datos del Formulario
         $this->validateUpdate($request);
         $terapia->descripcion = $request["descripcion"];
         $terapia->color = $request["color"];
-
         $this->updateTerapiaBitacora($request, $id);
         if($terapia->save()){
-            return redirect()->intended('system-management/terapia');
+            foreach ($citas as &$cita) {
+                $update_cita = Cita::findOrFail($cita->id);
+                $update_cita->start = $cita->start;
+                $update_cita->title = $cita->title;
+                $update_cita->color = $request["color"];
+                $update_cita->tratamiento_id = $cita->tratamiento_id;
+                $update_cita->save();
+            }
         }
+        return redirect()->intended('system-management/terapia');
     }
 
     public function search(Request $request) {

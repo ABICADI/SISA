@@ -31,7 +31,6 @@
 
     <link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
     <link href="{{ asset("/bower_components/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css")}}" rel="stylesheet" type="text/css" />
-
     <!-- Graficas -->
     {!! Charts::assets() !!}
   </head>
@@ -87,8 +86,7 @@
     <!-- AdminLTE App -->
     <script src="{{ asset ("/bower_components/AdminLTE/dist/js/app.min.js") }}" type="text/javascript"></script>
     <script src="{{ asset ("/bower_components/AdminLTE/dist/js/demo.js") }}" type="text/javascript"></script>
-
-    <script src="{{ asset ("/bower_components/fullcalendario/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js") }}"></script>
+    <script src='/bower_components/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js' type="text/javascript"/></script>
       <script>
         $(document).ready(function() {
           //Date picker

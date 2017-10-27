@@ -147,6 +147,7 @@
 <script src='fullcalendar/lib/moment.min.js'></script>
 <script src='fullcalendar/fullcalendar.js'></script>
 <script src='fullcalendar/locale/es.js'></script>
+<script src='/bower_components/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js' type="text/javascript"/></script>
 <!-- Llamar Calendario Full -->
   @include('calendario-mgmt.calendario_view')
 <!-- ************ -->
