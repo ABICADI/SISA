@@ -68,13 +68,21 @@ class CitaController extends Controller {
 
 	public function destroy($id){
 			$cita = Cita::find($id);
+			$tratamiento = Tratamiento::find($cita->tratamiento_id);
+			$paciente = Paciente::find($tratamiento->paciente_id);
+			$terapia = Terapia::find($tratamiento->terapia_id);
+
+			$new = $tratamiento->restantes+1;
+			$tratamiento->restantes = $new;
+			$tratamiento->save();
+
 			if($cita == null)
 					return Response()->json([
 							'message'   =>  'Error al Eliminar la Cita'
 					]);
 			$cita->delete();
 			return Response()->json([
-					'message'   =>  'Eliminación de la Cita con Éxito'
+					'message'   =>  'Citas sin asignar ' . $tratamiento->restantes . ' para el paciente ' . $paciente->nombre1 . ' ' . $paciente->apellido1 . ' con la terapia ' . $terapia->nombre . '  (Refrescar la Página para ver los cambios)'
 			]);
 	}
 }
