@@ -46,7 +46,7 @@
                 <th width="10%" class="sorting" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Terapia</th>
                 <th width="10%" class="hidden-xs" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Medico</th>
                 <th width="8%" class="hidden-xs" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Citas Asignadas</th>
-                <th width="8%" class="hidden-xs" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Citas sin Asignar</th>
+                <th width="10%" class="hidden-xs" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Citas sin Asignar</th>
                 <th width="5%" class="hidden-xs" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Fecha</th>
                 <th width="10%" class="sorting" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Opciones</th>
               </tr>
