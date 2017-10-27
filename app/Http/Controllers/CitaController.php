@@ -26,43 +26,83 @@ class CitaController extends Controller {
 	}
 
 	public function store(Request $request)	{
-			$restantes=0;
-			$last = DB::table('tratamientos')->latest()->first();
-			$tratamiento = Tratamiento::find($last->id);
+			if($request->id != 0){
+				$restantes=0;
 
-			$terapia = Terapia::find($tratamiento->terapia_id);
-			$paciente = Paciente::find($tratamiento->paciente_id);
+				$tratamiento = Tratamiento::find($request->id);
+				$terapia = Terapia::find($tratamiento->terapia_id);
+				$paciente = Paciente::find($tratamiento->paciente_id);
 
-			$cita = new Cita();
-			$cita->title = 'Paciente: ' . $paciente->nombre1 . ' ' . $paciente->apellido1 . ' - Asistencia: Sin evaluar';
-			$cita->start = $request->fecha;
-			$cita->color = $terapia->color;
-			$cita->tratamiento_id = $tratamiento->id;
+				$cita = new Cita();
+				$cita->title = 'Paciente: ' . $paciente->nombre1 . ' ' . $paciente->apellido1 . ' - Asistencia: Sin evaluar';
+				$cita->start = $request->fecha;
+				$cita->color = $terapia->color;
+				$cita->tratamiento_id = $request->id;
 
-			if($tratamiento->restantes>0){
-				$restantes = $tratamiento->restantes-1;
-				$tratamiento->restantes = $restantes;
-				$tratamiento->save();
-				if($cita->save()){
-					return redirect()->intended('/calendario');
+				if($tratamiento->restantes>0){
+					$restantes = $tratamiento->restantes-1;
+					$tratamiento->restantes = $restantes;
+					$tratamiento->save();
+					if($cita->save()){
+						return view('tratamientocalendario-mgmt/edit', ['tratamiento' => $tratamiento]);
+					}
+				}else{
+					$tratamientos = DB::table('tratamientos')
+	        ->leftJoin('pacientes', 'tratamientos.paciente_id', '=', 'pacientes.id')
+	        ->leftJoin('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
+	        ->leftJoin('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
+	        ->select('tratamientos.*',  'pacientes.nombre1 as primer_nombre',
+	                        'pacientes.nombre2 as segundo_nombre',
+	                        'pacientes.nombre3 as tercer_nombre',
+	                        'pacientes.apellido1 as primer_apellido',
+	                        'pacientes.apellido2 as segundo_apellido',
+	                        'pacientes.apellido3 as tercer_apellido',
+	                        'medicos.nombre as nombre_medico',
+	                        'terapias.nombre as nombre_terapia',
+	                        'terapias.color as color')
+	        ->orderBy('fecha', 'desc')->paginate(10);
+					$message = 'Ya no puede ingresar más citas al calendario, ya asgino las ' . $tratamiento->asignados . ' citas al paciente ' . $paciente->nombre1 . ' ' . $paciente->apellido1 . ' para la terapia ' . $terapia->nombre;
+		          	return view('tratamiento-mgmt/index',['tratamientos' => $tratamientos, 'message' => $message]);
 				}
-			}else{
-				$tratamientos = DB::table('tratamientos')
-        ->leftJoin('pacientes', 'tratamientos.paciente_id', '=', 'pacientes.id')
-        ->leftJoin('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
-        ->leftJoin('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
-        ->select('tratamientos.*',  'pacientes.nombre1 as primer_nombre',
-                        'pacientes.nombre2 as segundo_nombre',
-                        'pacientes.nombre3 as tercer_nombre',
-                        'pacientes.apellido1 as primer_apellido',
-                        'pacientes.apellido2 as segundo_apellido',
-                        'pacientes.apellido3 as tercer_apellido',
-                        'medicos.nombre as nombre_medico',
-                        'terapias.nombre as nombre_terapia',
-                        'terapias.color as color')
-        ->orderBy('fecha', 'desc')->paginate(10);
-				$message = 'Ya no puede ingresar más citas al calendario, ya asgino las ' . $tratamiento->asignados . ' citas al paciente ' . $paciente->nombre1 . ' ' . $paciente->apellido1 . ' para la terapia ' . $terapia->nombre;
-	          	return view('tratamiento-mgmt/index',['tratamientos' => $tratamientos, 'message' => $message]);
+			}else {
+					$restantes=0;
+					$last = DB::table('tratamientos')->latest()->first();
+					$tratamiento = Tratamiento::find($last->id);
+
+					$terapia = Terapia::find($tratamiento->terapia_id);
+					$paciente = Paciente::find($tratamiento->paciente_id);
+
+					$cita = new Cita();
+					$cita->title = 'Paciente: ' . $paciente->nombre1 . ' ' . $paciente->apellido1 . ' - Asistencia: Sin evaluar';
+					$cita->start = $request->fecha;
+					$cita->color = $terapia->color;
+					$cita->tratamiento_id = $tratamiento->id;
+
+					if($tratamiento->restantes>0){
+						$restantes = $tratamiento->restantes-1;
+						$tratamiento->restantes = $restantes;
+						$tratamiento->save();
+						if($cita->save()){
+							return redirect()->intended('/calendario');
+						}
+					}else{
+						$tratamientos = DB::table('tratamientos')
+						->leftJoin('pacientes', 'tratamientos.paciente_id', '=', 'pacientes.id')
+						->leftJoin('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
+						->leftJoin('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
+						->select('tratamientos.*',  'pacientes.nombre1 as primer_nombre',
+														'pacientes.nombre2 as segundo_nombre',
+														'pacientes.nombre3 as tercer_nombre',
+														'pacientes.apellido1 as primer_apellido',
+														'pacientes.apellido2 as segundo_apellido',
+														'pacientes.apellido3 as tercer_apellido',
+														'medicos.nombre as nombre_medico',
+														'terapias.nombre as nombre_terapia',
+														'terapias.color as color')
+						->orderBy('fecha', 'desc')->paginate(10);
+						$message = 'Ya no puede ingresar más citas al calendario, ya asgino las ' . $tratamiento->asignados . ' citas al paciente ' . $paciente->nombre1 . ' ' . $paciente->apellido1 . ' para la terapia ' . $terapia->nombre;
+									return view('tratamiento-mgmt/index',['tratamientos' => $tratamientos, 'message' => $message]);
+				}
 			}
 	}
 

@@ -60,9 +60,7 @@
     @include('layouts.header')
     <!-- Sidebar -->
     @include('layouts.sidebar')
-    <script src='fullcalendar/lib/moment.min.js'></script>
-    <script src='fullcalendar/fullcalendar.js'></script>
-    <script src='fullcalendar/locale/es.js'></script>
+
     @yield('content')
 
     <!-- Footer -->
@@ -182,4 +180,55 @@
       })
     </script>
   </body>
+  <script src='fullcalendar/lib/moment.min.js'></script>
+  <script src='fullcalendar/fullcalendar.js'></script>
+  <script src='fullcalendar/locale/es.js'></script>
+  <script>
+      $(document).ready(function() {
+          $('#calendar').fullCalendar({
+            header: {
+              left: 'prev,next today',
+              center: 'title',
+              right: 'month,basicWeek,basicDay'
+            },
+            navLinks: true, // can click day/week names to navigate views
+            selectable: true,
+
+                  select: function(start){
+                      start = moment(start.format());
+                      $('#fecha').val(start.format('DD-MM-YYYY'));
+                      $('#responsive-modal').modal('show');
+
+
+                  },
+            events: '/agregar-cita',
+
+                  eventClick: function(event, jsEvent, view){
+                      $('#modal-event #delete').attr('data-id', event.id);
+                      $('#modal-event #_title').val(event.title);
+                      $('#modal-event #_asistencia').val(event.asistencia);
+                      $('#modal-event #_obervacion').val(event.observacion);
+                      $('#modal-event').modal('show');
+                  }
+            });
+      });
+
+      $('#delete').on('click', function(){
+          var x = $(this);
+          var delete_url = x.attr('data-href')+'/'+x.attr('data-id');
+
+          $.ajax({
+              url: delete_url,
+              type: 'DELETE',
+              success: function(result){
+                  $('#modal-event').modal('hide');
+                  alert(result.message);
+              },
+              error: function(result){
+                  $('#modal-event').modal('hide');
+                  alert(result.message);
+              }
+          });
+      });
+  </script>
 </html>
