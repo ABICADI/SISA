@@ -151,7 +151,7 @@ class ReportPacienteController extends Controller {
 					];
 	        $pacientes = $this->getExportingData($constraints);
 	        $pdf = PDF::loadView('system-mgmt/report-paciente/pdf', ['pacientes' => $pacientes, 'searchingVals' => $constraints]);
-	        return $pdf->download('reporte_fecha_'. $now .'.pdf');
+	        return $pdf->download('reporte_paciente_fecha_'. $now .'.pdf');
 	        return view('system-mgmt/report-paciente/pdf', ['pacientes' => $pacientes, 'searchingVals' => $constraints]);
 	    }
 
@@ -165,7 +165,7 @@ class ReportPacienteController extends Controller {
 																								'departamento' => $request['departamento'],
 																								'municipio' => $request['municipio'],
 																								'pago' => $request['pago']]);
-	        return Excel::create('reporte_de_fecha_'. $now, function($excel) use($pacientes, $request, $author) {
+	        return Excel::create('reporte_paciente_de_fecha_'. $now, function($excel) use($pacientes, $request, $author) {
 						date_default_timezone_set('america/guatemala');
 						$format = 'Y-m-d H:i:s';
 						$now = date($format);

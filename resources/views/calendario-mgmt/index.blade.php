@@ -101,6 +101,7 @@
 <!-- Calendario Inicio JS-->
 <script src='fullcalendar/lib/moment.min.js'></script>
 <script src='fullcalendar/fullcalendar.js'></script>
+<script src='fullcalendar/locale/es.js'></script>
 <!-- Calendario Fin -->
 
 <script>

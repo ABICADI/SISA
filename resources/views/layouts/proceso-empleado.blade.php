@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-  This is a starter template page. Use this page to start your new project from
-  scratch. This page gets rid of all links and provides the needed markup only.
-  -->
 <html>
   <head>
     <meta charset="utf-8">
@@ -21,21 +17,8 @@
     <link href="{{ asset("/bower_components/AdminLTE/plugins/datepicker/datepicker3.css")}}" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
     <link href="{{ asset("/bower_components/AdminLTE/dist/css/AdminLTE.min.css")}}" rel="stylesheet" type="text/css" />
-    <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
-      page. However, you can choose any other skin. Make sure you
-      apply the skin class to the body tag so the changes take effect.
-      -->
     <link href="{{ asset("/bower_components/AdminLTE/dist/css/skins/_all-skins.min.css")}}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/app-template.css') }}" rel="stylesheet">
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>-->
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
   <!--
     BODY TAG OPTIONS:
@@ -57,7 +40,7 @@
     |               | sidebar-mini                            |
     |---------------------------------------------------------|
     -->
-  <body class="hold-transition skin-blue sidebar-mini">
+  <body class="hold-transition skin-green sidebar-collapse sidebar-mini">
     <div class="wrapper">
     <!-- Main Header -->
     @include('layouts.header-empleado')
@@ -87,10 +70,6 @@
     <script src="{{ asset ("/bower_components/AdminLTE/dist/js/app.min.js") }}" type="text/javascript"></script>
     <script src="{{ asset ("/bower_components/AdminLTE/dist/js/demo.js") }}" type="text/javascript"></script>
 
-    <!-- Optionally, you can add Slimscroll and FastClick plugins.
-      Both of these plugins are recommended to enhance the
-      user experience. Slimscroll is required when using the
-      fixed layout. -->
       <script>
         $(document).ready(function() {
           //Date picker
@@ -164,16 +143,6 @@
               te = String.fromCharCode(tecla);
               return patron.test(te);
           }
-    </script>
-
-    <script type="text/javascript">
-      function mostrarReferencia(){
-        if (document.fcontacto.Conocido[1].checked == true) {
-          document.getElementById('desdeotro').style.display='block';
-        } else {
-          document.getElementById('desdeotro').style.display='none';
-        }
-      }
     </script>
   </body>
 </html>

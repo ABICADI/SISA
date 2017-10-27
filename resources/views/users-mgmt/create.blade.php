@@ -254,7 +254,6 @@
             <td>
                 <div class="form-group">
                     <label for="edad" class="col-md-3 control-label">Edad</label>
-
                         <div class="col-md-3">
                             <input id="edad" type="text" class="form-control" name="edad" disabled />
                         </div>

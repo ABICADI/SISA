@@ -32,6 +32,7 @@
     <link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
     <link href="{{ asset("/bower_components/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css")}}" rel="stylesheet" type="text/css" />
 
+    <!-- Graficas -->
     {!! Charts::assets() !!}
   </head>
   <!--
@@ -62,6 +63,7 @@
     @include('layouts.sidebar')
     <script src='fullcalendar/lib/moment.min.js'></script>
     <script src='fullcalendar/fullcalendar.js'></script>
+    <script src='fullcalendar/locale/es.js'></script>
     @yield('content')
 
     <!-- Footer -->

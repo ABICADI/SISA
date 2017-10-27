@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="panel-heading" align="center"><img src="{{ asset("/bower_components/AdminLTE/dist/img/LOGO ABICADI 3.png") }}" ></div>
+<div class="panel-heading" align="center"><img src="{{ asset("/bower_components/AdminLTE/dist/img/abicadi.png") }}" height="250px"></div>
 
 <div class="container">
     <div class="row">

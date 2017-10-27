@@ -6,35 +6,36 @@ class DepartamentoTableSeeder extends Seeder {
 
     public function run() {
 
-		$departamentoss = array(
-            "Alta Verapaz",     //1
-            "Baja Verapaz",     //2
-            "Chimaltenango",    //3
-            "Chiquimula",       //4
-            "Guatemala",        //5
-            "El Progreso",      //6
-            "Escuintla",        //7
-            "Huehuetenango",    //8
-            "Izabal",           //9
-            "Jalapa",           //10
-            "Jutiapa",          //11
-            "Petén",            //12
-            "Quetzaltenango",   //13
-            "Quiché",           //14
-            "Retalhuleu",       //15
-            "Sacatepéquez",     //16
-            "San Marcos",       //17
-            "Santa Rosa",       //18
-            "Sololá",           //19
-            "Suchitepéquez",    //20
-            "Totonicapán",      //21
-            "Zacapa",           //22
+      $departamentoss = array(
+                  "ALTA VERAPAZ",     //1
+                  "BAJA VERAPAZ",     //2
+                  "CHIMALTENANGO",    //3
+                  "CHIQUIMULA",       //4
+                  "GUATEMALA",        //5
+                  "EL PROGRESO",      //6
+                  "ESCUINTLA",        //7
+                  "HUEHUETENANGO",    //8
+                  "IZABAL",           //9
+                  "JALAPA",           //10
+                  "JUTIAPA",          //11
+                  "PETÉN",            //12
+                  "QUETZALTENANGO",   //13
+                  "QUICHÉ",           //14
+                  "RETALHULEU",       //15
+                  "SACATEPÉQUEZ",     //16
+                  "SAN MARCOS",       //17
+                  "SANTA ROSA",       //18
+                  "SOLOLÁ",           //19
+                  "SUCHITEPÉQUEZ",    //20
+                  "TOTONICAPÁN",      //21
+                  "ZACAPA",           //22
         );
-        
+
+
         for($i=0;$i<count($departamentoss);$i++){
             $departamento = factory(App\Departamento::class)->create([
              'nombre' => $departamentoss[$i]
             ]);
-        } 
+        }
     }
 }

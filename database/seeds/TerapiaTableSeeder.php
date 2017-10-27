@@ -5,42 +5,41 @@ use Illuminate\Database\Seeder;
 class TerapiaTableSeeder extends Seeder {
 
     public function run() {
+      $terapia = factory(App\Terapia::class)->create([
+          'nombre' => 'NINGUNA',
+          'descripcion' => 'NINGUNA',
+          'color' => '#ff3333'
+      ]);
 
-        $terapia = factory(App\Terapia::class)->create([
-            'nombre' => 'Ninguna',
-            'descripcion' => 'Ninguna',
-            'color' => '#14eebb'
-        ]);
+      $terapia = factory(App\Terapia::class)->create([
+          'nombre' => 'FISIOTERAPIA',
+          'descripcion' => 'ESTA ES UNA ÁREA DE TERAPIA FÍSICA, LOS PACIENTES APRENDEN A LEVANTARSE, GATEAR, RODAR, SENTARSE Y SOSTENER EL PESO.',
+          'color' => '#33c4ff'
+      ]);
 
-		$terapia = factory(App\Terapia::class)->create([
-            'nombre' => 'Fisioterapia',
-            'descripcion' => 'Esta es una área de terapia física, los pacientes aprenden a levantarse, gatear, rodar, sentarse y sostener el peso.',
-            'color' => '#14eebb'
-        ]);
+      $terapia = factory(App\Terapia::class)->create([
+          'nombre' => 'TERAPIA DEL LENGUAJE',
+          'descripcion' => 'CON EL APOYO DE MATERIAL INTERACTIVO, LOS PACIENTES APRENDEN A EXPRESARSE Y DESARROLLAR EL LENGUAJE Y LA COMPRENSIÓN, SE TRABAJAN EJERCICIOS DE RELAJACIÓN, DE MANDÍBULA, MÚSCULOS DE LA BOCA PARA ADQUIRIR LA FUERZA NECESARIA PARA COMER Y HABLAR.',
+          'color' => '#33ff6e'
+      ]);
 
-        $terapia = factory(App\Terapia::class)->create([
-            'nombre' => 'Terapia del Lenguaje',
-            'descripcion' => 'Con el apoyo de material interactivo, los pacientes aprenden a expresarse y desarrollar el lenguaje y la comprensión, se trabajan ejercicios de relajación, de mandíbula, músculos de la boca para adquirir la fuerza necesaria para comer y hablar.',
-            'color' => '#14eebb'
-        ]);
+      $terapia = factory(App\Terapia::class)->create([
+          'nombre' => 'TERAPIA OCUPACIONAL',
+          'descripcion' => 'LOS EJERCICIOS CON OBJETOS DE USO COTIDIANO AYUDAN A LOS PACIENTES A INDEPENDIZARSE CON EL PROPÓSITO QUE CADA PACIENTE PUEDA REALIZAR ACTIVIDADES BASICAS EN EL HOGAR POR SI SOLOS.',
+          'color' => '#4c33ff'
+      ]);
 
-        $terapia = factory(App\Terapia::class)->create([
-            'nombre' => 'Terapia Ocupacional',
-            'descripcion' => 'Los ejercicios con objetos de uso cotidiano ayudan a los pacientes a independizarse con el propósito que cada paciente pueda realizar actividades basicas en el hogar por si solos.',
-            'color' => '#14eebb'
-        ]);
-
-        $terapia = factory(App\Terapia::class)->create([
-            'nombre' => 'Educación Especial',
-            'descripcion' => 'En esta área los pacientes aprenden a utilizar su memoria y a reconocer letras u objetos que hayan olvidado. Se utiliza material de apoyo acorde a la necesidad de cada paciente y se estimula su cerebro.',
-            'color' => '#14eebb'
-        ]);
+      $terapia = factory(App\Terapia::class)->create([
+          'nombre' => 'EDUCACIÓN ESPECIAL',
+          'descripcion' => 'EN ESTA ÁREA LOS PACIENTES APRENDEN A UTILIZAR SU MEMORIA Y A RECONOCER LETRAS U OBJETOS QUE HAYAN OLVIDADO. SE UTILIZA MATERIAL DE APOYO ACORDE A LA NECESIDAD DE CADA PACIENTE Y SE ESTIMULA SU CEREBRO.',
+          'color' => '#be33ff'
+      ]);
 
 
-        $terapia = factory(App\Terapia::class)->create([
-            'nombre' => 'Mecanoterapia',
-            'descripcion' => 'Esta área ayuda a niños y adultos a controlar su peso y lograr un equilibrio adecuado. Aparatos como bicicleta, elípticas ayudan a desarrolar los músculos y a la fuerza de cada paciente.',
-            'color' => '#14eebb'
-        ]);
+      $terapia = factory(App\Terapia::class)->create([
+          'nombre' => 'MECANOTERAPIA',
+          'descripcion' => 'ESTA ÁREA AYUDA A NIÑOS Y ADULTOS A CONTROLAR SU PESO Y LOGRAR UN EQUILIBRIO ADECUADO. APARATOS COMO BICICLETA, ELÍPTICAS AYUDAN A DESARROLAR LOS MÚSCULOS Y A LA FUERZA DE CADA PACIENTE.',
+          'color' => '#6b0a46'
+      ]);
     }
 }

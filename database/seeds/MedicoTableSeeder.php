@@ -10,6 +10,5 @@ class MedicoTableSeeder extends Seeder {
             'nombre' => 'El Dr. Mielita',
             'telefono' => '00000000'
         ]);
-
     }
 }

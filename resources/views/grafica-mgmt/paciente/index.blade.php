@@ -12,7 +12,20 @@
     </div>
   </div>
   <!-- /.box-header -->
-
+  <table class="table responsive">
+    <tr>
+      <td>
+        {!! $grafica_registro->render() !!}
+      </td>
+      </tr>
+  </table>
+  <table class="table responsive">
+    <tr>
+      <td>
+        {!! $group_tipo_pago->render() !!}
+      </td>
+      </tr>
+  </table>
   <!-- /.box-body -->
 </div>
     </section>
