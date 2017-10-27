@@ -21,11 +21,11 @@ class CitaController extends Controller {
 	}
 
 	public function index()	{
-		$data = Cita::get(['id', 'title', 'start', 'color']);
+		$data = Cita::get(['id', 'title', 'start', 'color', 'asistencia', 'observacion']);
 		return Response()->json($data);
 	}
 
-	public function store(Request $request)	{	
+	public function store(Request $request)	{
 			$last = DB::table('tratamientos')->latest()->first();
 			$tratamiento = Tratamiento::find($last->id);
 
@@ -33,13 +33,13 @@ class CitaController extends Controller {
 			$paciente = Paciente::find($tratamiento->paciente_id);
 
 			$cita = new Cita();
-			$cita->title = $paciente->nombre1 . ' ' . $paciente->apellido1;
+			$cita->title = 'Paciente: ' . $paciente->nombre1 . ' ' . $paciente->apellido1 . ' - Asistencia: ';
 			$cita->start = $request->fecha;
 			$cita->color = $terapia->color;
 			$cita->tratamiento_id = $tratamiento->id;
 
 			$update_cant_citas = Tratamiento::findOrFail($tratamiento->id);
-			
+
 			if($update_cant_citas->restantes){
 				$update_cant_citas->restantes = $tratamiento->restantes-1;
 				$update_cant_citas->save();
@@ -51,14 +51,14 @@ class CitaController extends Controller {
 				}
 			}
 
-			
+
 
 			$message = 'Ya no puede ingresar más';
           	return view('calendario-mgmt/index');
           	//return view('calendario-mgmt/index', ['restantes' => $update_cant_citas->restantes]);
 
-			
-			
+
+
 	}
 
 	public function destroy($id){

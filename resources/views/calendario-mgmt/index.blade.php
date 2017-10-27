@@ -41,15 +41,15 @@
     <section class="content">
 
     <!--<?php //if(!$restantes)
-    { 
+    {
       //'<label style="color:red">"{{$update_cant_citas->restantes}}"</label>'
       //echo $restantes;
-    } 
+    }
     ?>-->
-      
 
 
-    
+
+
   <!-- Calendario Inicio -->
   <table class="table responsive">
     <tr>
@@ -106,12 +106,22 @@
                             <div class="form-group">
                                   <label for="cui" class="col-md-2 control-label">Asistencia</label>
                                       <div class="col-md-8">
-                                            <select class="form-control" id="_asistencia" name="_asistencia">
-                                              <option  selected="selected" value="0">Seleccionar Asistencia</option>
+                                            <select class="form-control" id="_asistencia" name="_asistencia" value="{{ old('_asistencia') }}">
+                                              <option  value="" selected>Seleccionar Asistencia</option>
                                               <option  value="Si">Si</option>
                                               <option  value="No">No</option>
                                               <option  value="Permiso">Permiso</option>
                                             </select>
+                                      </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="form-group">
+                                  <label for="cui" class="col-md-2 control-label">Observación</label>
+                                      <div class="col-md-8">
+                                          <textarea id="_observacion" class="form-control" name="_observacion" placeholder="descripcion" cols="50" rows="10"  type="text" value="{{ old('_observacion') }}" maxlength="500" autofocus>{{ old('_observacion') }}</textarea>
                                       </div>
                             </div>
                           </td>
@@ -185,9 +195,8 @@
 
                 eventClick: function(event, jsEvent, view){
                     $('#modal-event #delete').attr('data-id', event.id);
-                    $('#modal-event #_date-start').val(event.start);
                     $('#modal-event #_title').val(event.title);
-                    $('#modal-event #_color').val(event.color);
+                    $('#modal-event #_asistencia').val(event.asistencia);
                     $('#modal-event').modal('show');
                 }
           });
