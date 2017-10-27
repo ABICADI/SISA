@@ -16,7 +16,8 @@ class CreateCitasTable extends Migration
         Schema::create('citas', function (Blueprint $table) {
             $table->increments('id');
             $table->date('start');
-            $table->date('end');
+            $table->string('title'); //nombre de paciente en eventos del calendario
+            $table->string('color'); //color de terapia para identificacion de eventos en calendario
             $table->string('asistencia')->nullable();
             $table->string('observacion')->nullable();
             $table->integer('tratamiento_id');

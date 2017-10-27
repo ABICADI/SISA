@@ -112,14 +112,16 @@
         right: 'month,basicWeek,basicDay'
       },
       navLinks: true, // can click day/week names to navigate views
-      editable: true,
+      //editable: true,
       selectable: true,
-      selectHelper: true,
+      //selectHelper: true,
 
             select: function(start){
                 start = moment(start.format());
                 $('#fecha').val(start.format('DD-MM-YYYY'));
                 $('#responsive-modal').modal('show');
+
+
             },
       events: '/agregar-cita',
             eventClick: function(event, jsEvent, view){

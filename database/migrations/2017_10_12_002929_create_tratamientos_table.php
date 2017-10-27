@@ -17,6 +17,8 @@ class CreateTratamientosTable extends Migration
             $table->increments('id');
             $table->string('descripcion', 500)->nullable();
             $table->date('fecha')->nullable();
+            $table->integer('asignados')->nullable(); //dias asignados
+            $table->integer('restantes')->nullable();  //dias restantes
             $table->integer('paciente_id');
             $table->integer('medico_id');
             $table->integer('terapia_id');
