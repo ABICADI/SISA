@@ -93,7 +93,7 @@
                           <td>
                             <div class="form-group">
                                 <div class="form-group">
-                                      <label for="cui" class="col-md-2 control-label">Paciente</label>
+                                      <label for="cui" class="col-md-2 control-label">Información</label>
                                           <div class="col-md-8">
                                               <input id="_title" type="text" class="form-control" name="_title" value="{{ old('_title') }}" autofocus>
                                           </div>
@@ -121,7 +121,7 @@
                             <div class="form-group">
                                   <label for="cui" class="col-md-2 control-label">Observación</label>
                                       <div class="col-md-8">
-                                          <textarea id="_observacion" class="form-control" name="_observacion" placeholder="descripcion" cols="50" rows="10"  type="text" value="{{ old('_observacion') }}" maxlength="500" autofocus>{{ old('_observacion') }}</textarea>
+                                          <textarea id="_observacion" class="form-control" name="_observacion" placeholder="observacion" cols="50" rows="10"  type="text" value="{{ old('_observacion') }}" maxlength="500" autofocus>{{ old('_observacion') }}</textarea>
                                       </div>
                             </div>
                           </td>
@@ -197,6 +197,7 @@
                     $('#modal-event #delete').attr('data-id', event.id);
                     $('#modal-event #_title').val(event.title);
                     $('#modal-event #_asistencia').val(event.asistencia);
+                    $('#modal-event #_obervacion').val(event.observacion);
                     $('#modal-event').modal('show');
                 }
           });

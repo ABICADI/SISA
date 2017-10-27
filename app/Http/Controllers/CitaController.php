@@ -21,7 +21,7 @@ class CitaController extends Controller {
 	}
 
 	public function index()	{
-		$data = Cita::get(['id', 'title', 'start', 'color', 'asistencia', 'observacion']);
+		$data = Cita::get(['id', 'title', 'start', 'color']);
 		return Response()->json($data);
 	}
 
@@ -43,22 +43,28 @@ class CitaController extends Controller {
 			if($update_cant_citas->restantes){
 				$update_cant_citas->restantes = $tratamiento->restantes-1;
 				$update_cant_citas->save();
-
 				if($cita->save()){
-				return redirect()->intended('/calendario');
-				//return redirect()->intended('/calendario', ['restantes' => $update_cant_citas->restantes]);
-				//return view('calendario-mgmt/index', ['restantes' => $update_cant_citas->restantes]);
+					return redirect()->intended('/calendario');
 				}
+			}else{
+				$tratamientos = DB::table('tratamientos')
+        ->leftJoin('pacientes', 'tratamientos.paciente_id', '=', 'pacientes.id')
+        ->leftJoin('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
+        ->leftJoin('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
+        ->select('tratamientos.*',  'pacientes.nombre1 as primer_nombre',
+                        'pacientes.nombre2 as segundo_nombre',
+                        'pacientes.nombre3 as tercer_nombre',
+                        'pacientes.apellido1 as primer_apellido',
+                        'pacientes.apellido2 as segundo_apellido',
+                        'pacientes.apellido3 as tercer_apellido',
+                        'medicos.nombre as nombre_medico',
+                        'terapias.nombre as nombre_terapia',
+                        'terapias.color as color')
+        ->orderBy('fecha', 'desc')->paginate(10);
+				$message = 'Ya no puede ingresar más citas al calendario, ya asgino las ' . $update_cant_citas->asignados . ' citas al paciente ' . $paciente->nombre1 . ' ' . $paciente->apellido1 . ' para la terapia ' . $terapia->nombre;
+	          	return view('tratamiento-mgmt/index',['tratamientos' => $tratamientos, 'message' => $message]);
 			}
-
-
-
-			$message = 'Ya no puede ingresar más';
-          	return view('calendario-mgmt/index');
           	//return view('calendario-mgmt/index', ['restantes' => $update_cant_citas->restantes]);
-
-
-
 	}
 
 	public function destroy($id){

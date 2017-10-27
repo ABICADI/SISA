@@ -36,8 +36,8 @@ class TratamientoController extends Controller {
                         'terapias.nombre as nombre_terapia',
                         'terapias.color as color')
         ->orderBy('fecha', 'desc')->paginate(10);
-
-        return view('tratamiento-mgmt/index', ['tratamientos' => $tratamientos]);
+        $message = '';
+        return view('tratamiento-mgmt/index', ['tratamientos' => $tratamientos, 'message' => $message]);
     }
 
     public function create() {
@@ -49,9 +49,12 @@ class TratamientoController extends Controller {
     }
 
     public function store(Request $request) {
-
+        date_default_timezone_set('america/guatemala');
+        $format = 'd/m/Y';
+        $now = date($format);
         $this->validateInsertTratamiento($request);
         $tratamiento = new Tratamiento();
+        $tratamiento->fecha = $now;
         $tratamiento->descripcion = $request['descripcion'];
         $tratamiento->paciente_id = $request['paciente_id'];
         $tratamiento->medico_id = $request['medico_id'];

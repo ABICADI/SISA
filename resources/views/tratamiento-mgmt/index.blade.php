@@ -22,6 +22,12 @@
         <div class="col-sm-6"></div>
         <div class="col-sm-6"></div>
       </div>
+      {{ csrf_field() }}
+      <div>
+        <h4>
+          <label style="color:red">{{ $message }}</label>
+        </h4>
+      </div>
       <form method="POST" action="{{ route('tratamiento-management.search') }}">
          {{ csrf_field() }}
          @component('layouts.search', ['title' => 'Buscar'])
