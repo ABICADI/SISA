@@ -66,7 +66,7 @@
 												 <div class="input-group-addon">
 														 <i class="fa fa-calendar"></i>
 												 </div>
-												 <input type="text" value="{{$searchingVals['to']}}" name="to" class="form-control pull-right" id="from" placeholder="Fecha Ingreso">
+												 <input type="text" value="{{$searchingVals['to']}}" name="to" class="form-control pull-right" id="to" placeholder="Fecha Ingreso">
 										 </div>
 								 </div>
 						 	 </td>
