@@ -43,6 +43,12 @@
                                     </select>
                                 </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label"><label style="color:red">*</label> Cantidad de Terapias</label>
+                                <div class="col-md-6">
+                                    <input value="{{ old('asignados') }}" class="form-control" name="asignados" id="asignados" placeholder="asignados" type="text">
+                                </div>
+                        </div>
                         <div class="form-group{{ $errors->has('descripcion') ? ' has-error' : '' }}">
                             <label for="descripcion" class="col-md-2 control-label">Descripcion</label>
 

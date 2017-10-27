@@ -1,26 +1,48 @@
 <script>
-    $(document).ready(function() {
 
-      $('#calendar').fullCalendar({
-        header: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'month,basicWeek,basicDay'
-        },
-        navLinks: true, // can click day/week names to navigate views
-        editable: true,
-        selectable: true,
-        selectHelper: true,
+  $(document).ready(function() {
+    
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'listDay,listWeek,month'
+      },
 
-              /*select: function(start){
-                  start = moment(start.format());
-                  $('#date_start').val(start.format('DD-MM-YYYY'));
-                  $('#responsive-modal').modal('show');
-              },*/
+      // customize the button names,
+      // otherwise they'd all just say "list"
+      views: {
+        listDay: { buttonText: 'list day' },
+        listWeek: { buttonText: 'list week' }
+      },
 
-        events: '/agregar-cita'
-
-      });
-
+      defaultView: 'listWeek',
+      defaultDate: $('#calendar').fullCalendar('today'),
+      navLinks: true, // can click day/week names to navigate views
+      editable: true,
+      eventLimit: true, // allow "more" link when too many events
+      events: '/agregar-cita'
     });
+    $('#calendar').fullCalendar('option', 'contentHeight', 450);
+    
+  });
+
 </script>
+<style>
+
+  body {
+    margin: 40px 10px;
+    padding: 0;
+    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    font-size: 14px;
+  }
+
+  #calendar {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+</style>
+
+
+
