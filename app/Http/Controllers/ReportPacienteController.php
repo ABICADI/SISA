@@ -74,84 +74,136 @@ class ReportPacienteController extends Controller {
 	    private function getRangoPaciente($constraints) {
 					if($constraints['from'] == '' && $constraints['to'] == ''){
 						if($constraints['pago']!=0 && $constraints['departamento']!=0 && $constraints['municipio']!=0){
-							$pacientes = Paciente::where('departamento_id', '=', $constraints['departamento'])
-																		->where('municipio_id', '=', $constraints['municipio'])
-																		->where('pago_id', '=', $constraints['pago'])->get();
+							$pacientes = Paciente::join('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
+																		->join('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+																		->join('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+																		->select('pacientes.*', 'departamentos.nombre as Departamento', 'municipios.nombre as Municipio', 'pagos.nombre as Pago')
+																		->where('pacientes.departamento_id', '=', $constraints['departamento'])
+																		->where('pacientes.municipio_id', '=', $constraints['municipio'])
+																		->where('pacientes.pago_id', '=', $constraints['pago'])->get();
 							return $pacientes;
 						}
 						if($constraints['pago']!=0 && $constraints['departamento']==0 && $constraints['municipio']==0){
-							$pacientes = Paciente::where('pago_id', '=', $constraints['pago'])->get();
+							$pacientes = Paciente::join('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
+																		->join('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+																		->join('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+																		->select('pacientes.*', 'departamentos.nombre as Departamento', 'municipios.nombre as Municipio', 'pagos.nombre as Pago')
+																		->where('pacientes.pago_id', '=', $constraints['pago'])->get();
 							return $pacientes;
 						}
 						if($constraints['departamento']!=0 && $constraints['pago']!=0){
-							$pacientes = Paciente::where('departamento_id', '=', $constraints['departamento'])
-																		->where('pago_id', '=', $constraints['pago'])->get();
+							$pacientes = Paciente::join('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
+																		->join('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+																		->join('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+																		->select('pacientes.*', 'departamentos.nombre as Departamento', 'municipios.nombre as Municipio', 'pagos.nombre as Pago')
+																		->where('pacientes.departamento_id', '=', $constraints['departamento'])
+																		->where('pacientes.pago_id', '=', $constraints['pago'])->get();
 							return $pacientes;
 						}
 						if($constraints['municipio']!=0 && $constraints['pago']!=0){
-							$pacientes = Paciente::where('municipio_id', '=', $constraints['municipio'])
-																		->where('pago_id', '=', $constraints['pago'])->get();
+							$pacientes = Paciente::join('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
+																		->join('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+																		->join('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+																		->select('pacientes.*', 'departamentos.nombre as Departamento', 'municipios.nombre as Municipio', 'pagos.nombre as Pago')
+																		->where('pacientes.municipio_id', '=', $constraints['municipio'])
+																		->where('pacientes.pago_id', '=', $constraints['pago'])->get();
 							return $pacientes;
 						}
 						if($constraints['departamento']!=0){
-							$pacientes = Paciente::where('departamento_id', '=', $constraints['departamento'])->get();
+							$pacientes = Paciente::join('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
+																		->join('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+																		->join('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+																		->select('pacientes.*', 'departamentos.nombre as Departamento', 'municipios.nombre as Municipio', 'pagos.nombre as Pago')
+																		->where('pacientes.departamento_id', '=', $constraints['departamento'])->get();
 							return $pacientes;
 						}
 						if($constraints['municipio']!=0){
-							$pacientes = Paciente::where('municipio_id', '=', $constraints['municipio'])->get();
+							$pacientes = Paciente::join('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
+																		->join('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+																		->join('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+																		->select('pacientes.*', 'departamentos.nombre as Departamento', 'municipios.nombre as Municipio', 'pagos.nombre as Pago')
+																		->where('pacientes.municipio_id', '=', $constraints['municipio'])->get();
 							return $pacientes;
 						}
 					}
 
 	        if($constraints['from'] != '' && $constraints['to'] != ''){
 						if($constraints['pago']!=0 && $constraints['departamento']!=0 && $constraints['municipio']!=0){
-							$pacientes = Paciente::where('departamento_id', '=', $constraints['departamento'])
-																		->where('municipio_id', '=', $constraints['municipio'])
-																		->where('pago_id', '=', $constraints['pago'])
+							$pacientes = Paciente::join('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
+																		->join('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+																		->join('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+																		->select('pacientes.*', 'departamentos.nombre as Departamento', 'municipios.nombre as Municipio', 'pagos.nombre as Pago')
+																		->where('pacientes.departamento_id', '=', $constraints['departamento'])
+																		->where('pacientes.municipio_id', '=', $constraints['municipio'])
+																		->where('pacientes.pago_id', '=', $constraints['pago'])
 																		->where('fecha_ingreso', '>=', $constraints['from'])
-													          ->where('fecha_ingreso', '<=', $constraints['to'])
+																		->where('fecha_ingreso', '<=', $constraints['to'])
 													          ->get();
 							return $pacientes;
 						}
 						if($constraints['pago']!=0 && $constraints['departamento']==0 && $constraints['municipio']==0){
-							$pacientes = Paciente::where('pago_id', '=', $constraints['pago'])
+							$pacientes = Paciente::join('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
+																		->join('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+																		->join('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+																		->select('pacientes.*', 'departamentos.nombre as Departamento', 'municipios.nombre as Municipio', 'pagos.nombre as Pago')
+																		->where('pacientes.pago_id', '=', $constraints['pago'])
 																		->where('fecha_ingreso', '>=', $constraints['from'])
 																		->where('fecha_ingreso', '<=', $constraints['to'])
 																		->get();
 							return $pacientes;
 						}
 						if($constraints['departamento']!=0 && $constraints['pago']!=0){
-							$pacientes = Paciente::where('departamento_id', '=', $constraints['departamento'])
-																		->where('pago_id', '=', $constraints['pago'])
+							$pacientes = Paciente::join('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
+																		->join('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+																		->join('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+																		->select('pacientes.*', 'departamentos.nombre as Departamento', 'municipios.nombre as Municipio', 'pagos.nombre as Pago')
+																		->where('pacientes.departamento_id', '=', $constraints['departamento'])
+																		->where('pacientes.pago_id', '=', $constraints['pago'])
 																		->where('fecha_ingreso', '>=', $constraints['from'])
-													          ->where('fecha_ingreso', '<=', $constraints['to'])
+																		->where('fecha_ingreso', '<=', $constraints['to'])
 													          ->get();
 							return $pacientes;
 						}
 						if($constraints['municipio']!=0 && $constraints['pago']!=0){
-							$pacientes = Paciente::where('municipio_id', '=', $constraints['municipio'])
-																		->where('pago_id', '=', $constraints['pago'])
+							$pacientes = Paciente::join('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
+																		->join('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+																		->join('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+																		->select('pacientes.*', 'departamentos.nombre as Departamento', 'municipios.nombre as Municipio', 'pagos.nombre as Pago')
+																		->where('pacientes.municipio_id', '=', $constraints['municipio'])
+																		->where('pacientes.pago_id', '=', $constraints['pago'])
 																		->where('fecha_ingreso', '>=', $constraints['from'])
-													          ->where('fecha_ingreso', '<=', $constraints['to'])
+																		->where('fecha_ingreso', '<=', $constraints['to'])
 													          ->get();
 							return $pacientes;
 						}
 						if($constraints['departamento']!=0){
-							$pacientes = Paciente::where('departamento_id', '=', $constraints['departamento'])
+							$pacientes = Paciente::join('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
+																		->join('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+																		->join('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+																		->select('pacientes.*', 'departamentos.nombre as Departamento', 'municipios.nombre as Municipio', 'pagos.nombre as Pago')
+																		->where('pacientes.departamento_id', '=', $constraints['departamento'])
 																		->where('fecha_ingreso', '>=', $constraints['from'])
 																		->where('fecha_ingreso', '<=', $constraints['to'])
 																		->get();
 							return $pacientes;
 						}
 						if($constraints['municipio']!=0){
-							$pacientes = Paciente::where('municipio_id', '=', $constraints['municipio'])
+							$pacientes = Paciente::join('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
+																		->join('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+																		->join('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+																		->select('pacientes.*', 'departamentos.nombre as Departamento', 'municipios.nombre as Municipio', 'pagos.nombre as Pago')
+																		->where('pacientes.municipio_id', '=', $constraints['municipio'])
 																		->where('fecha_ingreso', '>=', $constraints['from'])
 																		->where('fecha_ingreso', '<=', $constraints['to'])
 																		->get();
 							return $pacientes;
 						}
 						if($constraints['municipio']==0 && $constraints['departamento']==0 && $constraints['pago']==0){
-							$pacientes = Paciente::where('fecha_ingreso', '>=', $constraints['from'])
+							$pacientes = Paciente::join('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
+																		->join('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+																		->join('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+																		->select('pacientes.*', 'departamentos.nombre as Departamento', 'municipios.nombre as Municipio', 'pagos.nombre as Pago')
+																		->where('fecha_ingreso', '>=', $constraints['from'])
 																		->where('fecha_ingreso', '<=', $constraints['to'])
 																		->get();
 							return $pacientes;

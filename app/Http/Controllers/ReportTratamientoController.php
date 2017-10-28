@@ -44,21 +44,41 @@ class ReportTratamientoController extends Controller {
 
 		    private function getRangoTratamiento($constraints) {
 						if($constraints['medico']==0 && $constraints['terapia']==0){
-							$tratamientos = Tratamiento::where('medico_id', '=', $constraints['medico'])
-																		->where('terapia_id', '=', $constraints['terapia'])->get();
+							$tratamientos = Tratamiento::join('pacientes', 'tratamientos.paciente_id', '=', 'pacientes.id')
+																->join('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
+																->join('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
+																->select('tratamientos.*', 'pacientes.nombre1 as Nombre1', 'pacientes.nombre2 as Nombre2', 'pacientes.nombre3 as Nombre3',
+																'pacientes.apellido1 as Apellido1', 'pacientes.apellido2 as Apellido2', 'pacientes.apellido3 as Apellido3', 'medicos.nombre as Medico', 'terapias.nombre as Terapia')
+																->where('medico_id', '=', $constraints['medico'])
+																->where('terapia_id', '=', $constraints['terapia'])->get();
 							return $tratamientos;
 						}
 							if($constraints['medico']!=0 && $constraints['terapia']!=0){
-								$tratamientos = Tratamiento::where('medico_id', '=', $constraints['medico'])
-																			->where('terapia_id', '=', $constraints['terapia'])->get();
+								$tratamientos = Tratamiento::join('pacientes', 'tratamientos.paciente_id', '=', 'pacientes.id')
+																	->join('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
+																	->join('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
+																	->select('tratamientos.*', 'pacientes.nombre1 as Nombre1', 'pacientes.nombre2 as Nombre2', 'pacientes.nombre3 as Nombre3',
+																	'pacientes.apellido1 as Apellido1', 'pacientes.apellido2 as Apellido2', 'pacientes.apellido3 as Apellido3', 'medicos.nombre as Medico', 'terapias.nombre as Terapia')
+																	->where('medico_id', '=', $constraints['medico'])
+																	->where('terapia_id', '=', $constraints['terapia'])->get();
 								return $tratamientos;
 							}
 							if($constraints['medico']!=0){
-								$tratamientos = Tratamiento::where('medico_id', '=', $constraints['medico'])->get();
+								$tratamientos = Tratamiento::join('pacientes', 'tratamientos.paciente_id', '=', 'pacientes.id')
+																	->join('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
+																	->join('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
+																	->select('tratamientos.*', 'pacientes.nombre1 as Nombre1', 'pacientes.nombre2 as Nombre2', 'pacientes.nombre3 as Nombre3',
+																	'pacientes.apellido1 as Apellido1', 'pacientes.apellido2 as Apellido2', 'pacientes.apellido3 as Apellido3', 'medicos.nombre as Medico', 'terapias.nombre as Terapia')
+																	->where('medico_id', '=', $constraints['medico'])->get();
 								return $tratamientos;
 							}
 							if($constraints['terapia']!=0){
-								$tratamientos = Tratamiento::where('terapia_id', '=', $constraints['terapia'])->get();
+								$tratamientos = Tratamiento::join('pacientes', 'tratamientos.paciente_id', '=', 'pacientes.id')
+																	->join('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
+																	->join('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
+																	->select('tratamientos.*', 'pacientes.nombre1 as Nombre1', 'pacientes.nombre2 as Nombre2', 'pacientes.nombre3 as Nombre3',
+																	'pacientes.apellido1 as Apellido1', 'pacientes.apellido2 as Apellido2', 'pacientes.apellido3 as Apellido3', 'medicos.nombre as Medico', 'terapias.nombre as Terapia')
+																	->where('terapia_id', '=', $constraints['terapia'])->get();
 								return $tratamientos;
 							}
 		    }

@@ -52,14 +52,16 @@
           <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
             <thead>
               <tr role="row">
-                <th width = "30%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Nombre: activate to sort column ascending">Nombre de la Actividad</th>
-                <th width = "20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Fecha: activate to sort column ascending">Fecha</th>
+                <th width = "10%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Nombre: activate to sort column ascending">Nombre de la Actividad</th>
+                <th width = "15%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Nombre: activate to sort column ascending">Nombre del Encargado</th>
+                <th width = "5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Fecha: activate to sort column ascending">Fecha</th>
               </tr>
             </thead>
             <tbody>
             @foreach ($actividades as $actividad)
                 <tr role="row" class="odd">
                   <td>{{ $actividad['nombre'] }}</td>
+                  <td>{{ $actividad['Nombre1'] }} {{ $actividad['Nombre2'] }} {{ $actividad['Nombre3'] }} {{ $actividad['Apellido1'] }} {{ $actividad['Apellido2'] }} {{ $actividad['Apellido3'] }}</td>
                   <td>{{ $actividad['fecha'] }}</td>
               </tr>
             @endforeach

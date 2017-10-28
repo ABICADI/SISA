@@ -59,14 +59,18 @@ class ReportController extends Controller {
     private function getRangoAcitividad($constraints) {
 
         if($constraints['from'] == '' || $constraints['to'] == ''){
-          $actividades = Actividad::where('fecha', '>=', '01/01/1850')
+          $actividades = Actividad::join('users', 'actividades.user_id', '=', 'users.id')
+                          ->select('actividades.*', 'users.nombre1 as Nombre1', 'users.nombre2 as Nombre2', 'users.nombre3 as Nombre3', 'users.apellido1 as Apellido1', 'users.apellido2 as Apellido2', 'users.apellido3 as Apellido3')
+                          ->where('fecha', '>=', '01/01/1850')
                           ->where('fecha', '<=', '01/01/1850')
                           ->get();
           return $actividades;
         }
 
         if($constraints['from'] != '' && $constraints['to'] != ''){
-        $actividades = Actividad::where('fecha', '>=', $constraints['from'])
+        $actividades = Actividad::join('users', 'actividades.user_id', '=', 'users.id')
+                        ->select('actividades.*', 'users.nombre1 as Nombre1', 'users.nombre2 as Nombre2', 'users.nombre3 as Nombre3', 'users.apellido1 as Apellido1', 'users.apellido2 as Apellido2', 'users.apellido3 as Apellido3')
+                        ->where('fecha', '>=', $constraints['from'])
                         ->where('fecha', '<=', $constraints['to'])
                         ->get();
         return $actividades;

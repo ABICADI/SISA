@@ -120,7 +120,10 @@
           <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
             <thead>
               <tr role="row">
-                <th width = "30%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Nombre: activate to sort column ascending">Nombre del Paciente</th>
+                <th width = "15%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Nombre: activate to sort column ascending">Nombre del Paciente</th>
+                <th width = "5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Nombre: activate to sort column ascending">Departamento</th>
+                <th width = "5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Nombre: activate to sort column ascending">Municipio</th>
+                <th width = "5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Nombre: activate to sort column ascending">Pago</th>
                 <th width = "5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Fecha: activate to sort column ascending">Fecha Ingreso</th>
               </tr>
             </thead>
@@ -128,6 +131,9 @@
             @foreach ($pacientes as $paciente)
                 <tr role="row" class="odd">
                   <td>{{ $paciente['nombre1'] }} {{ $paciente['nombre2'] }} {{ $paciente['nombre3'] }} {{ $paciente['apellido1'] }} {{ $paciente['apellido2'] }} {{ $paciente['apellido3'] }}</td>
+                  <td>{{ $paciente['Departamento'] }}</td>
+                  <td>{{ $paciente['Municipio'] }}</td>
+                  <td>{{ $paciente['Pago'] }}</td>
                   <td>{{ $paciente['fecha_ingreso'] }}</td>
               </tr>
             @endforeach
