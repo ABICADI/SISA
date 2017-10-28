@@ -104,6 +104,14 @@
             autoclose: true,
             format: 'dd/mm/yyyy'
           });
+          $('#fromm').datepicker({
+            autoclose: true,
+            format: 'yyyy-mm-dd'
+          });
+          $('#too').datepicker({
+            autoclose: true,
+            format: 'yyyy-mm-dd'
+          });
           $('#fecha').datepicker({
             autoclose: true,
             format: 'dd/mm/yyyy'

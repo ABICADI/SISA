@@ -1,4 +1,4 @@
-@extends('system-mgmt.report-actividad.base')
+@extends('system-mgmt.report-paciente.base')
 @section('action-content')
     <!-- Main content -->
     <section class="content">
