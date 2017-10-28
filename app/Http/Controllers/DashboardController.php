@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\User;
 use App\Paciente;
 use App\Medico;
+use App\Tratamiento;
 
 class DashboardController extends Controller {
 
@@ -22,7 +23,8 @@ class DashboardController extends Controller {
     	$count_user = User::where('estado_id', '!=', 2)->where('id', '!=', 1)->count();
       $count_paci = Paciente::all()->count();
       $count_medi = Medico::all()->count();
+      $count_trat = Tratamiento::all()->count();
 
-      return view('dashboard', ['count_user' => $count_user, 'count_paci' => $count_paci, 'count_medi' => $count_medi]);
+      return view('dashboard', ['count_user' => $count_user, 'count_paci' => $count_paci, 'count_medi' => $count_medi, 'count_trat' => $count_trat]);
     }
 }

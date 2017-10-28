@@ -94,6 +94,20 @@
         <a href="{{ route('medico-management.index') }}" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
+
+    <div class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <div class="small-box bg-blue">
+        <div class="inner">
+          <h3>{{$count_trat}}</h3>
+          <p>Tratamientos Ingresados</p>
+        </div>
+        <div class="icon">
+          <a href="{{ route('tratamiento-management.create') }}"><i class="fa fa-heartbeat"></i></a>
+        </div>
+        <a href="{{ route('tratamiento-management.index') }}" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
   <!-- /.row -->
   <!-- Main row -->
   @endif
