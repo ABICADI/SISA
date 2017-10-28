@@ -28,13 +28,12 @@
 			<table id="example2" role="grid">
 					 <thead>
 						 <tr role="row">
-							 <th width="2%">CUI</th>
-							 <th width="2%">Nombre Completo</th>
-							 <th width="2%">Dirección</th>
-							 <th width="2%">Fec. Nac.</th>
-							 <th width="2%">Encargado y Télefono</th>
-							 <th width="2%">Fecha Ingreso y No. Social</th>
-							 <th width="2%">Tipo Pago</th>
+							 <th width="1%">CUI</th>
+							 <th width="1%">Nombre Completo</th>
+							 <th width="1%">Dirección</th>
+							 <th width="1%">Fec. Nac.</th>
+							 <th width="1%">Encargado y Télefono</th>
+							 <th width="1%">Fecha Ingreso , No. Social y Tipo de Pago</th>
 						 </tr>
 					 </thead>
 					 <tbody>
@@ -45,8 +44,7 @@
 								 <td>{{ $paciente['Departamento'] }}, {{ $paciente['Municipio'] }}, {{ $paciente['Dirección'] }}</td>
 								 <td>{{ $paciente['Fecha_Nacimiento'] }}</td>
 								 <td>{{ $paciente['Nombre_Encargado'] }} - {{ $paciente['Teléfono'] }}</td>
-								 <td>{{ $paciente['Fecha_Ingreso'] }} - {{ $paciente['No_Seguro_Social'] }}</td>
-								 <td>{{ $paciente['Tipo_Pago'] }}</td>
+								 <td>{{ $paciente['Fecha_Ingreso'] }} - {{ $paciente['No_Seguro_Social'] }} {{ $paciente['Tipo_Pago'] }}</td>
 						 </tr>
 					 @endforeach
 					 </tbody>

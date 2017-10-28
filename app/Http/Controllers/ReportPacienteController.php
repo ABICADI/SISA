@@ -72,7 +72,7 @@ class ReportPacienteController extends Controller {
 	    }
 
 	    private function getRangoPaciente($constraints) {
-					if($constraints['from'] == '' && $constraints['to'] == ''){
+					if($constraints['from'] == '' || $constraints['to'] == ''){
 						if($constraints['pago']!=0 && $constraints['departamento']!=0 && $constraints['municipio']!=0){
 							$pacientes = Paciente::join('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
 																		->join('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
@@ -223,9 +223,9 @@ class ReportPacienteController extends Controller {
 					$constraints = [
 								'from' => $request['from'],
 								'to' =>$request['to'],
-								'departamento' => $request['departamento_id'],
-								'municipio' => $request['municipio_id'],
-								'pago' => $request['pago_id'],
+								'departamento' => $request['departamento'],
+								'municipio' => $request['municipio'],
+								'pago' => $request['pago']
 					];
 	        $pacientes = $this->getExportingData($constraints);
 	        $pdf = PDF::loadView('system-mgmt/report-paciente/pdf', ['pacientes' => $pacientes, 'searchingVals' => $constraints]);
@@ -257,7 +257,7 @@ class ReportPacienteController extends Controller {
 	    }
 
 	    private function getExportingData($constraints) {
-				if($constraints['from'] == '' && $constraints['to'] == ''){
+				if($constraints['from'] == '' || $constraints['to'] == ''){
 					if($constraints['pago']!=0 && $constraints['departamento']!=0 && $constraints['municipio']!=0){
 									return DB::table('pacientes')
 									->leftJoin('departamentos', 'pacientes.departamento_id', '=', 'departamentos.id')
