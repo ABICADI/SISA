@@ -204,13 +204,8 @@
             <div class="form-group">
                 <label class="col-md-4 control-label"><label style="color:red">*</label> Municipio</label>
                     <div class="col-md-7">
-
                         <select class="form-control" name="municipio_id" id='municipio_id' required autofocus>
                           <option value="" selected disabled>seleccione municipio</option>
-
-                            @foreach ($municipios as $municipio)
-                                <option value="{{$municipio->id}}">{{$municipio->nombre}}</option>
-                            @endforeach
                         </select>
                     </div>
             </div>

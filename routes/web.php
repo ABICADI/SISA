@@ -27,9 +27,11 @@ Route::post('system-management/bitacora/search', 'BitacoraController@search')->n
 Route::resource('system-management/bitacora', 'BitacoraController');
 
 Route::post('user-management/search', 'UserManagementController@search')->name('user-management.search');
+Route::get('user-management/municipios/{id}', 'UserManagementController@getMunicipios');
 Route::resource('user-management', 'UserManagementController');
 
 Route::post('paciente-management/search', 'PacienteController@search')->name('paciente-management.search');
+Route::get('paciente-management/municipios/{id}', 'PacienteController@getMunicipios');
 Route::resource('paciente-management', 'PacienteController');
 
 Route::post('tratamiento-management/search', 'TratamientoController@search')->name('tratamiento-management.search');

@@ -128,7 +128,7 @@
             <td>
             <div class="form-group">
                 <label class="col-md-5 control-label"><label style="color:red">*</label> Departamento</label>
-                    <div class="col-md-7">
+                    <div class="col-md-6">
                         <select class="form-control" name="departamento_id" id="departamento_id" required autofocus>
                             @foreach ($departamentos as $departamento)
                                 <option value="{{$departamento->id}}" {{$departamento->id == $paciente->departamento_id ? 'selected' : ''}}>{{$departamento->nombre}}</option>
@@ -140,7 +140,7 @@
             <td>
             <div class="form-group">
                 <label class="col-md-4 control-label"><label style="color:red">*</label> Municipio</label>
-                    <div class="col-md-7">
+                    <div class="col-md-6">
                         <select class="form-control" name="municipio_id" id='municipio_id' required autofocus>
                             @foreach ($municipios as $municipio)
                                 <option value="{{$municipio->id}}" {{$municipio->id == $paciente->municipio_id ? 'selected' : ''}}>{{$municipio->nombre}}</option>

@@ -29,9 +29,15 @@ class PacienteController extends Controller {
 
     public function create() {
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        $municipios = Municipio::select('id', 'nombre','departamento_id')->orderBy('nombre', 'asc')->get();
         $pagos = Pago::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        return view('paciente-mgmt/create', ['departamentos' => $departamentos, 'municipios' => $municipios, 'pagos' => $pagos]);
+        return view('paciente-mgmt/create', ['departamentos' => $departamentos, 'pagos' => $pagos]);
+    }
+
+    public function getMunicipios(Request $request, $id){
+        if($request->ajax()){
+          $municipios = Municipio::buscar($id);
+          return response()->json($municipios);
+        }
     }
 
     public function store(Request $request){
@@ -76,7 +82,7 @@ class PacienteController extends Controller {
         }
 
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        $municipios = Municipio::select('id', 'nombre','departamento_id')->orderBy('nombre', 'asc')->get();
+        $municipios = Municipio::select('id', 'nombre')->where('id', '=', $paciente->municipio_id)->get();
         $pagos = Pago::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         return view('paciente-mgmt/edit', ['paciente' => $paciente, 'departamentos' => $departamentos, 'municipios' => $municipios, 'pagos' => $pagos]);
     }

@@ -35,8 +35,14 @@ class UserManagementController extends Controller {
     public function create() {
         $rols = Rol::select('id', 'nombre')->where('rols.id','!=','1')->orderBy('nombre', 'asc')->get();
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        $municipios = Municipio::select('id', 'nombre','departamento_id')->orderBy('nombre', 'asc')->get();
-        return view('users-mgmt/create', ['rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios]);
+        return view('users-mgmt/create', ['rols' => $rols, 'departamentos' => $departamentos]);
+    }
+
+    public function getMunicipios(Request $request, $id){
+        if($request->ajax()){
+          $municipios = Municipio::buscar($id);
+          return response()->json($municipios);
+        }
     }
 
     public function store(Request $request){
