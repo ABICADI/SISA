@@ -19,17 +19,14 @@ class CreateUsersTable extends Migration {
             $table->string('apellido1');
             $table->string('apellido2')->nullable();
             $table->string('apellido3')->nullable();
-            $table->integer('departamento_id');
             $table->integer('municipio_id');
             $table->string('direccion')->nullable();
             $table->string('fecha_nacimiento');
             $table->string('fecha_ingreso');
             $table->string('telefono')->nullable();
-            //$table->string('foto')->nullable();
             $table->integer('rol_id');
             $table->string('fecha_egreso')->nullable();
             $table->integer('estado_id');
-            $table->foreign('departamento_id')->references('id')->on('departamentos')->onUpdate('cascade');
             $table->foreign('municipio_id')->references('id')->on('municipios')->onUpdate('cascade');
             $table->foreign('rol_id')->references('id')->on('rols')->onUpdate('cascade');
             $table->foreign('estado_id')->references('id')->on('estados')->onUpdate('cascade');

@@ -41,7 +41,7 @@
 							 <tr role="row" class="odd">
 								 <td>{{ $paciente['CUI'] }}</td>
 								 <td>{{ $paciente['Primer_Nombre'] }} {{ $paciente['Segundo_Nombre'] }} {{ $paciente['Tercer_Nombre'] }} {{ $paciente['Primer_Apellido'] }} {{ $paciente['Segundo_Apellido'] }} {{ $paciente['Tercer_Apellido'] }}</td>
-								 <td>{{ $paciente['Departamento'] }}, {{ $paciente['Municipio'] }}, {{ $paciente['Dirección'] }}</td>
+								 <td>{{ $paciente['Municipio'] }}, {{ $paciente['Dirección'] }}</td>
 								 <td>{{ $paciente['Fecha_Nacimiento'] }}</td>
 								 <td>{{ $paciente['Nombre_Encargado'] }} - {{ $paciente['Teléfono'] }}</td>
 								 <td>{{ $paciente['Fecha_Ingreso'] }} - {{ $paciente['No_Seguro_Social'] }} {{ $paciente['Tipo_Pago'] }}</td>

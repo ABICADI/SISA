@@ -61,7 +61,7 @@
 						 	 </td>
 							 <td>
 								 <label class="col-md-2 control-label">Hasta</label>
-								 <div class="col-md-6">
+								 <div class="col-md-5">
 										 <div class="input-group date">
 												 <div class="input-group-addon">
 														 <i class="fa fa-calendar"></i>
@@ -74,7 +74,7 @@
 						 <tr>
 							 <td>
 								 <label class="col-md-2 control-label">Departamento</label>
-                     <div class="col-md-6">
+                     <div class="col-md-5">
                          <select class="form-control" name="departamento_id" id="departamento_id">
                              <option value="" selected>Ningun Departamento Seleccionado</option>
                              @foreach ($departamentos as $departamento)
@@ -88,9 +88,6 @@
                      <div class="col-md-6">
                          <select class="form-control" name="municipio_id" id="municipio_id">
                              <option value="" selected>Ningun Municipio Seleccionado</option>
-                             @foreach ($municipios as $municipio)
-                                 <option value="{{$municipio->id}}">{{$municipio->nombre}}</option>
-                             @endforeach
                          </select>
                      </div>
 							 </td>

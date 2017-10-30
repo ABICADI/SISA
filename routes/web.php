@@ -17,8 +17,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
+//Buscar Municipios de un Departamento
+Route::get('/{id}', 'MunicipioController@getMunicipio');
+
 //Nuestras Rutas
-Route::get('/dashboard', 'DashboardController@index');
+Route::get('/sisa/dashboard', 'DashboardController@index');
 Route::get('/error', 'ErrorController@index');
 Route::resource('profile', 'ProfileController');
 
@@ -26,19 +29,17 @@ Route::resource('profile', 'ProfileController');
 Route::post('system-management/bitacora/search', 'BitacoraController@search')->name('bitacora.search');
 Route::resource('system-management/bitacora', 'BitacoraController');
 
-Route::post('user-management/search', 'UserManagementController@search')->name('user-management.search');
-Route::get('user-management/municipios/{id}', 'UserManagementController@getMunicipios');
-Route::resource('user-management', 'UserManagementController');
+Route::post('sisa/user-management/search', 'UserManagementController@search')->name('user-management.search');
+Route::resource('sisa/user-management', 'UserManagementController');
 
-Route::post('paciente-management/search', 'PacienteController@search')->name('paciente-management.search');
-Route::get('paciente-management/municipios/{id}', 'PacienteController@getMunicipios');
-Route::resource('paciente-management', 'PacienteController');
+Route::post('sisa/paciente-management/search', 'PacienteController@search')->name('paciente-management.search');
+Route::resource('sisa/paciente-management', 'PacienteController');
 
 Route::post('tratamiento-management/search', 'TratamientoController@search')->name('tratamiento-management.search');
-Route::resource('tratamiento-management', 'TratamientoController');
+Route::resource('sisa/tratamiento-management', 'TratamientoController');
 
 Route::post('medico-management/search', 'MedicoController@search')->name('medico-management.search');
-Route::resource('medico-management', 'MedicoController');
+Route::resource('sisa/medico-management', 'MedicoController');
 
 Route::resource('dia-terapia-user-management', 'DiaTerapiaUsuarioController');
 

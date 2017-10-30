@@ -126,12 +126,30 @@
         <table id="example2" class="table table-responsive">
             <tr>
             <td>
+                <label for="direccion" class="col-md-3 control-label">Dirección Actual</label>
+                    <div class="col-md-7">
+                        <input type="text" class="form-control" value="{{ $paciente->Departamento }}, {{ $paciente->Municipio }}, {{ $paciente->direccion }}" disabled>
+                    </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="check" id="check" value="1" onchange="javascript:showContent()" />
+                        Editar
+                    </label>
+                </div>
+            </td>
+            </tr>
+        </table>
+        <div class="form-group" id="editar_direccion" style="display: none;">
+        <table id="example2" class="table table-responsive">
+            <tr>
+            <td>
             <div class="form-group">
                 <label class="col-md-5 control-label"><label style="color:red">*</label> Departamento</label>
-                    <div class="col-md-6">
-                        <select class="form-control" name="departamento_id" id="departamento_id" required autofocus>
+                    <div class="col-md-7">
+                        <select class="form-control" name="departamento_paciente" id="departamento_paciente" autofocus>
+                            <option value="0" selected disabled>seleccione departamento</option>
                             @foreach ($departamentos as $departamento)
-                                <option value="{{$departamento->id}}" {{$departamento->id == $paciente->departamento_id ? 'selected' : ''}}>{{$departamento->nombre}}</option>
+                                <option value="{{$departamento->id}}">{{$departamento->nombre}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -140,21 +158,20 @@
             <td>
             <div class="form-group">
                 <label class="col-md-4 control-label"><label style="color:red">*</label> Municipio</label>
-                    <div class="col-md-6">
-                        <select class="form-control" name="municipio_id" id='municipio_id' required autofocus>
-                            @foreach ($municipios as $municipio)
-                                <option value="{{$municipio->id}}" {{$municipio->id == $paciente->municipio_id ? 'selected' : ''}}>{{$municipio->nombre}}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                  <div class="col-md-7">
+                    <select class="form-control" name="municipio_paciente" id="municipio_paciente" autofocus>
+                    @foreach ($municipios as $municipio)
+                        <option value="{{$municipio->id}}">{{$municipio->nombre}}</option>
+                    @endforeach
+                    </select>
+                  </div>
             </div>
             </td>
             <td>
             <div class="form-group{{ $errors->has('direccion') ? ' has-error' : '' }}">
                 <label for="direccion" class="col-md-3 control-label">Dirección</label>
-
                     <div class="col-md-9">
-                        <input id="direccion" type="text" class="form-control" placeholder="colonia/barrio" name="direccion" value="{{ $paciente->direccion }}" maxlength="75" onKeyUp="this.value=this.value.toUpperCase();" autofocus>
+                        <input id="direccion" type="text" class="form-control" placeholder="colonia/barrio" name="direccion" value="{{$paciente->direccion}}" maxlength="75" onKeyUp="this.value=this.value.toUpperCase();" autofocus>
 
                             @if ($errors->has('direccion'))
                                 <span class="help-block">
@@ -166,6 +183,7 @@
             </td>
             </tr>
         </table>
+        </div>
         @endcomponent
 
         @component('layouts.esconder_info', ['title' => 'Referencias'])

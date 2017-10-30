@@ -14,7 +14,7 @@ use Auth;
 
 class PacienteController extends Controller {
 
-    protected $redirectTo = '/paciente-management';
+    protected $redirectTo = '/sisa/paciente-management';
 
     public function __construct() {
         $this->middleware('auth');
@@ -51,7 +51,6 @@ class PacienteController extends Controller {
         $paciente->apellido1 = $request['apellido1'];
         $paciente->apellido2 = $request['apellido2'];
         $paciente->apellido3 = $request['apellido3'];
-        $paciente->departamento_id = $request['departamento_id'];
         $paciente->municipio_id = $request['municipio_id'];
         $paciente->direccion = $request['direccion'];
         $paciente->fecha_nacimiento = $request['fecha_nacimiento'];
@@ -65,7 +64,7 @@ class PacienteController extends Controller {
         if($paciente->save()){
             $this->crearPacienteBitacora($request);
             Flash('¡El paciente se ha creado Exitosamente!')->success();
-            return redirect()->intended('/paciente-management');
+            return redirect()->intended('/sisa/paciente-management');
         }
     }
 
@@ -75,12 +74,13 @@ class PacienteController extends Controller {
 
     public function edit($id) {
 
-        $paciente = Paciente::find($id);
+        $paciente = Paciente::join('municipios', 'pacientes.municipio_id', 'municipios.id')
+                              ->join('departamentos', 'municipios.departamento_id', 'departamentos.id')
+                              ->select('pacientes.*', 'municipios.nombre as Municipio', 'departamentos.nombre as Departamento')->find($id);
         if ($paciente == null || count($paciente) == 0) {
             Flash('¡Error al cargar los Pacientes!')->error();
-            return redirect()->intended('/paciente-management');
+            return redirect()->intended('/sisa/paciente-management');
         }
-
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $municipios = Municipio::select('id', 'nombre')->where('id', '=', $paciente->municipio_id)->get();
         $pagos = Pago::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
@@ -91,6 +91,9 @@ class PacienteController extends Controller {
         $paciente = Paciente::findOrFail($id);
 
         $this->validateUpdate($request);
+        if($request['municipio_paciente']!=0){
+          $paciente->municipio_id = $request['municipio_paciente'];
+        }
         $paciente->cui = $request['cui'];
         $paciente->nombre1 = $request['nombre1'];
         $paciente->nombre2 = $request['nombre2'];
@@ -98,8 +101,6 @@ class PacienteController extends Controller {
         $paciente->apellido1 = $request['apellido1'];
         $paciente->apellido2 = $request['apellido2'];
         $paciente->apellido3 = $request['apellido3'];
-        $paciente->departamento_id = $request['departamento_id'];
-        $paciente->municipio_id = $request['municipio_id'];
         $paciente->direccion = $request['direccion'];
         $paciente->fecha_nacimiento = $request['fecha_nacimiento'];
         $paciente->encargado = $request['encargado'];
@@ -109,10 +110,9 @@ class PacienteController extends Controller {
         $paciente->observacion = $request['observacion'];
         $paciente->pago_id = $request['pago_id'];
         $this->updatePacienteBitacora($request, $id);
-
         if($paciente->save()) {
           Flash('¡El paciente se ha actualizado Exitosamente!')->success();
-          return redirect()->intended('/paciente-management');
+          return redirect()->intended('/sisa/paciente-management');
         }
     }
 
@@ -149,7 +149,6 @@ class PacienteController extends Controller {
             'apellido1' => 'required|max:30',
             'apellido2' => 'max:30',
             'apellido3' => 'max:30',
-            'departamento_id' => 'required',
             'municipio_id' => 'required',
             'direccion' => 'max:75',
             'fecha_nacimiento' => 'required',
@@ -171,8 +170,6 @@ class PacienteController extends Controller {
             'apellido1' => 'required|max:30',
             'apellido2' => 'max:30',
             'apellido3' => 'max:30',
-            'departamento_id' => 'required',
-            'municipio_id' => 'required',
             'direccion' => 'max:75',
             'fecha_nacimiento' => 'required',
             'encargado' => 'max:100',
@@ -214,10 +211,10 @@ class PacienteController extends Controller {
       $user = Auth::user()->username;
       $paciente = Paciente::findOrFail($id);
 
-      $departamentonew = Departamento::find($request['departamento_id']);
-      $departamentoold = Departamento::find($paciente->departamento_id);
-      $municipionew = Municipio::find($request['municipio_id']);
+      $departamentonew = Departamento::find($request['departamento_paciente']);
+      $municipionew = Municipio::find($request['municipio_paciente']);
       $municipioold = Municipio::find($paciente->municipio_id);
+      $departamentoold = Departamento::find($municipioold->departamento_id);
       $pagonew = Pago::find($request['pago_id']);
       $pagoold = Pago::find($paciente->pago_id);
 
@@ -298,24 +295,13 @@ class PacienteController extends Controller {
               $bitacora->save();
           }
 
-          if ($paciente->departamento_id != $request['departamento_id']) {
-              $bitacora = new Bitacora();
-              $bitacora->usuario = $user;
-              $bitacora->nombre_tabla = 'PACIENTE';
-              $bitacora->actividad = 'ACTUALIZAR';
-              $bitacora->anterior = 'Departamento: ' . $departamentoold->nombre;
-              $bitacora->nuevo = 'Departamento: ' . $departamentonew->nombre;
-              $bitacora->fecha = $now;
-              $bitacora->save();
-          }
-
           if ($paciente->municipio_id != $request['municipio_id']) {
               $bitacora = new Bitacora();
               $bitacora->usuario = $user;
               $bitacora->nombre_tabla = 'PACIENTE';
               $bitacora->actividad = 'ACTUALIZAR';
-              $bitacora->anterior = 'Municipio: ' . $municipioold->nombre;
-              $bitacora->nuevo = 'Municipio: ' . $municipionew->nombre;
+              $bitacora->anterior = 'Departamento: ' . $departamentoold->nombre . ', Municipio: ' . $municipioold->nombre;
+              $bitacora->nuevo = 'Departamento: ' . $departamentonew->nombre . ', Municipio: ' . $municipionew->nombre;
               $bitacora->fecha = $now;
               $bitacora->save();
           }

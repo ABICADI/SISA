@@ -16,7 +16,6 @@ class CreatePacientesTable extends Migration {
           $table->string('apellido1');
           $table->string('apellido2')->nullable();
           $table->string('apellido3')->nullable();
-          $table->integer('departamento_id');
           $table->integer('municipio_id');
           $table->string('direccion')->nullable();
           $table->string('fecha_nacimiento');
@@ -26,7 +25,6 @@ class CreatePacientesTable extends Migration {
           $table->string('seguro_social',10)->nullable();
           $table->string('observacion',500)->nullable();
           $table->integer('pago_id');
-          $table->foreign('departamento_id')->references('id')->on('departamentos')->onUpdate('cascade');
           $table->foreign('municipio_id')->references('id')->on('municipios')->onUpdate('cascade');
           $table->foreign('pago_id')->references('id')->on('pagos')->onUpdate('cascade');
           $table->timestamps();

@@ -13,7 +13,6 @@ class PacienteTableSeeder extends Seeder {
             'apellido1' => 'Paciente',
             'apellido2' => 'Nuevo',
             'apellido3' => 'Uno',
-            'departamento_id' => '1',
             'municipio_id' => '2',
             'direccion' => 'Al otro lado',
             'fecha_nacimiento' => '18/12/1993',
