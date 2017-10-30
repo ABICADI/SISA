@@ -9,8 +9,8 @@
         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
         <li><a href="{{ route('user-management.index') }}"><i class="fa fa-users"></i> <span>Empleado</span></a></li>
         <li><a href="{{ route('paciente-management.index') }}"><i class="fa fa-user"></i> <span>Paciente</span></a></li>
-        <li><a href="{{ route('tratamiento-management.index') }}"><i class="fa fa-heartbeat"></i> <span>Tratamiento</span></a></li>
         <li><a href="{{ route('medico-management.index') }}"><i class="fa fa-user-md"></i> <span>Médico</span></a></li>
+        <li><a href="{{ route('tratamiento-management.index') }}"><i class="fa fa-heartbeat"></i> <span>Tratamiento</span></a></li>
         @endif
         <li><a href="{{ route('actividad-management.index') }}"><i class="glyphicon glyphicon-calendar"></i> <span>Actividad</span></a></li>
         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)

@@ -21,7 +21,7 @@ class DiaTerapiaUsuarioController extends Controller {
     public function edit($id) {
         $user = User::find($id);
         if ($user == null || count($user) == 0) {
-            return redirect()->intended('/user-management');
+            return redirect()->intended('/sisa/user-management');
         }
 
         $rols = Rol::select('id', 'nombre')->where('rols.id','!=','1')->orderBy('nombre', 'asc')->get();
@@ -117,7 +117,6 @@ class DiaTerapiaUsuarioController extends Controller {
             'apellido1' => 'required|max:30',
             'apellido2' => 'max:30',
             'apellido3' => 'max:30',
-            'departamento_id' => 'required',
             'municipio_id' => 'required',
             'direccion' => 'max:75',
             'fecha_nacimiento' => 'required',
@@ -141,9 +140,9 @@ class DiaTerapiaUsuarioController extends Controller {
         $user = User::findOrFail($id);
 
         $departamentonew = Departamento::find($request['departamento_id']);
-        $departamentoold = Departamento::find($user->departamento_id);
         $municipionew = Municipio::find($request['municipio_id']);
         $municipioold = Municipio::find($user->municipio_id);
+        $departamentoold = Departamento::find($municipioold->departamento_id);
         $rolnew = Rol::find($request['rol_id']);
         $rolold = Rol::find($user->rol_id);
         $estadonew = Estado::find($request['estado_id']);
@@ -259,24 +258,13 @@ class DiaTerapiaUsuarioController extends Controller {
                 $bitacora->save();
             }
 
-            if($user->departamento_id != $request['departamento_id']){
-                $bitacora = new Bitacora();
-                $bitacora->usuario = $log;
-                $bitacora->nombre_tabla = 'EMPLEADO';
-                $bitacora->actividad = 'ACTUALIZAR';
-                $bitacora->anterior = 'Departamento: ' . $departamentoold->nombre;
-                $bitacora->nuevo = 'Departamento: ' . $departamentonew->nombre;
-                $bitacora->fecha = $now;
-                $bitacora->save();
-            }
-
             if($user->municipio_id != $request['municipio_id']){
                 $bitacora = new Bitacora();
                 $bitacora->usuario = $log;
                 $bitacora->nombre_tabla = 'EMPLEADO';
                 $bitacora->actividad = 'ACTUALIZAR';
-                $bitacora->anterior = 'Municipio: ' . $municipioold->nombre;
-                $bitacora->nuevo = 'Municipio: ' . $municipionew->nombre;
+                $bitacora->anterior = 'Departamento: ' . $departamentoold->nombre . ', Municipio: ' . $municipioold->nombre;
+                $bitacora->nuevo = 'Departamento: ' . $departamentonew->nombre . ', Municipio: ' . $municipionew->nombre;
                 $bitacora->fecha = $now;
                 $bitacora->save();
             }

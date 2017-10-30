@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\User;
@@ -18,7 +16,7 @@ use Auth;
 
 class TerapiaUsuarioController extends Controller {
 
-		protected $redirectTo = '/terapiausuario-management'; //redirecciona la ruta
+		protected $redirectTo = '/sisa/terapiausuario-management'; //redirecciona la ruta
 
 		public function __construct() {
         $this->middleware('auth');
@@ -26,18 +24,17 @@ class TerapiaUsuarioController extends Controller {
 
     public function index() {
     		$last = DB::table('users')->latest()->first();
-        $user = User::find($last->id);
-
-        $rols = Rol::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        $municipios = Municipio::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+				$user = User::join('municipios', 'users.municipio_id', 'municipios.id')
+											->join('departamentos', 'municipios.departamento_id', 'departamentos.id')
+											->join('rols', 'users.rol_id', 'rols.id')
+											->select('municipios.nombre as Municipio', 'departamentos.nombre as Departamento', 'rols.nombre as Rol', 'users.*')
+											->find($last->id);
         $terapias = Terapia::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $userdiasemanas = DB::table('userdiasemanas')
         ->leftJoin('diasemanas', 'userdiasemanas.diasemana_id', '=', 'diasemanas.id')
         ->select('userdiasemanas.*', 'diasemanas.nombre as diasemanas_nombre')
         ->where('userdiasemanas.user_id', '=', $user->id)->get();
-				$message = '';
-        return view('terapiausuario-mgmt/create', ['user' => $user, 'rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios, 'terapias' => $terapias, 'userdiasemanas' => $userdiasemanas, 'message' => $message]);
+        return view('terapiausuario-mgmt/create', ['user' => $user, 'terapias' => $terapias, 'userdiasemanas' => $userdiasemanas]);
     }
 
     public function store(Request $request){
@@ -55,23 +52,23 @@ class TerapiaUsuarioController extends Controller {
 	            }
 	        }
 					Flash('¡El Empleado se ha agregado Exitosamente!')->success();
-	        return redirect()->intended('/user-management');
+	        return redirect()->intended('/sisa/user-management');
 				}
 
 				if($terapias == ''){
 						$last = DB::table('users')->latest()->first();
-		        $user = User::find($last->id);
-
-		        $rols = Rol::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-		        $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-		        $municipios = Municipio::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+						$user = User::join('municipios', 'users.municipio_id', 'municipios.id')
+													->join('departamentos', 'municipios.departamento_id', 'departamentos.id')
+													->join('rols', 'users.rol_id', 'rols.id')
+													->select('municipios.nombre as Municipio', 'departamentos.nombre as Departamento', 'rols.nombre as Rol', 'users.*')
+													->find($last->id);
 		        $terapias = Terapia::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
 		        $userdiasemanas = DB::table('userdiasemanas')
 		        ->leftJoin('diasemanas', 'userdiasemanas.diasemana_id', '=', 'diasemanas.id')
 		        ->select('userdiasemanas.*', 'diasemanas.nombre as diasemanas_nombre')
 		        ->where('userdiasemanas.user_id', '=', $user->id)->get();
-						$message = 'Seleccionar una o más Terapias, caso contrario seleccionar Ninguno';
-		        return view('terapiausuario-mgmt/create', ['user' => $user, 'rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios, 'terapias' => $terapias, 'userdiasemanas' => $userdiasemanas, 'message' => $message]);
+						Flash('¡Seleccionar uno o más Terapias, caso contrario seleccionar Ninguno!')->error()->important();
+		        return view('terapiausuario-mgmt/create', ['user' => $user, 'terapias' => $terapias, 'userdiasemanas' => $userdiasemanas]);
 				}
     }
 

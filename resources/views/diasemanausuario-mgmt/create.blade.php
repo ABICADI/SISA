@@ -136,10 +136,7 @@
                 <label class="col-md-5 control-label"><label style="color:red">*</label> Departamento</label>
                     <div class="col-md-7">
                         <select class="form-control" name="departamento_id" required autofocus disabled>
-                            <option value="" selected disabled>seleccione departamento</option>
-                            @foreach ($departamentos as $departamento)
-                                <option value="{{$departamento->id}}" {{$departamento->id == $user->departamento_id ? 'selected' : ''}}>{{$departamento->nombre}}</option>
-                            @endforeach
+                                <option>{{$user->Departamento}}</option>
                         </select>
                     </div>
             </div>
@@ -149,10 +146,7 @@
                 <label class="col-md-4 control-label"><label style="color:red">*</label> Municipio</label>
                     <div class="col-md-7">
                         <select class="form-control" name="municipio_id" required autofocus disabled>
-                            <option value="" selected disabled>seleccione municipio</option>
-                            @foreach ($municipios as $municipio)
-                                <option value="{{$municipio->id}}" {{$municipio->id == $user->municipio_id ? 'selected' : ''}}>{{$municipio->nombre}}</option>
-                            @endforeach
+                                <option>{{$user->Municipio}}</option>
                         </select>
                     </div>
             </div>
@@ -160,7 +154,6 @@
             <td>
             <div class="form-group">
                 <label for="direccion" class="col-md-3 control-label">Dirección</label>
-
                     <div class="col-md-9">
                         <input id="direccion" type="direccion" class="form-control" placeholder="colonia/barrio" name="direccion" value="{{ $user->direccion }}" autofocus disabled>
                     </div>
@@ -181,18 +174,30 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" value="{{ $user->fecha_nacimiento }}" placeholder="30/01/1990" name="fecha_nacimiento" class="form-control pull-right" id="fechaNacimiento" required disabled>
+                            <input type="text" value="{{ $user->fecha_nacimiento }}" placeholder="30/01/1990" name="fecha_nacimiento" class="form-control pull-right" id="fechaNacimiento" style='display:none;'>
+                            <input type="text" value="{{ $user->fecha_nacimiento }}" placeholder="30/01/1990" name="nacimiento" class="form-control pull-right" id="nacimiento" required disabled>
                         </div>
                     </div>
             </div>
             </td>
             <td>
                 <label for="edad" class="col-md-3 control-label">Edad</label>
-
                     <div class="col-md-3">
                         <input id="edad" type="edad" class="form-control" name="edad" disabled>
+                        <script type="text/javascript">
+                            var fechaNac = document.getElementById("fechaNacimiento").value;
+                            var fechaHoy = new Date();
+                            var anioNac = parseInt(fechaNac.substring(fechaNac.lastIndexOf('/')+1));
+                            var mesNac = parseInt(fechaNac.substr(fechaNac.indexOf('/')+1,fechaNac.lastIndexOf('/')+1));
+                            var diaNac = parseInt(fechaNac.substr(0,fechaNac.lastIndexOf('/')+1));
+                            var edad = parseInt(fechaHoy.getFullYear())-anioNac;
+                                if(edad)
+                                    if(mesNac<=parseInt(fechaHoy.getMonth()+1))
+                                        document.getElementById("edad").value=edad;
+                                    else
+                                        document.getElementById("edad").value=edad-1;
+                        </script>
                     </div>
-            </div>
             </td>
             <td>
             <div class="form-group">
@@ -228,10 +233,7 @@
                 <label class="col-md-4 control-label"><label style="color:red">*</label> Puesto Encargado</label>
                     <div class="col-md-6">
                         <select class="form-control" name="rol_id" required autofocus disabled>
-                            <option value="" selected disabled>seleccione un puesto</option>
-                            @foreach ($rols as $rol)
-                                <option value="{{$rol->id}}" {{$rol->id == $user->rol_id ? 'selected' : ''}}>{{$rol->nombre}}</option>
-                            @endforeach
+                              <option>{{$user->Rol}}</option>
                         </select>
                     </div>
             </div>
@@ -252,8 +254,6 @@
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('diasemanausuario-management.store') }}">
                         {{ csrf_field() }}
-                    <label style="color:red">{{ $message }}</label>
-
                         <div class="form-group">
                             <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                                 <div class="row">

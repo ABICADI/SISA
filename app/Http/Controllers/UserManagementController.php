@@ -14,7 +14,7 @@ use Auth;
 
 class UserManagementController extends Controller {
 
-    protected $redirectTo = '/user-management';
+    protected $redirectTo = '/sisa/user-management';
 
     public function __construct() {
         $this->middleware('auth');
@@ -60,7 +60,6 @@ class UserManagementController extends Controller {
         $user->apellido1 = $request['apellido1'];
         $user->apellido2 = $request['apellido2'];
         $user->apellido3 = $request['apellido3'];
-        $user->departamento_id = $request['departamento_id'];
         $user->municipio_id = $request['municipio_id'];
         $user->direccion = $request['direccion'];
         $user->fecha_nacimiento = $request['fecha_nacimiento'];
@@ -71,22 +70,23 @@ class UserManagementController extends Controller {
 
         if($user->save()){
             $this->crearEmpleadoBitacora($request);
-            return redirect()->intended('/diasemanausuario-management');
+            Flash('¡Ha iniciado la creación del Empleado!')->success();
+            return redirect()->intended('/sisa/diasemanausuario-management');
         }
     }
 
     public function show($id) {
       $user = User::findOrFail($id);
-
       if($user->delete()){
-          return redirect()->intended('/user-management');
+          Flash('¡Se cancelo la creación del Empleado Exitosamente!')->error()->important();
+          return redirect()->intended('/sisa/user-management');
       }
     }
 
     public function view($id) {
         $user = User::find($id);
         if ($user == null || count($user) == 0) {
-            return redirect()->intended('/user-management');
+            return redirect()->intended('/sisa/user-management');
         }
 
         $userdiasemanas = DB::table('userdiasemanas')
@@ -118,7 +118,7 @@ class UserManagementController extends Controller {
         if($user->save()){
             $this->eliminarEmpleadoBitacora($id);
             Flash('¡El Empleado se ha eliminado Exitosamente!')->error();
-            return redirect()->intended('/user-management');
+            return redirect()->intended('/sisa/user-management');
         }
     }
 
@@ -158,7 +158,6 @@ class UserManagementController extends Controller {
             'apellido1' => 'required|max:30',
             'apellido2' => 'max:30',
             'apellido3' => 'max:30',
-            'departamento_id' => 'required',
             'municipio_id' => 'required',
             'direccion' => 'max:75',
             'fecha_nacimiento' => 'required',
@@ -175,8 +174,8 @@ class UserManagementController extends Controller {
         $log = Auth::user()->username;
         $estado_id = '1';
 
-        $departamento = Departamento::findOrFail($request['departamento_id']);
         $municipio = Municipio::findOrFail($request['municipio_id']);
+        $departamento = Departamento::findOrFail($municipio->departamento_id);
         $rol = Rol::findOrFail($request['rol_id']);
         $estado = Estado::findOrFail($estado_id);
 

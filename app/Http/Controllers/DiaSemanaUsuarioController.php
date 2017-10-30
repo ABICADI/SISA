@@ -15,7 +15,7 @@ use App\UsuarioDia;
 use Auth;
 
 class DiaSemanaUsuarioController extends Controller {
-	    protected $redirectTo = '/diasemanausuario-management';
+	    protected $redirectTo = '/sisa/diasemanausuario-management';
 
     public function __construct() {
         $this->middleware('auth');
@@ -23,14 +23,13 @@ class DiaSemanaUsuarioController extends Controller {
 
     public function index() {
     		$last = DB::table('users')->latest()->first();
-        $user = User::find($last->id);
-
-        $rols = Rol::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        $municipios = Municipio::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+        $user = User::join('municipios', 'users.municipio_id', 'municipios.id')
+											->join('departamentos', 'municipios.departamento_id', 'departamentos.id')
+											->join('rols', 'users.rol_id', 'rols.id')
+											->select('municipios.nombre as Municipio', 'departamentos.nombre as Departamento', 'rols.nombre as Rol', 'users.*')
+											->find($last->id);
         $diasemanas = DiaSemana::all();
-				$message = '';
-        return view('diasemanausuario-mgmt/create', ['user' => $user, 'rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios, 'diasemanas' => $diasemanas, 'message' => $message]);
+        return view('diasemanausuario-mgmt/create', ['user' => $user, 'diasemanas' => $diasemanas]);
     }
 
     public function store(Request $request){
@@ -46,33 +45,32 @@ class DiaSemanaUsuarioController extends Controller {
 		        	$this->createDiaSemanaUsuarioBitacora($request, $diasemana, $user);
 		          $diausuario->save();
 	        }
-	        return redirect()->intended('/terapiausuario-management');
+					Flash('¡Se agregaron Exitosamente los dias al Empleado!')->success();
+	        return redirect()->intended('/sisa/terapiausuario-management');
 				}
-
 				if($diasemanas == ''){
 					$last = DB::table('users')->latest()->first();
-	        $user = User::find($last->id);
-
-	        $rols = Rol::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-	        $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-	        $municipios = Municipio::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+	        $user = User::join('municipios', 'users.municipio_id', 'municipios.id')
+												->join('departamentos', 'municipios.departamento_id', 'departamentos.id')
+												->join('rols', 'users.rol_id', 'rols.id')
+												->select('municipios.nombre as Municipio', 'departamentos.nombre as Departamento', 'rols.nombre as Rol', 'users.*')
+												->find($last->id);
 	        $diasemanas = DiaSemana::all();
-					$message = 'Seleccionar uno o más Dias, caso contrario seleccionar Ninguno';
-	        return view('diasemanausuario-mgmt/create', ['user' => $user, 'rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios, 'diasemanas' => $diasemanas, 'message' => $message]);
+					Flash('¡Seleccionar uno o más Dias, caso contrario seleccionar Ninguno!')->error()->important();
+	        return view('diasemanausuario-mgmt/create', ['user' => $user, 'diasemanas' => $diasemanas]);
 				}
 
     }
 
 		public function show($id) {
-
       $user = User::findOrFail($id);
-
 			$deleteDia = DB::table('userdiasemanas')
 			->select('userdiasemanas.*')->where('userdiasemanas.user_id','=',$user->id);
 
 			if($deleteDia->delete()){
 				if($user->delete()){
-	          return redirect()->intended('/user-management');
+						Flash('¡Se cancelo la creación del Empleado Exitosamente!')->error()->important();
+	          return redirect()->intended('/sisa/user-management');
 	      }
 			}
 
