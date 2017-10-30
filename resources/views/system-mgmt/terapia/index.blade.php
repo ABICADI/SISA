@@ -37,8 +37,8 @@
             <thead>
               <tr role="row">
                 <th width="20%" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="terapia: activate to sort column ascending">Nombre</th>
-                <th width="20%" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="terapia: activate to sort column ascending">Descripcion</th>
-                <th width="20%" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="terapia: activate to sort column ascending">Color</th>
+                <th width="40%" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="terapia: activate to sort column ascending">Descripcion</th>
+                <th width="10%" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="terapia: activate to sort column ascending">Color</th>
                 <th tabindex="0" aria-controls="example2" rowspan="1" colspan="2" aria-label="Action: activate to sort column ascending">Opciones</th>
               </tr>
             </thead>

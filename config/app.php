@@ -163,7 +163,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         ConsoleTVs\Charts\ChartsServiceProvider::class,
-
+        Laracasts\Flash\FlashServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -230,6 +230,7 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
+        'Flash'     => 'Laracasts\Flash\Flash',
     ],
 
 ];

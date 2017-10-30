@@ -108,8 +108,11 @@
         <a href="{{ route('tratamiento-management.index') }}" class="small-box-footer">Más información <i class="fa fa-arrow-circle-right"></i></a>
       </div>
     </div>
+  </div>
   <!-- /.row -->
   <!-- Main row -->
+</script>
+</div>
   @endif
   @include('layouts.footer')
 

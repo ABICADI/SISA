@@ -17,6 +17,7 @@ class ComposerStaticInita03616900217c050ce42f041712fff54
         'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
+        'e23faeee409e941dc9b4c80386209c39' => __DIR__ . '/..' . '/laracasts/flash/src/Laracasts/Flash/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -354,6 +355,13 @@ class ComposerStaticInita03616900217c050ce42f041712fff54
                 0 => __DIR__ . '/..' . '/maatwebsite/excel/src',
             ),
         ),
+        'L' => 
+        array (
+            'Laracasts\\Flash' => 
+            array (
+                0 => __DIR__ . '/..' . '/laracasts/flash/src',
+            ),
+        ),
         'J' => 
         array (
             'JakubOnderka\\PhpConsoleHighlighter' => 
@@ -370,6 +378,7 @@ class ComposerStaticInita03616900217c050ce42f041712fff54
     public static $classMap = array (
         'App\\Actividad' => __DIR__ . '/../..' . '/app/Actividad.php',
         'App\\Bitacora' => __DIR__ . '/../..' . '/app/Bitacora.php',
+        'App\\Cita' => __DIR__ . '/../..' . '/app/Cita.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Departamento' => __DIR__ . '/../..' . '/app/Departamento.php',
         'App\\DiaSemana' => __DIR__ . '/../..' . '/app/DiaSemana.php',
@@ -382,17 +391,29 @@ class ComposerStaticInita03616900217c050ce42f041712fff54
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
         'App\\Http\\Controllers\\Auth\\ResetPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ResetPasswordController.php',
         'App\\Http\\Controllers\\BitacoraController' => __DIR__ . '/../..' . '/app/Http/Controllers/BitacoraController.php',
+        'App\\Http\\Controllers\\CalendarioController' => __DIR__ . '/../..' . '/app/Http/Controllers/CalendarioController.php',
+        'App\\Http\\Controllers\\CitaController' => __DIR__ . '/../..' . '/app/Http/Controllers/CitaController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/DashboardController.php',
         'App\\Http\\Controllers\\DiaSemanaUsuarioController' => __DIR__ . '/../..' . '/app/Http/Controllers/DiaSemanaUsuarioController.php',
         'App\\Http\\Controllers\\DiaTerapiaUsuarioController' => __DIR__ . '/../..' . '/app/Http/Controllers/DiaTerapiaUsuarioController.php',
         'App\\Http\\Controllers\\ErrorController' => __DIR__ . '/../..' . '/app/Http/Controllers/ErrorController.php',
+        'App\\Http\\Controllers\\GraficaCitaController' => __DIR__ . '/../..' . '/app/Http/Controllers/GraficaCitaController.php',
+        'App\\Http\\Controllers\\GraficaEmpleadoController' => __DIR__ . '/../..' . '/app/Http/Controllers/GraficaEmpleadoController.php',
+        'App\\Http\\Controllers\\GraficaMedicoController' => __DIR__ . '/../..' . '/app/Http/Controllers/GraficaMedicoController.php',
+        'App\\Http\\Controllers\\GraficaPacienteController' => __DIR__ . '/../..' . '/app/Http/Controllers/GraficaPacienteController.php',
+        'App\\Http\\Controllers\\GraficaTratamientoController' => __DIR__ . '/../..' . '/app/Http/Controllers/GraficaTratamientoController.php',
         'App\\Http\\Controllers\\MedicoController' => __DIR__ . '/../..' . '/app/Http/Controllers/MedicoController.php',
         'App\\Http\\Controllers\\PacienteController' => __DIR__ . '/../..' . '/app/Http/Controllers/PacienteController.php',
         'App\\Http\\Controllers\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfileController.php',
+        'App\\Http\\Controllers\\ReportCitaController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReportCitaController.php',
         'App\\Http\\Controllers\\ReportController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReportController.php',
+        'App\\Http\\Controllers\\ReportPacienteController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReportPacienteController.php',
+        'App\\Http\\Controllers\\ReportTratamientoController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReportTratamientoController.php',
         'App\\Http\\Controllers\\TerapiaController' => __DIR__ . '/../..' . '/app/Http/Controllers/TerapiaController.php',
         'App\\Http\\Controllers\\TerapiaUsuarioController' => __DIR__ . '/../..' . '/app/Http/Controllers/TerapiaUsuarioController.php',
+        'App\\Http\\Controllers\\TratamientoCalendarioController' => __DIR__ . '/../..' . '/app/Http/Controllers/TratamientoCalendarioController.php',
+        'App\\Http\\Controllers\\TratamientoController' => __DIR__ . '/../..' . '/app/Http/Controllers/TratamientoController.php',
         'App\\Http\\Controllers\\UserManagementController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserManagementController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
@@ -410,6 +431,7 @@ class ComposerStaticInita03616900217c050ce42f041712fff54
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\Rol' => __DIR__ . '/../..' . '/app/Rol.php',
         'App\\Terapia' => __DIR__ . '/../..' . '/app/Terapia.php',
+        'App\\Tratamiento' => __DIR__ . '/../..' . '/app/Tratamiento.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
         'App\\UsuarioDia' => __DIR__ . '/../..' . '/app/UsuarioDia.php',
         'App\\UsuarioTerapia' => __DIR__ . '/../..' . '/app/UsuarioTerapia.php',
@@ -438,6 +460,7 @@ class ComposerStaticInita03616900217c050ce42f041712fff54
         'Cpdf' => __DIR__ . '/..' . '/dompdf/dompdf/lib/Cpdf.php',
         'CreateActividadesTable' => __DIR__ . '/../..' . '/database/migrations/2017_09_05_230410_create_actividades_table.php',
         'CreateBitacorasTables' => __DIR__ . '/../..' . '/database/migrations/2017_08_18_034818_create_bitacoras_tables.php',
+        'CreateCitasTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_12_003042_create_citas_table.php',
         'CreateDepartamentosTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_22_180849_create_departamentos_table.php',
         'CreateDiasemanasTables' => __DIR__ . '/../..' . '/database/migrations/2017_08_18_035546_create_diasemanas_tables.php',
         'CreateEstadosTables' => __DIR__ . '/../..' . '/database/migrations/2017_08_18_035012_create_estados_tables.php',
@@ -447,6 +470,7 @@ class ComposerStaticInita03616900217c050ce42f041712fff54
         'CreatePagosTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_04_002418_create_pagos_table.php',
         'CreateRolsTables' => __DIR__ . '/../..' . '/database/migrations/2017_08_18_034918_create_rols_tables.php',
         'CreateTerapiasTables' => __DIR__ . '/../..' . '/database/migrations/2017_08_18_035030_create_terapias_tables.php',
+        'CreateTratamientosTable' => __DIR__ . '/../..' . '/database/migrations/2017_10_12_002929_create_tratamientos_table.php',
         'CreateUserdiasemanasTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_22_181026_create_userdiasemanas_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_22_181006_create_users_table.php',
         'CreateUserterapiasTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_22_181017_create_userterapias_table.php',
@@ -1974,6 +1998,13 @@ class ComposerStaticInita03616900217c050ce42f041712fff54
         'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src/JakubOnderka/PhpConsoleHighlighter/Highlighter.php',
         'Jenssegers\\Date\\Date' => __DIR__ . '/..' . '/jenssegers/date/src/Date.php',
         'Jenssegers\\Date\\DateServiceProvider' => __DIR__ . '/..' . '/jenssegers/date/src/DateServiceProvider.php',
+        'Laracasts\\Flash\\Flash' => __DIR__ . '/..' . '/laracasts/flash/src/Laracasts/Flash/Flash.php',
+        'Laracasts\\Flash\\FlashNotifier' => __DIR__ . '/..' . '/laracasts/flash/src/Laracasts/Flash/FlashNotifier.php',
+        'Laracasts\\Flash\\FlashServiceProvider' => __DIR__ . '/..' . '/laracasts/flash/src/Laracasts/Flash/FlashServiceProvider.php',
+        'Laracasts\\Flash\\LaravelSessionStore' => __DIR__ . '/..' . '/laracasts/flash/src/Laracasts/Flash/LaravelSessionStore.php',
+        'Laracasts\\Flash\\Message' => __DIR__ . '/..' . '/laracasts/flash/src/Laracasts/Flash/Message.php',
+        'Laracasts\\Flash\\OverlayMessage' => __DIR__ . '/..' . '/laracasts/flash/src/Laracasts/Flash/OverlayMessage.php',
+        'Laracasts\\Flash\\SessionStore' => __DIR__ . '/..' . '/laracasts/flash/src/Laracasts/Flash/SessionStore.php',
         'Laravel\\Tinker\\ClassAliasAutoloader' => __DIR__ . '/..' . '/laravel/tinker/src/ClassAliasAutoloader.php',
         'Laravel\\Tinker\\Console\\TinkerCommand' => __DIR__ . '/..' . '/laravel/tinker/src/Console/TinkerCommand.php',
         'Laravel\\Tinker\\TinkerCaster' => __DIR__ . '/..' . '/laravel/tinker/src/TinkerCaster.php',

@@ -25,7 +25,7 @@
          {{ csrf_field() }}
 
          @component('layouts.search', ['title' => 'Buscar'])
-          @component('layouts.two-cols-search-row', ['items' => ['Nombre'], 
+          @component('layouts.two-cols-search-row', ['items' => ['Nombre'],
           'oldVals' => [isset($searchingVals) ? strtoupper($searchingVals['nombre']) : '']])
           @endcomponent
         @endcomponent
@@ -40,7 +40,7 @@
                 <th width="20%" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Puesto: activate to sort column ascending">Presona Encargada</th>
                 <th width="20%" class="sorting hidden-xs" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Puesto: activate to sort column ascending">Lugar de la Actividad</th>
                 <th width="10%" class="sorting hidden-xs" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending">Fecha</th>
-                <th tabindex="0" aria-controls="example2" rowspan="1" colspan="3" aria-label="Action: activate to sort column ascending">Opciones</th>
+                <th width="20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending">Opciones</th>
               </tr>
             </thead>
             <tbody>
@@ -51,10 +51,6 @@
                   <td class="hidden-xs">{{ $actividad->departamentos_nombre }} {{ $actividad->municipios_nombre }} {{ $actividad->direccion }}</td>
                   <td class="hidden-xs">{{ $actividad->fecha }}</td>
                   <td>
-                    <form class="row" method="POST" action="{{ route('actividad-management.destroy', ['id' => $actividad->id]) }}" onsubmit = "return confirm('¿Está seguro que quiere eliminar a el registro?')">
-     
-                        <input type="hidden" name="_method" value="DELETE">
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
                         <a href="{{ route('actividad-management.edit', ['id' => $actividad->id]) }}" class="btn btn-warning col-sm-3 col-xs-2 btn-margin"><i class="fa fa-edit"></i></a>
                         @endif
@@ -63,11 +59,6 @@
                         <a href="{{ route('actividad-management.view', ['id' => $actividad->id]) }}" class="btn btn-default col-sm-3 col-xs-2 btn-margin" style="background-color:#009e0f"><i class="fa fa-eye"></i></a>
                         @endif
                         @endif
-                        @if (1 == Auth::user()->rol_id)
-                         <button type="submit" class="btn btn-danger col-sm-3 col-xs-2 btn-margin"><i class="fa fa-trash-o"></i> 
-                        </button>
-                        @endif
-                    </form>
                   </td>
               </tr>
             @endforeach

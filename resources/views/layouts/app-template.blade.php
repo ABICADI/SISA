@@ -85,6 +85,9 @@
     <script src="{{ asset ("/bower_components/AdminLTE/dist/js/app.min.js") }}" type="text/javascript"></script>
     <script src="{{ asset ("/bower_components/AdminLTE/dist/js/demo.js") }}" type="text/javascript"></script>
     <script src='/bower_components/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js' type="text/javascript"/></script>
+    <script>
+      $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
+    </script>
       <script>
         $(document).ready(function() {
           //Date picker
@@ -213,9 +216,8 @@
 
                   eventClick: function(event, jsEvent, view){
                       $('#modal-event #delete').attr('data-id', event.id);
+                      $('#modal-event #_id').val(event.id);
                       $('#modal-event #_title').val(event.title);
-                      $('#modal-event #_asistencia').val(event.asistencia);
-                      $('#modal-event #_obervacion').val(event.observacion);
                       $('#modal-event').modal('show');
                   }
             });

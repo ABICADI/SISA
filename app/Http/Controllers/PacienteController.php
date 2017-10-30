@@ -58,6 +58,7 @@ class PacienteController extends Controller {
 
         if($paciente->save()){
             $this->crearPacienteBitacora($request);
+            Flash('¡El paciente se ha creado Exitosamente!')->success();
             return redirect()->intended('/paciente-management');
         }
     }
@@ -70,6 +71,7 @@ class PacienteController extends Controller {
 
         $paciente = Paciente::find($id);
         if ($paciente == null || count($paciente) == 0) {
+            Flash('¡Error al cargar los Pacientes!')->error();
             return redirect()->intended('/paciente-management');
         }
 
@@ -103,6 +105,7 @@ class PacienteController extends Controller {
         $this->updatePacienteBitacora($request, $id);
 
         if($paciente->save()) {
+          Flash('¡El paciente se ha actualizado Exitosamente!')->success();
           return redirect()->intended('/paciente-management');
         }
     }

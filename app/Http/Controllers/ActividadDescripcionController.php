@@ -20,6 +20,7 @@ class ActividadDescripcionController extends Controller {
         $actividad->descripcion = $request['descripcion'];
         $this->updateDesActividadBitacora($request, $id);
             if($actividad->save()){
+                Flash('¡La Descripción de la Actividad se ha actualizado Exitosamente!')->success();
                 return redirect()->intended('/actividad-management');
             }
     }

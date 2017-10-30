@@ -54,6 +54,7 @@ class TerapiaUsuarioController extends Controller {
 	                $this->createTerpiaUsuario($request, $terapia, $user);
 	            }
 	        }
+					Flash('¡El Empleado se ha agregado Exitosamente!')->success();
 	        return redirect()->intended('/user-management');
 				}
 

@@ -25,7 +25,7 @@
       <form method="POST" action="{{ route('user-management.search') }}">
          {{ csrf_field() }}
          @component('layouts.search', ['title' => 'Buscar'])
-          @component('layouts.two-cols-search-row', ['items' => ['Nombre1', 'DPI'], 
+          @component('layouts.two-cols-search-row', ['items' => ['Nombre1', 'DPI'],
           'oldVals' => [isset($searchingVals) ? strtoupper($searchingVals['nombre1']) : '', isset($searchingVals) ? $searchingVals['dpi'] : '']])
           @endcomponent
         @endcomponent
@@ -36,9 +36,9 @@
           <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
             <thead>
               <tr role="row">
-                <th width="20%" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Puesto: activate to sort column ascending">Nombre</th>             
+                <th width="40%" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Puesto: activate to sort column ascending">Nombre</th>
                 <th width="10%" class="sorting hidden-xs" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending">DPI</th>
-                <th width="10%" class="sorting hidden-xs" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending">Puesto Encargado</th>   
+                <th width="15%" class="sorting hidden-xs" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending">Puesto Encargado</th>
                 <th tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending">Opciones</th>
               </tr>
             </thead>
@@ -50,21 +50,21 @@
                   <td class="hidden-xs">{{ $user->rols_nombre }}</td>
                   <td>
                     <form class="row" method="POST" action="{{ route('user-management.destroy', ['id' => $user->id]) }}" onsubmit = "return confirm('¿Está seguro que quiere eliminar a el registro?')">
-                        
+
                         <input type="hidden" name="_method" value="DELETE">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
-                        <a href="{{ route('dia-terapia-user-management.edit', ['id' => $user->id]) }}" class="btn btn-warning col-sm-2 col-xs-3 btn-margin"><i class="fa fa-edit"></i> 
+                        <a href="{{ route('dia-terapia-user-management.edit', ['id' => $user->id]) }}" class="btn btn-warning col-sm-2 col-xs-3 btn-margin"><i class="fa fa-edit"></i>
                         </a>
                         @endif
                         @if (4 != Auth::user()->rol_id)
-                        <a href="{{ route('user-management.view', ['id' => $user->id]) }}" class="btn btn-default col-sm-2 col-xs-3 btn-margin" style="background-color:#009e0f"><i class="fa fa-eye"></i> 
+                        <a href="{{ route('user-management.view', ['id' => $user->id]) }}" class="btn btn-default col-sm-2 col-xs-3 btn-margin" style="background-color:#009e0f"><i class="fa fa-eye"></i>
                         </a>
                         @endif
                         @if (1 == Auth::user()->rol_id)
                         @if ($user->username != Auth::user()->username)
                         @if (2 != $user->estado_id)
-                        <button type="submit" class="btn btn-danger col-sm-2 col-xs-3 btn-margin"><i class="fa fa-trash-o"></i>                 
+                        <button type="submit" class="btn btn-danger col-sm-2 col-xs-3 btn-margin"><i class="fa fa-trash-o"></i>
                         </button>
                         @endif
                         @endif

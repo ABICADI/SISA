@@ -52,6 +52,7 @@ class ActividadController extends Controller {
 
         if($actividad->save()){
             $this->createActividadBitacora($request);
+            Flash('¡La Actividad se ha creado Exitosamente!')->success();
             return redirect()->intended('/actividad-management');
         }
     }
@@ -76,6 +77,7 @@ class ActividadController extends Controller {
     public function edit($id) {
         $actividad = Actividad::find($id);
         if ($actividad == null || count($actividad) == 0) {
+            Flash('¡Error al cargar Actividades!')->error();
             return redirect()->intended('/actividad-management');
         }
 
@@ -99,17 +101,9 @@ class ActividadController extends Controller {
         $actividad->municipio_id = $request['municipio_id'];
         $this->updateActividadBitacora($request, $id);
             if($actividad->save()){
+                Flash('¡La Actividad se ha actualizado Exitosamente!')->success();
                 return redirect()->intended('/actividad-management');
             }
-    }
-
-    public function destroy($id) {
-        $actividad = Actividad::findOrFail($id);
-        $this->deleteActividadBitacora($id);
-
-        if($actividad->delete()){
-            return redirect()->intended('/actividad-management');
-        }
     }
 
     public function search(Request $request) {

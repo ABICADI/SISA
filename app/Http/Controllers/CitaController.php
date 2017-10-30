@@ -34,7 +34,7 @@ class CitaController extends Controller {
 				$paciente = Paciente::find($tratamiento->paciente_id);
 
 				$cita = new Cita();
-				$cita->title = 'Paciente: ' . $paciente->nombre1 . ' ' . $paciente->apellido1 . ' - Asistencia: Sin evaluar';
+				$cita->title = 'Paciente: ' . $paciente->nombre1 . ' ' . $paciente->apellido1 . $terapia->nombre;
 				$cita->start = $request->fecha;
 				$cita->color = $terapia->color;
 				$cita->tratamiento_id = $request->id;
@@ -44,6 +44,7 @@ class CitaController extends Controller {
 					$tratamiento->restantes = $restantes;
 					$tratamiento->save();
 					if($cita->save()){
+						Flash('¡La Cita se ha agregado Exitosamente!')->success();
 						return view('tratamientocalendario-mgmt/edit', ['tratamiento' => $tratamiento]);
 					}
 				}else{
@@ -61,7 +62,7 @@ class CitaController extends Controller {
 	                        'terapias.nombre as nombre_terapia',
 	                        'terapias.color as color')
 	        ->orderBy('fecha', 'desc')->paginate(10);
-					$message = 'Ya no puede ingresar más citas al calendario, ya asgino las ' . $tratamiento->asignados . ' citas al paciente ' . $paciente->nombre1 . ' ' . $paciente->apellido1 . ' para la terapia ' . $terapia->nombre;
+					$message = 'Ya no puede ingresar más citas al calendario, ya asigno las ' . $tratamiento->asignados . ' citas al paciente ' . $paciente->nombre1 . ' ' . $paciente->apellido1 . ' para la terapia ' . $terapia->nombre;
 		          	return view('tratamiento-mgmt/index',['tratamientos' => $tratamientos, 'message' => $message]);
 				}
 			}else {
@@ -83,6 +84,7 @@ class CitaController extends Controller {
 						$tratamiento->restantes = $restantes;
 						$tratamiento->save();
 						if($cita->save()){
+							Flash('¡La Cita se ha agregado Exitosamente!')->success();
 							return redirect()->intended('/calendario');
 						}
 					}else{

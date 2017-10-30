@@ -80,5 +80,5 @@ Route::get('grafica-management/tratamiento', 'GraficaTratamientoController@index
 
 Route::resource('calendario', 'CalendarioController');
 Route::resource('tratamientocalendario', 'TratamientoCalendarioController');
-Route::resource('agregar-cita', 'CitaController',['only' => ['index', 'store', 'update', 'destroy']]);
+Route::resource('agregar-cita', 'CitaController',['only' => ['index', 'store', 'destroy']]);
 //Route::get('avatars/{name}', 'EmployeeManagementController@load');

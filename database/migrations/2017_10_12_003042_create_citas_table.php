@@ -18,8 +18,6 @@ class CreateCitasTable extends Migration
             $table->date('start');
             $table->string('title'); //nombre de paciente en eventos del calendario
             $table->string('color'); //color de terapia para identificacion de eventos en calendario
-            $table->string('asistencia')->nullable();
-            $table->string('observacion')->nullable();
             $table->integer('tratamiento_id');
             $table->foreign('tratamiento_id')->references('id')->on('tratamientos')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

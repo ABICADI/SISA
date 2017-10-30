@@ -100,6 +100,7 @@ class DiaTerapiaUsuarioController extends Controller {
 
         $this->updateBitacora($request, $id);
         if($user->save()){
+           Flash('¡El Empleado se ha actualizado Exitosamente!')->success();
            return redirect()->intended('/user-management');
         }
 

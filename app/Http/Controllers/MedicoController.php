@@ -40,6 +40,7 @@ class MedicoController extends Controller {
         //Si la terapia se guarda, se crea un registro en la Bitacora
         if($medico->save()) {
             $this->crearMedicoBitacora($request);
+						Flash('¡El Médico se ha agregado Exitosamente!')->success();
             return redirect()->intended('/medico-management');
         }
     }
@@ -66,6 +67,7 @@ class MedicoController extends Controller {
 
         $this->updateMedicoBitacora($request, $id);
         if($medico->save()){
+						Flash('¡El Médico se ha actualizado Exitosamente!')->success();
             return redirect()->intended('/medico-management');
         }
     }

@@ -42,13 +42,13 @@
           <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
             <thead>
               <tr role="row">
-                <th width="20%" class="sorting" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Paciente</th>
+                <th width="30%" class="sorting" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Paciente</th>
                 <th width="10%" class="sorting" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Terapia</th>
-                <th width="10%" class="hidden-xs" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Medico</th>
-                <th width="8%" class="hidden-xs" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Citas Asignadas</th>
-                <th width="10%" class="hidden-xs" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Citas sin Asignar</th>
-                <th width="5%" class="hidden-xs" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Fecha</th>
-                <th width="10%" class="sorting" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Opciones</th>
+                <th width="30%" class="sorting hidden-xs" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Medico</th>
+                <th width="5%" class="sorting hidden-xs" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Citas Asignadas</th>
+                <th width="5%" class="sorting hidden-xs" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Citas sin Asignar</th>
+                <th width="7%" class="sorting hidden-xs" tabindex="0" aria-controls="ffff" rowspan="1" colspan="1" aria-label="rol: activate to sort column ascending">Fecha</th>
+                <th width="15%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending">Opciones</th>
               </tr>
             </thead>
             <tbody>
@@ -63,7 +63,7 @@
                   <td>
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
-                        <a href="{{ route('tratamiento-management.edit', ['id' => $tratamiento->id]) }}" class="btn btn-warning col-sm-2 col-xs-3 btn-margin"><i class="fa fa-edit"></i>
+                        <a href="{{ route('tratamiento-management.edit', ['id' => $tratamiento->id]) }}" class="btn btn-warning col-sm-3 col-xs-2 btn-margin"><i class="fa fa-edit"></i>
                         </a>
                         @endif
                     </form>

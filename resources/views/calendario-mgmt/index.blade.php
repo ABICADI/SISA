@@ -44,36 +44,11 @@
                           <td>
                             <div class="form-group">
                                 <div class="form-group">
-                                      <label for="cui" class="col-md-2 control-label">Información</label>
-                                          <div class="col-md-8">
-                                              <input id="_title" type="text" class="form-control" name="_title" value="{{ old('_title') }}" autofocus>
-                                          </div>
+                                  <label for="cui" class="col-md-3 control-label">Información</label>
+                                      <div class="col-md-7">
+                                          <textarea id="_title" type="text" class="form-control" name="_title" value="{{ old('_title') }}" disabled></textarea>
+                                      </div>
                                 </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div class="form-group">
-                                  <label for="cui" class="col-md-2 control-label">Asistencia</label>
-                                      <div class="col-md-8">
-                                            <select class="form-control" id="_asistencia" name="_asistencia" value="{{ old('_asistencia') }}">
-                                              <option  value="" selected>Seleccionar Asistencia</option>
-                                              <option  value="Si">Si</option>
-                                              <option  value="No">No</option>
-                                              <option  value="Permiso">Permiso</option>
-                                            </select>
-                                      </div>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>
-                            <div class="form-group">
-                                  <label for="cui" class="col-md-2 control-label">Observación</label>
-                                      <div class="col-md-8">
-                                          <textarea id="_observacion" class="form-control" name="_observacion" placeholder="observacion" cols="50" rows="10"  type="text" value="{{ old('_observacion') }}" maxlength="500" autofocus>{{ old('_observacion') }}</textarea>
-                                      </div>
                             </div>
                           </td>
                         </tr>

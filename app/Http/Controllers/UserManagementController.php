@@ -111,6 +111,7 @@ class UserManagementController extends Controller {
 
         if($user->save()){
             $this->eliminarEmpleadoBitacora($id);
+            Flash('¡El Empleado se ha eliminado Exitosamente!')->error();
             return redirect()->intended('/user-management');
         }
     }

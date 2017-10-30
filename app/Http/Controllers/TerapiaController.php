@@ -38,6 +38,7 @@ class TerapiaController extends Controller {
         //Si la terapia se guarda, se crea un registro en la Bitacora
         if($terapia->save()) {
             $this->crearTerapiaBitacora($request);
+            Flash('¡La Terapia se ha agregado Exitosamente!')->success();
             return redirect()->intended('system-management/terapia');
         }
     }
@@ -48,6 +49,7 @@ class TerapiaController extends Controller {
 
         //Si la terapia seleccionada no tiene datos redireccionamos a la pagina principal de la Terapia
         if ($terapia == null || count($terapia) == 0) {
+            Flash('¡Eror al cargar las Terapias!')->error();
             return redirect()->intended('/system-management/terapia');
         }
         return view('system-mgmt/terapia/edit', ['terapia' => $terapia]);
@@ -72,6 +74,7 @@ class TerapiaController extends Controller {
                 $update_cita->save();
             }
         }
+        Flash('¡La Terapia se ha actualizado Exitosamente!')->success();
         return redirect()->intended('system-management/terapia');
     }
 

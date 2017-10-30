@@ -64,6 +64,7 @@ class TratamientoController extends Controller {
 
         if($tratamiento->save()){
           $this->insertBitacoraTratamiento($request);
+          Flash('¡El Tratamiento se ha agregado Exitosamente!')->success();
           return redirect()->intended('/calendario');
         }
     }
@@ -103,15 +104,7 @@ class TratamientoController extends Controller {
       $this->updateBitacoraTratamiento($id, $request);
 
       if($tratamiento->save()){
-        return redirect()->intended('/tratamiento-management');
-      }
-    }
-
-    public function destroy($id) {
-
-      $tratamiento = Tratamiento::findOrFail($id);
-      $this->deleteBitacoraTratamiento($id);
-      if($tratamiento->delete()){
+        Flash('¡El Tratamiento se ha actualizado Exitosamente!')->success();
         return redirect()->intended('/tratamiento-management');
       }
     }
