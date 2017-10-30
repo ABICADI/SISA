@@ -14,7 +14,7 @@ use Auth;
 
 class CitaController extends Controller {
 
-	protected $redirectTo = '/agregar-cita'; //redirecciona la ruta
+	protected $redirectTo = '/sisa/agregar-cita'; //redirecciona la ruta
 
 	public function __construct() {
 			$this->middleware('auth');
@@ -34,7 +34,7 @@ class CitaController extends Controller {
 				$paciente = Paciente::find($tratamiento->paciente_id);
 
 				$cita = new Cita();
-				$cita->title = 'Paciente: ' . $paciente->nombre1 . ' ' . $paciente->apellido1 . $terapia->nombre;
+				$cita->title = 'Paciente: ' . $paciente->nombre1 . ' ' . $paciente->apellido1 . ' ' . $terapia->nombre;
 				$cita->start = $request->fecha;
 				$cita->color = $terapia->color;
 				$cita->tratamiento_id = $request->id;

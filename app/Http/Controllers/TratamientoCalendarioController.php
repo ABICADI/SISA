@@ -7,15 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Tratamiento;
 
 class TratamientoCalendarioController extends Controller {
-	protected $redirectTo = '/tratamientocalendario'; //redirecciona la ruta
+	protected $redirectTo = '/sisa/tratamientocalendario'; //redirecciona la ruta
 
 	public function __construct() {
 			$this->middleware('auth');
 	}
-
-	/*public function index()	{
-			return view('tratamientocalendario-mgmt/index');
-	}*/
 
 	public function store(Request $request)	{
 			$tratamiento = tratamiento::find($request->id);

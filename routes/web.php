@@ -22,7 +22,7 @@ Route::get('/{id}', 'MunicipioController@getMunicipio');
 
 //Nuestras Rutas
 Route::get('/sisa/dashboard', 'DashboardController@index');
-Route::get('/error', 'ErrorController@index');
+Route::get('/sisa/error', 'ErrorController@index');
 Route::resource('profile', 'ProfileController');
 
 //Rutas de CRUD de todo el Sistema
@@ -35,20 +35,20 @@ Route::resource('sisa/user-management', 'UserManagementController');
 Route::post('sisa/paciente-management/search', 'PacienteController@search')->name('paciente-management.search');
 Route::resource('sisa/paciente-management', 'PacienteController');
 
-Route::post('tratamiento-management/search', 'TratamientoController@search')->name('tratamiento-management.search');
+Route::post('sisa/tratamiento-management/search', 'TratamientoController@search')->name('tratamiento-management.search');
 Route::resource('sisa/tratamiento-management', 'TratamientoController');
 
-Route::post('medico-management/search', 'MedicoController@search')->name('medico-management.search');
+Route::post('sisa/medico-management/search', 'MedicoController@search')->name('medico-management.search');
 Route::resource('sisa/medico-management', 'MedicoController');
 
-Route::resource('dia-terapia-user-management', 'DiaTerapiaUsuarioController');
+Route::resource('sisa/dia-terapia-user-management', 'DiaTerapiaUsuarioController');
 
-Route::resource('diasemanausuario-management', 'DiaSemanaUsuarioController');
-Route::resource('terapiausuario-management', 'TerapiaUsuarioController');
+Route::resource('sisa/diasemanausuario-management', 'DiaSemanaUsuarioController');
+Route::resource('sisa/terapiausuario-management', 'TerapiaUsuarioController');
 
-Route::post('actividad-management/search', 'ActividadController@search')->name('actividad-management.search');
-Route::resource('actividad-management', 'ActividadController');
-Route::resource('actividad-descripcion-management', 'ActividadDescripcionController');
+Route::post('sisa/actividad-management/search', 'ActividadController@search')->name('actividad-management.search');
+Route::resource('sisa/actividad-management', 'ActividadController');
+Route::resource('sisa/actividad-descripcion-management', 'ActividadDescripcionController');
 
 Route::post('system-management/terapia/search', 'TerapiaController@search')->name('terapia.search');
 Route::resource('system-management/terapia', 'TerapiaController');
@@ -81,7 +81,7 @@ Route::get('grafica-management/medico', 'GraficaMedicoController@index');
 Route::get('grafica-management/paciente', 'GraficaPacienteController@index');
 Route::get('grafica-management/tratamiento', 'GraficaTratamientoController@index');
 
-Route::resource('calendario', 'CalendarioController');
-Route::resource('tratamientocalendario', 'TratamientoCalendarioController');
-Route::resource('agregar-cita', 'CitaController',['only' => ['index', 'store', 'destroy']]);
+Route::resource('sisa/calendario', 'CalendarioController');
+Route::resource('sisa/tratamientocalendario', 'TratamientoCalendarioController');
+Route::resource('sisa/agregar-cita', 'CitaController',['only' => ['index', 'store', 'destroy']]);
 //Route::get('avatars/{name}', 'EmployeeManagementController@load');

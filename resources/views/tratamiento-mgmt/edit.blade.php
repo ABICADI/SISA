@@ -84,9 +84,21 @@
                   <h4><p>La terapia con nombre <label style="color:blue">{{$terapia->nombre}}</label> le faltan <label style="color:red">{{$tratamiento->restantes}}</label> citas por asignar en el calendario</p></h4>
               </div>
             </div>
-						<div class="col-md-2 col-md-offset-4">
-                <button type="submit" class="btn btn-warning col-sm-6 col-xs-4 btn-margin"><i class="fa fa-edit"></i>
+            <div class="col-md-2 col-md-offset-4">
+                <button type="submit" class="btn btn-warning"><i class="fa fa-edit"></i>
                  Asignar</button>
+						</div>
+        </form>
+				</div>
+        @endif
+        @if($tratamiento->restantes==0)
+        <form class="form-horizontal" role="form" method="POST" action="{{ route('tratamientocalendario.store') }}">
+          {{ csrf_field() }}
+        <div class="form-group">
+            <input  class="form-control" name="id" id="id" value="{{$tratamiento->id}}" style='display:none;'>
+            <div class="col-md-2 col-md-offset-4">
+                <button type="submit" class="btn btn-warning"><i class="fa fa-edit"></i>
+                 Editar</button>
 						</div>
         </form>
 				</div>

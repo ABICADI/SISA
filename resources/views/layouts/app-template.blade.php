@@ -29,7 +29,7 @@
     <link href="{{ asset('css/app-template.css') }}" rel="stylesheet">
       <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>-->
 
-    <link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
+    <link rel='stylesheet' href="/bower_components/AdminLTE/fullcalendar/fullcalendar.css"/>
     <link href="{{ asset("/bower_components/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css")}}" rel="stylesheet" type="text/css" />
     <!-- Graficas -->
     {!! Charts::assets() !!}
@@ -207,9 +207,9 @@
     </script>
 
   </body>
-  <script src='fullcalendar/lib/moment.min.js'></script>
-  <script src='fullcalendar/fullcalendar.js'></script>
-  <script src='fullcalendar/locale/es.js'></script>
+  <script src="{{ asset ("/bower_components/AdminLTE/fullcalendar/lib/moment.min.js") }}"></script>
+  <script src="{{ asset ("/bower_components/AdminLTE/fullcalendar/fullcalendar.js") }}"></script>
+  <script src="{{ asset ("/bower_components/AdminLTE/fullcalendar/locale/es.js") }}"></script>
   <script>
       $(document).ready(function() {
           $('#calendar').fullCalendar({
@@ -228,7 +228,7 @@
 
 
                   },
-            events: '/agregar-cita',
+            events: '/sisa/agregar-cita',
 
                   eventClick: function(event, jsEvent, view){
                       $('#modal-event #delete').attr('data-id', event.id);

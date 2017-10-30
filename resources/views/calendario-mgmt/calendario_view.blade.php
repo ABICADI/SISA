@@ -18,7 +18,7 @@
       defaultDate: $('#calendar').fullCalendar('today'),
       navLinks: true, // can click day/week names to navigate views
       eventLimit: true, // allow "more" link when too many events
-      events: '/agregar-cita'
+      events: '/sisa/agregar-cita'
     });
     $('#calendar').fullCalendar('option', 'contentHeight', 450);
 

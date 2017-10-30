@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 
 class CalendarioController extends Controller {
-	protected $redirectTo = '/calendario'; //redirecciona la ruta
+	protected $redirectTo = '/sisa/calendario'; //redirecciona la ruta
 
 	public function __construct() {
 			$this->middleware('auth');

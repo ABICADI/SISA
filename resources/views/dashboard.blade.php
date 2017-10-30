@@ -20,7 +20,7 @@
    <link href="{{ asset('css/app-template.css') }}" rel="stylesheet">
 
    <!-- Calendario Inicio -->
-   <link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
+   <link rel='stylesheet' href="/bower_components/AdminLTE/fullcalendar/fullcalendar.css"/>
    <link href="{{ asset("/bower_components/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css")}}" rel="stylesheet" type="text/css" />
    <!-- Calendario Fin -->
 
@@ -126,9 +126,9 @@
 <script src="{{ asset ("/bower_components/AdminLTE/dist/js/app.min.js") }}" type="text/javascript"></script>
 </body>
 
-<script src='fullcalendar/lib/moment.min.js'></script>
-<script src='fullcalendar/fullcalendar.js'></script>
-<script src='fullcalendar/locale/es.js'></script>
+<script src="{{ asset ("/bower_components/AdminLTE/fullcalendar/lib/moment.min.js") }}"></script>
+<script src="{{ asset ("/bower_components/AdminLTE/fullcalendar/fullcalendar.js") }}"></script>
+<script src="{{ asset ("/bower_components/AdminLTE/fullcalendar/locale/es.js") }}"></script>
 <script src='/bower_components/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js' type="text/javascript"/></script>
 <!-- Llamar Calendario Full -->
   @include('calendario-mgmt.calendario_view')

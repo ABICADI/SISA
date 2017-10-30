@@ -15,7 +15,7 @@ use Auth;
 
 class TratamientoController extends Controller {
 
-    protected $redirectTo = '/tratamiento-management'; //redirecciona la ruta
+    protected $redirectTo = '/sisa/tratamiento-management'; //redirecciona la ruta
 
     public function __construct() {
         $this->middleware('auth');
@@ -65,7 +65,7 @@ class TratamientoController extends Controller {
         if($tratamiento->save()){
           $this->insertBitacoraTratamiento($request);
           Flash('¡El Tratamiento se ha agregado Exitosamente!')->success();
-          return redirect()->intended('/calendario');
+          return redirect()->intended('/sisa/calendario');
         }
     }
 
@@ -78,7 +78,7 @@ class TratamientoController extends Controller {
       $tratamiento = Tratamiento::findOrFail($id);
 
       if($tratamiento == null && count($tratamiento)== 0){
-        return redirect()->intended('/tratamiento-management');
+        return redirect()->intended('/sisa/tratamiento-management');
       }
 
       $pacientes = Paciente::select('pacientes.*')->orderBy('nombre1','asc')->get();
@@ -105,7 +105,7 @@ class TratamientoController extends Controller {
 
       if($tratamiento->save()){
         Flash('¡El Tratamiento se ha actualizado Exitosamente!')->success();
-        return redirect()->intended('/tratamiento-management');
+        return redirect()->intended('/sisa/tratamiento-management');
       }
     }
 

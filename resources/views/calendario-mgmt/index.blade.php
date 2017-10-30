@@ -57,7 +57,7 @@
                         <div class="modal-footer">
                             <div class="modal-footer">
                               {{ csrf_field() }}
-                              <a id="delete" data-href="{{ url('agregar-cita') }}" data-id="" class="btn btn-danger col-sm-2 col-xs-2 btn-margin">ELIMINAR</a>
+                              <a id="delete" data-href="{{ url('sisa/agregar-cita') }}" data-id="" class="btn btn-danger col-sm-2 col-xs-2 btn-margin">ELIMINAR</a>
                               <button type="button" class="btn btn-dafault" data-dismiss="modal">CANCELAR</button>
                             </div>
                         </div>
