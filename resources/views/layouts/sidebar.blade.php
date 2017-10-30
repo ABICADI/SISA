@@ -1,17 +1,11 @@
   <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
-
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel">
-      </div>
-
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="/sisa/dashboard"><i class="glyphicon glyphicon-home"></i> <span>Dashboard</span></a></li>
+        <li><a href="/sisa/dashboard"><i class="glyphicon glyphicon-home"></i> <span>Dashboard</span></a></li>
         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
         <li><a href="{{ route('user-management.index') }}"><i class="fa fa-users"></i> <span>Empleado</span></a></li>
         <li><a href="{{ route('paciente-management.index') }}"><i class="fa fa-user"></i> <span>Paciente</span></a></li>
