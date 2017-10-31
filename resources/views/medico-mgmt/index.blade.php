@@ -49,7 +49,7 @@
                   <td class="hidden-xs">{{ $medico->colegiado }}</td>
                   <td class="hidden-xs">{{ $medico->telefono }}</td>
                   <td>
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="_token" onKeyUp="this.value=this.value.toUpperCase();" value="{{ csrf_token() }}">
                         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
                         <a href="{{ route('medico-management.edit', ['id' => $medico->id]) }}" class="btn btn-warning col-sm-3 col-xs-2 btn-margin"><i class="fa fa-edit"></i>
                         </a>

@@ -61,7 +61,7 @@
                   <td class="hidden-xs">{{ $tratamiento->restantes }}</td>
                   <td class="hidden-xs">{{ $tratamiento->fecha }}</td>
                   <td>
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}" onKeyUp="this.value=this.value.toUpperCase();">
                         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
                         <a href="{{ route('tratamiento-management.edit', ['id' => $tratamiento->id]) }}" class="btn btn-warning col-sm-3 col-xs-2 btn-margin"><i class="fa fa-edit"></i>
                         </a>
