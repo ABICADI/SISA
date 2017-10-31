@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Municipio;
 use Charts;
 
 class GraficaEmpleadoController extends Controller{
@@ -22,7 +23,7 @@ class GraficaEmpleadoController extends Controller{
 	        ->dimensions(10, 5)
 	        ->responsive(true)
 					->elementLabel("Cantidad")
-	        ->groupBy('departamento_id', null, [1 => 'ALTA VERAPAZ', 2 => 'BAJA VERAPAZ', 3 => 'CHIMALTENANGO',
+	        ->groupBy('municipio_id', null, [1 => 'ALTA VERAPAZ', 2 => 'BAJA VERAPAZ', 3 => 'CHIMALTENANGO',
 																							4 => 'CHIQUIMULA', 5 => 'GUATEMALA', 6 => 'EL PROGRESO',
 																							7 => 'ESCUINTLA', 8 => 'HUEHUETENANGO', 9 => 'IZABAL',
 																							10 => 'JALAPA', 11 => 'JUTIAPA', 12 => 'PETÉN',

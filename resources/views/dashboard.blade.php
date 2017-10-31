@@ -39,15 +39,20 @@
     <!-- Main content -->
     <section class="content">
 
-  <!-- Calendario Inicio -->
-  <table class="table responsive">
-    <tr>
-      <td>
-      <div id='calendar'></div>
-    </td>
-    </tr>
-</table>
-  <!-- Calendario Fin -->
+      @if (4 != Auth::user()->rol_id)
+      <!-- Calendario Inicio -->
+      <div class="form-group" style="text-align:center;">
+        <h1>AGENDA</h1>
+      </div>
+      <table class="table responsive">
+        <tr>
+          <td>
+          <div id='calendar'></div>
+        </td>
+        </tr>
+    </table>
+      <!-- Calendario Fin -->
+      @endif
   @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
   <!-- Fila Contenido -->
   <div class="row">

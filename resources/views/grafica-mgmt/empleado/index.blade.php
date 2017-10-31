@@ -19,13 +19,6 @@
       </td>
       </tr>
   </table>
-  <table class="table responsive">
-    <tr>
-      <td>
-        {!! $group_departamento->render() !!}
-      </td>
-      </tr>
-  </table>
   <!-- /.box-body -->
 </div>
     </section>
