@@ -47,7 +47,7 @@
                   <td class="sorting_1">{{ $paciente->nombre1 }} {{ $paciente->nombre2 }} {{ $paciente->nombre3 }} {{ $paciente->apellido1 }} {{ $paciente->apellido2 }} {{ $paciente->apellido3 }}</td>
                   <td class="hidden-xs">{{ $paciente->cui }}</td>
                   <td>
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="_token" onKeyUp="this.value=this.value.toUpperCase();" value="{{ csrf_token() }}">
                         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
                         <a href="{{ route('paciente-management.edit', ['id' => $paciente->id]) }}" class="btn btn-warning col-sm-2 col-xs-3 btn-margin"><i class="fa fa-edit"></i>
                         </a>
