@@ -12,7 +12,7 @@
 
             <div class="form-group{{ $errors->has('dpi') ? ' has-error' : '' }}">
                 <label for="dpi" class="col-md-2 control-label"><label style="color:red">*</label> DPI</label>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <input id="dpi" type="text" class="form-control" placeholder="0000000000000" name="dpi" value="{{ old('dpi') }}" onkeypress="return numeros(event)" minlength="13" maxlength="13" required autofocus>
 
                         @if ($errors->has('dpi'))

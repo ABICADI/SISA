@@ -304,8 +304,8 @@
                 <td>
                 @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
                     <div class="col-md-4 col-md-offset-4">
-                        <button type="submit" class="btn btn-primary">
-                            Siguiente <i class="fa fa-chevron-right"></i>
+                        <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>
+                            Guardar
                         </button>
 
                         <a href="{{ route('diasemanausuario-management.show', ['id' => $user->id]) }}" class="btn btn-danger col-sm-6 col-xs-6 btn-margin"><i class="fa fa-user-times"></i> Cancelar Proceso

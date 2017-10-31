@@ -43,7 +43,7 @@ class TratamientoController extends Controller {
     public function create() {
         $pacientes = Paciente::select('pacientes.*')->orderBy('nombre1','asc')->get();
         $medicos = Medico::select('medicos.*')->orderBy('nombre','asc')->get();
-        $terapias = Terapia::select('terapias.*')->orderBy('nombre','asc')->get();
+        $terapias = Terapia::select('terapias.*')->where('id', '!=', 1)->orderBy('nombre','asc')->get();
 
         return view('tratamiento-mgmt/create', ['pacientes' => $pacientes, 'medicos' => $medicos, 'terapias' => $terapias]);
     }
@@ -83,7 +83,7 @@ class TratamientoController extends Controller {
 
       $pacientes = Paciente::select('pacientes.*')->orderBy('nombre1','asc')->get();
       $medicos = Medico::select('medicos.*')->orderBy('nombre','asc')->get();
-      $terapias = Terapia::select('terapias.*')->orderBy('nombre','asc')->get();
+      $terapias = Terapia::select('terapias.*')->where('id', '!=', 1)->orderBy('nombre','asc')->get();
 
       return view('tratamiento-mgmt/edit',['tratamiento' => $tratamiento, 'pacientes' => $pacientes, 'medicos' => $medicos, 'terapias' => $terapias]);
     }
@@ -151,14 +151,48 @@ class TratamientoController extends Controller {
     }
 
     private function insertBitacoraTratamiento($request){
+      date_default_timezone_set('america/guatemala');
+      $format = 'd/m/Y';
+      $now = date($format);
+      $log = Auth::user()->username;
 
+      $paciente = Paciente::findOrFail($request['paciente_id']);
+      $medico = Medico::findOrFail($request['medico_id']);
+      $terapia = Terapia::findOrFail($request['terapia_id']);
+
+      $data = 'Paciente: ' . $paciente->nombre1 .' '. $paciente->nombre2 .' '. $paciente->nombre3 .' '. $paciente->apellido1 .' '. $paciente->apellido2 .' '. $paciente->apellido3 . ', Médico: ' . $medico->nombre . ', Terapia: ' . $terapia->nombre . ', Fecha: ' . $now . ', Cantidad de Citas: ' . $request['asignados'];
+
+          $bitacora = new Bitacora();
+          $bitacora->usuario = $log;
+          $bitacora->nombre_tabla = 'TRATAMIENTO';
+          $bitacora->actividad = 'CREAR';
+          $bitacora->anterior = '';
+          $bitacora->nuevo = $data;
+          $bitacora->fecha = $now;
+          $bitacora->save();
     }
 
     private function updateBitacoraTratamiento($id, $request){
+      date_default_timezone_set('america/guatemala');
+      $format = 'd/m/Y';
+      $now = date($format);
+      $log = Auth::user()->username;
 
-    }
+      $tratamiento = Tratamiento::findOrFail($id);
+      $pacientenew = Paciente::findOrFail($request['paciente_id']);
+      $pacienteold = Paciente::findOrFail($tratamiento->paciente_id);
+      $mediconew = Medico::findOrFail($request['medico_id']);
+      $medicoold = Medico::findOrFail($tratamiento->medico_id);
+      $terapianew = Terapia::findOrFail($request['terapia_id']);
+      $terapiaold = Terapia::findOrFail($tratamiento->terapia_id);
 
-    private function deleteBitacoraTratamiento($id){
-
+          $bitacora = new Bitacora();
+          $bitacora->usuario = $log;
+          $bitacora->nombre_tabla = 'TRATAMIENTO';
+          $bitacora->actividad = 'CREAR';
+          $bitacora->anterior = '';
+          $bitacora->nuevo = $data;
+          $bitacora->fecha = $now;
+          $bitacora->save();
     }
 }

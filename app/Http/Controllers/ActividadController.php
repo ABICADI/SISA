@@ -13,7 +13,7 @@ use Auth;
 
 class ActividadController extends Controller {
 
-    protected $redirectTo = '/actividad-management';
+    protected $redirectTo = '/sisa/actividad-management';
 
     public function __construct() {
         $this->middleware('auth');
@@ -53,7 +53,7 @@ class ActividadController extends Controller {
         if($actividad->save()){
             $this->createActividadBitacora($request);
             Flash('¡La Actividad se ha creado Exitosamente!')->success();
-            return redirect()->intended('/actividad-management');
+            return redirect()->intended('/sisa/actividad-management');
         }
     }
 
@@ -64,7 +64,8 @@ class ActividadController extends Controller {
    public function view($id) {
         $actividad = Actividad::find($id);
         if ($actividad == null || count($actividad) == 0) {
-            return redirect()->intended('/actividad-management');
+            Flash('¡Error al cargar Actividades!')->error();
+            return redirect()->intended('/sisa/actividad-management');
         }
 
         $users = User::select('id', 'nombre1', 'nombre2', 'nombre3', 'apellido1', 'apellido2', 'apellido3')
@@ -78,7 +79,7 @@ class ActividadController extends Controller {
         $actividad = Actividad::find($id);
         if ($actividad == null || count($actividad) == 0) {
             Flash('¡Error al cargar Actividades!')->error();
-            return redirect()->intended('/actividad-management');
+            return redirect()->intended('/sisa/actividad-management');
         }
 
         $users = User::select('id', 'nombre1', 'nombre2', 'nombre3', 'apellido1', 'apellido2', 'apellido3')
@@ -102,7 +103,7 @@ class ActividadController extends Controller {
         $this->updateActividadBitacora($request, $id);
             if($actividad->save()){
                 Flash('¡La Actividad se ha actualizado Exitosamente!')->success();
-                return redirect()->intended('/actividad-management');
+                return redirect()->intended('/sisa/actividad-management');
             }
     }
 

@@ -26,14 +26,14 @@ class ReportTratamientoController extends Controller {
 									'terapia' => 0
 		        ];
 						$medicos = Medico::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-		        $terapias = Terapia::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+		        $terapias = Terapia::select('id', 'nombre')->where('id', '!=', 1)->orderBy('nombre', 'asc')->get();
 						$tratamientos = $this->getRangoTratamiento($constraints);
 		        return view('system-mgmt/report-tratamiento/index', ['tratamientos' => $tratamientos, 'medicos' => $medicos, 'terapias' => $terapias, 'searchingVals' => $constraints]);
 		    }
 
 		    public function search(Request $request) {
 							$medicos = Medico::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-							$terapias = Terapia::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+							$terapias = Terapia::select('id', 'nombre')->where('id', '!=', 1)->orderBy('nombre', 'asc')->get();
 							$constraints = [
 										'medico' => $request['medico_id'],
 										'terapia' => $request['terapia_id']
