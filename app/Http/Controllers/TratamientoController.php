@@ -186,13 +186,49 @@ class TratamientoController extends Controller {
       $terapianew = Terapia::findOrFail($request['terapia_id']);
       $terapiaold = Terapia::findOrFail($tratamiento->terapia_id);
 
+      if($tratamiento->paciente_id != $request['paciente_id']){
           $bitacora = new Bitacora();
           $bitacora->usuario = $log;
           $bitacora->nombre_tabla = 'TRATAMIENTO';
           $bitacora->actividad = 'CREAR';
-          $bitacora->anterior = '';
-          $bitacora->nuevo = $data;
+          $bitacora->anterior = 'Paciente: ' . $pacienteold->nombre1 .' '.$pacienteold->nombre2.' '.$pacienteold->nombre3.' '.$pacienteold->apellido1.' '.$pacienteold->apellido2.' '.$pacienteold->apellido3;
+          $bitacora->nuevo = 'Paciente: ' . $pacientenew->nombre1 .' '.$pacientenew->nombre2.' '.$pacientenew->nombre3.' '.$pacientenew->apellido1.' '.$pacientenew->apellido2.' '.$pacientenew->apellido3;
           $bitacora->fecha = $now;
           $bitacora->save();
+      }
+
+      if($tratamiento->medico_id != $request['medico_id']){
+          $bitacora = new Bitacora();
+          $bitacora->usuario = $log;
+          $bitacora->nombre_tabla = 'TRATAMIENTO';
+          $bitacora->actividad = 'CREAR';
+          $bitacora->anterior = 'Médico: ' . $medicoold->nombre;
+          $bitacora->nuevo = 'Médico: ' . $mediconew->nombre;
+          $bitacora->fecha = $now;
+          $bitacora->save();
+      }
+
+      if($tratamiento->terapia_id != $request['terapia_id']){
+          $bitacora = new Bitacora();
+          $bitacora->usuario = $log;
+          $bitacora->nombre_tabla = 'TRATAMIENTO';
+          $bitacora->actividad = 'CREAR';
+          $bitacora->anterior = 'Médico: ' . $terapiaold->nombre;
+          $bitacora->nuevo = 'Médico: ' . $terapianew->nombre;
+          $bitacora->fecha = $now;
+          $bitacora->save();
+      }
+
+      if($request['asignados']!=0){
+        $new_asignado = $request['asignados'] + $tratamiento->asignados;
+        $bitacora = new Bitacora();
+        $bitacora->usuario = $log;
+        $bitacora->nombre_tabla = 'TRATAMIENTO';
+        $bitacora->actividad = 'CREAR';
+        $bitacora->anterior = 'Cantidad de Citas: ' . $tratamiento->asignados;
+        $bitacora->nuevo = 'Cantidad de Citas: ' . $new_asignado;
+        $bitacora->fecha = $now;
+        $bitacora->save();
+      }
     }
 }

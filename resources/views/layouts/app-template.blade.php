@@ -101,7 +101,7 @@
         }
     </script>
     <script>
-      $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
+      $('div.alert').not('.alert-important').delay(2000).fadeOut(350);
     </script>
       <script>
         $(document).ready(function() {
