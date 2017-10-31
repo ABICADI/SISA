@@ -19,14 +19,19 @@ use Auth;
 class DiaTerapiaUsuarioController extends Controller {
 
     public function edit($id) {
-        $user = User::find($id);
+        $user = User::join('municipios', 'users.municipio_id', '=', 'municipios.id')
+                    ->join('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
+                    ->select('users.*', 'municipios.nombre as Municipio', 'departamentos.nombre as Departamento')
+                    ->find($id);
+
         if ($user == null || count($user) == 0) {
+            Flash('¡Error al cargar Empleado!')->error();
             return redirect()->intended('/sisa/user-management');
         }
 
         $rols = Rol::select('id', 'nombre')->where('rols.id','!=','1')->orderBy('nombre', 'asc')->get();
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        $municipios = Municipio::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+        $municipios = Municipio::select('id', 'nombre')->where('id', '=', $user->municipio_id)->get();
         $estados = Estado::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $diasemanas = DiaSemana::all();
         $terapias = Terapia::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
@@ -59,6 +64,9 @@ class DiaTerapiaUsuarioController extends Controller {
         ->select('userterapias.*')->where('userterapias.user_id','=',$user->id);
         $deleteTerapia->delete();
 
+        if($request['municipio_paciente']!=0){
+          $user->municipio_id = $request['municipio_paciente'];
+        }
         $user->username = $request['username'];
         $user->email = $request['email'];
         $user->dpi = $request['dpi'];
@@ -68,8 +76,6 @@ class DiaTerapiaUsuarioController extends Controller {
         $user->apellido1 = $request['apellido1'];
         $user->apellido2 = $request['apellido2'];
         $user->apellido3 = $request['apellido3'];
-        $user->departamento_id = $request['departamento_id'];
-        $user->municipio_id = $request['municipio_id'];
         $user->direccion = $request['direccion'];
         $user->fecha_nacimiento = $request['fecha_nacimiento'];
         $user->fecha_ingreso = $request['fecha_ingreso'];
@@ -101,7 +107,7 @@ class DiaTerapiaUsuarioController extends Controller {
         $this->updateBitacora($request, $id);
         if($user->save()){
            Flash('¡El Empleado se ha actualizado Exitosamente!')->success();
-           return redirect()->intended('/user-management');
+           return redirect()->intended('/sisa/user-management');
         }
 
     }
@@ -117,7 +123,7 @@ class DiaTerapiaUsuarioController extends Controller {
             'apellido1' => 'required|max:30',
             'apellido2' => 'max:30',
             'apellido3' => 'max:30',
-            'municipio_id' => 'required',
+            'municipio_paciente' => 'required',
             'direccion' => 'max:75',
             'fecha_nacimiento' => 'required',
             'fecha_ingreso' => 'required',
@@ -139,8 +145,8 @@ class DiaTerapiaUsuarioController extends Controller {
         $log = Auth::user()->username;
         $user = User::findOrFail($id);
 
-        $departamentonew = Departamento::find($request['departamento_id']);
-        $municipionew = Municipio::find($request['municipio_id']);
+        $departamentonew = Departamento::find($request['departamento_paciente']);
+        $municipionew = Municipio::find($request['municipio_paciente']);
         $municipioold = Municipio::find($user->municipio_id);
         $departamentoold = Departamento::find($municipioold->departamento_id);
         $rolnew = Rol::find($request['rol_id']);
@@ -258,7 +264,7 @@ class DiaTerapiaUsuarioController extends Controller {
                 $bitacora->save();
             }
 
-            if($user->municipio_id != $request['municipio_id']){
+            if($user->municipio_id != $request['municipio_paciente']){
                 $bitacora = new Bitacora();
                 $bitacora->usuario = $log;
                 $bitacora->nombre_tabla = 'EMPLEADO';

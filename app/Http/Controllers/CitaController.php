@@ -85,7 +85,7 @@ class CitaController extends Controller {
 						$tratamiento->save();
 						if($cita->save()){
 							Flash('¡La Cita se ha agregado Exitosamente!')->success();
-							return redirect()->intended('/calendario');
+							return redirect()->intended('/sisa/calendario');
 						}
 					}else{
 						$tratamientos = DB::table('tratamientos')

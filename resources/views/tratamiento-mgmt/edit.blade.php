@@ -16,7 +16,7 @@
                     <div class="col-md-5">
                         <select class="form-control" name="paciente_id" id="paciente_id" required autofocus>
                             @foreach ($pacientes as $paciente)
-                                <option value="{{$paciente->id}}" {{$paciente->id == $tratamiento->paciente_id ? 'selected' : ''}}>{{$paciente->nombre1}}</option>
+                                <option value="{{$paciente->id}}" {{$paciente->id == $tratamiento->paciente_id ? 'selected' : ''}}>{{$paciente->nombre1}} {{$paciente->nombre2}} {{$paciente->nombre3}} {{$paciente->apellido1}} {{$paciente->apellido2}} {{$paciente->apellido3}}</option>
                             @endforeach
                         </select>
                     </div>

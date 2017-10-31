@@ -10,7 +10,7 @@ use Auth;
 
 class MedicoController extends Controller {
 
-	protected $redirectTo = '/medico-management';
+	protected $redirectTo = '/sisa/medico-management';
 
     public function __construct() {
         $this->middleware('auth');
@@ -41,7 +41,7 @@ class MedicoController extends Controller {
         if($medico->save()) {
             $this->crearMedicoBitacora($request);
 						Flash('¡El Médico se ha agregado Exitosamente!')->success();
-            return redirect()->intended('/medico-management');
+            return redirect()->intended('/sisa/medico-management');
         }
     }
 
@@ -51,7 +51,7 @@ class MedicoController extends Controller {
 
         //Si la terapia seleccionada no tiene datos redireccionamos a la pagina principal de la Terapia
         if ($medico == null || count($medico) == 0) {
-            return redirect()->intended('/medico-management');
+            return redirect()->intended('/sisa/medico-management');
         }
         return view('medico-mgmt/edit', ['medico' => $medico]);
     }
@@ -68,7 +68,7 @@ class MedicoController extends Controller {
         $this->updateMedicoBitacora($request, $id);
         if($medico->save()){
 						Flash('¡El Médico se ha actualizado Exitosamente!')->success();
-            return redirect()->intended('/medico-management');
+            return redirect()->intended('/sisa/medico-management');
         }
     }
 
