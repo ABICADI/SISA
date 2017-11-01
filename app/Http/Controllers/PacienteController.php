@@ -155,7 +155,7 @@ class PacienteController extends Controller {
             'encargado' => 'max:100',
             'fecha_ingreso' => 'required',
             'telefono' => 'digits:8|nullable',
-            'seguro_social' => 'max:10|unique:pacientes|nullable',
+            'seguro_social' => 'max:10|unique:pacientes|required',
             'observacion' => 'max:500|nullable',
             'pago_id' => 'required',
         ]);
@@ -175,7 +175,7 @@ class PacienteController extends Controller {
             'encargado' => 'max:100',
             'fecha_ingreso' => 'required',
             'telefono' => 'digits:8|nullable',
-            'seguro_social' => 'max:10|nullable',
+            'seguro_social' => 'max:10|required',
             'observacion' => 'max:500',
             'pago_id' => 'required',
         ]);
