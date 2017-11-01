@@ -27,7 +27,7 @@
                                     <select class="form-control" name="medico_id" id="medico_id" required autofocus>
                                         <option value="" selected disabled>seleccione medico</option>
                                         @foreach ($medicos as $medico)
-                                            <option value="{{$medico->id}}">{{$medico->nombre}}</option>
+                                            <option value="{{$medico->id}}">{{$medico->colegiado}} | {{$medico->nombre}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -50,7 +50,7 @@
                                 </div>
                         </div>
                         <div class="form-group{{ $errors->has('descripcion') ? ' has-error' : '' }}">
-                            <label for="descripcion" class="col-md-2 control-label">Descripcion</label>
+                            <label for="descripcion" class="col-md-2 control-label">Diagnóstico</label>
 
                                 <div class="col-md-6">
                                     <textarea id="descripcion" class="form-control" name="descripcion" placeholder="descripcion" cols="50" rows="10"  type="text" value="{{ old('descripcion') }}" maxlength="500" autofocus></textarea>

@@ -52,7 +52,7 @@
                     </div>
             </div>
             <div class="form-group{{ $errors->has('descripcion') ? ' has-error' : '' }}">
-                <label for="descripcion" class="col-md-2 control-label">Descripcion</label>
+                <label for="descripcion" class="col-md-2 control-label">Diagnóstico</label>
 
                     <div class="col-md-6">
                         <textarea id="descripcion" class="form-control" name="descripcion" placeholder="descripcion" cols="50" rows="10"  type="text" value="{{ $terapia->descripcion }}" maxlength="500" onKeyUp="this.value=this.value.toUpperCase();" autofocus>{{ $tratamiento->descripcion }}</textarea>

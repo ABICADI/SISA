@@ -10,8 +10,8 @@ class CreateMedicosTable extends Migration {
         Schema::create('medicos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('colegiado',10);
-            $table->string('nombre')->nullabel();
-            $table->string('telefono',8)->nullabel();
+            $table->string('nombre');
+            $table->string('telefono',8)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

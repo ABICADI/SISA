@@ -40,7 +40,7 @@
             <div class="form-group{{ $errors->has('telefono') ? ' has-error' : '' }}">
                 <label for="cui" class="col-md-2 control-label">Teléfono</label>
                     <div class="col-md-3">
-                        <input id="telefono" type="text" class="form-control" placeholder="78840000" name="telefono" value="{{ old('telefono') }}" onkeypress="return numeros(event)" minlength="8" maxlength="8" required autofocus>
+                        <input id="telefono" type="text" class="form-control" placeholder="78840000" name="telefono" value="{{ old('telefono') }}" onkeypress="return numeros(event)" minlength="8" maxlength="8" autofocus>
 
                         @if ($errors->has('telefono'))
                             <span class="help-block">

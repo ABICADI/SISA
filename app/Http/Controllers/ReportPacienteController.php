@@ -90,12 +90,21 @@ class ReportPacienteController extends Controller {
 																		->where('pacientes.pago_id', '=', $constraints['pago'])->get();
 							return $pacientes;
 						}
-						if($constraints['departamento']!=0 && $constraints['municipio']!=0){
+						if($constraints['pago']==0 && $constraints['departamento']!=0 && $constraints['municipio']!=0){
 							$pacientes = Paciente::join('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
 																		->join('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
 																		->join('pagos', 'pacientes.pago_id', '=', 'pagos.id')
 																		->select('pacientes.*', 'municipios.nombre as Municipio', 'departamentos.nombre as Departamento', 'pagos.nombre as Pago')
 																		->where('pacientes.municipio_id', '=', $constraints['municipio'])->get();
+							return $pacientes;
+						}
+						if($constraints['pago']==0 && $constraints['departamento']==0 && $constraints['municipio']==0){
+							$pacientes = Paciente::join('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+																		->join('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
+																		->join('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+																		->select('pacientes.*', 'municipios.nombre as Municipio', 'departamentos.nombre as Departamento', 'pagos.nombre as Pago')
+																		->where('fecha_ingreso', '>=', '01/01/1800')
+																		->where('fecha_ingreso', '<=', '01/01/1800')->get();
 							return $pacientes;
 						}
 					}
@@ -118,7 +127,7 @@ class ReportPacienteController extends Controller {
 																		->where('pacientes.pago_id', '=', $constraints['pago'])->get();
 							return $pacientes;
 						}
-						if($constraints['departamento']!=0 && $constraints['municipio']!=0){
+						if($constraints['pago']==0 && $constraints['departamento']!=0 && $constraints['municipio']!=0){
 							$pacientes = Paciente::join('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
 																		->join('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
 																		->join('pagos', 'pacientes.pago_id', '=', 'pagos.id')
@@ -247,7 +256,7 @@ class ReportPacienteController extends Controller {
 						})
 						->all();
 					}
-					if($constraints['departamento']!=0 && $constraints['municipio']!=0){
+					if($constraints['pago']==0 && $constraints['departamento']!=0 && $constraints['municipio']!=0){
 						return DB::table('pacientes')
 						->leftJoin('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
 						->leftJoin('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
@@ -271,6 +280,37 @@ class ReportPacienteController extends Controller {
 											'pacientes.telefono as Teléfono',
 											'pagos.nombre as Tipo_Pago')
 						->where('pacientes.municipio_id', '=', $constraints['municipio'])
+						->get()
+						->map(function ($item, $key) {
+						return (array) $item;
+						})
+						->all();
+					}
+					if($constraints['pago']==0 && $constraints['departamento']==0 && $constraints['municipio']==0){
+						return DB::table('pacientes')
+						->leftJoin('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
+						->leftJoin('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
+						->leftJoin('pagos', 'pacientes.pago_id', '=', 'pagos.id')
+						->leftJoin('generos', 'pacientes.genero_id', '=', 'generos.id')
+						->select('pacientes.seguro_social as No_Registro',
+											'pacientes.cui as CUI',
+											'pacientes.nombre1 as Primer_Nombre',
+											'pacientes.nombre2 as Segundo_Nombre',
+											'pacientes.nombre3 as Tercer_Nombre',
+											'pacientes.apellido1 as Primer_Apellido',
+											'pacientes.apellido2 as Segundo_Apellido',
+											'pacientes.apellido3 as Tercer_Apellido',
+											'generos.nombre as Género',
+											'municipios.nombre as Municipio',
+											'departamentos.nombre as Departamento',
+											'pacientes.direccion as Dirección',
+											'pacientes.fecha_nacimiento as Fecha_Nacimiento',
+											'pacientes.encargado as Nombre_Encargado',
+											'pacientes.fecha_ingreso as Fecha_Ingreso',
+											'pacientes.telefono as Teléfono',
+											'pagos.nombre as Tipo_Pago')
+						->where('fecha_ingreso', '>=', '01/01/1800')
+						->where('fecha_ingreso', '<=', '01/01/1800')
 						->get()
 						->map(function ($item, $key) {
 						return (array) $item;
@@ -344,7 +384,7 @@ class ReportPacienteController extends Controller {
 						})
 						->all();
 					}
-					if($constraints['departamento']!=0 && $constraints['municipio']!=0){
+					if($constraints['pago']==0 && $constraints['departamento']!=0 && $constraints['municipio']!=0){
 						return DB::table('pacientes')
 						->leftJoin('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
 						->leftJoin('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')

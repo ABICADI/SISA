@@ -51,6 +51,7 @@ class MedicoController extends Controller {
 
         //Si la terapia seleccionada no tiene datos redireccionamos a la pagina principal de la Terapia
         if ($medico == null || count($medico) == 0) {
+						Flash('¡Error al cargar los médicos!')->error();
             return redirect()->intended('/sisa/medico-management');
         }
         return view('medico-mgmt/edit', ['medico' => $medico]);
@@ -114,16 +115,16 @@ class MedicoController extends Controller {
     private function validateInput($request) {
         $this->validate($request, [
         'colegiado' => 'required|max:10|unique:medicos',
-        'nombre' => 'max:150|unique:medicos',
-        'telefono' => 'max:8|min:8'
+        'nombre' => 'max:150|required|unique:medicos',
+        'telefono' => 'digits:8|nullable'
         ]);
     }
 
     private function validateUpdate($request) {
         $this->validate($request, [
         'colegiado' => 'required|max:10',
-        'nombre' => 'max:150',
-        'telefono' => 'max:8|min:8'
+        'nombre' => 'max:150|required',
+        'telefono' => 'digits:8|nullable'
         ]);
     }
 
