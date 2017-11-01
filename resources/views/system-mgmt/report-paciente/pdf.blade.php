@@ -24,7 +24,7 @@
  </head>
  <body>
 	 <div class="container">
-			 <div><h2>Reporte de Pacientes</h2></div>
+			 <div><h2>{{ $title }}</h2></div>
 			<table id="example2" role="grid">
 					 <thead>
 						 <tr role="row">

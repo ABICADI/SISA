@@ -24,21 +24,25 @@
  </head>
  <body>
 	 <div class="container">
-			 <div><h2>Reporte de Tratamiento</h2></div>
+			 <div><h2>{{ $title }}</h2></div>
 			<table id="example2" role="grid">
 					 <thead>
 						 <tr role="row">
-							 <th width="10%">Nombre Completo</th>
-							 <th width="10%">Médico</th>
-							 <th width="10%">Terapia</th>
+               <th width="3%">No. Registro</th>
+							 <th width="6%">Nombre Completo</th>
+							 <th width="6%">Médico</th>
+							 <th width="6%">Terapia</th>
+               <th width="20%">Diagnóstico</th>
 						 </tr>
 					 </thead>
 					 <tbody>
 					 @foreach ($tratamientos as $tratamiento)
 							 <tr role="row" class="odd">
+                 <td>{{ $tratamiento['No. Registro'] }}</td>
 								 <td>{{ $tratamiento['Primer_Nombre'] }} {{ $tratamiento['Segundo_Nombre'] }} {{ $tratamiento['Tercer_Nombre'] }} {{ $tratamiento['Primer_Apellido'] }} {{ $tratamiento['Segundo_Apellido'] }} {{ $tratamiento['Tercer_Apellido'] }}</td>
 								 <td>{{ $tratamiento['Medico'] }}</td>
 								 <td>{{ $tratamiento['Terapia'] }}</td>
+                 <td>{{ $tratamiento['Diagnóstico'] }}</td>
 						 </tr>
 					 @endforeach
 					 </tbody>

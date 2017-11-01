@@ -22,62 +22,58 @@ class ReportTratamientoController extends Controller {
 		    public function index() {
 		        date_default_timezone_set('america/guatemala');
 		        $constraints = [
-									'medico' => 0,
+									'paciente' => 0,
 									'terapia' => 0
 		        ];
-						$medicos = Medico::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+						$pacientes = Paciente::select('pacientes.*')->orderBy('nombre1', 'asc')->get();
 		        $terapias = Terapia::select('id', 'nombre')->where('id', '!=', 1)->orderBy('nombre', 'asc')->get();
 						$tratamientos = $this->getRangoTratamiento($constraints);
-		        return view('system-mgmt/report-tratamiento/index', ['tratamientos' => $tratamientos, 'medicos' => $medicos, 'terapias' => $terapias, 'searchingVals' => $constraints]);
+		        return view('system-mgmt/report-tratamiento/index', ['tratamientos' => $tratamientos, 'pacientes' => $pacientes, 'terapias' => $terapias, 'searchingVals' => $constraints]);
 		    }
 
 		    public function search(Request $request) {
-							$medicos = Medico::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+							$pacientes = Paciente::select('pacientes.*')->orderBy('nombre1', 'asc')->get();
 							$terapias = Terapia::select('id', 'nombre')->where('id', '!=', 1)->orderBy('nombre', 'asc')->get();
 							$constraints = [
-										'medico' => $request['medico_id'],
+										'paciente' => $request['paciente_id'],
 										'terapia' => $request['terapia_id']
 			        ];
 		        	$tratamientos = $this->getRangoTratamiento($constraints);
-		        	return view('system-mgmt/report-tratamiento/index', ['tratamientos' => $tratamientos, 'medicos' => $medicos, 'terapias' => $terapias, 'searchingVals' => $constraints]);
+		        	return view('system-mgmt/report-tratamiento/index', ['tratamientos' => $tratamientos, 'pacientes' => $pacientes, 'terapias' => $terapias, 'searchingVals' => $constraints]);
 		    }
 
 		    private function getRangoTratamiento($constraints) {
-						if($constraints['medico']==0 && $constraints['terapia']==0){
+						if($constraints['paciente']==0 && $constraints['terapia']==0){
 							$tratamientos = Tratamiento::join('pacientes', 'tratamientos.paciente_id', '=', 'pacientes.id')
 																->join('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
 																->join('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
-																->select('tratamientos.*', 'pacientes.nombre1 as Nombre1', 'pacientes.nombre2 as Nombre2', 'pacientes.nombre3 as Nombre3',
-																'pacientes.apellido1 as Apellido1', 'pacientes.apellido2 as Apellido2', 'pacientes.apellido3 as Apellido3', 'medicos.nombre as Medico', 'terapias.nombre as Terapia')
-																->where('medico_id', '=', $constraints['medico'])
+																->select('tratamientos.*', 'pacientes.seguro_social as No_Registro', 'pacientes.nombre1 as Nombre1', 'pacientes.nombre2 as Nombre2', 'pacientes.nombre3 as Nombre3', 'pacientes.apellido1 as Apellido1', 'pacientes.apellido2 as Apellido2', 'pacientes.apellido3 as Apellido3', 'medicos.nombre as Medico', 'terapias.nombre as Terapia')
+																->where('paciente_id', '=', $constraints['paciente'])
 																->where('terapia_id', '=', $constraints['terapia'])->get();
 							return $tratamientos;
 						}
-							if($constraints['medico']!=0 && $constraints['terapia']!=0){
+							if($constraints['paciente']!=0 && $constraints['terapia']!=0){
 								$tratamientos = Tratamiento::join('pacientes', 'tratamientos.paciente_id', '=', 'pacientes.id')
 																	->join('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
 																	->join('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
-																	->select('tratamientos.*', 'pacientes.nombre1 as Nombre1', 'pacientes.nombre2 as Nombre2', 'pacientes.nombre3 as Nombre3',
-																	'pacientes.apellido1 as Apellido1', 'pacientes.apellido2 as Apellido2', 'pacientes.apellido3 as Apellido3', 'medicos.nombre as Medico', 'terapias.nombre as Terapia')
-																	->where('medico_id', '=', $constraints['medico'])
+																	->select('tratamientos.*', 'pacientes.seguro_social as No_Registro', 'pacientes.nombre1 as Nombre1', 'pacientes.nombre2 as Nombre2', 'pacientes.nombre3 as Nombre3', 'pacientes.apellido1 as Apellido1', 'pacientes.apellido2 as Apellido2', 'pacientes.apellido3 as Apellido3', 'medicos.nombre as Medico', 'terapias.nombre as Terapia')
+																	->where('paciente_id', '=', $constraints['paciente'])
 																	->where('terapia_id', '=', $constraints['terapia'])->get();
 								return $tratamientos;
 							}
-							if($constraints['medico']!=0){
+							if($constraints['paciente']!=0){
 								$tratamientos = Tratamiento::join('pacientes', 'tratamientos.paciente_id', '=', 'pacientes.id')
 																	->join('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
 																	->join('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
-																	->select('tratamientos.*', 'pacientes.nombre1 as Nombre1', 'pacientes.nombre2 as Nombre2', 'pacientes.nombre3 as Nombre3',
-																	'pacientes.apellido1 as Apellido1', 'pacientes.apellido2 as Apellido2', 'pacientes.apellido3 as Apellido3', 'medicos.nombre as Medico', 'terapias.nombre as Terapia')
-																	->where('medico_id', '=', $constraints['medico'])->get();
+																	->select('tratamientos.*', 'pacientes.seguro_social as No_Registro', 'pacientes.nombre1 as Nombre1', 'pacientes.nombre2 as Nombre2', 'pacientes.nombre3 as Nombre3', 'pacientes.apellido1 as Apellido1', 'pacientes.apellido2 as Apellido2', 'pacientes.apellido3 as Apellido3', 'medicos.nombre as Medico', 'terapias.nombre as Terapia')
+																	->where('paciente_id', '=', $constraints['paciente'])->get();
 								return $tratamientos;
 							}
 							if($constraints['terapia']!=0){
 								$tratamientos = Tratamiento::join('pacientes', 'tratamientos.paciente_id', '=', 'pacientes.id')
 																	->join('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
 																	->join('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
-																	->select('tratamientos.*', 'pacientes.nombre1 as Nombre1', 'pacientes.nombre2 as Nombre2', 'pacientes.nombre3 as Nombre3',
-																	'pacientes.apellido1 as Apellido1', 'pacientes.apellido2 as Apellido2', 'pacientes.apellido3 as Apellido3', 'medicos.nombre as Medico', 'terapias.nombre as Terapia')
+																	->select('tratamientos.*', 'pacientes.seguro_social as No_Registro', 'pacientes.nombre1 as Nombre1', 'pacientes.nombre2 as Nombre2', 'pacientes.nombre3 as Nombre3', 'pacientes.apellido1 as Apellido1', 'pacientes.apellido2 as Apellido2', 'pacientes.apellido3 as Apellido3', 'medicos.nombre as Medico', 'terapias.nombre as Terapia')
 																	->where('terapia_id', '=', $constraints['terapia'])->get();
 								return $tratamientos;
 							}
@@ -89,17 +85,31 @@ class ReportTratamientoController extends Controller {
 		    }
 
 		    public function exportPDF(Request $request) {
+						$paciente = Paciente::find($request['paciente']);
+						$terapia = Terapia::find($request['terapia']);
 						date_default_timezone_set('america/guatemala');
 						$format = 'Y-m-d H:i:s';
 						$now = date($format);
 						$constraints = [
-									'medico' => $request['medico'],
+									'paciente' => $request['paciente'],
 									'terapia' => $request['terapia']
 						];
 		        $tratamientos = $this->getExportingData($constraints);
-		        $pdf = PDF::loadView('system-mgmt/report-tratamiento/pdf', ['tratamientos' => $tratamientos, 'searchingVals' => $constraints]);
+						if($request['paciente']!=0 && $request['terapia']!=0){
+								$title = 'Reporte de Tratamiento por Paciente: '.$paciente->nombre1.' '.$paciente->apellido1.', y por Terapia: '.$terapia->nombre;
+						}
+						if($request['paciente']!=0 && $request['terapia']==0){
+								$title = 'Reporte de Tratamiento por Paciente: '.$paciente->nombre1.' '.$paciente->apellido1;
+						}
+						if($request['paciente']==0 && $request['terapia']!=0){
+								$title = 'Reporte de Tratamiento por Terapia: '.$terapia->nombre;
+						}
+						if($request['paciente']==0 && $request['terapia']==0){
+								$title = 'Reporte de Tratamiento';
+						}
+		        $pdf = PDF::loadView('system-mgmt/report-tratamiento/pdf', ['tratamientos' => $tratamientos, 'searchingVals' => $constraints, 'title' => $title]);
 		        return $pdf->download('reporte_tratamiento_fecha_'. $now .'.pdf');
-		        return view('system-mgmt/report-tratamiento/pdf', ['tratamientos' => $tratamientos, 'searchingVals' => $constraints]);
+		        return view('system-mgmt/report-tratamiento/pdf', ['tratamientos' => $tratamientos, 'searchingVals' => $constraints, 'title' => $title]);
 		    }
 
 		    private function prepareExportingData($request) {
@@ -107,28 +117,42 @@ class ReportTratamientoController extends Controller {
 						$format = 'Y-m-d H:i:s';
 						$now = date($format);
 		        $author = Auth::user()->username;
-		        $tratamientos = $this->getExportingData(['medico'=> $request['medico'],
+		        $tratamientos = $this->getExportingData(['paciente'=> $request['paciente'],
 																									'terapia' => $request['terapia']]);
 		        return Excel::create('reporte_tratamiento_de_fecha_'. $now, function($excel) use($tratamientos, $request, $author) {
+							$paciente = Paciente::find($request['paciente']);
+							$terapia = Terapia::find($request['terapia']);
 							date_default_timezone_set('america/guatemala');
-							$format = 'Y-m-d H:i:s';
+							$format = 'd-m-Y';
 							$now = date($format);
-			        $excel->setTitle('Reporte de Tratamientos del '. $now);
+								if($request['paciente']!=0 && $request['terapia']!=0){
+										$title = 'Reporte de Tratamiento por Paciente: '.$paciente->nombre1.' '.$paciente->apellido1.', y por Terapia: '.$terapia->nombre;
+								}
+								if($request['paciente']!=0 && $request['terapia']==0){
+										$title = 'Reporte de Tratamiento por Paciente: '.$paciente->nombre1.' '.$paciente->apellido1;
+								}
+								if($request['paciente']==0 && $request['terapia']!=0){
+										$title = 'Reporte de Tratamiento por Terapia: '.$terapia->nombre;
+								}
+								if($request['paciente']==0 && $request['terapia']==0){
+										$title = 'Reporte de Tratamiento';
+								}
+			        $excel->setTitle($title);
 			        $excel->setCreator($author)->setCompany('HoaDang');
 			        $excel->setDescription('Listado de Tratamientos');
-			        $excel->sheet('Reporte', function($sheet) use($tratamientos) {
+			        $excel->sheet('Reporte_'.$now, function($sheet) use($tratamientos) {
 			        	$sheet->fromArray($tratamientos);
 		          });
 		        });
 		    }
 
 		    private function getExportingData($constraints) {
-					if($constraints['medico']==0 && $constraints['terapia']==0){
+					if($constraints['paciente']==0 && $constraints['terapia']==0){
 						return DB::table('tratamientos')
 						->leftJoin('pacientes', 'tratamientos.paciente_id', '=', 'pacientes.id')
 						->leftJoin('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
 						->leftJoin('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
-						->select(	'tratamientos.*',
+						->select('pacientes.seguro_social as No. Registro',
 											'pacientes.nombre1 as Primer_Nombre',
 											'pacientes.nombre2 as Segundo_Nombre',
 											'pacientes.nombre3 as Tercer_Nombre',
@@ -136,8 +160,9 @@ class ReportTratamientoController extends Controller {
 											'pacientes.apellido2 as Segundo_Apellido',
 											'pacientes.apellido3 as Tercer_Apellido',
 											'medicos.nombre as Medico',
-											'terapias.nombre as Terapia')
-						->where('tratamientos.medico_id', '=', $constraints['medico'])
+											'terapias.nombre as Terapia',
+											'tratamientos.descripcion as Diagnóstico')
+						->where('tratamientos.paciente_id', '=', $constraints['paciente'])
 						->where('tratamientos.terapia_id', '=', $constraints['terapia'])
 						->get()
 						->map(function ($item, $key) {
@@ -145,12 +170,12 @@ class ReportTratamientoController extends Controller {
 						})
 						->all();
 					}
-					if($constraints['medico']!=0 && $constraints['terapia']!=0){
+					if($constraints['paciente']!=0 && $constraints['terapia']!=0){
 						return DB::table('tratamientos')
 						->leftJoin('pacientes', 'tratamientos.paciente_id', '=', 'pacientes.id')
 						->leftJoin('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
 						->leftJoin('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
-						->select(	'tratamientos.*',
+						->select('pacientes.seguro_social as No. Registro',
 											'pacientes.nombre1 as Primer_Nombre',
 											'pacientes.nombre2 as Segundo_Nombre',
 											'pacientes.nombre3 as Tercer_Nombre',
@@ -158,8 +183,9 @@ class ReportTratamientoController extends Controller {
 											'pacientes.apellido2 as Segundo_Apellido',
 											'pacientes.apellido3 as Tercer_Apellido',
 											'medicos.nombre as Medico',
-											'terapias.nombre as Terapia')
-						->where('tratamientos.medico_id', '=', $constraints['medico'])
+											'terapias.nombre as Terapia',
+											'tratamientos.descripcion as Diagnóstico')
+						->where('tratamientos.paciente_id', '=', $constraints['paciente'])
 						->where('tratamientos.terapia_id', '=', $constraints['terapia'])
 						->get()
 						->map(function ($item, $key) {
@@ -167,12 +193,12 @@ class ReportTratamientoController extends Controller {
 						})
 						->all();
 					}
-					if($constraints['medico']!=0){
+					if($constraints['paciente']!=0){
 						return DB::table('tratamientos')
 						->leftJoin('pacientes', 'tratamientos.paciente_id', '=', 'pacientes.id')
 						->leftJoin('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
 						->leftJoin('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
-						->select(	'tratamientos.*',
+						->select('pacientes.seguro_social as No. Registro',
 											'pacientes.nombre1 as Primer_Nombre',
 											'pacientes.nombre2 as Segundo_Nombre',
 											'pacientes.nombre3 as Tercer_Nombre',
@@ -180,8 +206,9 @@ class ReportTratamientoController extends Controller {
 											'pacientes.apellido2 as Segundo_Apellido',
 											'pacientes.apellido3 as Tercer_Apellido',
 											'medicos.nombre as Medico',
-											'terapias.nombre as Terapia')
-						->where('tratamientos.medico_id', '=', $constraints['medico'])
+											'terapias.nombre as Terapia',
+											'tratamientos.descripcion as Diagnóstico')
+						->where('tratamientos.paciente_id', '=', $constraints['paciente'])
 						->get()
 						->map(function ($item, $key) {
 						return (array) $item;
@@ -193,7 +220,7 @@ class ReportTratamientoController extends Controller {
 						->leftJoin('pacientes', 'tratamientos.paciente_id', '=', 'pacientes.id')
 						->leftJoin('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
 						->leftJoin('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
-						->select(	'tratamientos.*',
+						->select('pacientes.seguro_social as No. Registro',
 											'pacientes.nombre1 as Primer_Nombre',
 											'pacientes.nombre2 as Segundo_Nombre',
 											'pacientes.nombre3 as Tercer_Nombre',
@@ -201,7 +228,8 @@ class ReportTratamientoController extends Controller {
 											'pacientes.apellido2 as Segundo_Apellido',
 											'pacientes.apellido3 as Tercer_Apellido',
 											'medicos.nombre as Medico',
-											'terapias.nombre as Terapia')
+											'terapias.nombre as Terapia',
+											'tratamientos.descripcion as Diagnóstico')
 						->where('tratamientos.terapia_id', '=', $constraints['terapia'])
 						->get()
 						->map(function ($item, $key) {

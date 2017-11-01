@@ -232,7 +232,7 @@ class ReportCitaController extends Controller{
 								if($request['terapia']!=0 && $request['paciente']!=0){
 									$title = 'Reporte de Citas Rango de ' .$request['from']. ' hasta ' .$request['to'].' Paciente: '.$paciente->nombre1. ' ' .$paciente->apellido1. ' y Terapia: ' .$terapia->nombre;
 								}else{
-									$title = 'Reporte de Cita';
+									$title = 'Reporte de Citas Rango de ' .$request['from']. ' hasta ' .$request['to'];
 								}
 							}
 			        $citas = $this->getExportingData($constraints);
@@ -267,7 +267,7 @@ class ReportCitaController extends Controller{
 									if($request['terapia']!=0 && $request['paciente']!=0){
 										$title = 'Reporte de Citas Rango de ' .$request['from']. ' hasta ' .$request['to'].' Paciente: '.$paciente->nombre1. ' ' .$paciente->apellido1. ' y Terapia: ' .$terapia->nombre;
 									}else{
-										$title = 'Reporte de Cita';
+										$title = 'Reporte de Citas Rango de ' .$request['from']. ' hasta ' .$request['to'];
 									}
 								}
 								$excel->setTitle($title);

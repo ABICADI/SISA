@@ -9,7 +9,7 @@ class CreateTratamientosTable extends Migration {
     public function up() {
         Schema::create('tratamientos', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('descripcion', 500)->nullable();
+            $table->string('descripcion', 1000)->nullable();
             $table->date('fecha')->nullable();
             $table->integer('asignados')->nullable();
             $table->integer('restantes')->nullable();

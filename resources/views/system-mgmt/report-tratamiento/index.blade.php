@@ -11,7 +11,7 @@
         <div class="col-sm-4">
             <form class="form-horizontal" role="form" method="POST" action="{{ route('report-tratamiento.excel') }}">
                 {{ csrf_field() }}
-                <input type="hidden" value="{{$searchingVals['medico']}}" name="medico" />
+                <input type="hidden" value="{{$searchingVals['paciente']}}" name="paciente" />
                 <input type="hidden" value="{{$searchingVals['terapia']}}" name="terapia" />
                 <button type="submit" class="btn btn-primary"><i class="fa fa-file-excel-o"></i>
                      Exportar
@@ -21,7 +21,7 @@
         <div class="col-sm-4">
             <form class="form-horizontal" role="form" method="POST" action="{{ route('report-tratamiento.pdf') }}">
                 {{ csrf_field() }}
-                <input type="hidden" value="{{$searchingVals['medico']}}" name="medico" />
+                <input type="hidden" value="{{$searchingVals['paciente']}}" name="paciente" />
                 <input type="hidden" value="{{$searchingVals['terapia']}}" name="terapia" />
                 <button type="submit" class="btn btn-info"><i class="fa fa-file-pdf-o"></i>
                      Exportar
@@ -43,12 +43,12 @@
 					 <table class="table responsive">
 						 <tr>
 							 <td>
-								 <label class="col-md-2 control-label">Médico</label>
+								 <label class="col-md-2 control-label">Paciente</label>
                      <div class="col-md-6">
-                         <select class="form-control" name="medico_id" id="medico_id">
-                             <option value="" selected>Ningun Médico Seleccionado</option>
-                             @foreach ($medicos as $medico)
-                                 <option value="{{$medico->id}}">{{$medico->nombre}}</option>
+                         <select class="form-control" name="paciente_id" id="paciente_id">
+                             <option value="" selected>Ningun Paciente Seleccionado</option>
+                             @foreach ($pacientes as $paciente)
+                                 <option value="{{$paciente->id}}">{{$paciente->seguro_social}} | {{$paciente->nombre1}} {{$paciente->nombre2}} {{$paciente->nombre3}} {{$paciente->Apellido1}} {{$paciente->Apellido2}} {{$paciente->Apellido3}}</option>
                              @endforeach
                          </select>
                      </div>
@@ -75,15 +75,17 @@
           <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
             <thead>
               <tr role="row">
+                  <th width = "5%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Nombre: activate to sort column ascending">Nombre del No. Registro</th>
                 <th width = "15%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Nombre: activate to sort column ascending">Nombre del Paciente</th>
                 <th width = "15%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Nombre: activate to sort column ascending">Nombre del Médico</th>
-                <th width = "30%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Nombre: activate to sort column ascending">Nombre de la Terapia</th>
+                <th width = "10%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Nombre: activate to sort column ascending">Nombre de la Terapia</th>
               </tr>
             </thead>
             <tbody>
 
               @foreach ($tratamientos as $tratamientos)
                   <tr role="row" class="odd">
+                    <td>{{ $tratamientos['No_Registro'] }}</td>
                     <td>{{ $tratamientos['Nombre1'] }} {{ $tratamientos['Nombre2'] }} {{ $tratamientos['Nombre3'] }}  {{ $tratamientos['Apelllido1'] }} {{ $tratamientos['Apelllido2'] }} {{ $tratamientos['Apelllido3'] }}</td>
                     <td>{{ $tratamientos['Medico'] }}</td>
                     <td>{{ $tratamientos['Terapia'] }}</td>
