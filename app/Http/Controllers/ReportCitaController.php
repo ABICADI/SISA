@@ -213,21 +213,37 @@ class ReportCitaController extends Controller{
 							date_default_timezone_set('america/guatemala');
 							$format = 'Y-m-d H:i:s';
 							$now = date($format);
+							$terapia = Terapia::find($request['terapia']);
+							$paciente = Paciente::find($request['paciente']);
 							$constraints = [
 										'from' => $request['from'],
 										'to' => $request['to'],
 										'terapia' => $request['terapia'],
 										'paciente' => $request['paciente']
 							];
+							if($request['from'] == '' || $request['to'] == ''){
+								if($request['terapia']!=0 && $request['paciente']!=0){
+									$title = 'Reporte de Citas Paciente: '. $paciente->nombre1 . ' ' . $paciente->apellido1 . ' y Terapia: ' . $terapia->nombre;
+								}else{
+									$title = 'Reporte de Cita';
+								}
+							}
+							if($request['from'] != '' || $request['to'] != ''){
+								if($request['terapia']!=0 && $request['paciente']!=0){
+									$title = 'Reporte de Citas Rango de ' .$request['from']. ' hasta ' .$request['to'].' Paciente: '.$paciente->nombre1. ' ' .$paciente->apellido1. ' y Terapia: ' .$terapia->nombre;
+								}else{
+									$title = 'Reporte de Cita';
+								}
+							}
 			        $citas = $this->getExportingData($constraints);
-			        $pdf = PDF::loadView('system-mgmt/report-cita/pdf', ['citas' => $citas, 'searchingVals' => $constraints]);
+			        $pdf = PDF::loadView('system-mgmt/report-cita/pdf', ['citas' => $citas, 'searchingVals' => $constraints, 'title' => $title]);
 			        return $pdf->download('reporte_cita_fecha_'. $now .'.pdf');
-			        return view('system-mgmt/report-cita/pdf', ['citas' => $citas, 'searchingVals' => $constraints]);
+			        return view('system-mgmt/report-cita/pdf', ['citas' => $citas, 'searchingVals' => $constraints, 'title' => $title]);
 			    }
 
 			    private function prepareExportingData($request) {
 							date_default_timezone_set('america/guatemala');
-							$format = 'Y-m-d H:i:s';
+							$format = 'Y-m-d_H:i:s';
 							$now = date($format);
 			        $author = Auth::user()->username;
 			        $citas = $this->getExportingData(['from'=> $request['from'],
@@ -235,13 +251,29 @@ class ReportCitaController extends Controller{
 																								'terapia' => $request['terapia'],
 																								'paciente' => $request['paciente']]);
 			        return Excel::create('reporte_cita_de_fecha_'. $now, function($excel) use($citas, $request, $author) {
+								$terapia = Terapia::find($request['terapia']);
+								$paciente = Paciente::find($request['paciente']);
 								date_default_timezone_set('america/guatemala');
-								$format = 'Y-m-d H:i:s';
+								$format = 'd-m-Y';
 								$now = date($format);
-				        $excel->setTitle('Reporte de Citas del '. $now);
+								if($request['from'] == '' || $request['to'] == ''){
+									if($request['terapia']!=0 && $request['paciente']!=0){
+										$title = 'Reporte de Citas Paciente: '. $paciente->nombre1 . ' ' . $paciente->apellido1 . ' y Terapia: ' . $terapia->nombre;
+									}else{
+										$title = 'Reporte de Cita';
+									}
+								}
+								if($request['from'] != '' || $request['to'] != ''){
+									if($request['terapia']!=0 && $request['paciente']!=0){
+										$title = 'Reporte de Citas Rango de ' .$request['from']. ' hasta ' .$request['to'].' Paciente: '.$paciente->nombre1. ' ' .$paciente->apellido1. ' y Terapia: ' .$terapia->nombre;
+									}else{
+										$title = 'Reporte de Cita';
+									}
+								}
+								$excel->setTitle($title);
 				        $excel->setCreator($author)->setCompany('HoaDang');
 				        $excel->setDescription('Listado de Citas');
-				        $excel->sheet('Reporte', function($sheet) use($citas) {
+				        $excel->sheet('Reporte_'.$now, function($sheet) use($citas) {
 				        	$sheet->fromArray($citas);
 			          });
 			        });
@@ -265,17 +297,14 @@ class ReportCitaController extends Controller{
 											->leftJoin('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
 											->leftJoin('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
 											->select('citas.start as Fecha',
-																'citas.asistencia as Asistencia',
-																'tratamientos.asignados as Citas',
-																'tratamientos.restantes as Restantes',
-																'medicos.nombre as Medico',
 																'pacientes.nombre1 as Primer_Nombre',
 																'pacientes.nombre2 as Segundo_Nombre',
 																'pacientes.nombre3 as Tercer_Nombre',
 																'pacientes.apellido1 as Primer_Apellido',
 																'pacientes.apellido2 as Segundo_Apellido',
 																'pacientes.apellido3 as Tercer_Apellido',
-																'terapias.nombre as Terapia')
+																'terapias.nombre as Terapia',
+																'medicos.nombre as Medico')
 																->where('citas.tratamiento_id', '=', $keys)
 											->get()
 											->map(function ($item, $key) {
@@ -290,17 +319,14 @@ class ReportCitaController extends Controller{
 										->leftJoin('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
 										->leftJoin('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
 										->select('citas.start as Fecha',
-															'citas.asistencia as Asistencia',
-															'tratamientos.asignados as Citas',
-															'tratamientos.restantes as Restantes',
-															'medicos.nombre as Medico',
 															'pacientes.nombre1 as Primer_Nombre',
 															'pacientes.nombre2 as Segundo_Nombre',
 															'pacientes.nombre3 as Tercer_Nombre',
 															'pacientes.apellido1 as Primer_Apellido',
 															'pacientes.apellido2 as Segundo_Apellido',
 															'pacientes.apellido3 as Tercer_Apellido',
-															'terapias.nombre as Terapia')
+															'terapias.nombre as Terapia',
+															'medicos.nombre as Medico')
 															->where('citas.tratamiento_id', '=', $plucks)
 										->get()
 										->map(function ($item, $key) {
@@ -317,17 +343,14 @@ class ReportCitaController extends Controller{
 							->leftJoin('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
 							->leftJoin('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
 							->select('citas.start as Fecha',
-												'citas.asistencia as Asistencia',
-												'tratamientos.asignados as Citas',
-												'tratamientos.restantes as Restantes',
-												'medicos.nombre as Medico',
 												'pacientes.nombre1 as Primer_Nombre',
 												'pacientes.nombre2 as Segundo_Nombre',
 												'pacientes.nombre3 as Tercer_Nombre',
 												'pacientes.apellido1 as Primer_Apellido',
 												'pacientes.apellido2 as Segundo_Apellido',
 												'pacientes.apellido3 as Tercer_Apellido',
-												'terapias.nombre as Terapia')
+												'terapias.nombre as Terapia',
+												'medicos.nombre as Medico')
 												->where('start', '>=', '1800-01-01')
 												->where('start', '<=', '1800-01-01')
 							->get()
@@ -343,17 +366,14 @@ class ReportCitaController extends Controller{
 							->leftJoin('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
 							->leftJoin('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
 							->select('citas.start as Fecha',
-												'citas.asistencia as Asistencia',
-												'tratamientos.asignados as Citas',
-												'tratamientos.restantes as Restantes',
-												'medicos.nombre as Medico',
 												'pacientes.nombre1 as Primer_Nombre',
 												'pacientes.nombre2 as Segundo_Nombre',
 												'pacientes.nombre3 as Tercer_Nombre',
 												'pacientes.apellido1 as Primer_Apellido',
 												'pacientes.apellido2 as Segundo_Apellido',
 												'pacientes.apellido3 as Tercer_Apellido',
-												'terapias.nombre as Terapia')
+												'terapias.nombre as Terapia',
+												'medicos.nombre as Medico')
 												->where('start', '>=', '1800-01-01')
 												->where('start', '<=', '1800-01-01')
 							->get()
@@ -369,17 +389,14 @@ class ReportCitaController extends Controller{
 							->leftJoin('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
 							->leftJoin('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
 							->select('citas.start as Fecha',
-												'citas.asistencia as Asistencia',
-												'tratamientos.asignados as Citas',
-												'tratamientos.restantes as Restantes',
-												'medicos.nombre as Medico',
 												'pacientes.nombre1 as Primer_Nombre',
 												'pacientes.nombre2 as Segundo_Nombre',
 												'pacientes.nombre3 as Tercer_Nombre',
 												'pacientes.apellido1 as Primer_Apellido',
 												'pacientes.apellido2 as Segundo_Apellido',
 												'pacientes.apellido3 as Tercer_Apellido',
-												'terapias.nombre as Terapia')
+												'terapias.nombre as Terapia',
+												'medicos.nombre as Medico')
 												->where('start', '>=', '1800-01-01')
 												->where('start', '<=', '1800-01-01')
 							->get()
@@ -407,17 +424,14 @@ class ReportCitaController extends Controller{
 										->leftJoin('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
 										->leftJoin('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
 										->select('citas.start as Fecha',
-															'citas.asistencia as Asistencia',
-															'tratamientos.asignados as Citas',
-															'tratamientos.restantes as Restantes',
-															'medicos.nombre as Medico',
 															'pacientes.nombre1 as Primer_Nombre',
 															'pacientes.nombre2 as Segundo_Nombre',
 															'pacientes.nombre3 as Tercer_Nombre',
 															'pacientes.apellido1 as Primer_Apellido',
 															'pacientes.apellido2 as Segundo_Apellido',
 															'pacientes.apellido3 as Tercer_Apellido',
-															'terapias.nombre as Terapia')
+															'terapias.nombre as Terapia',
+															'medicos.nombre as Medico')
 															->where('citas.tratamiento_id', '=', $keys)
 															->where('start', '>=', $constraints['from'])
 															->where('start', '<=', $constraints['to'])
@@ -434,17 +448,14 @@ class ReportCitaController extends Controller{
 									->leftJoin('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
 									->leftJoin('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
 									->select('citas.start as Fecha',
-														'citas.asistencia as Asistencia',
-														'tratamientos.asignados as Citas',
-														'tratamientos.restantes as Restantes',
-														'medicos.nombre as Medico',
 														'pacientes.nombre1 as Primer_Nombre',
 														'pacientes.nombre2 as Segundo_Nombre',
 														'pacientes.nombre3 as Tercer_Nombre',
 														'pacientes.apellido1 as Primer_Apellido',
 														'pacientes.apellido2 as Segundo_Apellido',
 														'pacientes.apellido3 as Tercer_Apellido',
-														'terapias.nombre as Terapia')
+														'terapias.nombre as Terapia',
+														'medicos.nombre as Medico')
 														->where('citas.tratamiento_id', '=', $plucks)
 														->where('start', '>=', $constraints['from'])
 														->where('start', '<=', $constraints['to'])
@@ -463,17 +474,14 @@ class ReportCitaController extends Controller{
 						->leftJoin('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
 						->leftJoin('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
 						->select('citas.start as Fecha',
-											'citas.asistencia as Asistencia',
-											'tratamientos.asignados as Citas',
-											'tratamientos.restantes as Restantes',
-											'medicos.nombre as Medico',
 											'pacientes.nombre1 as Primer_Nombre',
 											'pacientes.nombre2 as Segundo_Nombre',
 											'pacientes.nombre3 as Tercer_Nombre',
 											'pacientes.apellido1 as Primer_Apellido',
 											'pacientes.apellido2 as Segundo_Apellido',
 											'pacientes.apellido3 as Tercer_Apellido',
-											'terapias.nombre as Terapia')
+											'terapias.nombre as Terapia',
+											'medicos.nombre as Medico')
 											->where('start', '>=', '1800-01-01')
 											->where('start', '<=', '1800-01-01')
 						->get()
@@ -489,17 +497,14 @@ class ReportCitaController extends Controller{
 						->leftJoin('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
 						->leftJoin('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
 						->select('citas.start as Fecha',
-											'citas.asistencia as Asistencia',
-											'tratamientos.asignados as Citas',
-											'tratamientos.restantes as Restantes',
-											'medicos.nombre as Medico',
 											'pacientes.nombre1 as Primer_Nombre',
 											'pacientes.nombre2 as Segundo_Nombre',
 											'pacientes.nombre3 as Tercer_Nombre',
 											'pacientes.apellido1 as Primer_Apellido',
 											'pacientes.apellido2 as Segundo_Apellido',
 											'pacientes.apellido3 as Tercer_Apellido',
-											'terapias.nombre as Terapia')
+											'terapias.nombre as Terapia',
+											'medicos.nombre as Medico')
 											->where('start', '>=', '1800-01-01')
 											->where('start', '<=', '1800-01-01')
 						->get()
@@ -515,17 +520,14 @@ class ReportCitaController extends Controller{
 						->leftJoin('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
 						->leftJoin('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
 						->select('citas.start as Fecha',
-											'citas.asistencia as Asistencia',
-											'tratamientos.asignados as Citas',
-											'tratamientos.restantes as Restantes',
-											'medicos.nombre as Medico',
 											'pacientes.nombre1 as Primer_Nombre',
 											'pacientes.nombre2 as Segundo_Nombre',
 											'pacientes.nombre3 as Tercer_Nombre',
 											'pacientes.apellido1 as Primer_Apellido',
 											'pacientes.apellido2 as Segundo_Apellido',
 											'pacientes.apellido3 as Tercer_Apellido',
-											'terapias.nombre as Terapia')
+											'terapias.nombre as Terapia',
+											'medicos.nombre as Medico')
 											->where('start', '>=', $constraints['from'])
 											->where('start', '<=', $constraints['to'])
 						->get()

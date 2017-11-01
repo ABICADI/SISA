@@ -107,8 +107,6 @@
               <tr role="row">
                 <th width = "20%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Nombre: activate to sort column ascending">Nombre del Paciente</th>
                 <th width = "10%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Nombre: activate to sort column ascending">Terapia</th>
-                <th width = "8%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Nombre: activate to sort column ascending">Citas Asignadas</th>
-                <th width = "10%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Nombre: activate to sort column ascending">Citas sin Asignar</th>
                 <th width = "6%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Fecha: activate to sort column ascending">Fecha de Cita</th>
               </tr>
             </thead>
@@ -117,8 +115,6 @@
                 <tr role="row" class="odd">
                   <td>{{ $cita['nombre1'] }} {{ $cita['nombre2'] }} {{ $cita['nombre3'] }} {{ $cita['apellido1'] }} {{ $cita['apellido2'] }} {{ $cita['apellido3'] }}</td>
                   <td>{{ $cita['nombre'] }}</td>
-                  <td>{{ $cita['asignados'] }}</td>
-                  <td>{{ $cita['restantes'] }}</td>
                   <td>{{ $cita['start'] }}</td>
               </tr>
             @endforeach
