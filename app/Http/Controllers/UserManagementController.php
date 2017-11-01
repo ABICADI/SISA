@@ -24,7 +24,7 @@ class UserManagementController extends Controller {
         $users = DB::table('users')
         ->leftJoin('rols', 'users.rol_id', '=', 'rols.id')
         ->leftJoin('estados', 'users.estado_id', '=', 'estados.id')
-        ->select('users.*', 'rols.nombre as rols_nombre', 'estados.id as estado_id')
+        ->select('users.*', 'rols.nombre as nombre', 'estados.id as estado_id')
         ->where('users.estado_id','!=','2')
         ->where('users.id','!=','1')
         ->paginate(10);
@@ -123,12 +123,30 @@ class UserManagementController extends Controller {
     }
 
     public function search(Request $request) {
+
+
         $constraints = [
-            'nombre1' => $request['nombre1'],
+            'nombre1' => strtoupper ($request['nombre1']),
             'dpi' => $request['dpi']
         ];
+  
+        $nombre = strtoupper($request['nombre1']);
+        $users = DB::table('users')
+            ->leftJoin('rols', 'users.rol_id', '=', 'rols.id')
+            ->select(DB::raw('*'))
+            ->whereRaw("(dpi like '%$nombre%')")
+            ->orWhereRaw("(nombre like '%$nombre%')")
+            ->orWhereRaw("(nombre1 like '%$nombre%')")
+            ->orWhereRaw("(nombre2 like '%$nombre%')")
+            ->orWhereRaw("(nombre3 like '%$nombre%')")
+            ->orWhereRaw("(CONCAT(nombre1,' ',nombre2) like '%$nombre%')")
+            ->orWhereRaw("(CONCAT(nombre1,' ',nombre2,' ',nombre3) like '%$nombre%')")
+            ->orWhereRaw("(CONCAT(nombre1,' ',apellido1) like '%$nombre%')")
+            ->orWhereRaw("(CONCAT(nombre1,' ',nombre2,' ',apellido1) like '%$nombre%')")  
+            ->paginate(10);
 
-       $users = $this->doSearchingQuery($constraints);
+            //dd($users);
+            //$users = $this->doSearchingQuery($constraints);
        return view('users-mgmt/index', ['users' => $users, 'searchingVals' => $constraints]);
     }
 
@@ -138,11 +156,13 @@ class UserManagementController extends Controller {
         $index = 0;
         foreach ($constraints as $constraint) {
             if ($constraint != null) {
-                $query = $query->where( $fields[$index], 'like', '%'.$constraint.'%');
+                $query = $query
+                ->where( $fields[$index], 'like', '%'.$constraint.'%');
             }
-
             $index++;
         }
+        
+        //dd($query);
         return $query->paginate(10);
     }
 

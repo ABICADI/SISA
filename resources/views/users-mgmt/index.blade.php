@@ -25,9 +25,10 @@
       <form method="POST" action="{{ route('user-management.search') }}">
          {{ csrf_field() }}
          @component('layouts.search', ['title' => 'Buscar'])
-          @component('layouts.two-cols-search-row', ['items' => ['Nombre1', 'DPI'],
-          'oldVals' => [isset($searchingVals) ? strtoupper($searchingVals['nombre1']) : '', isset($searchingVals) ? $searchingVals['dpi'] : '']])
-          @endcomponent
+                <label for="nombre1" class="col-md-1 control-label">BUSCAR</label>
+                    <div class="col-md-5">
+                        <input id="nombre1" type="text" class="form-control" placeholder="buscar por Nombre/DPI/Puesto" name="nombre1" value="{{ old('nombre1') }}"  onKeyUp="this.value=this.value.toUpperCase();" >     
+                    </div>
         @endcomponent
       </form>
     <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
@@ -47,11 +48,11 @@
                 <tr role="row" class="odd">
                   <td class="sorting_1">{{ $user->nombre1 }} {{ $user->nombre2 }} {{ $user->nombre3 }} {{ $user->apellido1 }} {{ $user->apellido2 }} {{ $user->apellido3 }}</td>
                   <td class="hidden-xs">{{ $user->dpi }}</td>
-                  <td class="hidden-xs">{{ $user->rols_nombre }}</td>
+                  <td class="hidden-xs">{{ $user->nombre }}</td>
                   <td>
                     <form class="row" method="POST" action="{{ route('user-management.destroy', ['id' => $user->id]) }}" onsubmit = "return confirm('¿Está seguro que quiere eliminar a el registro?')">
 
-                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_method" onKeyUp="this.value=this.value.toUpperCase();" value="DELETE">
                         <input type="hidden" name="_token" onKeyUp="this.value=this.value.toUpperCase();" value="{{ csrf_token() }}">
                         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
                         <a href="{{ route('dia-terapia-user-management.edit', ['id' => $user->id]) }}" class="btn btn-warning col-sm-2 col-xs-3 btn-margin"><i class="fa fa-edit"></i>
