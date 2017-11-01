@@ -139,3 +139,10 @@
             'pago_id' => null,
         ];
     });
+
+    $factory->define(App\Genero::class, function (Faker\Generator $faker) {
+
+        return [
+            'nombre' => null,
+        ];
+    });
