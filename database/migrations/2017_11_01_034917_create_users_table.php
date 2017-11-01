@@ -27,9 +27,11 @@ class CreateUsersTable extends Migration {
             $table->integer('rol_id');
             $table->string('fecha_egreso')->nullable();
             $table->integer('estado_id');
+            $table->integer('genero_id');
             $table->foreign('municipio_id')->references('id')->on('municipios')->onUpdate('cascade');
             $table->foreign('rol_id')->references('id')->on('rols')->onUpdate('cascade');
             $table->foreign('estado_id')->references('id')->on('estados')->onUpdate('cascade');
+            $table->foreign('genero_id')->references('id')->on('generos')->onUpdate('cascade');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

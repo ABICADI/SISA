@@ -26,7 +26,8 @@ class DiaSemanaUsuarioController extends Controller {
         $user = User::join('municipios', 'users.municipio_id', 'municipios.id')
 											->join('departamentos', 'municipios.departamento_id', 'departamentos.id')
 											->join('rols', 'users.rol_id', 'rols.id')
-											->select('municipios.nombre as Municipio', 'departamentos.nombre as Departamento', 'rols.nombre as Rol', 'users.*')
+											->join('generos', 'users.genero_id', 'generos.id')
+											->select('municipios.nombre as Municipio', 'departamentos.nombre as Departamento', 'rols.nombre as Rol', 'generos.nombre as Genero', 'users.*')
 											->find($last->id);
         $diasemanas = DiaSemana::all();
         return view('diasemanausuario-mgmt/create', ['user' => $user, 'diasemanas' => $diasemanas]);
@@ -53,7 +54,8 @@ class DiaSemanaUsuarioController extends Controller {
 	        $user = User::join('municipios', 'users.municipio_id', 'municipios.id')
 												->join('departamentos', 'municipios.departamento_id', 'departamentos.id')
 												->join('rols', 'users.rol_id', 'rols.id')
-												->select('municipios.nombre as Municipio', 'departamentos.nombre as Departamento', 'rols.nombre as Rol', 'users.*')
+												->join('generos', 'users.genero_id', 'generos.id')
+												->select('municipios.nombre as Municipio', 'departamentos.nombre as Departamento', 'rols.nombre as Rol', 'generos.nombre as Genero','users.*')
 												->find($last->id);
 	        $diasemanas = DiaSemana::all();
 					Flash('¡Seleccionar uno o más Dias, caso contrario seleccionar Ninguno!')->error()->important();

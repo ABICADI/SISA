@@ -12,6 +12,7 @@ use App\Departamento;
 use App\Municipio;
 use App\DiaSemana;
 use App\Terapia;
+use App\Genero;
 use App\UsuarioDia;
 use App\UsuarioTerapia;
 use Auth;
@@ -35,6 +36,7 @@ class DiaTerapiaUsuarioController extends Controller {
         $estados = Estado::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $diasemanas = DiaSemana::all();
         $terapias = Terapia::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+        $generos = Genero::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
 
         $userdiasemanas = DB::table('userdiasemanas')
         ->leftJoin('diasemanas', 'userdiasemanas.diasemana_id', '=', 'diasemanas.id')
@@ -47,7 +49,7 @@ class DiaTerapiaUsuarioController extends Controller {
         ->where('userterapias.user_id', '=', $id)->get();
 
 
-        return view('users-mgmt/edit', ['user' => $user, 'rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios, 'estados' => $estados, 'diasemanas' => $diasemanas, 'terapias' => $terapias, 'userdiasemanas' => $userdiasemanas, 'usuarioterapias' => $usuarioterapias]);
+        return view('users-mgmt/edit', ['user' => $user, 'rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios, 'estados' => $estados, 'diasemanas' => $diasemanas, 'terapias' => $terapias, 'userdiasemanas' => $userdiasemanas, 'usuarioterapias' => $usuarioterapias, 'generos' => $generos]);
     }
 
     public function update(Request $request, $id) {
@@ -82,6 +84,7 @@ class DiaTerapiaUsuarioController extends Controller {
         $user->telefono = $request['telefono'];
         $user->rol_id = $request['rol_id'];
         $user->estado_id = $request['estado_id'];
+        $user->genero_id = $request['genero_id'];
 
         $terapias = $request->terapia;
         foreach ($terapias as $terapia) {
@@ -129,6 +132,7 @@ class DiaTerapiaUsuarioController extends Controller {
             'fecha_ingreso' => 'required',
             'telefono' => 'digits:8|nullable',
             'rol_id' => 'required',
+            'genero_id' => 'required',
         ]);
     }
 
@@ -153,6 +157,8 @@ class DiaTerapiaUsuarioController extends Controller {
         $rolold = Rol::find($user->rol_id);
         $estadonew = Estado::find($request['estado_id']);
         $estadoold = Estado::find($user->estado_id);
+        $generonew = Genero::find($request['genero_id']);
+        $generoold = Genero::find($user->genero_id);
 
             if($user->username != $request['username']){
                 $bitacora = new Bitacora();
@@ -337,6 +343,17 @@ class DiaTerapiaUsuarioController extends Controller {
                 $bitacora->actividad = 'ACTUALIZAR';
                 $bitacora->anterior = 'Puesto Encargado: ' . $estadoold->nombre;
                 $bitacora->nuevo = 'Puesto Encargado: ' . $estadonew->nombre;
+                $bitacora->fecha = $now;
+                $bitacora->save();
+            }
+
+            if($user->genero_id != $request['genero_id']){
+                $bitacora = new Bitacora();
+                $bitacora->usuario = $log;
+                $bitacora->nombre_tabla = 'EMPLEADO';
+                $bitacora->actividad = 'ACTUALIZAR';
+                $bitacora->anterior = 'Género: ' . $generoold->nombre;
+                $bitacora->nuevo = 'Género: ' . $generonew->nombre;
                 $bitacora->fecha = $now;
                 $bitacora->save();
             }

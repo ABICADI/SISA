@@ -9,6 +9,7 @@ use App\Bitacora;
 use App\Pago;
 use App\Departamento;
 use App\Municipio;
+use App\Genero;
 use Auth;
 
 
@@ -22,7 +23,8 @@ class PacienteController extends Controller {
 
     public function index() {
         $pacientes = DB::table('pacientes')
-        ->select('pacientes.*')->paginate(10);
+        ->join('generos', 'pacientes.genero_id', 'generos.id')
+        ->select('pacientes.*', 'generos.nombre as Genero')->paginate(10);
 
         return view('paciente-mgmt/index', ['pacientes' => $pacientes]);
     }
@@ -30,7 +32,8 @@ class PacienteController extends Controller {
     public function create() {
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $pagos = Pago::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        return view('paciente-mgmt/create', ['departamentos' => $departamentos, 'pagos' => $pagos]);
+        $generos = Genero::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+        return view('paciente-mgmt/create', ['departamentos' => $departamentos, 'pagos' => $pagos, 'generos' => $generos]);
     }
 
     public function getMunicipios(Request $request, $id){
@@ -60,6 +63,7 @@ class PacienteController extends Controller {
         $paciente->seguro_social = $request['seguro_social'];
         $paciente->observacion = $request['observacion'];
         $paciente->pago_id = $request['pago_id'];
+        $paciente->genero_id = $request['genero_id'];
 
         if($paciente->save()){
             $this->crearPacienteBitacora($request);
@@ -84,7 +88,8 @@ class PacienteController extends Controller {
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $municipios = Municipio::select('id', 'nombre')->where('id', '=', $paciente->municipio_id)->get();
         $pagos = Pago::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        return view('paciente-mgmt/edit', ['paciente' => $paciente, 'departamentos' => $departamentos, 'municipios' => $municipios, 'pagos' => $pagos]);
+        $generos = Genero::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+        return view('paciente-mgmt/edit', ['paciente' => $paciente, 'departamentos' => $departamentos, 'municipios' => $municipios, 'pagos' => $pagos, 'generos' => $generos]);
     }
 
     public function update(Request $request, $id) {
@@ -109,6 +114,7 @@ class PacienteController extends Controller {
         $paciente->seguro_social = $request['seguro_social'];
         $paciente->observacion = $request['observacion'];
         $paciente->pago_id = $request['pago_id'];
+        $paciente->genero_id = $request['genero_id'];
         $this->updatePacienteBitacora($request, $id);
         if($paciente->save()) {
           Flash('¡El paciente se ha actualizado Exitosamente!')->success();
@@ -155,9 +161,10 @@ class PacienteController extends Controller {
             'encargado' => 'max:100',
             'fecha_ingreso' => 'required',
             'telefono' => 'digits:8|nullable',
-            'seguro_social' => 'max:10|unique:pacientes|nullable',
+            'seguro_social' => 'max:10|unique:pacientes|required',
             'observacion' => 'max:500|nullable',
             'pago_id' => 'required',
+            'genero_id' => 'required',
         ]);
     }
 
@@ -175,9 +182,10 @@ class PacienteController extends Controller {
             'encargado' => 'max:100',
             'fecha_ingreso' => 'required',
             'telefono' => 'digits:8|nullable',
-            'seguro_social' => 'max:10|nullable',
+            'seguro_social' => 'max:10|required',
             'observacion' => 'max:500',
             'pago_id' => 'required',
+            'genero_id' => 'required',
         ]);
     }
 
@@ -190,8 +198,9 @@ class PacienteController extends Controller {
         $departamento = Departamento::findOrFail($request['departamento_id']);
         $municipio = Municipio::findOrFail($request['municipio_id']);
         $pago = Pago::findOrFail($request['pago_id']);
+        $genero = Genero::findOrFail($request['genero_id']);
 
-        $data = 'CUI: ' . $request->cui . ', Nombre Completo: ' . $request->nombre1 .' '. $request->nombre2 .' '. $request->nombre3 . $request->apellido1 .' '. $request->apellido2 .' '. $request->apellido3 . ', Datos del Paciente: ' . $request->fecha_nacimiento . ', Direccion: ' . $departamento->nombre .' '. $municipio->nombre .' '. $request->direccion . ', Encargado: ' . $request->encargado .' '. $request->telefono . ', Fecha de Ingreso: ' . $request->fecha_ingreso . ', Datos Médicos: ' . $request->seguro_social .', Tipo de Pago: ' . $pago->nombre;
+        $data = 'CUI: ' . $request->cui . ', Nombre Completo: ' . $request->nombre1 .' '. $request->nombre2 .' '. $request->nombre3 . $request->apellido1 .' '. $request->apellido2 .' '. $request->apellido3 . ', Datos del Paciente: ' . $request->fecha_nacimiento .' '. $genero->nombre . ', Direccion: ' . $departamento->nombre .' '. $municipio->nombre .' '. $request->direccion . ', Encargado: ' . $request->encargado .' '. $request->telefono . ', Fecha de Ingreso: ' . $request->fecha_ingreso . ', Datos Médicos: ' . $request->seguro_social .', Tipo de Pago: ' . $pago->nombre;
 
             $bitacora = new Bitacora();
             $bitacora->usuario = $log;
@@ -217,6 +226,8 @@ class PacienteController extends Controller {
       $departamentoold = Departamento::find($municipioold->departamento_id);
       $pagonew = Pago::find($request['pago_id']);
       $pagoold = Pago::find($paciente->pago_id);
+      $generonew = Genero::find($request['genero_id']);
+      $generoold = Genero::find($paciente->genero_id);
 
           if ($paciente->cui != $request['cui']) {
               $bitacora = new Bitacora();
@@ -295,7 +306,7 @@ class PacienteController extends Controller {
               $bitacora->save();
           }
 
-          if ($paciente->municipio_id != $request['municipio_id']) {
+          if ($paciente->municipio_id != $request['municipio_paciente']) {
               $bitacora = new Bitacora();
               $bitacora->usuario = $user;
               $bitacora->nombre_tabla = 'PACIENTE';
@@ -393,6 +404,17 @@ class PacienteController extends Controller {
               $bitacora->fecha = $now;
               $bitacora->save();
           }
-  }
+
+          if ($paciente->genero_id != $request['genero_id']) {
+              $bitacora = new Bitacora();
+              $bitacora->usuario = $user;
+              $bitacora->nombre_tabla = 'PACIENTE';
+              $bitacora->actividad = 'ACTUALIZAR';
+              $bitacora->anterior = 'Género: ' . $generoold->nombre;
+              $bitacora->nuevo = 'Género: ' . $generonew->nombre;
+              $bitacora->fecha = $now;
+              $bitacora->save();
+          }
+    }
 
 }

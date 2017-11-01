@@ -9,6 +9,7 @@ use App\Bitacora;
 use App\Rol;
 use App\Estado;
 use App\Departamento;
+use App\Genero;
 use App\Municipio;
 use Auth;
 
@@ -35,7 +36,8 @@ class UserManagementController extends Controller {
     public function create() {
         $rols = Rol::select('id', 'nombre')->where('rols.id','!=','1')->orderBy('nombre', 'asc')->get();
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        return view('users-mgmt/create', ['rols' => $rols, 'departamentos' => $departamentos]);
+        $generos = Genero::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+        return view('users-mgmt/create', ['rols' => $rols, 'departamentos' => $departamentos, 'generos' => $generos]);
     }
 
     public function getMunicipios(Request $request, $id){
@@ -66,6 +68,7 @@ class UserManagementController extends Controller {
         $user->fecha_ingreso = $request['fecha_ingreso'];
         $user->telefono = $request['telefono'];
         $user->rol_id = $request['rol_id'];
+        $user->genero_id = $request['genero_id'];
         $user->estado_id = $estado_id;
 
         if($user->save()){
@@ -103,7 +106,8 @@ class UserManagementController extends Controller {
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $municipios = Municipio::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $estados = Estado::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        return view('users-mgmt/view', ['user' => $user, 'rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios, 'estados' => $estados, 'userdiasemanas' => $userdiasemanas, 'usuarioterapias' => $usuarioterapias]);
+        $generos = Genero::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+        return view('users-mgmt/view', ['user' => $user, 'rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios, 'estados' => $estados, 'userdiasemanas' => $userdiasemanas, 'usuarioterapias' => $usuarioterapias, 'generos' => $generos]);
     }
 
     public function destroy($id) {
@@ -184,6 +188,7 @@ class UserManagementController extends Controller {
             'fecha_ingreso' => 'required',
             'telefono' => 'digits:8|nullable',
             'rol_id' => 'required',
+            'genero_id' => 'required',
         ]);
     }
 
@@ -198,8 +203,9 @@ class UserManagementController extends Controller {
         $departamento = Departamento::findOrFail($municipio->departamento_id);
         $rol = Rol::findOrFail($request['rol_id']);
         $estado = Estado::findOrFail($estado_id);
+        $genero = Genero::findOrFail($request['genero_id']);
 
-        $data = 'DPI: ' . $request->dpi . ', Nombre Completo: ' . $request->nombre1 .' '. $request->nombre2 .' '. $request->nombre3 . $request->apellido1 .' '. $request->apellido2 .' '. $request->apellido3 . ', Datos de Usuario: ' . $request->username . $request->email . ', Direccion: ' . $departamento->nombre .' '. $municipio->nombre .' '. $request->direccion . ', Datos Personales: ' . $request->fecha_nacimiento .' '. $request->telefono . ', Fecha de Ingreso: ' . $request->fecha_ingreso . ', Puesto Encargado: ' . $rol->nombre . ', Estado: ' . $estado->nombre;
+        $data = 'DPI: ' . $request->dpi . ', Nombre Completo: ' . $request->nombre1 .' '. $request->nombre2 .' '. $request->nombre3 . $request->apellido1 .' '. $request->apellido2 .' '. $request->apellido3 . ', Datos de Usuario: ' . $request->username . $request->email . ', Direccion: ' . $departamento->nombre .' '. $municipio->nombre .' '. $request->direccion . ', Datos Personales: ' . $request->fecha_nacimiento .' '. $request->telefono . ', Fecha de Ingreso: ' . $request->fecha_ingreso . ', Puesto Encargado: ' . $rol->nombre . ', Estado: ' . $estado->nombre . ', Genero: ' . $genero->nombre;
 
             $bitacora = new Bitacora();
             $bitacora->usuario = $log;

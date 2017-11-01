@@ -20,11 +20,11 @@
                     <div class="col-md-6">
                         <input id="dpi" type="text" class="form-control" name="dpi" value="{{ $user->dpi }}" disabled>
                     </div>
-            </div> 
+            </div>
             </td>
             </tr>
             <tr>
-            <td>   
+            <td>
             <div class="form-group">
                 <label for="nombre1" class="col-md-6 control-label"><label style="color:red">*</label> Primer Nombre</label>
                     <div class="col-md-5">
@@ -41,18 +41,18 @@
                     </div>
             </div>
             </td>
-            <td>           
+            <td>
             <div class="form-group">
                 <label for="nombre3" class="col-md-6 control-label">Tercer Nombre</label>
 
                     <div class="col-md-5">
-                        <input id="nombre3" type="text" class="form-control" placeholder="tercer nombre" name="nombre3" value="{{ $user->nombre3 }}" disabled> 
+                        <input id="nombre3" type="text" class="form-control" placeholder="tercer nombre" name="nombre3" value="{{ $user->nombre3 }}" disabled>
                     </div>
-            </div> 
+            </div>
             </td>
-            </tr> 
+            </tr>
             <tr>
-            <td> 
+            <td>
             <div class="form-group">
                 <label for="apellido1" class="col-md-6 control-label"><label style="color:red">*</label> Primer Apellido</label>
                     <div class="col-md-5">
@@ -70,7 +70,7 @@
                     </div>
             </div>
             </td>
-            <td>           
+            <td>
             <div class="form-group">
                 <label for="apellido3" class="col-md-6 control-label">Tercer Apellido</label>
 
@@ -81,13 +81,13 @@
             </td>
             </tr>
         </div>
-        </table>   
+        </table>
         @endcomponent
 
         @component('layouts.esconder_info', ['title' => 'Datos de la Cuenta'])
         <table id="example2" class="table table-responsive">
             <tr>
-            <td>   
+            <td>
             <div class="form-group">
                 <label for="username" class="col-md-4 control-label"><label style="color:red">*</label> Usuario</label>
 
@@ -175,7 +175,7 @@
                                 var fechaHoy = new Date();
                                 var anioNac = parseInt(fechaNac.substring(fechaNac.lastIndexOf('/')+1));
                                 var mesNac = parseInt(fechaNac.substr(fechaNac.indexOf('/')+1,fechaNac.lastIndexOf('/')+1));
-                                var diaNac = parseInt(fechaNac.substr(0,fechaNac.lastIndexOf('/')+1));    
+                                var diaNac = parseInt(fechaNac.substr(0,fechaNac.lastIndexOf('/')+1));
                                 var edad = parseInt(fechaHoy.getFullYear())-anioNac;
                                 if(edad)
                                     if(mesNac<=parseInt(fechaHoy.getMonth()+1))
@@ -194,6 +194,20 @@
                         <input id="telefono" type="text" class="form-control" placeholder="00000000" name="telefono" value="{{ $user->telefono }}" disabled>
                     </div>
             </div>
+            </td>
+            </tr>
+            <tr>
+            <td>
+              <div class="form-group">
+                  <label class="col-md-5 control-label"><label style="color:red">*</label> Género</label>
+                      <div class="col-md-7">
+                          <select class="form-control" name="genero_id" disabled>
+                              @foreach ($generos as $genero)
+                                  <option value="{{$genero->id}}" {{$genero->id == $user->genero_id ? 'selected' : ''}}>{{$genero->nombre}}</option>
+                              @endforeach
+                          </select>
+                      </div>
+              </div>
             </td>
             </tr>
         </table>
@@ -263,7 +277,7 @@
                                                     <tr>
                                     <td role="row"><label id="label1" name="userdiasemanas[]" disabled>{{ $userdiasemana->diasemana_nombre }}</label></td>
                                                     </tr>
-                                                @endforeach 
+                                                @endforeach
                                                 </table>
                                             </div>
                                         </div>
@@ -273,7 +287,7 @@
                         @endcomponent
                     </div>
                 </div>
-            </div> 
+            </div>
 
         <div class="row">
                 <div class="col-md-47 col-md-offset-0">
@@ -290,7 +304,7 @@
                                                     <tr>
                                     <td role="row"><label id="label1" name="usuarioterapias[]" disabled>{{ $usuarioterapia->terapia_nombre }}</label></td>
                                                     </tr>
-                                                @endforeach 
+                                                @endforeach
                                                 </table>
                                             </div>
                                         </div>
@@ -304,7 +318,7 @@
 
                      <div class="panel-body" align="center">
                         <div class="form-group">
-                            <a href="{{ route('user-management.index', ['id' => $user->id]) }}" class="btn btn-default" style="background-color:#3c8dbc"><i class="fa fa-reply-all"></i> 
+                            <a href="{{ route('user-management.index', ['id' => $user->id]) }}" class="btn btn-default" style="background-color:#3c8dbc"><i class="fa fa-reply-all"></i>
                           Atrás
                         </a>
                         </div>

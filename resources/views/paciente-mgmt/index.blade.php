@@ -36,16 +36,18 @@
           <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
             <thead>
               <tr role="row">
+                <th width="5%" class="sorting hidden-xs" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending">No. Registro</th>
                 <th width="40%" class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Puesto: activate to sort column ascending">Nombre</th>
-                <th width="15%" class="sorting hidden-xs" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending">CUI/DPI</th>
+                <th width="10%" class="sorting hidden-xs" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending">Género</th>
                 <th width="15%" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Action: activate to sort column ascending">Opciones</th>
               </tr>
             </thead>
             <tbody>
             @foreach ($pacientes as $paciente)
                 <tr role="row" class="odd">
+                  <td class="sorting_1">{{ $paciente->seguro_social }}</td>
                   <td class="sorting_1">{{ $paciente->nombre1 }} {{ $paciente->nombre2 }} {{ $paciente->nombre3 }} {{ $paciente->apellido1 }} {{ $paciente->apellido2 }} {{ $paciente->apellido3 }}</td>
-                  <td class="hidden-xs">{{ $paciente->cui }}</td>
+                  <td class="sorting_1 hidden-xs">{{ $paciente->Genero }}</td>
                   <td>
                         <input type="hidden" name="_token" onKeyUp="this.value=this.value.toUpperCase();" value="{{ csrf_token() }}">
                         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)

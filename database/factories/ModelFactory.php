@@ -23,6 +23,7 @@
             'rol_id' => null,
             'fecha_egreso' => null,
             'estado_id' => null,
+            'genero_id' => null,
             'remember_token' => str_random(10),
         ];
     });
@@ -137,5 +138,13 @@
             'seguro_social' => null,
             'observacion' => null,
             'pago_id' => null,
+            'genero_id' => null,
+        ];
+    });
+
+    $factory->define(App\Genero::class, function (Faker\Generator $faker) {
+
+        return [
+            'nombre' => null,
         ];
     });

@@ -11,18 +11,43 @@
                         <input type="hidden" name="_method" value="PATCH">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-						<div class="form-group{{ $errors->has('cui') ? ' has-error' : '' }}">
-                <label for="cui" class="col-md-2 control-label">CUI</label>
-                    <div class="col-md-3">
-                        <input id="cui" type="text" class="form-control" placeholder="0000000000000" name="cui" value="{{ $paciente->cui }}" onkeypress="return numeros(event)" minlength="13" maxlength="13" autofocus>
+      <div class="box box-default">
+            <div class="box-body">
+                <table id="example2" class="table table-responsive">
+                  <tr>
+                  <td>
+                    <div class="form-group{{ $errors->has('seguro_social') ? ' has-error' : '' }}">
+                        <label for="seguro_social" class="col-md-3 control-label"><label style="color:red">*</label> No. Registro</label>
 
-                        @if ($errors->has('cui'))
-                            <span class="help-block">
-                            <strong>{{ $errors->first('cui') }}</strong>
-                            </span>
-                        @endif
-                    </div>
-            </div>
+                            <div class="col-md-3">
+                                <input id="seguro_social" type="text" class="form-control" placeholder="0000000000" name="seguro_social" value="{{ $paciente->seguro_social }}" onkeypress="return numeros(event)" maxlength="10" required autofocus>
+
+                              @if ($errors->has('seguro_social'))
+                                  <span class="help-block">
+                                        <strong>{{ $errors->first('seguro_social') }}</strong>
+                                  </span>
+                              @endif
+                            </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-group">
+                        <label for="cui" class="col-md-2 control-label">CUI</label>
+                          <div class="col-md-4">
+                            <input id="cui" type="text" class="form-control" placeholder="0000000000000" name="cui" value="{{ $paciente->cui }}" onkeypress="return numeros(event)" minlength="13" maxlength="13" autofocus>
+
+                                @if ($errors->has('cui'))
+                                  <span class="help-block">
+                                    <strong>{{ $errors->first('cui') }}</strong>
+                                  </span>
+                                @endif
+                            </div>
+                        </div>
+                      </td>
+                      </tr>
+                    </table>
+              </div>
+      </div>
 
         @component('layouts.esconder_info', ['title' => 'Nombre y Apellido'])
         <table id="example2" class="table table-responsive">
@@ -120,6 +145,23 @@
             </tr>
         </div>
         </table>
+        <table id="example2" class="table table-responsive">
+            <tr>
+              <td>
+                <div class="form-group">
+                    <label class="col-md-2 control-label"><label style="color:red">*</label> Género</label>
+                        <div class="col-md-2">
+                            <select class="form-control" name="genero_id" id="genero_id" autofocus>
+                                <option value="0" selected disabled>seleccione género</option>
+                                @foreach ($generos as $genero)
+                                    <option value="{{$genero->id}}" {{$genero->id == $paciente->genero_id ? 'selected' : ''}}>{{$genero->nombre}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                </div>
+              </td>
+            </tr>
+        </table>
         @endcomponent
 
         @component('layouts.esconder_info', ['title' => 'Dirección'])
@@ -192,7 +234,7 @@
             <td>
             <div class="form-group">
                 <label class="col-md-5 control-label"><label style="color:red">*</label> Fecha de Nacimiento</label>
-                    <div class="col-md-5">
+                    <div class="col-md-3">
                         <div class="input-group date">
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
@@ -266,7 +308,7 @@
             <td>
             <div class="form-group">
                 <label class="col-md-4 control-label"><label style="color:red">*</label> Fecha de Ingreso</label>
-                    <div class="col-md-5">
+                    <div class="col-md-3">
                         <div class="input-group date">
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
@@ -277,35 +319,16 @@
             </div>
             </td>
             <td>
-            <div class="form-group{{ $errors->has('seguro_social') ? ' has-error' : '' }}">
-                <label for="seguro_social" class="col-md-3 control-label">No. Social</label>
-
-                    <div class="col-md-6">
-                        <input id="seguro_social" type="text" class="form-control" placeholder="0000" name="seguro_social" value="{{ $paciente->seguro_social }}" onkeypress="return numeros(event)" maxlength="10" autofocus>
-
-                            @if ($errors->has('seguro_social'))
-                                <span class="help-block">
-                                <strong>{{ $errors->first('seguro_social') }}</strong>
-                                </span>
-                            @endif
-                    </div>
-            </div>
-            </td>
-            </tr>
-        </table>
-        <table id="example2" class="table table-responsive">
-            <tr>
-            <td>
-            <div class="form-group">
-                <label class="col-md-4 control-label"><label style="color:red">*</label> Tipo de Pago</label>
-                    <div class="col-md-4">
-                        <select class="form-control" name="pago_id" id='pago_id' required autofocus>
-                            @foreach ($pagos as $pago)
-                                <option value="{{$pago->id}}" {{$pago->id == $paciente->pago_id ? 'selected' : ''}}>{{$pago->nombre}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-            </div>
+              <div class="form-group">
+                  <label class="col-md-3 control-label"><label style="color:red">*</label> Tipo de Pago</label>
+                      <div class="col-md-5">
+                          <select class="form-control" name="pago_id" id='pago_id' required autofocus>
+                              @foreach ($pagos as $pago)
+                                  <option value="{{$pago->id}}" {{$pago->id == $paciente->pago_id ? 'selected' : ''}}>{{$pago->nombre}}</option>
+                              @endforeach
+                          </select>
+                      </div>
+              </div>
             </td>
             </tr>
         </table>

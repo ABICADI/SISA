@@ -4,21 +4,15 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTratamientosTable extends Migration
-{
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
+class CreateTratamientosTable extends Migration {
+
+    public function up() {
         Schema::create('tratamientos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('descripcion', 500)->nullable();
             $table->date('fecha')->nullable();
-            $table->integer('asignados')->nullable(); //dias asignados
-            $table->integer('restantes')->nullable();  //dias restantes
+            $table->integer('asignados')->nullable();
+            $table->integer('restantes')->nullable();
             $table->integer('paciente_id');
             $table->integer('medico_id');
             $table->integer('terapia_id');
@@ -30,13 +24,7 @@ class CreateTratamientosTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
+    public function down() {
         Schema::dropIfExists('tratamientos');
     }
 }
