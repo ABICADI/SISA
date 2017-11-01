@@ -130,8 +130,7 @@ class UserManagementController extends Controller {
 
 
         $constraints = [
-            'nombre1' => strtoupper ($request['nombre1']),
-            'dpi' => $request['dpi']
+            'nombre1' => strtoupper ($request['nombre1'])
         ];
   
         $nombre = strtoupper($request['nombre1']);

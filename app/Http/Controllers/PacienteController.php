@@ -24,7 +24,7 @@ class PacienteController extends Controller {
     public function index() {
         $pacientes = DB::table('pacientes')
         ->join('generos', 'pacientes.genero_id', 'generos.id')
-        ->select('pacientes.*', 'generos.nombre as Genero')->paginate(10);
+        ->select('pacientes.*', 'generos.nombre as nombre')->paginate(10);
 
         return view('paciente-mgmt/index', ['pacientes' => $pacientes]);
     }
@@ -124,26 +124,24 @@ class PacienteController extends Controller {
 
     public function search(Request $request) {
         $constraints = [
-            'nombre1' => $request['nombre1'],
-            'cui' => $request['cui']
+            'nombre1' => strtoupper ($request['nombre1'])
         ];
-
-       $pacientes = $this->doSearchingQuery($constraints);
-       return view('paciente-mgmt/index', ['pacientes' => $pacientes, 'searchingVals' => $constraints]);
-    }
-
-    private function doSearchingQuery($constraints) {
-        $query = Paciente::query();
-        $fields = array_keys($constraints);
-        $index = 0;
-        foreach ($constraints as $constraint) {
-            if ($constraint != null) {
-                $query = $query->where( $fields[$index], 'like', '%'.$constraint.'%');
-            }
-
-            $index++;
-        }
-        return $query->paginate(10);
+  
+        $nombre = strtoupper($request['nombre1']);
+        $pacientes = DB::table('pacientes')
+            ->leftJoin('generos', 'pacientes.genero_id', '=', 'generos.id')
+            ->select(DB::raw('*'))
+            ->whereRaw("(seguro_social like '%$nombre%')")
+            ->orWhereRaw("(nombre like '%$nombre%')")
+            ->orWhereRaw("(nombre1 like '%$nombre%')")
+            ->orWhereRaw("(nombre2 like '%$nombre%')")
+            ->orWhereRaw("(nombre3 like '%$nombre%')")
+            ->orWhereRaw("(CONCAT(nombre1,' ',nombre2) like '%$nombre%')")
+            ->orWhereRaw("(CONCAT(nombre1,' ',nombre2,' ',nombre3) like '%$nombre%')")
+            ->orWhereRaw("(CONCAT(nombre1,' ',apellido1) like '%$nombre%')")
+            ->orWhereRaw("(CONCAT(nombre1,' ',nombre2,' ',apellido1) like '%$nombre%')")  
+            ->paginate(10);
+        return view('paciente-mgmt/index', ['pacientes' => $pacientes, 'searchingVals' => $constraints]);
     }
 
     private function validateInput($request) {

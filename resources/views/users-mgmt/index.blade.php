@@ -25,12 +25,12 @@
       <form method="POST" action="{{ route('user-management.search') }}">
          {{ csrf_field() }}
          @component('layouts.search', ['title' => 'Buscar'])
-                <label for="nombre1" class="col-md-1 control-label">BUSCAR</label>
-                    <div class="col-md-5">
-                        <input id="nombre1" type="text" class="form-control" placeholder="buscar por Nombre/DPI/Puesto" name="nombre1" value="{{ old('nombre1') }}"  onKeyUp="this.value=this.value.toUpperCase();" >     
-                    </div>
-        @endcomponent
+                <div class="col-md-5">
+                  <input id="nombre1" type="text" class="form-control" placeholder="buscar por Nombre/DPI/Puesto" name="nombre1" value="{{ old('nombre1') }}"  onKeyUp="this.value=this.value.toUpperCase();" >     
+                </div> 
+          @endcomponent
       </form>
+
     <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
       <div class="row">
         <div class="col-sm-12">
