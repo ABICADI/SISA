@@ -74,12 +74,27 @@ class MedicoController extends Controller {
 
     public function search(Request $request) {
         $constraints = [
+            'nombre1' => strtoupper ($request['nombre1'])
+        ];
+  
+        $nombre = strtoupper($request['nombre1']);
+        $medicos = DB::table('medicos')
+            ->select(DB::raw('*'))
+            ->whereRaw("(colegiado '%$nombre%')")
+            ->orWhereRaw("(nombre like '%$nombre%')")
+            ->orWhereRaw("(telefono like '%$nombre%')")
+            ->paginate(10);
+        return view('medico-mgmt/index', ['medicos' => $medicos, 'searchingVals' => $constraints]);
+
+
+
+        $constraints = [
             'colegiado' => $request['colegiado'],
             'nombre' => $request['nombre']
             ];
 
        $medicos = $this->doSearchingQuery($constraints);
-       return view('medico-mgmt/index', ['medicos' => $medicos, 'searchingVals' => $constraints]);
+       
     }
 
     private function doSearchingQuery($constraints) {

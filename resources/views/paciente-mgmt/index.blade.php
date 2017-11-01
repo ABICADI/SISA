@@ -25,9 +25,9 @@
       <form method="POST" action="{{ route('paciente-management.search') }}">
          {{ csrf_field() }}
          @component('layouts.search', ['title' => 'Buscar'])
-          @component('layouts.two-cols-search-row', ['items' => ['Nombre1', 'CUI'],
-          'oldVals' => [isset($searchingVals) ? strtoupper($searchingVals['nombre1']) : '', isset($searchingVals) ? $searchingVals['cui'] : '']])
-          @endcomponent
+          <div class="col-md-5">
+            <input id="nombre1" type="text" class="form-control" placeholder="buscar por Nombre/Registro/Genero" name="nombre1" value="{{ old('nombre1') }}"  onKeyUp="this.value=this.value.toUpperCase();" >     
+          </div> 
         @endcomponent
       </form>
     <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
@@ -47,7 +47,7 @@
                 <tr role="row" class="odd">
                   <td class="sorting_1">{{ $paciente->seguro_social }}</td>
                   <td class="sorting_1">{{ $paciente->nombre1 }} {{ $paciente->nombre2 }} {{ $paciente->nombre3 }} {{ $paciente->apellido1 }} {{ $paciente->apellido2 }} {{ $paciente->apellido3 }}</td>
-                  <td class="sorting_1 hidden-xs">{{ $paciente->Genero }}</td>
+                  <td class="sorting_1 hidden-xs">{{ $paciente->nombre }}</td>
                   <td>
                         <input type="hidden" name="_token" onKeyUp="this.value=this.value.toUpperCase();" value="{{ csrf_token() }}">
                         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
