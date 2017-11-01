@@ -48,18 +48,6 @@
                     </table>
               </div>
       </div>
-						<div class="form-group{{ $errors->has('cui') ? ' has-error' : '' }}">
-                <label for="cui" class="col-md-2 control-label">CUI</label>
-                    <div class="col-md-3">
-                        <input id="cui" type="text" class="form-control" placeholder="0000000000000" name="cui" value="{{ $paciente->cui }}" onkeypress="return numeros(event)" minlength="13" maxlength="13" autofocus>
-
-                        @if ($errors->has('cui'))
-                            <span class="help-block">
-                            <strong>{{ $errors->first('cui') }}</strong>
-                            </span>
-                        @endif
-                    </div>
-            </div>
 
         @component('layouts.esconder_info', ['title' => 'Nombre y Apellido'])
         <table id="example2" class="table table-responsive">
@@ -156,6 +144,23 @@
             </td>
             </tr>
         </div>
+        </table>
+        <table id="example2" class="table table-responsive">
+            <tr>
+              <td>
+                <div class="form-group">
+                    <label class="col-md-2 control-label"><label style="color:red">*</label> Género</label>
+                        <div class="col-md-2">
+                            <select class="form-control" name="genero_id" id="genero_id" autofocus>
+                                <option value="0" selected disabled>seleccione género</option>
+                                @foreach ($generos as $genero)
+                                    <option value="{{$genero->id}}" {{$genero->id == $paciente->genero_id ? 'selected' : ''}}>{{$genero->nombre}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                </div>
+              </td>
+            </tr>
         </table>
         @endcomponent
 

@@ -21,7 +21,8 @@ class PacienteTableSeeder extends Seeder {
             'telefono' => '00000000',
             'seguro_social' => '5698',
             'observacion' => 'Ninguna por el momento',
-            'pago_id' => '1'
+            'pago_id' => '1',
+            'genero_id' => '2'
         ]);
     }
 }

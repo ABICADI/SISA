@@ -74,7 +74,7 @@
 						 <tr>
 							 <td>
 								 <label class="col-md-2 control-label">Departamento</label>
-                     <div class="col-md-5">
+                     <div class="col-md-6">
                          <select class="form-control" name="departamento_id" id="departamento_id">
                              <option value="" selected>Ningun Departamento Seleccionado</option>
                              @foreach ($departamentos as $departamento)

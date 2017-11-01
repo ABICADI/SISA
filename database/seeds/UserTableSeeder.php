@@ -23,6 +23,7 @@ class UserTableSeeder extends Seeder {
             'telefono' => '00000000',
             'rol_id' => '1',
             'estado_id' => '1',
+            'genero_id' => '2',
         ]);
     }
 }

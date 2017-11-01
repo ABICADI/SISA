@@ -189,15 +189,18 @@ class ReportPacienteController extends Controller {
 					if($constraints['pago']!=0 && $constraints['departamento']!=0 && $constraints['municipio']!=0){
 						return DB::table('pacientes')
 						->leftJoin('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
-						->join('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
+						->leftJoin('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
 						->leftJoin('pagos', 'pacientes.pago_id', '=', 'pagos.id')
-						->select('pacientes.cui as CUI',
+						->leftJoin('generos', 'pacientes.genero_id', '=', 'generos.id')
+						->select('pacientes.seguro_social as No_Registro',
+											'pacientes.cui as CUI',
 											'pacientes.nombre1 as Primer_Nombre',
 											'pacientes.nombre2 as Segundo_Nombre',
 											'pacientes.nombre3 as Tercer_Nombre',
 											'pacientes.apellido1 as Primer_Apellido',
 											'pacientes.apellido2 as Segundo_Apellido',
 											'pacientes.apellido3 as Tercer_Apellido',
+											'generos.nombre as Género',
 											'municipios.nombre as Municipio',
 											'departamentos.nombre as Departamento',
 											'pacientes.direccion as Dirección',
@@ -205,7 +208,6 @@ class ReportPacienteController extends Controller {
 											'pacientes.encargado as Nombre_Encargado',
 											'pacientes.fecha_ingreso as Fecha_Ingreso',
 											'pacientes.telefono as Teléfono',
-											'pacientes.seguro_social as No_Seguro_Social',
 											'pagos.nombre as Tipo_Pago')
 						->where('pacientes.municipio_id', '=', $constraints['municipio'])
 						->where('pacientes.pago_id', '=', $constraints['pago'])
@@ -218,15 +220,18 @@ class ReportPacienteController extends Controller {
 					if($constraints['pago']!=0 && $constraints['departamento']==0 && $constraints['municipio']==0){
 						return DB::table('pacientes')
 						->leftJoin('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
-						->join('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
+						->leftJoin('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
 						->leftJoin('pagos', 'pacientes.pago_id', '=', 'pagos.id')
-						->select('pacientes.cui as CUI',
+						->leftJoin('generos', 'pacientes.genero_id', '=', 'generos.id')
+						->select('pacientes.seguro_social as No_Registro',
+											'pacientes.cui as CUI',
 											'pacientes.nombre1 as Primer_Nombre',
 											'pacientes.nombre2 as Segundo_Nombre',
 											'pacientes.nombre3 as Tercer_Nombre',
 											'pacientes.apellido1 as Primer_Apellido',
 											'pacientes.apellido2 as Segundo_Apellido',
 											'pacientes.apellido3 as Tercer_Apellido',
+											'generos.nombre as Género',
 											'municipios.nombre as Municipio',
 											'departamentos.nombre as Departamento',
 											'pacientes.direccion as Dirección',
@@ -234,7 +239,6 @@ class ReportPacienteController extends Controller {
 											'pacientes.encargado as Nombre_Encargado',
 											'pacientes.fecha_ingreso as Fecha_Ingreso',
 											'pacientes.telefono as Teléfono',
-											'pacientes.seguro_social as No_Seguro_Social',
 											'pagos.nombre as Tipo_Pago')
 						->where('pacientes.pago_id', '=', $constraints['pago'])
 						->get()
@@ -246,15 +250,18 @@ class ReportPacienteController extends Controller {
 					if($constraints['departamento']!=0 && $constraints['municipio']!=0){
 						return DB::table('pacientes')
 						->leftJoin('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
-						->join('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
+						->leftJoin('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
 						->leftJoin('pagos', 'pacientes.pago_id', '=', 'pagos.id')
-						->select('pacientes.cui as CUI',
+						->leftJoin('generos', 'pacientes.genero_id', '=', 'generos.id')
+						->select('pacientes.seguro_social as No_Registro',
+											'pacientes.cui as CUI',
 											'pacientes.nombre1 as Primer_Nombre',
 											'pacientes.nombre2 as Segundo_Nombre',
 											'pacientes.nombre3 as Tercer_Nombre',
 											'pacientes.apellido1 as Primer_Apellido',
 											'pacientes.apellido2 as Segundo_Apellido',
 											'pacientes.apellido3 as Tercer_Apellido',
+											'generos.nombre as Género',
 											'municipios.nombre as Municipio',
 											'departamentos.nombre as Departamento',
 											'pacientes.direccion as Dirección',
@@ -262,7 +269,6 @@ class ReportPacienteController extends Controller {
 											'pacientes.encargado as Nombre_Encargado',
 											'pacientes.fecha_ingreso as Fecha_Ingreso',
 											'pacientes.telefono as Teléfono',
-											'pacientes.seguro_social as No_Seguro_Social',
 											'pagos.nombre as Tipo_Pago')
 						->where('pacientes.municipio_id', '=', $constraints['municipio'])
 						->get()
@@ -276,15 +282,18 @@ class ReportPacienteController extends Controller {
 					if($constraints['pago']!=0 && $constraints['departamento']!=0 && $constraints['municipio']!=0){
 						return DB::table('pacientes')
 						->leftJoin('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
-						->join('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
+						->leftJoin('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
 						->leftJoin('pagos', 'pacientes.pago_id', '=', 'pagos.id')
-						->select('pacientes.cui as CUI',
+						->leftJoin('generos', 'pacientes.genero_id', '=', 'generos.id')
+						->select('pacientes.seguro_social as No_Registro',
+											'pacientes.cui as CUI',
 											'pacientes.nombre1 as Primer_Nombre',
 											'pacientes.nombre2 as Segundo_Nombre',
 											'pacientes.nombre3 as Tercer_Nombre',
 											'pacientes.apellido1 as Primer_Apellido',
 											'pacientes.apellido2 as Segundo_Apellido',
 											'pacientes.apellido3 as Tercer_Apellido',
+											'generos.nombre as Género',
 											'municipios.nombre as Municipio',
 											'departamentos.nombre as Departamento',
 											'pacientes.direccion as Dirección',
@@ -292,7 +301,6 @@ class ReportPacienteController extends Controller {
 											'pacientes.encargado as Nombre_Encargado',
 											'pacientes.fecha_ingreso as Fecha_Ingreso',
 											'pacientes.telefono as Teléfono',
-											'pacientes.seguro_social as No_Seguro_Social',
 											'pagos.nombre as Tipo_Pago')
 						->where('pacientes.municipio_id', '=', $constraints['municipio'])
 						->where('pacientes.pago_id', '=', $constraints['pago'])
@@ -307,15 +315,18 @@ class ReportPacienteController extends Controller {
 					if($constraints['pago']!=0 && $constraints['departamento']==0 && $constraints['municipio']==0){
 						return DB::table('pacientes')
 						->leftJoin('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
-						->join('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
+						->leftJoin('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
 						->leftJoin('pagos', 'pacientes.pago_id', '=', 'pagos.id')
-						->select('pacientes.cui as CUI',
+						->leftJoin('generos', 'pacientes.genero_id', '=', 'generos.id')
+						->select('pacientes.seguro_social as No_Registro',
+											'pacientes.cui as CUI',
 											'pacientes.nombre1 as Primer_Nombre',
 											'pacientes.nombre2 as Segundo_Nombre',
 											'pacientes.nombre3 as Tercer_Nombre',
 											'pacientes.apellido1 as Primer_Apellido',
 											'pacientes.apellido2 as Segundo_Apellido',
 											'pacientes.apellido3 as Tercer_Apellido',
+											'generos.nombre as Género',
 											'municipios.nombre as Municipio',
 											'departamentos.nombre as Departamento',
 											'pacientes.direccion as Dirección',
@@ -323,7 +334,6 @@ class ReportPacienteController extends Controller {
 											'pacientes.encargado as Nombre_Encargado',
 											'pacientes.fecha_ingreso as Fecha_Ingreso',
 											'pacientes.telefono as Teléfono',
-											'pacientes.seguro_social as No_Seguro_Social',
 											'pagos.nombre as Tipo_Pago')
 						->where('pacientes.pago_id', '=', $constraints['pago'])
 						->where('fecha_ingreso', '>=', $constraints['from'])
@@ -337,15 +347,18 @@ class ReportPacienteController extends Controller {
 					if($constraints['departamento']!=0 && $constraints['municipio']!=0){
 						return DB::table('pacientes')
 						->leftJoin('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
-						->join('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
+						->leftJoin('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
 						->leftJoin('pagos', 'pacientes.pago_id', '=', 'pagos.id')
-						->select('pacientes.cui as CUI',
+						->leftJoin('generos', 'pacientes.genero_id', '=', 'generos.id')
+						->select('pacientes.seguro_social as No_Registro',
+											'pacientes.cui as CUI',
 											'pacientes.nombre1 as Primer_Nombre',
 											'pacientes.nombre2 as Segundo_Nombre',
 											'pacientes.nombre3 as Tercer_Nombre',
 											'pacientes.apellido1 as Primer_Apellido',
 											'pacientes.apellido2 as Segundo_Apellido',
 											'pacientes.apellido3 as Tercer_Apellido',
+											'generos.nombre as Género',
 											'municipios.nombre as Municipio',
 											'departamentos.nombre as Departamento',
 											'pacientes.direccion as Dirección',
@@ -353,7 +366,6 @@ class ReportPacienteController extends Controller {
 											'pacientes.encargado as Nombre_Encargado',
 											'pacientes.fecha_ingreso as Fecha_Ingreso',
 											'pacientes.telefono as Teléfono',
-											'pacientes.seguro_social as No_Seguro_Social',
 											'pagos.nombre as Tipo_Pago')
 						->where('pacientes.municipio_id', '=', $constraints['municipio'])
 						->where('fecha_ingreso', '>=', $constraints['from'])
@@ -367,15 +379,18 @@ class ReportPacienteController extends Controller {
 					if($constraints['pago']==0 && $constraints['departamento']==0 && $constraints['municipio']==0){
 						return DB::table('pacientes')
 						->leftJoin('municipios', 'pacientes.municipio_id', '=', 'municipios.id')
-						->join('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
+						->leftJoin('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
 						->leftJoin('pagos', 'pacientes.pago_id', '=', 'pagos.id')
-						->select('pacientes.cui as CUI',
+						->leftJoin('generos', 'pacientes.genero_id', '=', 'generos.id')
+						->select('pacientes.seguro_social as No_Registro',
+											'pacientes.cui as CUI',
 											'pacientes.nombre1 as Primer_Nombre',
 											'pacientes.nombre2 as Segundo_Nombre',
 											'pacientes.nombre3 as Tercer_Nombre',
 											'pacientes.apellido1 as Primer_Apellido',
 											'pacientes.apellido2 as Segundo_Apellido',
 											'pacientes.apellido3 as Tercer_Apellido',
+											'generos.nombre as Género',
 											'municipios.nombre as Municipio',
 											'departamentos.nombre as Departamento',
 											'pacientes.direccion as Dirección',
@@ -383,7 +398,6 @@ class ReportPacienteController extends Controller {
 											'pacientes.encargado as Nombre_Encargado',
 											'pacientes.fecha_ingreso as Fecha_Ingreso',
 											'pacientes.telefono as Teléfono',
-											'pacientes.seguro_social as No_Seguro_Social',
 											'pagos.nombre as Tipo_Pago')
 						->where('fecha_ingreso', '>=', $constraints['from'])
 						->where('fecha_ingreso', '<=', $constraints['to'])

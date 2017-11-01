@@ -143,6 +143,23 @@
             </tr>
         </div>
         </table>
+        <table id="example2" class="table table-responsive">
+            <tr>
+              <td>
+                <div class="form-group">
+                    <label class="col-md-2 control-label"><label style="color:red">*</label> Género</label>
+                        <div class="col-md-2">
+                            <select class="form-control" name="genero_id" id="genero_id" required autofocus>
+                                <option value="" selected disabled>seleccione género</option>
+                                @foreach ($generos as $genero)
+                                    <option value="{{$genero->id}}">{{$genero->nombre}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                </div>
+              </td>
+            </tr>
+        </table>
         @endcomponent
 
         @component('layouts.esconder_info', ['title' => 'Dirección'])

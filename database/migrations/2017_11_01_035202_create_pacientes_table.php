@@ -25,8 +25,10 @@ class CreatePacientesTable extends Migration {
           $table->string('seguro_social',10);
           $table->string('observacion',500)->nullable();
           $table->integer('pago_id');
+          $table->integer('genero_id');
           $table->foreign('municipio_id')->references('id')->on('municipios')->onUpdate('cascade');
           $table->foreign('pago_id')->references('id')->on('pagos')->onUpdate('cascade');
+          $table->foreign('genero_id')->references('id')->on('generos')->onUpdate('cascade');
           $table->timestamps();
           $table->softDeletes();
         });

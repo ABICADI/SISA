@@ -271,6 +271,21 @@
             </div>
             </td>
             </tr>
+            <tr>
+            <td>
+              <div class="form-group">
+                  <label class="col-md-4 control-label"><label style="color:red">*</label> Género</label>
+                      <div class="col-md-6">
+                          <select class="form-control" name="genero_id" required autofocus>
+                              <option value="" selected disabled>seleccione un genero</option>
+                              @foreach ($generos as $genero)
+                                  <option value="{{$genero->id}}">{{$genero->nombre}}</option>
+                              @endforeach
+                          </select>
+                      </div>
+              </div>
+            </td>
+            </tr>
         </table>
         @endcomponent
 
