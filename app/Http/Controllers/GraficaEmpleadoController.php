@@ -19,7 +19,7 @@ class GraficaEmpleadoController extends Controller{
 			$now = date($format);
 
 			$group_departamento = Charts::database(User::all(), 'bar', 'highcharts')
-	        ->title('Empleados por Departamento')
+	        ->title('Empleados por Municipio de Santa Rosa')
 	        ->dimensions(10, 5)
 	        ->responsive(true)
 					->elementLabel("Cantidad")
