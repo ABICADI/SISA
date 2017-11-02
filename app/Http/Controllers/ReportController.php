@@ -142,8 +142,8 @@ class ReportController extends Controller {
     private function getExportingData($constraints) {
         return DB::table('actividades')
         ->leftJoin('users', 'actividades.user_id', '=', 'users.id')
-        ->leftJoin('departamentos', 'actividades.departamento_id', '=', 'departamentos.id')
         ->leftJoin('municipios', 'actividades.municipio_id', '=', 'municipios.id')
+        ->leftJoin('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
         ->select('actividades.nombre as Nombre_Actividad', 'users.nombre1 as Primer_Nombre', 'users.nombre2 as Segundo_Nombre','users.nombre3 as Tercer_Nombre', 'users.apellido1 as Primer_Apellido', 'users.apellido2 as Segundo_Apellido', 'users.apellido3 as Tercer_Apellido', 'users.telefono as Teléfono', 'departamentos.nombre as Departamento', 'municipios.nombre as Municipio', 'actividades.direccion as Dirección', 'actividades.fecha as Fecha', 'actividades.descripcion as Descripción')
         ->where('fecha', '>=', $constraints['from'])
         ->where('fecha', '<=', $constraints['to'])

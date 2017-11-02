@@ -199,8 +199,6 @@ class ActividadController extends Controller {
         return false;
     }
 
-<<<<<<< HEAD
-=======
     private function doSearchingQuery($constraints) {
         $query = Actividad::query();
         $fields = array_keys($constraints);
@@ -215,7 +213,6 @@ class ActividadController extends Controller {
         return $query->paginate(10);
     }
 
->>>>>>> 22368a2a883240e9f1c97ed72e340ca97f22c164
     private function validateInput($request) {
         $this->validate($request, [
             'nombre' => 'required|max:50',
