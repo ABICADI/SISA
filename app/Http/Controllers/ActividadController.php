@@ -204,7 +204,10 @@ class ActividadController extends Controller {
         return false;
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 728a583b2c55807ffb27a546ac482762dc52bb12
     private function doSearchingQuery($constraints) {
         $query = Actividad::query();
         $fields = array_keys($constraints);

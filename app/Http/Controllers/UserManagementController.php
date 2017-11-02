@@ -103,7 +103,9 @@ class UserManagementController extends Controller {
         ->where('userterapias.user_id', '=', $id)->orderBy('terapias.nombre','asc')->get();
 
         $rols = Rol::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+        $departamentos = Municipio::join('departamentos', 'municipios.departamento_id', 'departamentos.id')
+                                  ->select('departamentos.id', 'departamentos.nombre')
+                                  ->where('municipios.id','=',$user->municipio_id)->get();
         $municipios = Municipio::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $estados = Estado::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $generos = Genero::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
@@ -118,6 +120,7 @@ class UserManagementController extends Controller {
         $user = User::findOrFail($id);
         $user->fecha_egreso = $now;
         $user->estado_id = '2';
+        $user->password = bcrypt('W4@._@4taAsjW');
 
         if($user->save()){
             $this->eliminarEmpleadoBitacora($id);
@@ -130,7 +133,7 @@ class UserManagementController extends Controller {
         $constraints = [
             'nombre1' => strtoupper ($request['nombre1'])
         ];
-  
+
         $nombre = strtoupper($request['nombre1']);
         $users = DB::table('users')
             ->leftJoin('rols', 'users.rol_id', '=', 'rols.id')
@@ -143,7 +146,7 @@ class UserManagementController extends Controller {
             ->orWhereRaw("(CONCAT(nombre1,' ',nombre2) like '%$nombre%')")
             ->orWhereRaw("(CONCAT(nombre1,' ',nombre2,' ',nombre3) like '%$nombre%')")
             ->orWhereRaw("(CONCAT(nombre1,' ',apellido1) like '%$nombre%')")
-            ->orWhereRaw("(CONCAT(nombre1,' ',nombre2,' ',apellido1) like '%$nombre%')")  
+            ->orWhereRaw("(CONCAT(nombre1,' ',nombre2,' ',apellido1) like '%$nombre%')")
             ->paginate(10);
 
        return view('users-mgmt/index', ['users' => $users, 'searchingVals' => $constraints]);
@@ -152,7 +155,7 @@ class UserManagementController extends Controller {
     private function validateInput($request) {
         $this->validate($request, [
             'username' => 'required|min:6|max:20|unique:users',
-            'email' => 'email|max:125|unique:users|nullable',
+            'email' => 'email|max:125|nullable',
             'password' => 'required|min:8|confirmed',
             'dpi' => 'required|digits:13|unique:users',
             'nombre1' => 'required|max:30',

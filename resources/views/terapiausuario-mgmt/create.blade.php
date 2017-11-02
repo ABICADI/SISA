@@ -320,7 +320,7 @@
                             Guardar
                         </button>
 
-                        <a href="{{ route('diasemanausuario-management.show', ['id' => $user->id]) }}" class="btn btn-danger col-sm-6 col-xs-6 btn-margin"><i class="fa fa-user-times"></i> Cancelar Proceso
+                        <a href="{{ route('diasemanausuario-management.show', ['id' => $user->id]) }}" class="btn btn-danger col-sm-3 col-xs-6 btn-margin"><i class="fa fa-user-times"></i> Cancelar
                         </a>
                     </div>
                 @endif

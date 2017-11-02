@@ -118,7 +118,7 @@
                     <div class="col-md-6">
                         <select class="form-control" name="departamento_id" disabled>
                             @foreach ($departamentos as $departamento)
-                                <option value="{{$departamento->id}}" {{$departamento->id == $user->departamento_id ? 'selected' : ''}}>{{$departamento->nombre}}</option>
+                                <option>{{$departamento->nombre}}</option>
                             @endforeach
                         </select>
                     </div>

@@ -13,7 +13,7 @@ return [
     |
     */
 
-                
+
     'accepted'             => 'Es necesario aceptar.',
     'active_url'           => 'URL inválida.',
     'after'                => 'La fecha debe de ser mayor a :fecha.',
@@ -50,18 +50,18 @@ return [
     'ip'                   => 'Solo se permiten ingresar direcciones IP válidas.',
     'json'                 => 'El atributo debe ser una cadena JSON válida.',
     'max'                  => [
-        'numeric' => 'El número no puede ser mayor a :max.',
-        'file'    => 'El archivo no puede ser mayor a :max kilobytes.',
-        'string'  => 'El registro no puede ser mayor a :max caracteres.',
+        'numeric' => 'El número no puede ser menor a :max.',
+        'file'    => 'El archivo no puede ser menor a :max kilobytes.',
+        'string'  => 'El registro no puede ser menor a :max caracteres.',
         'array'   => 'La lista no debe tener mas de :max registros.',
     ],
     'mimes'                => 'Debe ser un archivo tipo: :valor.',
     'mimetypes'            => 'Debe ser un archivo tipo: :valor.',
     'min'                  => [
-        'numeric' => 'El número debe ser menor a :min.',
-        'file'    => 'El archivo debe ser menor a :min kilobytes.',
-        'string'  => 'El registro debe ser menor a :min caracteres.',
-        'array'   => 'La lista debe ser menor a :min detalle.',
+        'numeric' => 'El número debe ser mayor a :min.',
+        'file'    => 'El archivo debe ser mayor a :min kilobytes.',
+        'string'  => 'El registro debe ser mayor a :min caracteres.',
+        'array'   => 'La lista debe tener mas de :min registros.',
     ],
     'not_in'               => 'El archivo seleccionado es invalido.',
     'numeric'              => 'Solo se permite un número.',
