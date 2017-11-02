@@ -25,9 +25,9 @@
       <form method="POST" action="{{ route('user-management.search') }}">
          {{ csrf_field() }}
          @component('layouts.search', ['title' => 'Buscar'])
-                <div class="col-md-5">
+                <td class="col-md-10">
                   <input id="nombre1" type="text" class="form-control" placeholder="buscar por Nombre/DPI/Puesto" name="nombre1" value="{{ old('nombre1') }}"  onKeyUp="this.value=this.value.toUpperCase();" >     
-                </div> 
+                </td> 
           @endcomponent
       </form>
 
