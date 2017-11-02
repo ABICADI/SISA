@@ -52,18 +52,18 @@ class UserManagementController extends Controller {
 
         $this->validateInput($request);
         $user = new User();
-        $user->username = $request['username'];
-        $user->email = $request['email'];
+        $user->username = strtoupper($request['username']);
+        $user->email = strtoupper($request['email']);
         $user->password = bcrypt($request['password']);
         $user->dpi = $request['dpi'];
-        $user->nombre1 = $request['nombre1'];
-        $user->nombre2 = $request['nombre2'];
-        $user->nombre3 = $request['nombre3'];
-        $user->apellido1 = $request['apellido1'];
-        $user->apellido2 = $request['apellido2'];
-        $user->apellido3 = $request['apellido3'];
+        $user->nombre1 = strtoupper($request['nombre1']);
+        $user->nombre2 = strtoupper($request['nombre2']);
+        $user->nombre3 = strtoupper($request['nombre3']);
+        $user->apellido1 = strtoupper($request['apellido1']);
+        $user->apellido2 = strtoupper($request['apellido2']);
+        $user->apellido3 = strtoupper($request['apellido3']);
         $user->municipio_id = $request['municipio_id'];
-        $user->direccion = $request['direccion'];
+        $user->direccion = strtoupper($request['direccion']);
         $user->fecha_nacimiento = $request['fecha_nacimiento'];
         $user->fecha_ingreso = $request['fecha_ingreso'];
         $user->telefono = $request['telefono'];
@@ -127,8 +127,6 @@ class UserManagementController extends Controller {
     }
 
     public function search(Request $request) {
-
-
         $constraints = [
             'nombre1' => strtoupper ($request['nombre1'])
         ];
@@ -148,25 +146,7 @@ class UserManagementController extends Controller {
             ->orWhereRaw("(CONCAT(nombre1,' ',nombre2,' ',apellido1) like '%$nombre%')")  
             ->paginate(10);
 
-            //dd($users);
-            //$users = $this->doSearchingQuery($constraints);
        return view('users-mgmt/index', ['users' => $users, 'searchingVals' => $constraints]);
-    }
-
-    private function doSearchingQuery($constraints) {
-        $query = User::query();
-        $fields = array_keys($constraints);
-        $index = 0;
-        foreach ($constraints as $constraint) {
-            if ($constraint != null) {
-                $query = $query
-                ->where( $fields[$index], 'like', '%'.$constraint.'%');
-            }
-            $index++;
-        }
-        
-        //dd($query);
-        return $query->paginate(10);
     }
 
     private function validateInput($request) {

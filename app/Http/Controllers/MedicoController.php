@@ -33,7 +33,7 @@ class MedicoController extends Controller {
         //Nuevo Forma de Inserta Datos
         $medico = new Medico();
         $medico->colegiado = $request["colegiado"];
-        $medico->nombre = $request["nombre"];
+        $medico->nombre = strtoupper($request["nombre"]);
         $medico->telefono = $request["telefono"];
 
 
@@ -63,7 +63,7 @@ class MedicoController extends Controller {
         //Validamos Datos del Formulario
         $this->validateUpdate($request);
         $medico->colegiado = $request["colegiado"];
-        $medico->nombre = $request["nombre"];
+        $medico->nombre = strtoupper($request["nombre"]);
         $medico->telefono = $request["telefono"];
 
         $this->updateMedicoBitacora($request, $id);
@@ -86,30 +86,6 @@ class MedicoController extends Controller {
             ->orWhereRaw("(telefono like '%$nombre%')")
             ->paginate(10);
         return view('medico-mgmt/index', ['medicos' => $medicos, 'searchingVals' => $constraints]);
-
-
-
-        $constraints = [
-            'colegiado' => $request['colegiado'],
-            'nombre' => $request['nombre']
-            ];
-
-       $medicos = $this->doSearchingQuery($constraints);
-       
-    }
-
-    private function doSearchingQuery($constraints) {
-        $query = Medico::query();
-        $fields = array_keys($constraints);
-        $index = 0;
-        foreach ($constraints as $constraint) {
-            if ($constraint != null) {
-                $query = $query->where( $fields[$index], 'like', '%'.$constraint.'%');
-            }
-
-            $index++;
-        }
-        return $query->paginate(10);
     }
 
     private function validateInput($request) {

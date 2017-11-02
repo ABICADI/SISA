@@ -31,8 +31,8 @@ class TerapiaController extends Controller {
 
         //Nuevo Forma de Inserta Datos
         $terapia = new Terapia();
-        $terapia->nombre = $request["nombre"];
-        $terapia->descripcion = $request["descripcion"];
+        $terapia->nombre = strtoupper($request["nombre"]);
+        $terapia->descripcion = strtoupper($request["descripcion"]);
         $terapia->color = $request["color"];
 
         //Si la terapia se guarda, se crea un registro en la Bitacora
@@ -61,7 +61,7 @@ class TerapiaController extends Controller {
         $citas = DB::table('citas')->select('citas.*')->where('citas.color', '=', $terapia->color)->get();
         //Validamos Datos del Formulario
         $this->validateUpdate($request);
-        $terapia->descripcion = $request["descripcion"];
+        $terapia->descripcion = strtoupper($request["descripcion"]);
         $terapia->color = $request["color"];
         $this->updateTerapiaBitacora($request, $id);
         if($terapia->save()){
@@ -89,22 +89,10 @@ class TerapiaController extends Controller {
             ->whereRaw("(nombre like '%$nombre%')")
             ->orWhereRaw("(descripcion like '%$nombre%')") 
             ->paginate(10);
+            
         return view('system-mgmt/terapia/index', ['terapias' => $terapias, 'searchingVals' => $constraints]);
     }
 
-    private function doSearchingQuery($constraints) {
-        $query = Terapia::query();
-        $fields = array_keys($constraints);
-        $index = 0;
-        foreach ($constraints as $constraint) {
-            if ($constraint != null) {
-                $query = $query->where( $fields[$index], 'like', '%'.$constraint.'%');
-            }
-
-            $index++;
-        }
-        return $query->paginate(10);
-    }
 
     private function validateInput($request) {
         $this->validate($request, [

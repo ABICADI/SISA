@@ -17,7 +17,7 @@ class ActividadDescripcionController extends Controller {
         $actividad = Actividad::findOrFail($id);
 
         $this->validateDes($request);
-        $actividad->descripcion = $request['descripcion'];
+        $actividad->descripcion = strtoupper($request['descripcion']);
         $this->updateDesActividadBitacora($request, $id);
             if($actividad->save()){
                 Flash('¡La Descripción de la Actividad se ha actualizado Exitosamente!')->success();

@@ -42,9 +42,9 @@ class ActividadController extends Controller {
     public function store(Request $request){
         $this->validateInput($request);
         $actividad = new Actividad();
-        $actividad->nombre = $request['nombre'];
-        $actividad->direccion = $request['direccion'];
-        $actividad->descripcion = $request['descripcion'];
+        $actividad->nombre = strtoupper($request['nombre']);
+        $actividad->direccion = strtoupper($request['direccion']);
+        $actividad->descripcion = strtoupper($request['descripcion']);
         $actividad->fecha = $request['fecha'];
         $actividad->user_id = $request['user_id'];
         $actividad->departamento_id = $request['departamento_id'];
@@ -93,9 +93,9 @@ class ActividadController extends Controller {
         $actividad = Actividad::findOrFail($id);
 
         $this->validateUpdate($request);
-        $actividad->nombre = $request['nombre'];
-        $actividad->direccion = $request['direccion'];
-        $actividad->descripcion = $request['descripcion'];
+        $actividad->nombre = strtoupper($request['nombre']);
+        $actividad->direccion = strtoupper($request['direccion']);
+        $actividad->descripcion = strtoupper($request['descripcion']);
         $actividad->fecha = $request['fecha'];
         $actividad->user_id = $request['user_id'];
         $actividad->departamento_id = $request['departamento_id'];
@@ -109,7 +109,7 @@ class ActividadController extends Controller {
 
     public function search(Request $request) {
         $constraints = [
-            'nombre1' => strtoupper ($request['nombre1']),
+            'nombre1' => strtoupper($request['nombre1']),
             'fechaInicio' => $request['fecha_inicio'],
             'fechaFin' => $request['fecha_fin']
         ];
@@ -189,7 +189,6 @@ class ActividadController extends Controller {
         
         $message = ' ';
         return view('actividad-mgmt/index', ['actividades' => $actividades, 'searchingVals' => $constraints]);
-        //return view('tratamiento-mgmt/index', ['tratamientos' => $tratamientos, 'searchingVals' => $constraints, 'message' => $message]);
     }
 
     private function validar_fecha($fecha){
@@ -197,22 +196,6 @@ class ActividadController extends Controller {
       if((count($valores) == 3 && checkdate($valores[2], $valores[1], $valores[0]))
         ||($fecha==null)) return true;
         return false;
-    }
-
-
-
-    private function doSearchingQuery($constraints) {
-        $query = Actividad::query();
-        $fields = array_keys($constraints);
-        $index = 0;
-        foreach ($constraints as $constraint) {
-            if ($constraint != null) {
-                $query = $query->where( $fields[$index], 'like', '%'.$constraint.'%');
-            }
-
-            $index++;
-        }
-        return $query->paginate(10);
     }
 
     private function validateInput($request) {
