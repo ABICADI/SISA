@@ -21,7 +21,7 @@ class ActividadDescripcionController extends Controller {
         $this->updateDesActividadBitacora($request, $id);
             if($actividad->save()){
                 Flash('¡La Descripción de la Actividad se ha actualizado Exitosamente!')->success();
-                return redirect()->intended('/actividad-management');
+                return redirect()->intended('/sisa/actividad-management');
             }
     }
 

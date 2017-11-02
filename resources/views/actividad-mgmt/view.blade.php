@@ -56,12 +56,11 @@
             <tr>
             <td>
             <div class="form-group">
-                <label class="col-md-3 control-label"><label style="color:red">*</label> Departamento</label>
+                <label class="col-md-4 control-label"><label style="color:red">*</label> Departamento</label>
                     <div class="col-md-7">
                         <select class="form-control" name="departamento_id" autofocus disabled>
-                            <option value="" selected disabled>seleccione departamento</option>
                             @foreach ($departamentos as $departamento)
-                                <option value="{{$departamento->id}}" {{$departamento->id == $actividad->departamento_id ? 'selected' : ''}}>{{$departamento->nombre}}</option>
+                                <option value="{{$departamento->id}}">{{$departamento->nombre}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -111,7 +110,7 @@
                         @if (2 != Auth::user()->rol_id)
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i> 
+                                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>
                                     Guardar
                                 </button>
                             </div>

@@ -24,6 +24,21 @@ class GraficaPacienteController extends Controller{
 			$prepago = Paciente::where('pago_id', '=', 3)->count('pago_id');
 			$exonerado = Paciente::where('pago_id', '=', 4)->count('pago_id');
 
+			$municipio = Paciente::join('municipios', 'pacientes.municipio_id', 'municipios.id')
+												->select('pacientes.municipio_id')
+												->where('municipios.departamento_id', '=', 18)->get();
+
+			$group_municipio = Charts::database($municipio, 'bar', 'highcharts')
+	        ->title('Pacientes por Municipio de Santa Rosa')
+	        ->dimensions(10, 5)
+	        ->responsive(true)
+					->elementLabel("Cantidad")
+					->groupBy('municipio_id', null, [267 => 'BARBERENA', 268 => 'CASILLAS', 269 => 'CHIQUIMULILLA',
+																									270 => 'CUILAPA', 271 => 'GUAZACAPAN', 272 => 'NUEVA SANTA ROSA',
+																									273 => 'ORATORIO', 274 => 'PUEBLO NUEVO VIÑAS', 275 => 'SAN JUAN TECUACO',
+																									276 => 'SAN RAFAEL LAS FLORES', 277 => 'SANTA CRUZ NARANJO', 278 => 'SANTA MARIA IXHUATAN',
+																									279 => 'SANTA ROSA DE LIMA', 280 => 'TAXISCO']);
+
 			$group_tipo_pago = Charts::create('pie', 'highcharts')
 					->title('Pacientes por Tipo de Pago')
 					->labels(['APADRINADO', 'MUNICIPALIDAD', 'PREPAGO', 'EXONERADO'])
@@ -39,6 +54,6 @@ class GraficaPacienteController extends Controller{
           ->elementLabel("Cantidad")
           ->groupByMonth($now, true);
 
-      return view('grafica-mgmt/paciente/index', ['grafica_registro' => $grafica_registro, 'group_tipo_pago' => $group_tipo_pago]);
+      return view('grafica-mgmt/paciente/index', ['grafica_registro' => $grafica_registro, 'group_tipo_pago' => $group_tipo_pago, 'group_municipio' => $group_municipio]);
     }
 }

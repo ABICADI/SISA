@@ -28,7 +28,12 @@ class ReportTratamientoController extends Controller {
 						$pacientes = Paciente::select('pacientes.*')->orderBy('nombre1', 'asc')->get();
 		        $terapias = Terapia::select('id', 'nombre')->where('id', '!=', 1)->orderBy('nombre', 'asc')->get();
 						$tratamientos = $this->getRangoTratamiento($constraints);
-		        return view('system-mgmt/report-tratamiento/index', ['tratamientos' => $tratamientos, 'pacientes' => $pacientes, 'terapias' => $terapias, 'searchingVals' => $constraints]);
+						if($tratamientos->count()==0){
+							$si=1;
+						}else {
+							$si=0;
+						}
+						return view('system-mgmt/report-tratamiento/index', ['tratamientos' => $tratamientos, 'pacientes' => $pacientes, 'terapias' => $terapias, 'searchingVals' => $constraints, 'si' => $si]);
 		    }
 
 		    public function search(Request $request) {
@@ -39,7 +44,12 @@ class ReportTratamientoController extends Controller {
 										'terapia' => $request['terapia_id']
 			        ];
 		        	$tratamientos = $this->getRangoTratamiento($constraints);
-		        	return view('system-mgmt/report-tratamiento/index', ['tratamientos' => $tratamientos, 'pacientes' => $pacientes, 'terapias' => $terapias, 'searchingVals' => $constraints]);
+							if($tratamientos->count()==0){
+								$si=1;
+							}else {
+								$si=0;
+							}
+		        	return view('system-mgmt/report-tratamiento/index', ['tratamientos' => $tratamientos, 'pacientes' => $pacientes, 'terapias' => $terapias, 'searchingVals' => $constraints, 'si' => $si]);
 		    }
 
 		    private function getRangoTratamiento($constraints) {

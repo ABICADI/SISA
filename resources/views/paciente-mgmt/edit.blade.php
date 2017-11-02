@@ -225,7 +225,6 @@
             </td>
             </tr>
         </table>
-        </div>
         @endcomponent
 
         @component('layouts.esconder_info', ['title' => 'Referencias'])

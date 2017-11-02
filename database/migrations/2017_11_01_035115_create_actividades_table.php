@@ -14,11 +14,8 @@ class CreateActividadesTable extends Migration {
             $table->string("descripcion",500)->nullable();
             $table->string("fecha");
             $table->integer("user_id");
-            $table->integer("departamento_id");
             $table->integer("municipio_id");
-            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
-            $table->foreign('departamento_id')->references('id')->on('departamentos')->onUpdate('cascade');
-            $table->foreign('municipio_id')->references('id')->on('municipios')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');            $table->foreign('municipio_id')->references('id')->on('municipios')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();
         });

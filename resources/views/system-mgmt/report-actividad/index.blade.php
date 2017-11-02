@@ -8,6 +8,7 @@
         <div class="col-sm-4">
           <h3 class="box-title">Listado de Actividades</h3>
         </div>
+        @if($si==0)
         <div class="col-sm-4">
             <form class="form-horizontal" role="form" method="POST" action="{{ route('report-actividad.excel') }}">
                 {{ csrf_field() }}
@@ -28,6 +29,7 @@
                 </button>
             </form>
         </div>
+        @endif
     </div>
   </div>
   <!-- /.box-header -->
@@ -39,9 +41,34 @@
       <form method="POST" action="{{ route('report-actividad.search') }}">
          {{ csrf_field() }}
          @component('layouts.search', ['title' => 'Buscar'])
-          @component('layouts.two-cols-date-search-row', ['items' => ['From', 'To'],
-          'oldVals' => [isset($searchingVals) ? $searchingVals['from'] : '', isset($searchingVals) ? $searchingVals['to'] : '']])
-          @endcomponent
+				 <div class="row">
+					 <table class="table responsive">
+						 <tr>
+							 <td>
+								 <label class="col-md-2 control-label">De</label>
+								 <div class="col-md-5">
+										 <div class="input-group date">
+												 <div class="input-group-addon">
+														 <i class="fa fa-calendar"></i>
+												 </div>
+												 <input type="text" name="from" value="{{$searchingVals['from']}}" class="form-control pull-right" id="from" placeholder="Fecha Actividad">
+										 </div>
+								 </div>
+						 	 </td>
+							 <td>
+								 <label class="col-md-2 control-label">Hasta</label>
+								 <div class="col-md-6">
+										 <div class="input-group date">
+												 <div class="input-group-addon">
+														 <i class="fa fa-calendar"></i>
+												 </div>
+												 <input type="text" name="to" value="{{$searchingVals['to']}}" class="form-control pull-right" id="to" placeholder="Fecha Actividad">
+										 </div>
+								 </div>
+						 	 </td>
+						 </tr>
+				 	</table>
+				 </div>
          @endcomponent
       </form>
       {{ csrf_field() }}

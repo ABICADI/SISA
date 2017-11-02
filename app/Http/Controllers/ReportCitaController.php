@@ -34,8 +34,13 @@ class ReportCitaController extends Controller{
 							$pacientes = Paciente::select('pacientes.*')->get();
 							$terapias = Terapia::select('terapias.*')->where('id','!=',1)->get();
 			        $citas = $this->getRangoCita($constraints);
+							if($citas->count()==0){
+								$si=1;
+							}else {
+								$si=0;
+							}
 			        $message = '';
-			        return view('system-mgmt/report-cita/index', ['citas' => $citas, 'pacientes' => $pacientes, 'terapias' => $terapias, 'searchingVals' => $constraints, 'message' => $message]);
+			        return view('system-mgmt/report-cita/index', ['citas' => $citas, 'pacientes' => $pacientes, 'terapias' => $terapias, 'searchingVals' => $constraints, 'message' => $message, 'si' => $si]);
 			    }
 
 			    public function search(Request $request) {
@@ -49,8 +54,13 @@ class ReportCitaController extends Controller{
 								$pacientes = Paciente::select('pacientes.*')->get();
 								$terapias = Terapia::select('terapias.*')->where('id','!=',1)->get();
 				        $citas = $this->getRangoCita($constraints);
+								if($citas->count()==0){
+									$si=1;
+								}else {
+									$si=0;
+								}
 				        $message = '';
-				        return view('system-mgmt/report-cita/index', ['citas' => $citas, 'pacientes' => $pacientes, 'terapias' => $terapias, 'searchingVals' => $constraints, 'message' => $message]);
+				        return view('system-mgmt/report-cita/index', ['citas' => $citas, 'pacientes' => $pacientes, 'terapias' => $terapias, 'searchingVals' => $constraints, 'message' => $message, 'si' => $si]);
 								}
 
 			        if($request->from == '' || $request->to == ''){
@@ -63,8 +73,13 @@ class ReportCitaController extends Controller{
 								$pacientes = Paciente::select('pacientes.*')->get();
 								$terapias = Terapia::select('terapias.*')->where('id','!=',1)->get();
 				        $citas = $this->getRangoCita($constraints);
+								if($citas->count()==0){
+									$si=1;
+								}else {
+									$si=0;
+								}
 				        $message = 'No es valido el rango de fecha.';
-				        return view('system-mgmt/report-cita/index', ['citas' => $citas, 'pacientes' => $pacientes, 'terapias' => $terapias, 'searchingVals' => $constraints, 'message' => $message]);
+				        return view('system-mgmt/report-cita/index', ['citas' => $citas, 'pacientes' => $pacientes, 'terapias' => $terapias, 'searchingVals' => $constraints, 'message' => $message, 'si' => $si]);
 			        }
 			    }
 
