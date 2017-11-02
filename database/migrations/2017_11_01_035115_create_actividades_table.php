@@ -12,7 +12,7 @@ class CreateActividadesTable extends Migration {
             $table->string("nombre");
             $table->string("direccion")->nullable();
             $table->string("descripcion",500)->nullable();
-            $table->string("fecha");
+            $table->date("fecha");
             $table->integer("user_id");
             $table->integer("municipio_id");
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');            $table->foreign('municipio_id')->references('id')->on('municipios')->onUpdate('cascade');

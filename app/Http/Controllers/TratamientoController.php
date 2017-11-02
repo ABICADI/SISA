@@ -150,7 +150,7 @@ class TratamientoController extends Controller {
         } 
 
           else if($this->validar_fecha($fechaInicio)
-            &&$this->validar_fecha($fechaInicio)){
+            &&$this->validar_fecha($fechaFin)){
             $tratamientos = DB::table('tratamientos')
             ->leftJoin('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
             ->leftJoin('pacientes', 'tratamientos.paciente_id', '=', 'pacientes.id')
@@ -194,7 +194,7 @@ class TratamientoController extends Controller {
 
     private function validar_fecha($fecha){
       $valores = explode('-', $fecha);
-      if((count($valores) == 3 && checkdate($valores[2], $valores[1], $valores[0]))
+      if((count($valores) == 3 && checkdate($valores[1], $valores[2], $valores[0]))
         ||($fecha==null)) return true;
         return false;
     }

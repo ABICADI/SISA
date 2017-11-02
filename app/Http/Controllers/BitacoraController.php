@@ -42,7 +42,7 @@ class BitacoraController extends Controller {
         } 
 
           else if($this->validar_fecha($fechaInicio)
-            &&$this->validar_fecha($fechaInicio)){
+            &&$this->validar_fecha($fechaFin)){
           $bitacoras = DB::table('bitacoras')
             ->select(DB::raw('*'))
             ->whereRaw("(fecha::text like '%$fechaInicio%')")
@@ -62,7 +62,7 @@ class BitacoraController extends Controller {
 
     private function validar_fecha($fecha){
       $valores = explode('-', $fecha);
-      if((count($valores) == 3 && checkdate($valores[2], $valores[1], $valores[0]))
+      if((count($valores) == 3 && checkdate($valores[1], $valores[2], $valores[0]))
         ||($fecha==null)) return true;
         return false;
     }
