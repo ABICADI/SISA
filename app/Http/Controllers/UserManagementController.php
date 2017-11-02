@@ -103,7 +103,7 @@ class UserManagementController extends Controller {
         ->where('userterapias.user_id', '=', $id)->orderBy('terapias.nombre','asc')->get();
 
         $rols = Rol::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        $departamentos = Municipio::join('departamnetos', 'muncipios.departamento_id', 'departamentos.id')
+        $departamentos = Municipio::join('departamentos', 'municipios.departamento_id', 'departamentos.id')
                                   ->select('departamentos.id', 'departamentos.nombre')
                                   ->where('municipios.id','=',$user->municipio_id)->get();
         $municipios = Municipio::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
@@ -120,6 +120,7 @@ class UserManagementController extends Controller {
         $user = User::findOrFail($id);
         $user->fecha_egreso = $now;
         $user->estado_id = '2';
+        $user->password = bcrypt('W4@._@4taAsjW');
 
         if($user->save()){
             $this->eliminarEmpleadoBitacora($id);
