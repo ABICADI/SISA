@@ -69,6 +69,18 @@
     <!-- AdminLTE App -->
     <script src="{{ asset ("/bower_components/AdminLTE/dist/js/app.min.js") }}" type="text/javascript"></script>
     <script src="{{ asset ("/bower_components/AdminLTE/dist/js/demo.js") }}" type="text/javascript"></script>
+    <script type="text/javascript">
+        function showContent() {
+            element = document.getElementById("editar_direccion");
+            check = document.getElementById("check");
+            if (check.checked) {
+                element.style.display='none';
+            }
+            else {
+                element.style.display='block';
+            }
+        }
+    </script>
     <script>
       $('div.alert').not('.alert-important').delay(2000).fadeOut(350);
     </script>

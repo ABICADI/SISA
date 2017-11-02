@@ -267,13 +267,31 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('diasemanausuario-management.store') }}">
                         {{ csrf_field() }}
                         <div class="form-group">
+                          <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                  <table id="example2" class="table table-responsive" role="grid" aria-describedby="example2_info">
+                                      <tr>
+                                      <td role="row">
+                                        <label>
+                                            <input type="checkbox" name="check" id="check" value="1" onchange="javascript:showContent()" checked>
+                                            NINGUNO
+                                        </label>
+                                      </td>
+                                      </tr>
+                                  </table>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group" id="editar_direccion" style="display: none;">
                             <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                                 <div class="row">
                                     <div class="col-sm-10">
                                         <table id="example2" class="table table-responsive" role="grid" aria-describedby="example2_info">
                                             <tr>
                                             @foreach ($diasemanas as $diasemana)
-                            <td role="row"><input type="checkbox" id="inlineCheckbox1" name="diasemana[]" value="{{$diasemana->id}}">  {{ $diasemana->nombre }}</td>
+                            <td role="row" class="col-md-1"><input type="checkbox" id="inlineCheckbox1" name="diasemana[]" value="{{$diasemana->id}}">  {{ $diasemana->nombre }}</td>
                                             @endforeach
                                             </tr>
                                         </table>

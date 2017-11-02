@@ -35,7 +35,6 @@ class TerapiaTableSeeder extends Seeder {
           'color' => '#be33ff'
       ]);
 
-
       $terapia = factory(App\Terapia::class)->create([
           'nombre' => 'MECANOTERAPIA',
           'descripcion' => 'ESTA ÁREA AYUDA A NIÑOS Y ADULTOS A CONTROLAR SU PESO Y LOGRAR UN EQUILIBRIO ADECUADO. APARATOS COMO BICICLETA, ELÍPTICAS AYUDAN A DESARROLAR LOS MÚSCULOS Y A LA FUERZA DE CADA PACIENTE.',

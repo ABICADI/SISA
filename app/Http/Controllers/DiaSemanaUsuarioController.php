@@ -29,7 +29,7 @@ class DiaSemanaUsuarioController extends Controller {
 											->join('generos', 'users.genero_id', 'generos.id')
 											->select('municipios.nombre as Municipio', 'departamentos.nombre as Departamento', 'rols.nombre as Rol', 'generos.nombre as Genero', 'users.*')
 											->find($last->id);
-        $diasemanas = DiaSemana::all();
+        $diasemanas = DiaSemana::where('id','!=',1)->get();
         return view('diasemanausuario-mgmt/create', ['user' => $user, 'diasemanas' => $diasemanas]);
     }
 
@@ -37,31 +37,41 @@ class DiaSemanaUsuarioController extends Controller {
         $last = DB::table('users')->latest()->first();
         $user = User::find($last->id);
         $diasemanas = $request->diasemana;
-
-				if($diasemanas != ''){
-					foreach ($diasemanas as $diasemana) {
-							$diausuario = new UsuarioDia();
-		        	$diausuario->diasemana_id = $diasemana;
-		        	$diausuario->user_id = $user->id;
-		        	$this->createDiaSemanaUsuarioBitacora($request, $diasemana, $user);
-		          $diausuario->save();
-	        }
-					Flash('¡Se agregaron Exitosamente los dias al Empleado!')->success();
-	        return redirect()->intended('/sisa/terapiausuario-management');
+				if($request->check==null){
+					if($diasemanas != ''){
+						foreach ($diasemanas as $diasemana) {
+								$diausuario = new UsuarioDia();
+			        	$diausuario->diasemana_id = $diasemana;
+			        	$diausuario->user_id = $user->id;
+			        	$this->createDiaSemanaUsuarioBitacora($request, $diasemana, $user);
+			          $diausuario->save();
+		        }
+						Flash('¡Se agregaron Exitosamente los dias al Empleado!')->success();
+		        return redirect()->intended('/sisa/terapiausuario-management');
+					}
+					if($diasemanas == ''){
+						$last = DB::table('users')->latest()->first();
+		        $user = User::join('municipios', 'users.municipio_id', 'municipios.id')
+													->join('departamentos', 'municipios.departamento_id', 'departamentos.id')
+													->join('rols', 'users.rol_id', 'rols.id')
+													->join('generos', 'users.genero_id', 'generos.id')
+													->select('municipios.nombre as Municipio', 'departamentos.nombre as Departamento', 'rols.nombre as Rol', 'generos.nombre as Genero','users.*')
+													->find($last->id);
+		        $diasemanas = DiaSemana::all();
+						Flash('¡Seleccionar uno o más Dias, caso contrario seleccionar Ninguno!')->error()->important();
+		        return view('diasemanausuario-mgmt/create', ['user' => $user, 'diasemanas' => $diasemanas]);
+					}
 				}
-				if($diasemanas == ''){
-					$last = DB::table('users')->latest()->first();
-	        $user = User::join('municipios', 'users.municipio_id', 'municipios.id')
-												->join('departamentos', 'municipios.departamento_id', 'departamentos.id')
-												->join('rols', 'users.rol_id', 'rols.id')
-												->join('generos', 'users.genero_id', 'generos.id')
-												->select('municipios.nombre as Municipio', 'departamentos.nombre as Departamento', 'rols.nombre as Rol', 'generos.nombre as Genero','users.*')
-												->find($last->id);
-	        $diasemanas = DiaSemana::all();
-					Flash('¡Seleccionar uno o más Dias, caso contrario seleccionar Ninguno!')->error()->important();
-	        return view('diasemanausuario-mgmt/create', ['user' => $user, 'diasemanas' => $diasemanas]);
+				if($request->check==1){
+					$diausuario = new UsuarioDia();
+					$diausuario->diasemana_id = $request->check;
+					$diausuario->user_id = $user->id;
+					$this->createDiaNullSemanaUsuarioBitacora($request, $user);
+					if($diausuario->save()){
+						Flash('¡Se agregaron Exitosamente los dias al Empleado!')->success();
+						return redirect()->intended('/sisa/terapiausuario-management');
+					}
 				}
-
     }
 
 		public function show($id) {
@@ -93,6 +103,27 @@ class DiaSemanaUsuarioController extends Controller {
         }
 
              $data = 'Usuario: ' . $user->nombre1 .' '. $user->nombre2 .' '. $user->nombre3 .' '. $user->apellido1 .' '. $user->apellido2 .' '. $user->apellido3 . ' , Dia: ' . $cadena;
+
+            $bitacora = new Bitacora();
+            $bitacora->usuario = $log;
+            $bitacora->nombre_tabla = 'USUARIO DIA SEMANA';
+            $bitacora->actividad = 'CREAR';
+            $bitacora->anterior = '';
+            $bitacora->nuevo = $data;
+            $bitacora->fecha = $now;
+            $bitacora->save();
+    }
+
+		public function createDiaNullSemanaUsuarioBitacora ($request, $user){
+        //Datos para la Bitacora
+        date_default_timezone_set('america/guatemala');
+        $format = 'd/m/Y';
+        $now = date($format);
+        $log = Auth::user()->username;
+
+        $nombredia=DiaSemana::findOrFail($request->check);
+
+             $data = 'Usuario: ' . $user->nombre1 .' '. $user->nombre2 .' '. $user->nombre3 .' '. $user->apellido1 .' '. $user->apellido2 .' '. $user->apellido3 . ' , Dia: ' . $nombredia->nombre;
 
             $bitacora = new Bitacora();
             $bitacora->usuario = $log;

@@ -294,21 +294,39 @@
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('terapiausuario-management.store') }}">
                         {{ csrf_field() }}
-                          <div class="form-group">
+                        <div class="form-group">
+                          <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                  <table id="example2" class="table table-responsive" role="grid" aria-describedby="example2_info">
+                                      <tr>
+                                      <td role="row">
+                                        <label>
+                                            <input type="checkbox" name="check" id="check" value="1" onchange="javascript:showContent()" checked>
+                                            NINGUNO
+                                        </label>
+                                      </td>
+                                      </tr>
+                                  </table>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group" id="editar_direccion" style="display: none;">
                             <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                                 <div class="row">
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-12">
                                         <table id="example2" class="table table-responsive" role="grid" aria-describedby="example2_info">
-                                            <tr>
-                                            @foreach ($terapias as $terapia)
-                            <td role="row"><input type="checkbox" id="inlineCheckbox1" name="terapia[]" value="{{$terapia->id}}">  {{ $terapia->nombre }}</td>
-                                            @endforeach
+                                          @foreach ($terapias as $terapia)
+                                            <tr class="col-md-3"  role="row">
+                            <td><input type="checkbox" id="inlineCheckbox1" name="terapia[]" value="{{$terapia->id}}">  {{ $terapia->nombre }}</td>
                                             </tr>
+                                          @endforeach
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                      </div>
                 </div>
                 @endcomponent
                 <table id="example2" class="table table-responsive">
