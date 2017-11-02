@@ -28,7 +28,7 @@ class CitaController extends Controller {
 	public function store(Request $request)	{
 			if($request->id != 0){
 				$restantes=0;
-
+				$this->validateInput($request);
 				$tratamiento = Tratamiento::find($request->id);
 				$terapia = Terapia::find($tratamiento->terapia_id);
 				$paciente = Paciente::find($tratamiento->paciente_id);
@@ -72,7 +72,7 @@ class CitaController extends Controller {
 
 					$terapia = Terapia::find($tratamiento->terapia_id);
 					$paciente = Paciente::find($tratamiento->paciente_id);
-
+					$this->validateInput($request);
 					$cita = new Cita();
 					$cita->title = 'Paciente: ' . $paciente->nombre1 . ' ' . $paciente->apellido1 . ' - Asistencia: Sin evaluar';
 					$cita->start = $request->fecha;
@@ -125,6 +125,12 @@ class CitaController extends Controller {
 			$cita->delete();
 			return Response()->json([
 					'message'   =>  'Citas sin asignar ' . $tratamiento->restantes . ' para el paciente ' . $paciente->nombre1 . ' ' . $paciente->apellido1 . ' con la terapia ' . $terapia->nombre . '  (Refrescar la Página para ver los cambios)'
+			]);
+	}
+
+	private function validateInput($request) {
+			$this->validate($request, [
+					'fecha' => 'required|date'
 			]);
 	}
 }

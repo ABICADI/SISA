@@ -19,6 +19,13 @@
       </td>
       </tr>
   </table>
+  <table class="table responsive">
+    <tr>
+      <td>
+        {!! $grafica_terapia->render() !!}
+      </td>
+      </tr>
+  </table>
   <!-- /.box-body -->
 </div>
     </section>

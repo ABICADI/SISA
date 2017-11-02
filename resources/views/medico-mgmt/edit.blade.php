@@ -25,7 +25,7 @@
             </div>
 
 						<div class="form-group{{ $errors->has('nombre') ? ' has-error' : '' }}">
-                <label for="nombre" class="col-md-2 control-label">Nombre completo</label>
+                <label for="nombre" class="col-md-2 control-label"><label style="color:red">*</label> Nombre completo</label>
                     <div class="col-md-6">
                         <input id="nombre" type="text" class="form-control" placeholder="nombre" name="nombre" value="{{ $medico->nombre }}" onkeypress="return letras(event)" maxlength="125" onKeyUp="this.value=this.value.toUpperCase();" required autofocus>
 

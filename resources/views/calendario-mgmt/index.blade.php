@@ -15,10 +15,17 @@
                     <div class="modal-content">
                         <div class="modal-header"><h4>Nueva Cita</h4></div>
                         <div class="modal-body">
-                              <label for="cui" class="col-md-2 control-label">Fecha</label>
+                          <div class="form-group{{ $errors->has('fecha') ? ' has-error' : '' }}">
+                              <label for="cui" class="col-md-2 control-label"><label style="color:red">*</label> Fecha</label>
                                   <div class="col-md-3">
-                                      <input id="fecha" type="text" class="form-control" name="fecha" value="{{ old('fecha') }}"  autofocus>
+                                      <input id="fecha" type="text" class="form-control" name="fecha" value="{{ old('fecha') }}" required autofocus>
+                                      @if ($errors->has('fecha'))
+                                          <span class="help-block">
+                                          <strong>{{ $errors->first('fecha') }}</strong>
+                                          </span>
+                                      @endif
                                   </div>
+                          </div>
                         </div>
                         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
                         <div class="modal-footer">

@@ -18,6 +18,13 @@ class GraficaEmpleadoController extends Controller{
 			$format = 'Y';
 			$now = date($format);
 
+			$group_genero = Charts::database(User::all(), 'pie', 'highcharts')
+	        ->title('Empleados por Género')
+	        ->dimensions(10, 5)
+	        ->responsive(true)
+					->elementLabel("Cantidad")
+					->groupBy('genero_id', null, [1 => 'FEMENINO', 2 => 'MASCULINO']);
+
 			$municipio = User::join('municipios', 'users.municipio_id', 'municipios.id')
 												->select('users.municipio_id')
 												->where('municipios.departamento_id', '=', 18)->get();
@@ -41,6 +48,6 @@ class GraficaEmpleadoController extends Controller{
           ->elementLabel("Cantidad")
           ->groupByMonth($now, true);
 
-      return view('grafica-mgmt/empleado/index', ['grafica_registro' => $grafica_registro, 'group_municipio' => $group_municipio]);
+      return view('grafica-mgmt/empleado/index', ['grafica_registro' => $grafica_registro, 'group_municipio' => $group_municipio, 'group_genero' => $group_genero]);
     }
 }
