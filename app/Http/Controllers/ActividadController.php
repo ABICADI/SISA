@@ -109,12 +109,97 @@ class ActividadController extends Controller {
 
     public function search(Request $request) {
         $constraints = [
-            'nombre' => $request['nombre']
+            'nombre1' => strtoupper ($request['nombre1']),
+            'fechaInicio' => $request['fecha_inicio'],
+            'fechaFin' => $request['fecha_fin']
         ];
+  
+        $nombre = strtoupper($request['nombre1']);
+        
+        $fechaInicio = $request['fecha_inicio'];
+        $fechaFin = $request['fecha_fin'];
 
-       $actividades = $this->doSearchingQuery($constraints);
-       return view('actividad-mgmt/index', ['actividades' => $actividades, 'searchingVals' => $constraints]);
+        if($request['nombre1']!=''){
+          $actividades = DB::table('actividades')
+            ->leftJoin('users', 'actividades.user_id', '=', 'users.id')
+            ->leftJoin('municipios', 'actividades.municipio_id', '=', 'municipios.id')
+            ->leftJoin('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
+            ->select(DB::raw('users.nombre1 as users_nombre1,
+                              users.nombre2 as users_nombre2, 
+                              users.nombre3 as users_nombre3, 
+                              users.apellido1 as users_apellido1, 
+                              users.apellido2 as users_apellido2, 
+                              users.apellido3 as users_apellido3,
+                              users.username as users_username,
+                              departamentos.nombre as departamentos_nombre,
+                              municipios.nombre as municipios_nombre, 
+                              actividades.*'))
+            ->whereRaw("(actividades.nombre like '%$nombre%')")
+            ->orWhereRaw("(users.nombre1 like '%$nombre%')")
+            ->orWhereRaw("(users.nombre2 like '%$nombre%')")
+            ->orWhereRaw("(users.nombre3 like '%$nombre%')")
+            ->orWhereRaw("(CONCAT(users.nombre1,' ',users.nombre2) like '%$nombre%')")
+            ->orWhereRaw("(CONCAT(users.nombre1,' ',users.nombre2,' ',users.nombre3) like '%$nombre%')")
+            ->orWhereRaw("(CONCAT(users.nombre1,' ',users.apellido1) like '%$nombre%')")
+            ->orWhereRaw("(CONCAT(users.nombre1,' ',users.nombre2,' ',users.apellido1) like '%$nombre%')")
+            ->orWhereRaw("(actividades.direccion like '%$nombre%')")
+            ->orWhereRaw("(municipios.nombre like '%$nombre%')")
+            ->orWhereRaw("(departamentos.nombre like '%$nombre%')")
+            ->paginate(10);
+        } 
+
+          else if($this->validar_fecha($fechaInicio)
+            &&$this->validar_fecha($fechaInicio)){
+            $actividades = DB::table('actividades')
+            ->leftJoin('users', 'actividades.user_id', '=', 'users.id')
+            ->leftJoin('municipios', 'actividades.municipio_id', '=', 'municipios.id')
+            ->leftJoin('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
+            ->select(DB::raw('users.nombre1 as users_nombre1,
+                              users.nombre2 as users_nombre2, 
+                              users.nombre3 as users_nombre3, 
+                              users.apellido1 as users_apellido1, 
+                              users.apellido2 as users_apellido2, 
+                              users.apellido3 as users_apellido3,
+                              users.username as users_username,
+                              departamentos.nombre as departamentos_nombre,
+                              municipios.nombre as municipios_nombre, 
+                              actividades.*'))
+            ->whereRaw("(actividades.fecha::text like '%$fechaInicio%')")
+            ->whereRaw("(actividades.fecha::text like '%$fechaFin%')")
+            ->orWhereBetween('actividades.fecha', [$fechaInicio, $fechaFin])
+            ->paginate(10);
+          }
+          else{
+            $actividades = DB::table('actividades')
+            ->leftJoin('users', 'actividades.user_id', '=', 'users.id')
+            ->leftJoin('municipios', 'actividades.municipio_id', '=', 'municipios.id')
+            ->leftJoin('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
+            ->select(DB::raw('users.nombre1 as users_nombre1,
+                              users.nombre2 as users_nombre2, 
+                              users.nombre3 as users_nombre3, 
+                              users.apellido1 as users_apellido1, 
+                              users.apellido2 as users_apellido2, 
+                              users.apellido3 as users_apellido3,
+                              users.username as users_username,
+                              departamentos.nombre as departamentos_nombre,
+                              municipios.nombre as municipios_nombre, 
+                              actividades.*'))
+            ->paginate(10);
+          }
+        
+        $message = ' ';
+        return view('actividad-mgmt/index', ['actividades' => $actividades, 'searchingVals' => $constraints]);
+        //return view('tratamiento-mgmt/index', ['tratamientos' => $tratamientos, 'searchingVals' => $constraints, 'message' => $message]);
     }
+
+    private function validar_fecha($fecha){
+      $valores = explode('-', $fecha);
+      if((count($valores) == 3 && checkdate($valores[2], $valores[1], $valores[0]))
+        ||($fecha==null)) return true;
+        return false;
+    }
+
+
 
     private function doSearchingQuery($constraints) {
         $query = Actividad::query();

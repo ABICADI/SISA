@@ -25,9 +25,9 @@
       <form method="POST" action="{{ route('terapia.search') }}">
          {{ csrf_field() }}
          @component('layouts.search', ['title' => 'Buscar'])
-          @component('layouts.two-cols-search-row', ['items' => ['Nombre'],
-          'oldVals' => [isset($searchingVals) ? strtoupper($searchingVals['nombre']) : '']])
-          @endcomponent
+          <div class="col-md-5">
+            <input id="nombre1" type="text" class="form-control" placeholder="buscar por Nombre/Descripción" name="nombre1" value="{{ old('nombre1') }}"  onKeyUp="this.value=this.value.toUpperCase();" >     
+          </div>
         @endcomponent
       </form>
     <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">

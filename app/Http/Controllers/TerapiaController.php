@@ -80,11 +80,16 @@ class TerapiaController extends Controller {
 
     public function search(Request $request) {
         $constraints = [
-            'nombre' => $request['nombre']
-            ];
-
-       $terapias = $this->doSearchingQuery($constraints);
-       return view('system-mgmt/terapia/index', ['terapias' => $terapias, 'searchingVals' => $constraints]);
+            'nombre1' => strtoupper ($request['nombre1'])
+        ];
+  
+        $nombre = strtoupper($request['nombre1']);
+        $terapias = DB::table('terapias')
+            ->select(DB::raw('*'))
+            ->whereRaw("(nombre like '%$nombre%')")
+            ->orWhereRaw("(descripcion like '%$nombre%')") 
+            ->paginate(10);
+        return view('system-mgmt/terapia/index', ['terapias' => $terapias, 'searchingVals' => $constraints]);
     }
 
     private function doSearchingQuery($constraints) {

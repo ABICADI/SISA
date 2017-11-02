@@ -20,16 +20,54 @@ class BitacoraController extends Controller {
 
     public function search(Request $request) {
         $constraints = [
-            'usuario' => $request['usuario'],
-            'actividad' => $request['actividad'],
-            'fecha' => $request['fecha'],
-            'nombre_tabla' => $request['nombre_tabla'],
-            ];
+            'nombre1' => strtoupper ($request['nombre1']),
+            'fechaInicio' => $request['fecha_inicio'],
+            'fechaFin' => $request['fecha_fin']
+        ];
 
+        //dd($constraints);
+  
+        $nombre = strtoupper($request['nombre1']);
+        
+        $fechaInicio = $request['fecha_inicio'];
+        $fechaFin = $request['fecha_fin'];
 
-       $bitacoras = $this->doSearchingQuery($constraints);
-       return view('system-mgmt/bitacora/index', ['bitacoras' => $bitacoras, 'searchingVals' => $constraints]);
+        if($request['nombre1']!=''){
+          $bitacoras = DB::table('bitacoras')
+            ->select(DB::raw('*'))
+            ->whereRaw("(usuario like '%$nombre%')")
+            ->orWhereRaw("(nombre_tabla like '%$nombre%')")
+            ->orWhereRaw("(actividad like '%$nombre%')")
+            ->paginate(10);
+        } 
+
+          else if($this->validar_fecha($fechaInicio)
+            &&$this->validar_fecha($fechaInicio)){
+          $bitacoras = DB::table('bitacoras')
+            ->select(DB::raw('*'))
+            ->whereRaw("(fecha::text like '%$fechaInicio%')")
+            ->whereRaw("(fecha::text like '%$fechaFin%')")
+            ->orWhereBetween('fecha', [$fechaInicio, $fechaFin])
+            ->paginate(10);
+          }
+          else{
+            $bitacoras = DB::table('bitacoras')
+            ->select(DB::raw('*'))
+            ->paginate(10);
+          }
+        //dd($bitacoras);
+        $message = ' ';
+        return view('system-mgmt/bitacora/index', ['bitacoras' => $bitacoras, 'searchingVals' => $constraints]);
     }
+
+    private function validar_fecha($fecha){
+      $valores = explode('-', $fecha);
+      if((count($valores) == 3 && checkdate($valores[2], $valores[1], $valores[0]))
+        ||($fecha==null)) return true;
+        return false;
+    }
+
+    
 
     private function doSearchingQuery($constraints) {
         $query = Bitacora::query();

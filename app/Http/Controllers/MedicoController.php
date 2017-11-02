@@ -81,7 +81,7 @@ class MedicoController extends Controller {
         $nombre = strtoupper($request['nombre1']);
         $medicos = DB::table('medicos')
             ->select(DB::raw('*'))
-            ->whereRaw("(colegiado '%$nombre%')")
+            ->whereRaw("(colegiado like '%$nombre%')")
             ->orWhereRaw("(nombre like '%$nombre%')")
             ->orWhereRaw("(telefono like '%$nombre%')")
             ->paginate(10);

@@ -31,9 +31,41 @@
       <form method="POST" action="{{ route('tratamiento-management.search') }}">
          {{ csrf_field() }}
          @component('layouts.search', ['title' => 'Buscar'])
-          @component('layouts.two-cols-search-row', ['items' => ['Fecha'],
-          'oldVals' => [isset($searchingVals) ? $searchingVals['fecha'] : '']])
-          @endcomponent
+         <table id="example2" class="table table-responsive">
+            <tr>
+            <td>
+            <div>
+                    <div>
+                        <input id="nombre1" type="text" class="form-control" placeholder="buscar por Paciente/Terapia/Médico" name="nombre1" value="{{ old('nombre1') }}"  onKeyUp="this.value=this.value.toUpperCase();" >
+                    </div>
+            </div>
+            </td>
+            <td>
+            <div>
+                    <div class="col-md-6">
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" value="{{ old('fecha_inicio') }}" placeholder="Inicio" name="fecha_inicio" class="form-control pull-right" id="fechaInicio">
+                        </div>
+                    </div>
+            </div>
+            </td>
+            <td>
+            <div>
+                    <div class="col-md-6">
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" value="{{ old('fecha_fin') }}" placeholder="Fin" name="fecha_fin" class="form-control pull-right" id="fechaFin">
+                        </div>
+                    </div>
+            </div>
+            </td>
+            </tr>
+        </table>
         @endcomponent
       </form>
     <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">

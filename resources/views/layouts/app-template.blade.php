@@ -134,6 +134,14 @@
             autoclose: true,
             format: 'dd/mm/yyyy'
           });
+          $('#fechaInicio').datepicker({
+            autoclose: true,
+            format: 'yyyy-mm-dd'
+          });
+          $('#fechaFin').datepicker({
+            autoclose: true,
+            format: 'yyyy-mm-dd'
+          });
         });
       </script>
 

@@ -12,6 +12,7 @@ use App\Paciente;
 use App\Medico;
 use App\Terapia;
 use Auth;
+//use DateTime;
 
 class TratamientoController extends Controller {
 
@@ -36,7 +37,7 @@ class TratamientoController extends Controller {
                         'terapias.nombre as nombre_terapia',
                         'terapias.color as color')
         ->orderBy('fecha', 'desc')->paginate(10);
-        $message = '';
+        $message = ' ';
         return view('tratamiento-mgmt/index', ['tratamientos' => $tratamientos, 'message' => $message]);
     }
 
@@ -111,11 +112,91 @@ class TratamientoController extends Controller {
 
     public function search(Request $request) {
         $constraints = [
-            'fecha' => $request['fecha']
+            'nombre1' => strtoupper ($request['nombre1']),
+            'fechaInicio' => $request['fecha_inicio'],
+            'fechaFin' => $request['fecha_fin']
         ];
+  
+        $nombre = strtoupper($request['nombre1']);
+        
+        $fechaInicio = $request['fecha_inicio'];
+        $fechaFin = $request['fecha_fin'];
 
-       $tratamientos = $this->doSearchingQuery($constraints);
-       return view('tratamiento-mgmt/index', ['tratamientos' => $tratamientos, 'searchingVals' => $constraints]);
+        if($request['nombre1']!=''){
+          $tratamientos = DB::table('tratamientos')
+            ->leftJoin('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
+            ->leftJoin('pacientes', 'tratamientos.paciente_id', '=', 'pacientes.id')
+            ->leftJoin('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
+            ->select(DB::raw('terapias.color as color,
+                              terapias.nombre as nombre_terapia, 
+                              medicos.nombre as nombre_medico,
+                              pacientes.nombre1 as primer_nombre,
+                              pacientes.nombre2 as segundo_nombre,
+                              pacientes.nombre3 as tercer_nombre,
+                              pacientes.apellido1 as primer_apellido,
+                              pacientes.apellido2 as segundo_apellido,
+                              pacientes.apellido3 as tercer_apellido,
+                              tratamientos.*'))
+            ->whereRaw("(terapias.nombre like '%$nombre%')")
+            ->orWhereRaw("(pacientes.nombre1 like '%$nombre%')")
+            ->orWhereRaw("(pacientes.nombre2 like '%$nombre%')")
+            ->orWhereRaw("(pacientes.nombre3 like '%$nombre%')")
+            ->orWhereRaw("(CONCAT(pacientes.nombre1,' ',pacientes.nombre2) like '%$nombre%')")
+            ->orWhereRaw("(CONCAT(pacientes.nombre1,' ',pacientes.nombre2,' ',pacientes.nombre3) like '%$nombre%')")
+            ->orWhereRaw("(CONCAT(pacientes.nombre1,' ',pacientes.apellido1) like '%$nombre%')")
+            ->orWhereRaw("(CONCAT(pacientes.nombre1,' ',pacientes.nombre2,' ',pacientes.apellido1) like '%$nombre%')")
+            ->orWhereRaw("(medicos.nombre like '%$nombre%')")
+            ->paginate(10);
+        } 
+
+          else if($this->validar_fecha($fechaInicio)
+            &&$this->validar_fecha($fechaInicio)){
+            $tratamientos = DB::table('tratamientos')
+            ->leftJoin('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
+            ->leftJoin('pacientes', 'tratamientos.paciente_id', '=', 'pacientes.id')
+            ->leftJoin('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
+            ->select(DB::raw('terapias.color as color,
+                              terapias.nombre as nombre_terapia, 
+                              medicos.nombre as nombre_medico,
+                              pacientes.nombre1 as primer_nombre,
+                              pacientes.nombre2 as segundo_nombre,
+                              pacientes.nombre3 as tercer_nombre,
+                              pacientes.apellido1 as primer_apellido,
+                              pacientes.apellido2 as segundo_apellido,
+                              pacientes.apellido3 as tercer_apellido,
+                              tratamientos.*'))
+            ->whereRaw("(tratamientos.fecha::text like '%$fechaInicio%')")
+            ->whereRaw("(tratamientos.fecha::text like '%$fechaFin%')")
+            ->orWhereBetween('tratamientos.fecha', [$fechaInicio, $fechaFin])
+            ->paginate(10);
+          }
+          else{
+            $tratamientos = DB::table('tratamientos')
+            ->leftJoin('medicos', 'tratamientos.medico_id', '=', 'medicos.id')
+            ->leftJoin('pacientes', 'tratamientos.paciente_id', '=', 'pacientes.id')
+            ->leftJoin('terapias', 'tratamientos.terapia_id', '=', 'terapias.id')
+            ->select(DB::raw('terapias.color as color,
+                              terapias.nombre as nombre_terapia, 
+                              medicos.nombre as nombre_medico,
+                              pacientes.nombre1 as primer_nombre,
+                              pacientes.nombre2 as segundo_nombre,
+                              pacientes.nombre3 as tercer_nombre,
+                              pacientes.apellido1 as primer_apellido,
+                              pacientes.apellido2 as segundo_apellido,
+                              pacientes.apellido3 as tercer_apellido,
+                              tratamientos.*'))
+            ->paginate(10);
+          }
+        
+        $message = ' ';
+        return view('tratamiento-mgmt/index', ['tratamientos' => $tratamientos, 'searchingVals' => $constraints, 'message' => $message]);
+    }
+
+    private function validar_fecha($fecha){
+      $valores = explode('-', $fecha);
+      if((count($valores) == 3 && checkdate($valores[2], $valores[1], $valores[0]))
+        ||($fecha==null)) return true;
+        return false;
     }
 
     private function doSearchingQuery($constraints) {

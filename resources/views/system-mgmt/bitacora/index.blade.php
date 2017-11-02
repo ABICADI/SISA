@@ -22,12 +22,41 @@
       <form method="POST" action="{{ route('bitacora.search') }}">
          {{ csrf_field() }}
          @component('layouts.search', ['title' => 'Buscar'])
-          @component('layouts.two-cols-search-row', ['items' => ['Usuario', 'Actividad', 'Nombre_Tabla'],
-          'oldVals' => [isset($searchingVals) ? strtoupper($searchingVals['usuario']) : '', isset($searchingVals) ? strtoupper($searchingVals['actividad']) : '', isset($searchingVals) ? strtoupper($searchingVals['nombre_tabla']) : '']])
-          @endcomponent
-          @component('layouts.two-cols-date-search-row', ['items' => ['Fecha'],
-          'oldVals' => [isset($searchingVals) ? $searchingVals['fecha'] : '']])
-          @endcomponent
+          <table id="example2" class="table table-responsive">
+            <tr>
+            <td>
+            <div>
+                    <div>
+                        <input id="nombre1" type="text" class="form-control" placeholder="buscar por Paciente/Terapia/Médico" name="nombre1" value="{{ old('nombre1') }}"  onKeyUp="this.value=this.value.toUpperCase();" >
+                    </div>
+            </div>
+            </td>
+            <td>
+            <div>
+                    <div class="col-md-6">
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" value="{{ old('fecha_inicio') }}" placeholder="Inicio" name="fecha_inicio" class="form-control pull-right" id="from">
+                        </div>
+                    </div>
+            </div>
+            </td>
+            <td>
+            <div>
+                    <div class="col-md-6">
+                        <div class="input-group date">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <input type="text" value="{{ old('fecha_fin') }}" placeholder="Fin" name="fecha_fin" class="form-control pull-right" id="to">
+                        </div>
+                    </div>
+            </div>
+            </td>
+            </tr>
+        </table>
         @endcomponent
       </form>
       @endif
@@ -58,16 +87,7 @@
               </tr>
             @endforeach
             </tbody>
-            <tfoot>
-              <tr>
-                <th width="20%" rowspan="1" colspan="1">Usuario</th>
-                <th width="20%" rowspan="1" colspan="1">Nombre Tabla</th>
-                <th width="20%" rowspan="1" colspan="1">Actividad</th>
-                <th width="20%" rowspan="1" colspan="1">Dato Anterior</th>
-                <th width="20%" rowspan="1" colspan="1">Dato Nuevo</th>
-                <th width="20%" rowspan="1" colspan="1">Fecha</th>
-              </tr>
-            </tfoot>
+            
           </table>
         </div>
       </div>
