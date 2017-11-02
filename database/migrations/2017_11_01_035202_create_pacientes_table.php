@@ -23,7 +23,7 @@ class CreatePacientesTable extends Migration {
           $table->string('fecha_ingreso');
           $table->string('telefono')->nullable();
           $table->string('seguro_social',10);
-          $table->string('observacion',500)->nullable();
+          $table->string('observacion',1000)->nullable();
           $table->integer('pago_id');
           $table->integer('genero_id');
           $table->foreign('municipio_id')->references('id')->on('municipios')->onUpdate('cascade');

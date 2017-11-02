@@ -48,14 +48,14 @@
                     </div>
                 <label class="col-md-2 control-label">Incrementar Citas</label>
                     <div class="col-md-2">
-                        <input  class="form-control" name="asignados" id="asignados" placeholder="agregar más citas" type="text" onkeypress="return numeros(event)" required autofocus>
+                        <input  class="form-control" name="asignados" id="asignados" placeholder="agregar más citas" type="text" onkeypress="return numeros(event)"  autofocus>
                     </div>
             </div>
             <div class="form-group{{ $errors->has('descripcion') ? ' has-error' : '' }}">
                 <label for="descripcion" class="col-md-2 control-label">Diagnóstico</label>
 
                     <div class="col-md-6">
-                        <textarea id="descripcion" class="form-control" name="descripcion" placeholder="descripcion" cols="50" rows="10"  type="text" value="{{ $terapia->descripcion }}" maxlength="500" onKeyUp="this.value=this.value.toUpperCase();" autofocus>{{ $tratamiento->descripcion }}</textarea>
+                        <textarea id="descripcion" class="form-control" name="descripcion" placeholder="descripcion" cols="50" rows="10"  type="text" value="{{ $terapia->descripcion }}" maxlength="1000" onKeyUp="this.value=this.value.toUpperCase();" autofocus>{{ $tratamiento->descripcion }}</textarea>
 
                             @if ($errors->has('descripcion'))
                                 <span class="help-block">

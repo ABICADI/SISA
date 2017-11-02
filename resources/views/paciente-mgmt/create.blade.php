@@ -303,7 +303,7 @@
                 <label for="observacion" class="col-md-2 control-label">Observaciones</label>
 
                     <div class="col-md-6">
-                        <textarea id="observacion" class="form-control" name="observacion" placeholder="observacion" cols="50" rows="10"  type="text" value="{{ old('observacion') }}" maxlength="500" autofocus></textarea>
+                        <textarea id="observacion" class="form-control" name="observacion" placeholder="observacion" cols="50" rows="10"  type="text" value="{{ old('observacion') }}" onKeyUp="this.value=this.value.toUpperCase();"  maxlength="1000" autofocus></textarea>
 
                             @if ($errors->has('observacion'))
                                 <span class="help-block">

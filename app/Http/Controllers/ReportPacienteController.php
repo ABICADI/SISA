@@ -165,9 +165,35 @@ class ReportPacienteController extends Controller {
 								'pago' => $request['pago']
 					];
 	        $pacientes = $this->getExportingData($constraints);
-	        $pdf = PDF::loadView('system-mgmt/report-paciente/pdf', ['pacientes' => $pacientes, 'searchingVals' => $constraints]);
+					if($constraints['from'] == '' || $constraints['to'] == ''){
+						if($constraints['pago']!=0 && $constraints['departamento']!=0 && $constraints['municipio']!=0){
+								$title = 'Reporte del Paciente por Departamento: '.$departamento->nombre.', Municipio: '.$municipio->nombre.', y Pago: '.$pago->nombre;
+						}
+						if($constraints['pago']!=0 && $constraints['departamento']==0 && $constraints['municipio']==0){
+								$title = 'Reporte del Paciente por Pago: '.$pago->nombre;
+						}
+						if($constraints['pago']==0 && $constraints['departamento']!=0 && $constraints['municipio']!=0){
+								$title = 'Reporte del Paciente por Departamento: '.$departamento->nombre.', y Municipio: '.$municipio->nombre;
+						}else{
+								$title = 'Reporte del Paciente';
+						}
+					}
+					if($constraints['from'] != '' && $constraints['to'] != ''){
+						if($constraints['pago']!=0 && $constraints['departamento']!=0 && $constraints['municipio']!=0){
+								$title = 'Reporte del Paciente por Rango: de '.$request['from'].' hasta '.$request['to'].', Departamento: '.$departamento->nombre.', Municipio: '.$municipio->nombre.', y Pago: '.$pago->nombre;
+						}
+						if($constraints['pago']!=0 && $constraints['departamento']==0 && $constraints['municipio']==0){
+								$title = 'Reporte del Paciente por Rango: de '.$request['from'].' hasta '.$request['to'].', y Pago: '.$pago->nombre;
+						}
+						if($constraints['pago']==0 && $constraints['departamento']!=0 && $constraints['municipio']!=0){
+								$title = 'Reporte del Paciente por Rango: de '.$request['from'].' hasta '.$request['to'].', Departamento: '.$departamento->nombre.', y Municipio: '.$municipio->nombre;
+						}else{
+								$title = 'Reporte del Paciente por Rango: de '.$request['from'].' hasta '.$request['to'];
+						}
+					}
+	        $pdf = PDF::loadView('system-mgmt/report-paciente/pdf', ['pacientes' => $pacientes, 'searchingVals' => $constraints, 'title' => $title]);
 	        return $pdf->download('reporte_paciente_fecha_'. $now .'.pdf');
-	        return view('system-mgmt/report-paciente/pdf', ['pacientes' => $pacientes, 'searchingVals' => $constraints]);
+	        return view('system-mgmt/report-paciente/pdf', ['pacientes' => $pacientes, 'searchingVals' => $constraints, 'title' => $title]);
 	    }
 
 	    private function prepareExportingData($request) {
@@ -181,13 +207,42 @@ class ReportPacienteController extends Controller {
 																								'municipio' => $request['municipio'],
 																								'pago' => $request['pago']]);
 	        return Excel::create('reporte_paciente_de_fecha_'. $now, function($excel) use($pacientes, $request, $author) {
+						$pago = Pago::find($request['pago']);
+						$departamento = Departamento::find($request['departamento']);
+						$municipio = Municipio::find($request['municipio']);
 						date_default_timezone_set('america/guatemala');
-						$format = 'Y-m-d H:i:s';
+						$format = 'd-m-Y';
 						$now = date($format);
-		        $excel->setTitle('Reporte de Pacientes del '. $now);
+						if($constraints['from'] == '' || $constraints['to'] == ''){
+							if($constraints['pago']!=0 && $constraints['departamento']!=0 && $constraints['municipio']!=0){
+									$title = 'Reporte del Paciente por Departamento: '.$departamento->nombre.', Municipio: '.$municipio->nombre.', y Pago: '.$pago->nombre;
+							}
+							if($constraints['pago']!=0 && $constraints['departamento']==0 && $constraints['municipio']==0){
+									$title = 'Reporte del Paciente por Pago: '.$pago->nombre;
+							}
+							if($constraints['pago']==0 && $constraints['departamento']!=0 && $constraints['municipio']!=0){
+									$title = 'Reporte del Paciente por Departamento: '.$departamento->nombre.', y Municipio: '.$municipio->nombre;
+							}else{
+									$title = 'Reporte del Paciente';
+							}
+						}
+						if($constraints['from'] != '' && $constraints['to'] != ''){
+							if($constraints['pago']!=0 && $constraints['departamento']!=0 && $constraints['municipio']!=0){
+									$title = 'Reporte del Paciente por Rango: de '.$request['from'].' hasta '.$request['to'].', Departamento: '.$departamento->nombre.', Municipio: '.$municipio->nombre.', y Pago: '.$pago->nombre;
+							}
+							if($constraints['pago']!=0 && $constraints['departamento']==0 && $constraints['municipio']==0){
+									$title = 'Reporte del Paciente por Rango: de '.$request['from'].' hasta '.$request['to'].', y Pago: '.$pago->nombre;
+							}
+							if($constraints['pago']==0 && $constraints['departamento']!=0 && $constraints['municipio']!=0){
+									$title = 'Reporte del Paciente por Rango: de '.$request['from'].' hasta '.$request['to'].', Departamento: '.$departamento->nombre.', y Municipio: '.$municipio->nombre;
+							}else{
+									$title = 'Reporte del Paciente por Rango: de '.$request['from'].' hasta '.$request['to'];
+							}
+						}
+		        $excel->setTitle($title);
 		        $excel->setCreator($author)->setCompany('HoaDang');
 		        $excel->setDescription('Listado de Pacientes');
-		        $excel->sheet('Reporte', function($sheet) use($pacientes) {
+		        $excel->sheet('Reporte_'.$now, function($sheet) use($pacientes) {
 		        	$sheet->fromArray($pacientes);
 	          });
 	        });

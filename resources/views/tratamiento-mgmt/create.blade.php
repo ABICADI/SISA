@@ -53,7 +53,7 @@
                             <label for="descripcion" class="col-md-2 control-label">Diagnóstico</label>
 
                                 <div class="col-md-6">
-                                    <textarea id="descripcion" class="form-control" name="descripcion" placeholder="descripcion" cols="50" rows="10"  type="text" value="{{ old('descripcion') }}" maxlength="500" autofocus></textarea>
+                                    <textarea id="descripcion" class="form-control" name="descripcion" placeholder="descripcion" cols="50" rows="10"  type="text" value="{{ old('descripcion') }}" maxlength="1000" autofocus></textarea>
 
                                         @if ($errors->has('descripcion'))
                                             <span class="help-block">
