@@ -207,7 +207,7 @@ class ActividadController extends Controller {
         $this->validate($request, [
             'nombre' => 'required|max:50',
             'direccion' => 'max:75',
-            'descripcion' => 'max:500',
+            'descripcion' => 'max:1000',
             'fecha' => 'required',
             'user_id' => 'required',
             'municipio_id' => 'required',
@@ -218,7 +218,7 @@ class ActividadController extends Controller {
         $this->validate($request, [
             'nombre' => 'max:50',
             'direccion' => 'max:75',
-            'descripcion' => 'max:500',
+            'descripcion' => 'max:1000',
             'fecha' => 'required',
             'user_id' => 'required',
             'municipio_paciente' => 'required',

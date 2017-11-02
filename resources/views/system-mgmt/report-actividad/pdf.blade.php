@@ -28,12 +28,12 @@
        <table id="example2" role="grid">
             <thead>
               <tr role="row">
-                <th width="15%">Nombre</th>
-                <th width="20%">Encargado</th>
+                <th width="5%">Nombre</th>
+                <th width="8%">Encargado</th>
                 <th width="5%">Teléfono</th>
-                <th width="20%">Dirección</th>
+                <th width="2%">Dirección</th>
                 <th width="5%">Fecha</th>
-                <th width="15%">Descripción</th>
+                <th width="20%">Descripción</th>
               </tr>
             </thead>
             <tbody>

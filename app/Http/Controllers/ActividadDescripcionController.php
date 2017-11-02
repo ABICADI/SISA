@@ -27,7 +27,7 @@ class ActividadDescripcionController extends Controller {
 
     private function validateDes($request) {
         $this->validate($request, [
-            'descripcion' => 'max:250',
+            'descripcion' => 'max:1000',
         ]);
     }
 

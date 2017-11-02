@@ -11,7 +11,7 @@ class CreateActividadesTable extends Migration {
             $table->increments('id');
             $table->string("nombre");
             $table->string("direccion")->nullable();
-            $table->string("descripcion",500)->nullable();
+            $table->string("descripcion",1000)->nullable();
             $table->date("fecha");
             $table->integer("user_id");
             $table->integer("municipio_id");
