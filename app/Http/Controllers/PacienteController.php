@@ -30,10 +30,12 @@ class PacienteController extends Controller {
     }
 
     public function create() {
+        $format = 'd/m/Y';
+        $fecha = date($format);
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $pagos = Pago::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $generos = Genero::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        return view('paciente-mgmt/create', ['departamentos' => $departamentos, 'pagos' => $pagos, 'generos' => $generos]);
+        return view('paciente-mgmt/create', ['departamentos' => $departamentos, 'pagos' => $pagos, 'generos' => $generos, 'fecha' => $fecha]);
     }
 
     public function getMunicipios(Request $request, $id){
@@ -126,7 +128,7 @@ class PacienteController extends Controller {
         $constraints = [
             'nombre1' => strtoupper ($request['nombre1'])
         ];
-  
+
         $nombre = strtoupper($request['nombre1']);
         $pacientes = DB::table('pacientes')
             ->leftJoin('generos', 'pacientes.genero_id', '=', 'generos.id')
@@ -139,7 +141,7 @@ class PacienteController extends Controller {
             ->orWhereRaw("(CONCAT(nombre1,' ',nombre2) like '%$nombre%')")
             ->orWhereRaw("(CONCAT(nombre1,' ',nombre2,' ',nombre3) like '%$nombre%')")
             ->orWhereRaw("(CONCAT(nombre1,' ',apellido1) like '%$nombre%')")
-            ->orWhereRaw("(CONCAT(nombre1,' ',nombre2,' ',apellido1) like '%$nombre%')")  
+            ->orWhereRaw("(CONCAT(nombre1,' ',nombre2,' ',apellido1) like '%$nombre%')")
             ->paginate(10);
 
         return view('paciente-mgmt/index', ['pacientes' => $pacientes, 'searchingVals' => $constraints]);

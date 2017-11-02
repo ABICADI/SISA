@@ -18,11 +18,11 @@ class GraficaCitaController extends Controller{
 			$format = 'Y';
 			$now = date($format);
 
-			$fisioterapia = Cita::join('tratamientos','citas.tratamiento_id','tratamientos.id')->where('tratamientos.terapia_id', '=', 2)->count('citas.id');
-			$terapia_lenguaje = Cita::join('tratamientos','citas.tratamiento_id','tratamientos.id')->where('tratamientos.terapia_id', '=', 3)->count('citas.id');
-			$terapia_ocupacional = Cita::join('tratamientos','citas.tratamiento_id','tratamientos.id')->where('tratamientos.terapia_id', '=', 4)->count('citas.id');
-			$educacion_especial = Cita::join('tratamientos','citas.tratamiento_id','tratamientos.id')->where('tratamientos.terapia_id', '=', 5)->count('citas.id');
-			$mecanoterapia = Cita::join('tratamientos','citas.tratamiento_id','tratamientos.id')->where('tratamientos.terapia_id', '=', 6)->count('citas.id');
+			$fisioterapia = Cita::join('tratamientos','citas.tratamiento_id','tratamientos.id')->where('tratamientos.terapia_id', '=', 2)->count('tratamientos.terapia_id');
+			$terapia_lenguaje = Cita::join('tratamientos','citas.tratamiento_id','tratamientos.id')->where('tratamientos.terapia_id', '=', 3)->count('tratamientos.terapia_id');
+			$terapia_ocupacional = Cita::join('tratamientos','citas.tratamiento_id','tratamientos.id')->where('tratamientos.terapia_id', '=', 4)->count('tratamientos.terapia_id');
+			$educacion_especial = Cita::join('tratamientos','citas.tratamiento_id','tratamientos.id')->where('tratamientos.terapia_id', '=', 5)->count('tratamientos.terapia_id');
+			$mecanoterapia = Cita::join('tratamientos','citas.tratamiento_id','tratamientos.id')->where('tratamientos.terapia_id', '=', 6)->count('tratamientos.terapia_id');
 
 			$grafica_terapia = Charts::create('area', 'highcharts')
 					->title('Gráfica de Citas por terapias registradas en SISA')

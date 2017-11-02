@@ -34,10 +34,12 @@ class UserManagementController extends Controller {
     }
 
     public function create() {
+        $format = 'd/m/Y';
+        $fecha = date($format);
         $rols = Rol::select('id', 'nombre')->where('rols.id','!=','1')->orderBy('nombre', 'asc')->get();
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $generos = Genero::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        return view('users-mgmt/create', ['rols' => $rols, 'departamentos' => $departamentos, 'generos' => $generos]);
+        return view('users-mgmt/create', ['rols' => $rols, 'departamentos' => $departamentos, 'generos' => $generos, 'fecha' => $fecha]);
     }
 
     public function getMunicipios(Request $request, $id){

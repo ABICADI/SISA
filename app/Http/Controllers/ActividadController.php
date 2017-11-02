@@ -31,11 +31,13 @@ class ActividadController extends Controller {
     }
 
     public function create() {
+        $format = 'd/m/Y';
+        $fecha = date($format);
         $users = User::select('id', 'nombre1', 'nombre2', 'nombre3', 'apellido1', 'apellido2', 'apellido3')
         ->where('users.estado_id','!=','2')->orderBy('nombre1', 'asc')->get();
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
 
-        return view('actividad-mgmt/create', ['users' => $users, 'departamentos' => $departamentos]);
+        return view('actividad-mgmt/create', ['users' => $users, 'departamentos' => $departamentos, 'fecha' => $fecha]);
     }
 
     public function store(Request $request){
