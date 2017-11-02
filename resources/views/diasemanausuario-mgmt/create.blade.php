@@ -292,7 +292,7 @@
                             Siguiente <i class="fa fa-chevron-right"></i>
                         </button>
 
-                        <a href="{{ route('user-management.show', ['id' => $user->id]) }}" class="btn btn-danger col-sm-6 col-xs-6 btn-margin"><i class="fa fa-user-times"></i> Cancelar Proceso
+                        <a href="{{ route('user-management.show', ['id' => $user->id]) }}" class="btn btn-danger col-sm-3 col-xs-6 btn-margin"><i class="fa fa-user-times"></i> Cancelar
                         </a>
                     </div>
                 @endif

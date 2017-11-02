@@ -103,7 +103,9 @@ class UserManagementController extends Controller {
         ->where('userterapias.user_id', '=', $id)->orderBy('terapias.nombre','asc')->get();
 
         $rols = Rol::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+        $departamentos = Municipio::join('departamnetos', 'muncipios.departamento_id', 'departamentos.id')
+                                  ->select('departamentos.id', 'departamentos.nombre')
+                                  ->where('municipios.id','=',$user->municipio_id)->get();
         $municipios = Municipio::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $estados = Estado::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $generos = Genero::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
@@ -132,7 +134,7 @@ class UserManagementController extends Controller {
         $constraints = [
             'nombre1' => strtoupper ($request['nombre1'])
         ];
-  
+
         $nombre = strtoupper($request['nombre1']);
         $users = DB::table('users')
             ->leftJoin('rols', 'users.rol_id', '=', 'rols.id')
@@ -145,7 +147,7 @@ class UserManagementController extends Controller {
             ->orWhereRaw("(CONCAT(nombre1,' ',nombre2) like '%$nombre%')")
             ->orWhereRaw("(CONCAT(nombre1,' ',nombre2,' ',nombre3) like '%$nombre%')")
             ->orWhereRaw("(CONCAT(nombre1,' ',apellido1) like '%$nombre%')")
-            ->orWhereRaw("(CONCAT(nombre1,' ',nombre2,' ',apellido1) like '%$nombre%')")  
+            ->orWhereRaw("(CONCAT(nombre1,' ',nombre2,' ',apellido1) like '%$nombre%')")
             ->paginate(10);
 
             //dd($users);
@@ -164,7 +166,7 @@ class UserManagementController extends Controller {
             }
             $index++;
         }
-        
+
         //dd($query);
         return $query->paginate(10);
     }
