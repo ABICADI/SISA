@@ -23,13 +23,9 @@
          {{ csrf_field() }}
          @component('layouts.search', ['title' => 'Buscar'])
           <table id="example2" class="table table-responsive">
-            <tr>
+            <tr class="col-md-5">
             <td>
-            <div>
-                    <div>
-                        <input id="nombre1" type="text" class="form-control" placeholder="buscar por Usuario/Tabla/Actividad" name="nombre1" value="{{ old('nombre1') }}"  onKeyUp="this.value=this.value.toUpperCase();" >
-                    </div>
-            </div>
+              <input id="nombre1" type="text" class="form-control" placeholder="buscar por Usuario/Tabla/Actividad" name="nombre1" value="{{ old('nombre1') }}"  onKeyUp="this.value=this.value.toUpperCase();" >
             </td>
             <td>
             <div>
@@ -44,7 +40,6 @@
             </div>
             </td>
             <td>
-            <div>
                     <div class="col-md-6">
                         <div class="input-group date">
                             <div class="input-group-addon">
@@ -53,7 +48,6 @@
                             <input type="text" value="{{ old('fecha_fin') }}" placeholder="Fin" name="fecha_fin" class="form-control pull-right" id="to">
                         </div>
                     </div>
-            </div>
             </td>
             </tr>
         </table>
@@ -87,7 +81,7 @@
               </tr>
             @endforeach
             </tbody>
-            
+
           </table>
         </div>
       </div>

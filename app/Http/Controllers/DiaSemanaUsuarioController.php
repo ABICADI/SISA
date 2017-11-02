@@ -43,8 +43,9 @@ class DiaSemanaUsuarioController extends Controller {
 								$diausuario = new UsuarioDia();
 			        	$diausuario->diasemana_id = $diasemana;
 			        	$diausuario->user_id = $user->id;
-			        	$this->createDiaSemanaUsuarioBitacora($request, $diasemana, $user);
-			          $diausuario->save();
+			          if($diausuario->save()){
+									$this->createDiaSemanaUsuarioBitacora($request, $diasemana, $user);
+								}
 		        }
 						Flash('¡Se agregaron Exitosamente los dias al Empleado!')->success();
 		        return redirect()->intended('/sisa/terapiausuario-management');

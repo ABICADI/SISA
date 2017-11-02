@@ -316,7 +316,7 @@
                             <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <table id="example2" class="table table-responsive" role="grid" aria-describedby="example2_info">
+                                        <table id="example2" class="table table-responsive" role="grid" aria-describedby="example2_info" style="text-align:center;">
                                           @foreach ($terapias as $terapia)
                                             <tr class="col-md-3"  role="row">
                             <td><input type="checkbox" id="inlineCheckbox1" name="terapia[]" value="{{$terapia->id}}">  {{ $terapia->nombre }}</td>

@@ -206,8 +206,7 @@
         <table id="example2" class="table table-responsive">
             <tr>
             <td>
-            <div class="form-group">
-                <label class="col-md-5 control-label"><label style="color:red">*</label> Departamento</label>
+                <label class="col-md-4 control-label"><label style="color:red">*</label> Departamento</label>
                     <div class="col-md-7">
                         <select class="form-control" name="departamento_paciente" id="departamento_paciente" autofocus>
                             <option value="0" selected disabled>seleccione departamento</option>
@@ -216,10 +215,8 @@
                             @endforeach
                         </select>
                     </div>
-            </div>
             </td>
             <td>
-            <div class="form-group">
                 <label class="col-md-4 control-label"><label style="color:red">*</label> Municipio</label>
                   <div class="col-md-7">
                     <select class="form-control" name="municipio_paciente" id="municipio_paciente" autofocus>
@@ -228,7 +225,6 @@
                     @endforeach
                     </select>
                   </div>
-            </div>
             </td>
             <td>
             <div class="form-group{{ $errors->has('direccion') ? ' has-error' : '' }}">
@@ -266,7 +262,6 @@
             </td>
             <td>
                 <label for="edad" class="col-md-3 control-label">Edad</label>
-
                     <div class="col-md-3">
                         <input id="edad" type="text" class="form-control" name="edad" disabled="">
                             <script type="text/javascript">
@@ -373,7 +368,25 @@
             <div class="panel panel-default">
                 @component('layouts.esconder_info', ['title' => 'Dias a Laborar'])
                 <div class="panel-body">
-                        <div class="form-group">
+                  <div class="form-group">
+                    <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                      <div class="row">
+                          <div class="col-sm-10">
+                            <table id="example2" class="table table-responsive" role="grid" aria-describedby="example2_info">
+                                <tr>
+                                <td role="row">
+                                  <label>
+                                      <input type="checkbox" name="dia_default" id="dia_default" value="1" onchange="javascript:EsconderDias()" checked>
+                                      NINGUNO
+                                  </label>
+                                </td>
+                                </tr>
+                            </table>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group" id="editar_dia" style="display: none;">
                             <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                                 <div class="row">
                                     <div class="col-sm-10">
@@ -384,8 +397,10 @@
                                             @foreach ($userdiasemanas as $userdiasemana)
 
                                             @if($diasemana->id == $userdiasemana->diasemana_id)
+                                            @if($userdiasemana->diasemana_id!=1)
                                             <td role="row"><input type="checkbox" id="{{$diasemana->id}}" name="diasemana[]" value="{{$diasemana->id}}" checked>  {{ $userdiasemana->nombre_dia }}</td>
                                             <?php $cont = 1; ?>
+                                            @endif
                                             @endif
                                             @endforeach
                                             <?php if($cont < 1) {?>
@@ -399,7 +414,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                    </div>
                 </div>
                 @endcomponent
             </div>
@@ -413,25 +428,43 @@
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('terapiausuario-management.store') }}">
                         {{ csrf_field() }}
-
                         <div class="form-group">
+                          <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                  <table id="example2" class="table table-responsive" role="grid" aria-describedby="example2_info">
+                                      <tr>
+                                      <td role="row">
+                                        <label>
+                                            <input type="checkbox" name="terapia_default" id="terapia_default" value="1" onchange="javascript:EsconderTerapias()" checked>
+                                            NINGUNO
+                                        </label>
+                                      </td>
+                                      </tr>
+                                  </table>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group" id="editar_terapia" style="display: none;">
                             <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                                 <div class="row">
                                     <div class="col-sm-10">
-                                        <table id="example2" class="table table-responsive" role="grid" aria-describedby="example2_info">
-                                            <tr>
+                                        <table id="example2" class="table table-responsive" role="grid" aria-describedby="example2_info" style="text-align:center;">
                                             @foreach ($terapias as $terapia)
                                             <?php $cont = 0; ?>
                                             @foreach ($usuarioterapias as $usuarioterapia)
-
+                                            <tr class="col-md-3"  role="row">
                                             @if($terapia->id == $usuarioterapia->terapia_id)
-                                            <td role="row"><input type="checkbox" id="{{$terapia->id}}" name="terapia[]" value="{{$terapia->id}}" checked>  {{ $usuarioterapia->terapia_nombre }}</td>
+                                            @if($usuarioterapia->terapia_id!=1)
+                                            <td><input type="checkbox" id="{{$terapia->id}}" name="terapia[]" value="{{$terapia->id}}" checked>  {{ $usuarioterapia->terapia_nombre }}</td>
                                             <?php $cont = 1; ?>
+                                            @endif
                                             @endif
                                             @endforeach
                                             <?php if($cont < 1) {?>
                                             @if($terapia->id != $usuarioterapia->terapia_id)
-                                            <td role="row"><input type="checkbox" id="{{$terapia->id}}" name="terapia[]" value="{{$terapia->id}}">  {{ $terapia->nombre }}</td>
+                                            <td><input type="checkbox" id="{{$terapia->id}}" name="terapia[]" value="{{$terapia->id}}">  {{ $terapia->nombre }}</td>
                                             @endif
                                             <?php }?>
                                             @endforeach

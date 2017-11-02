@@ -38,15 +38,49 @@ class DiaTerapiaUsuarioController extends Controller {
         $terapias = Terapia::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $generos = Genero::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
 
-        $userdiasemanas = DB::table('userdiasemanas')
+        $diasemanaas = DB::table('userdiasemanas')
         ->leftJoin('diasemanas', 'userdiasemanas.diasemana_id', '=', 'diasemanas.id')
         ->select('userdiasemanas.*', 'diasemanas.id as diasemana_id', 'diasemanas.nombre as nombre_dia')
         ->where('userdiasemanas.user_id', '=', $id)->get();
 
-        $usuarioterapias = DB::table('userterapias')
+          if($diasemanaas->count()==null){
+              $diausuario = new UsuarioDia();
+              $diausuario->diasemana_id = 1;
+              $diausuario->user_id = $user->id;
+              $diausuario->save();
+
+              $userdiasemanas = DB::table('userdiasemanas')
+              ->leftJoin('diasemanas', 'userdiasemanas.diasemana_id', '=', 'diasemanas.id')
+              ->select('userdiasemanas.*', 'diasemanas.id as diasemana_id', 'diasemanas.nombre as nombre_dia')
+              ->where('userdiasemanas.user_id', '=', $id)->get();
+          }else{
+            $userdiasemanas = DB::table('userdiasemanas')
+            ->leftJoin('diasemanas', 'userdiasemanas.diasemana_id', '=', 'diasemanas.id')
+            ->select('userdiasemanas.*', 'diasemanas.id as diasemana_id', 'diasemanas.nombre as nombre_dia')
+            ->where('userdiasemanas.user_id', '=', $id)->get();
+          }
+
+        $terapiaas = DB::table('userterapias')
         ->leftJoin('terapias', 'userterapias.terapia_id', '=', 'terapias.id')
         ->select('userterapias.*', 'terapias.nombre as terapia_nombre', 'terapias.id as terapia_id')
         ->where('userterapias.user_id', '=', $id)->get();
+
+          if($terapiaas->count()==null){
+            $terapiausuario = new UsuarioTerapia();
+            $terapiausuario->terapia_id = 1;
+            $terapiausuario->user_id = $user->id;
+            $terapiausuario->save();
+
+            $usuarioterapias = DB::table('userterapias')
+            ->leftJoin('terapias', 'userterapias.terapia_id', '=', 'terapias.id')
+            ->select('userterapias.*', 'terapias.nombre as terapia_nombre', 'terapias.id as terapia_id')
+            ->where('userterapias.user_id', '=', $id)->get();
+          }else{
+            $usuarioterapias = DB::table('userterapias')
+            ->leftJoin('terapias', 'userterapias.terapia_id', '=', 'terapias.id')
+            ->select('userterapias.*', 'terapias.nombre as terapia_nombre', 'terapias.id as terapia_id')
+            ->where('userterapias.user_id', '=', $id)->get();
+          }
 
 
         return view('users-mgmt/edit', ['user' => $user, 'rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios, 'estados' => $estados, 'diasemanas' => $diasemanas, 'terapias' => $terapias, 'userdiasemanas' => $userdiasemanas, 'usuarioterapias' => $usuarioterapias, 'generos' => $generos]);
@@ -55,16 +89,80 @@ class DiaTerapiaUsuarioController extends Controller {
     public function update(Request $request, $id) {
         $user = User::findOrFail($id);
         $this->validateUpdate($request);
-        $this->updatediaBitacora($request, $id);
-        $this->updateterapiaBitacora($request, $id);
+        $evaluar_dia = $request->diasemana;
+        $evaluar_terapia = $request->terapia;
+        if(collect($evaluar_dia)->isEmpty()==true || collect($evaluar_terapia)->isEmpty()==true && $request->dia_default==null && $request->terapia_default==null){
+          $user = User::join('municipios', 'users.municipio_id', '=', 'municipios.id')
+                      ->join('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
+                      ->select('users.*', 'municipios.nombre as Municipio', 'departamentos.nombre as Departamento')
+                      ->find($id);
 
-        $deleteDia = DB::table('userdiasemanas')
-        ->select('userdiasemanas.*')->where('userdiasemanas.user_id','=',$user->id);
-        $deleteDia->delete();
+                      $rols = Rol::select('id', 'nombre')->where('rols.id','!=','1')->orderBy('nombre', 'asc')->get();
+                      $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+                      $municipios = Municipio::select('id', 'nombre')->where('id', '=', $user->municipio_id)->get();
+                      $estados = Estado::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+                      $diasemanas = DiaSemana::all();
+                      $terapias = Terapia::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+                      $generos = Genero::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
 
-        $deleteTerapia = DB::table('userterapias')
-        ->select('userterapias.*')->where('userterapias.user_id','=',$user->id);
-        $deleteTerapia->delete();
+                      $diasemanaas = DB::table('userdiasemanas')
+                      ->leftJoin('diasemanas', 'userdiasemanas.diasemana_id', '=', 'diasemanas.id')
+                      ->select('userdiasemanas.*', 'diasemanas.id as diasemana_id', 'diasemanas.nombre as nombre_dia')
+                      ->where('userdiasemanas.user_id', '=', $id)->get();
+
+                        if($diasemanaas->count()==0){
+                            $diausuario = new UsuarioDia();
+                            $diausuario->diasemana_id = 1;
+                            $diausuario->user_id = $user->id;
+                            $diausuario->save();
+
+                            $userdiasemanas = DB::table('userdiasemanas')
+                            ->leftJoin('diasemanas', 'userdiasemanas.diasemana_id', '=', 'diasemanas.id')
+                            ->select('userdiasemanas.*', 'diasemanas.id as diasemana_id', 'diasemanas.nombre as nombre_dia')
+                            ->where('userdiasemanas.user_id', '=', $id)->get();
+                        }else{
+                          $userdiasemanas = DB::table('userdiasemanas')
+                          ->leftJoin('diasemanas', 'userdiasemanas.diasemana_id', '=', 'diasemanas.id')
+                          ->select('userdiasemanas.*', 'diasemanas.id as diasemana_id', 'diasemanas.nombre as nombre_dia')
+                          ->where('userdiasemanas.user_id', '=', $id)->get();
+                        }
+
+                      $terapiaas = DB::table('userterapias')
+                      ->leftJoin('terapias', 'userterapias.terapia_id', '=', 'terapias.id')
+                      ->select('userterapias.*', 'terapias.nombre as terapia_nombre', 'terapias.id as terapia_id')
+                      ->where('userterapias.user_id', '=', $id)->get();
+
+                        if($terapiaas->count()==0){
+                          $terapiausuario = new UsuarioTerapia();
+                          $terapiausuario->terapia_id = 1;
+                          $terapiausuario->user_id = $user->id;
+                          $terapiausuario->save();
+
+                          $usuarioterapias = DB::table('userterapias')
+                          ->leftJoin('terapias', 'userterapias.terapia_id', '=', 'terapias.id')
+                          ->select('userterapias.*', 'terapias.nombre as terapia_nombre', 'terapias.id as terapia_id')
+                          ->where('userterapias.user_id', '=', $id)->get();
+                        }else{
+                          $usuarioterapias = DB::table('userterapias')
+                          ->leftJoin('terapias', 'userterapias.terapia_id', '=', 'terapias.id')
+                          ->select('userterapias.*', 'terapias.nombre as terapia_nombre', 'terapias.id as terapia_id')
+                          ->where('userterapias.user_id', '=', $id)->get();
+                        }
+
+                      Flash('¡Debe seleccionar al menos un Dia y una Terapia, caso contrario marcar NINGUNO donde no lo requiera!')->error()->important();
+                      return view('users-mgmt/edit', ['user' => $user, 'rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios, 'estados' => $estados, 'diasemanas' => $diasemanas, 'terapias' => $terapias, 'userdiasemanas' => $userdiasemanas, 'usuarioterapias' => $usuarioterapias, 'generos' => $generos]);
+        }else{
+            $this->updatediaBitacora($request, $id);
+            $this->updateterapiaBitacora($request, $id);
+
+            $deleteDia = DB::table('userdiasemanas')
+            ->select('userdiasemanas.*')->where('userdiasemanas.user_id','=',$user->id);
+            $deleteDia->delete();
+
+            $deleteTerapia = DB::table('userterapias')
+            ->select('userterapias.*')->where('userterapias.user_id','=',$user->id);
+            $deleteTerapia->delete();
+        }
 
         if($request['municipio_paciente']!=0){
           $user->municipio_id = $request['municipio_paciente'];
@@ -86,20 +184,34 @@ class DiaTerapiaUsuarioController extends Controller {
         $user->estado_id = $request['estado_id'];
         $user->genero_id = $request['genero_id'];
 
-        $terapias = $request->terapia;
-        foreach ($terapias as $terapia) {
-            $terapiausuario = new UsuarioTerapia();
-            $terapiausuario->terapia_id = $terapia;
-            $terapiausuario->user_id = $user->id;
-            $terapiausuario->save();
+        if($request->terapia_default==null){
+          $terapias = $request->terapia;
+          foreach ($terapias as $terapia) {
+              $terapiausuario = new UsuarioTerapia();
+              $terapiausuario->terapia_id = $terapia;
+              $terapiausuario->user_id = $user->id;
+              $terapiausuario->save();
+          }
+        }else{
+              $terapiausuario = new UsuarioTerapia();
+              $terapiausuario->terapia_id = 1;
+              $terapiausuario->user_id = $user->id;
+              $terapiausuario->save();
         }
 
-        $diasemanas = $request->diasemana;
-        foreach ($diasemanas as $diasemana) {
-            $diausuario = new UsuarioDia();
-            $diausuario->diasemana_id = $diasemana;
-            $diausuario->user_id = $user->id;
-            $diausuario->save();
+        if($request->dia_default==null){
+          $diasemanas = $request->diasemana;
+          foreach ($diasemanas as $diasemana) {
+              $diausuario = new UsuarioDia();
+              $diausuario->diasemana_id = $diasemana;
+              $diausuario->user_id = $user->id;
+              $diausuario->save();
+          }
+        }else{
+          $diausuario = new UsuarioDia();
+          $diausuario->diasemana_id = 1;
+          $diausuario->user_id = $user->id;
+          $diausuario->save();
         }
 
         if ($request['password'] != null && strlen($request['password']) > 0) {
@@ -376,21 +488,32 @@ class DiaTerapiaUsuarioController extends Controller {
             $cadena1 = $cadena1.' , '.$userdiasemana->nombre_dia;
         }
 
-        $diasemanas = $request->diasemana;
-        $cadena = '';
-        foreach ($diasemanas as $diasemana) {
-            $nombredia=DiaSemana::findOrFail($diasemana);
-            $cadena = $cadena.' , '.$nombredia->nombre;
-        }
+        if($request->dia_default==null){
+          $diasemanas = $request->diasemana;
+          $cadena = '';
+          foreach ($diasemanas as $diasemana) {
+              $nombredia=DiaSemana::findOrFail($diasemana);
+              $cadena = $cadena.' , '.$nombredia->nombre;
+          }
 
-                $bitacora = new Bitacora();
-                $bitacora->usuario = $log;
-                $bitacora->nombre_tabla = 'USUARIO DIA SEMANA';
-                $bitacora->actividad = 'ACTUALIZAR';
-                $bitacora->anterior = 'Dias Anteriores: ' . $cadena1;
-                $bitacora->nuevo = 'Dias Actuales: ' . $cadena;
-                $bitacora->fecha = $now;
-                $bitacora->save();
+                  $bitacora = new Bitacora();
+                  $bitacora->usuario = $log;
+                  $bitacora->nombre_tabla = 'USUARIO DIA SEMANA';
+                  $bitacora->actividad = 'ACTUALIZAR';
+                  $bitacora->anterior = 'Dias Anteriores: ' . $cadena1;
+                  $bitacora->nuevo = 'Dias Actuales: ' . $cadena;
+                  $bitacora->fecha = $now;
+                  $bitacora->save();
+        }else{
+            $cadena = DiaSemana::findOrFail($request->dia_default);
+            $bitacora->usuario = $log;
+            $bitacora->nombre_tabla = 'USUARIO DIA SEMANA';
+            $bitacora->actividad = 'ACTUALIZAR';
+            $bitacora->anterior = 'Dias Anteriores: ' . $cadena1;
+            $bitacora->nuevo = 'Dias Actuales: ' . $cadena;
+            $bitacora->fecha = $now;
+            $bitacora->save();
+        }
     }
 
     public function updateterapiaBitacora($request, $id){
@@ -410,20 +533,32 @@ class DiaTerapiaUsuarioController extends Controller {
             $cadena1 = $cadena1.' , '.$usuarioterapia->terapia_nombre;
         }
 
-        $terapias = $request->terapia;
-        $cadena = '';
-        foreach ($terapias as $terapia) {
-            $nombreterapia=Terapia::findOrFail($terapia);
-            $cadena = $cadena.' , '.$nombreterapia->nombre;
-        }
+        if($request->terapia_default==null){
+            $terapias = $request->terapia;
+            $cadena = '';
+            foreach ($terapias as $terapia) {
+                $nombreterapia=Terapia::findOrFail($terapia);
+                $cadena = $cadena.' , '.$nombreterapia->nombre;
+            }
 
-                $bitacora = new Bitacora();
-                $bitacora->usuario = $log;
-                $bitacora->nombre_tabla = 'USUARIO TERAPIA';
-                $bitacora->actividad = 'ACTUALIZAR';
-                $bitacora->anterior = 'Terapias Anteriores: ' . $cadena1;
-                $bitacora->nuevo = 'Terapias Actuales: ' . $cadena;
-                $bitacora->fecha = $now;
-                $bitacora->save();
+                    $bitacora = new Bitacora();
+                    $bitacora->usuario = $log;
+                    $bitacora->nombre_tabla = 'USUARIO TERAPIA';
+                    $bitacora->actividad = 'ACTUALIZAR';
+                    $bitacora->anterior = 'Terapias Anteriores: ' . $cadena1;
+                    $bitacora->nuevo = 'Terapias Actuales: ' . $cadena;
+                    $bitacora->fecha = $now;
+                    $bitacora->save();
+        }else{
+          $cadena = Terapia::findOrFail($request->terapia_default);
+                    $bitacora = new Bitacora();
+                    $bitacora->usuario = $log;
+                    $bitacora->nombre_tabla = 'USUARIO TERAPIA';
+                    $bitacora->actividad = 'ACTUALIZAR';
+                    $bitacora->anterior = 'Terapias Anteriores: ' . $cadena1;
+                    $bitacora->nuevo = 'Terapias Actuales: ' . $cadena;
+                    $bitacora->fecha = $now;
+                    $bitacora->save();
+        }
     }
 }

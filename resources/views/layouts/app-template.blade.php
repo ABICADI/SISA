@@ -100,6 +100,30 @@
             }
         }
     </script>
+    <script type="text/javascript">
+        function EsconderDias() {
+            element = document.getElementById("editar_dia");
+            check = document.getElementById("dia_default");
+            if (check.checked) {
+                element.style.display='none';
+            }
+            else {
+                element.style.display='block';
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        function EsconderTerapias() {
+            element = document.getElementById("editar_terapia");
+            check = document.getElementById("terapia_default");
+            if (check.checked) {
+                element.style.display='none';
+            }
+            else {
+                element.style.display='block';
+            }
+        }
+    </script>
     <script>
       $('div.alert').not('.alert-important').delay(1000).fadeOut(200);
     </script>
