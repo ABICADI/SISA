@@ -21,7 +21,7 @@ class ReportPacienteController extends Controller {
 
 	    public function index() {
 	        date_default_timezone_set('america/guatemala');
-	        $format = 'd/m/Y';
+	        $format = 'Y-m-d';
 	        $now = date($format);
 	        $to = date($format, strtotime("-366 days"));
 	        $constraints = [

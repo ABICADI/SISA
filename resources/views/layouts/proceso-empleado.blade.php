@@ -82,7 +82,7 @@
         }
     </script>
     <script>
-      $('div.alert').not('.alert-important').delay(2000).fadeOut(350);
+      $('div.alert').not('.alert-important').delay(1000).fadeOut(200);
     </script>
       <script>
         $(document).ready(function() {

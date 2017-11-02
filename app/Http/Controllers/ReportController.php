@@ -17,12 +17,12 @@ class ReportController extends Controller {
 
     public function index() {
         date_default_timezone_set('america/guatemala');
-        $format = 'd/m/Y';
+        $format = 'Y-m-d';
         $now = date($format);
-        $to = date($format, strtotime("-30 days"));
+        $to = date($format, strtotime("+365 days"));
         $constraints = [
-              'from' => $to,
-              'to' => $now,
+              'from' => $now,
+              'to' => $to,
         ];
         $actividades = $this->getRangoAcitividad($constraints);
         if($actividades->count()==0){

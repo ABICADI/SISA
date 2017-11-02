@@ -198,7 +198,6 @@ class ActividadController extends Controller {
     private function validar_fecha($fecha){
 
       $valores = explode('-', $fecha);
-      //dd($valores);
       if((count($valores) == 3 && checkdate($valores[1], $valores[2], $valores[0]))
         ||($fecha==null)) return true;
         return false;

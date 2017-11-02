@@ -101,7 +101,7 @@
         }
     </script>
     <script>
-      $('div.alert').not('.alert-important').delay(2000).fadeOut(350);
+      $('div.alert').not('.alert-important').delay(1000).fadeOut(200);
     </script>
       <script>
         $(document).ready(function() {
@@ -116,11 +116,11 @@
           });
           $('#from').datepicker({
             autoclose: true,
-            format: 'dd/mm/yyyy'
+            format: 'yyyy-mm-dd'
           });
           $('#to').datepicker({
             autoclose: true,
-            format: 'dd/mm/yyyy'
+            format: 'yyyy-mm-dd'
           });
           $('#fromm').datepicker({
             autoclose: true,
