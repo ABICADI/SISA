@@ -66,20 +66,4 @@ class BitacoraController extends Controller {
         ||($fecha==null)) return true;
         return false;
     }
-
-    
-
-    private function doSearchingQuery($constraints) {
-        $query = Bitacora::query();
-        $fields = array_keys($constraints);
-        $index = 0;
-        foreach ($constraints as $constraint) {
-            if ($constraint != null) {
-                $query = $query->where( $fields[$index], 'like', '%'.$constraint.'%');
-            }
-
-            $index++;
-        }
-        return $query->paginate(10);
-    }
 }

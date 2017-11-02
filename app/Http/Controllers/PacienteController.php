@@ -48,20 +48,20 @@ class PacienteController extends Controller {
         $this->validateInput($request);
         $paciente = new Paciente();
         $paciente->cui = $request['cui'];
-        $paciente->nombre1 = $request['nombre1'];
-        $paciente->nombre2 = $request['nombre2'];
-        $paciente->nombre3 = $request['nombre3'];
-        $paciente->apellido1 = $request['apellido1'];
-        $paciente->apellido2 = $request['apellido2'];
-        $paciente->apellido3 = $request['apellido3'];
+        $paciente->nombre1 = strtoupper($request['nombre1']);
+        $paciente->nombre2 = strtoupper($request['nombre2']);
+        $paciente->nombre3 = strtoupper($request['nombre3']);
+        $paciente->apellido1 = strtoupper($request['apellido1']);
+        $paciente->apellido2 = strtoupper($request['apellido2']);
+        $paciente->apellido3 = strtoupper($request['apellido3']);
         $paciente->municipio_id = $request['municipio_id'];
-        $paciente->direccion = $request['direccion'];
+        $paciente->direccion = strtoupper($request['direccion']);
         $paciente->fecha_nacimiento = $request['fecha_nacimiento'];
-        $paciente->encargado = $request['encargado'];
+        $paciente->encargado = strtoupper($request['encargado']);
         $paciente->fecha_ingreso = $request['fecha_ingreso'];
         $paciente->telefono = $request['telefono'];
         $paciente->seguro_social = $request['seguro_social'];
-        $paciente->observacion = $request['observacion'];
+        $paciente->observacion = strtoupper($request['observacion']);
         $paciente->pago_id = $request['pago_id'];
         $paciente->genero_id = $request['genero_id'];
 
@@ -100,19 +100,19 @@ class PacienteController extends Controller {
           $paciente->municipio_id = $request['municipio_paciente'];
         }
         $paciente->cui = $request['cui'];
-        $paciente->nombre1 = $request['nombre1'];
-        $paciente->nombre2 = $request['nombre2'];
-        $paciente->nombre3 = $request['nombre3'];
-        $paciente->apellido1 = $request['apellido1'];
-        $paciente->apellido2 = $request['apellido2'];
-        $paciente->apellido3 = $request['apellido3'];
-        $paciente->direccion = $request['direccion'];
+        $paciente->nombre1 = strtoupper($request['nombre1']);
+        $paciente->nombre2 = strtoupper($request['nombre2']);
+        $paciente->nombre3 = strtoupper($request['nombre3']);
+        $paciente->apellido1 = strtoupper($request['apellido1']);
+        $paciente->apellido2 = strtoupper($request['apellido2']);
+        $paciente->apellido3 = strtoupper($request['apellido3']);
+        $paciente->direccion = strtoupper($request['direccion']);
         $paciente->fecha_nacimiento = $request['fecha_nacimiento'];
-        $paciente->encargado = $request['encargado'];
+        $paciente->encargado = strtoupper($request['encargado']);
         $paciente->fecha_ingreso = $request['fecha_ingreso'];
         $paciente->telefono = $request['telefono'];
         $paciente->seguro_social = $request['seguro_social'];
-        $paciente->observacion = $request['observacion'];
+        $paciente->observacion = strtoupper($request['observacion']);
         $paciente->pago_id = $request['pago_id'];
         $paciente->genero_id = $request['genero_id'];
         $this->updatePacienteBitacora($request, $id);
@@ -131,7 +131,7 @@ class PacienteController extends Controller {
         $pacientes = DB::table('pacientes')
             ->leftJoin('generos', 'pacientes.genero_id', '=', 'generos.id')
             ->select(DB::raw('*'))
-            ->whereRaw("(seguro_social like '%$nombre%')")
+            ->whereRaw("(pacientes.seguro_social like '%$nombre%')")
             ->orWhereRaw("(nombre like '%$nombre%')")
             ->orWhereRaw("(nombre1 like '%$nombre%')")
             ->orWhereRaw("(nombre2 like '%$nombre%')")
@@ -141,6 +141,7 @@ class PacienteController extends Controller {
             ->orWhereRaw("(CONCAT(nombre1,' ',apellido1) like '%$nombre%')")
             ->orWhereRaw("(CONCAT(nombre1,' ',nombre2,' ',apellido1) like '%$nombre%')")  
             ->paginate(10);
+
         return view('paciente-mgmt/index', ['pacientes' => $pacientes, 'searchingVals' => $constraints]);
     }
 

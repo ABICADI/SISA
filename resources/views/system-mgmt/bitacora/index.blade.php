@@ -27,7 +27,7 @@
             <td>
             <div>
                     <div>
-                        <input id="nombre1" type="text" class="form-control" placeholder="buscar por Paciente/Terapia/Médico" name="nombre1" value="{{ old('nombre1') }}"  onKeyUp="this.value=this.value.toUpperCase();" >
+                        <input id="nombre1" type="text" class="form-control" placeholder="buscar por Usuario/Tabla/Actividad" name="nombre1" value="{{ old('nombre1') }}"  onKeyUp="this.value=this.value.toUpperCase();" >
                     </div>
             </div>
             </td>

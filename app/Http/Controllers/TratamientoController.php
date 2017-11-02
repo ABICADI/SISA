@@ -56,7 +56,7 @@ class TratamientoController extends Controller {
         $this->validateInsertTratamiento($request);
         $tratamiento = new Tratamiento();
         $tratamiento->fecha = $now;
-        $tratamiento->descripcion = $request['descripcion'];
+        $tratamiento->descripcion = strtoupper($request['descripcion']);
         $tratamiento->paciente_id = $request['paciente_id'];
         $tratamiento->medico_id = $request['medico_id'];
         $tratamiento->terapia_id = $request['terapia_id'];
@@ -98,7 +98,7 @@ class TratamientoController extends Controller {
         $tratamiento->restantes = $new_restante;
       }
       $this->validateUpdateTratamiento($request);
-      $tratamiento->descripcion = $request['descripcion'];
+      $tratamiento->descripcion = strtoupper($request['descripcion']);
       $tratamiento->paciente_id = $request['paciente_id'];
       $tratamiento->medico_id = $request['medico_id'];
       $tratamiento->terapia_id = $request['terapia_id'];
@@ -197,20 +197,6 @@ class TratamientoController extends Controller {
       if((count($valores) == 3 && checkdate($valores[2], $valores[1], $valores[0]))
         ||($fecha==null)) return true;
         return false;
-    }
-
-    private function doSearchingQuery($constraints) {
-        $query = Tratamiento::query();
-        $fields = array_keys($constraints);
-        $index = 0;
-        foreach ($constraints as $constraint) {
-            if ($constraint != null) {
-                $query = $query->where( $fields[$index], 'like', '%'.$constraint.'%');
-            }
-
-            $index++;
-        }
-        return $query->paginate(10);
     }
 
     private function validateInsertTratamiento($request){

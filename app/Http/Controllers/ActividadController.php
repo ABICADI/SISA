@@ -41,9 +41,9 @@ class ActividadController extends Controller {
     public function store(Request $request){
         $this->validateInput($request);
         $actividad = new Actividad();
-        $actividad->nombre = $request['nombre'];
-        $actividad->direccion = $request['direccion'];
-        $actividad->descripcion = $request['descripcion'];
+        $actividad->nombre = strtoupper($request['nombre']);
+        $actividad->direccion = strtoupper($request['direccion']);
+        $actividad->descripcion = strtoupper($request['descripcion']);
         $actividad->fecha = $request['fecha'];
         $actividad->user_id = $request['user_id'];
         $actividad->municipio_id = $request['municipio_id'];
@@ -95,9 +95,9 @@ class ActividadController extends Controller {
         $actividad = Actividad::findOrFail($id);
 
         $this->validateUpdate($request);
-        $actividad->nombre = $request['nombre'];
-        $actividad->direccion = $request['direccion'];
-        $actividad->descripcion = $request['descripcion'];
+        $actividad->nombre = strtoupper($request['nombre']);
+        $actividad->direccion = strtoupper($request['direccion']);
+        $actividad->descripcion = strtoupper($request['descripcion']);
         $actividad->fecha = $request['fecha'];
         $actividad->user_id = $request['user_id'];
         $actividad->municipio_id = $request['municipio_paciente'];
@@ -110,7 +110,7 @@ class ActividadController extends Controller {
 
     public function search(Request $request) {
         $constraints = [
-            'nombre1' => strtoupper ($request['nombre1']),
+            'nombre1' => strtoupper($request['nombre1']),
             'fechaInicio' => $request['fecha_inicio'],
             'fechaFin' => $request['fecha_fin']
         ];
@@ -190,7 +190,6 @@ class ActividadController extends Controller {
 
         $message = ' ';
         return view('actividad-mgmt/index', ['actividades' => $actividades, 'searchingVals' => $constraints]);
-        //return view('tratamiento-mgmt/index', ['tratamientos' => $tratamientos, 'searchingVals' => $constraints, 'message' => $message]);
     }
 
     private function validar_fecha($fecha){
@@ -200,6 +199,8 @@ class ActividadController extends Controller {
         return false;
     }
 
+<<<<<<< HEAD
+=======
     private function doSearchingQuery($constraints) {
         $query = Actividad::query();
         $fields = array_keys($constraints);
@@ -214,6 +215,7 @@ class ActividadController extends Controller {
         return $query->paginate(10);
     }
 
+>>>>>>> 22368a2a883240e9f1c97ed72e340ca97f22c164
     private function validateInput($request) {
         $this->validate($request, [
             'nombre' => 'required|max:50',
