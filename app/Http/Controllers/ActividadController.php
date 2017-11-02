@@ -196,30 +196,12 @@ class ActividadController extends Controller {
     }
 
     private function validar_fecha($fecha){
-        
+
       $valores = explode('-', $fecha);
       //dd($valores);
       if((count($valores) == 3 && checkdate($valores[1], $valores[2], $valores[0]))
         ||($fecha==null)) return true;
         return false;
-    }
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 728a583b2c55807ffb27a546ac482762dc52bb12
-    private function doSearchingQuery($constraints) {
-        $query = Actividad::query();
-        $fields = array_keys($constraints);
-        $index = 0;
-        foreach ($constraints as $constraint) {
-            if ($constraint != null) {
-                $query = $query->where( $fields[$index], 'like', '%'.$constraint.'%');
-            }
-
-            $index++;
-        }
-        return $query->paginate(10);
     }
 
     private function validateInput($request) {
