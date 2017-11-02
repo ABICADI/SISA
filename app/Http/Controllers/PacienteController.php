@@ -30,7 +30,7 @@ class PacienteController extends Controller {
     }
 
     public function create() {
-        $format = 'd/m/Y';
+        $format = 'Y-m-d';
         $fecha = date($format);
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         $pagos = Pago::select('id', 'nombre')->orderBy('nombre', 'asc')->get();

@@ -34,7 +34,7 @@ class UserManagementController extends Controller {
     }
 
     public function create() {
-        $format = 'd/m/Y';
+        $format = 'Y-m-d';
         $fecha = date($format);
         $rols = Rol::select('id', 'nombre')->where('rols.id','!=','1')->orderBy('nombre', 'asc')->get();
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();

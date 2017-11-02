@@ -31,7 +31,7 @@ class ActividadController extends Controller {
     }
 
     public function create() {
-        $format = 'd/m/Y';
+        $format = 'Y-m-d';
         $fecha = date($format);
         $users = User::select('id', 'nombre1', 'nombre2', 'nombre3', 'apellido1', 'apellido2', 'apellido3')
         ->where('users.estado_id','!=','2')->orderBy('nombre1', 'asc')->get();
