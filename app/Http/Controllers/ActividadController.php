@@ -115,6 +115,8 @@ class ActividadController extends Controller {
             'fechaFin' => $request['fecha_fin']
         ];
 
+        //dd($constraints);
+
         $nombre = strtoupper($request['nombre1']);
 
         $fechaInicio = $request['fecha_inicio'];
@@ -150,7 +152,8 @@ class ActividadController extends Controller {
         }
 
           else if($this->validar_fecha($fechaInicio)
-            &&$this->validar_fecha($fechaInicio)){
+            &&$this->validar_fecha($fechaFin)){
+            //dd($constraints);
             $actividades = DB::table('actividades')
             ->leftJoin('users', 'actividades.user_id', '=', 'users.id')
             ->leftJoin('municipios', 'actividades.municipio_id', '=', 'municipios.id')
@@ -193,14 +196,15 @@ class ActividadController extends Controller {
     }
 
     private function validar_fecha($fecha){
+        
       $valores = explode('-', $fecha);
-      if((count($valores) == 3 && checkdate($valores[2], $valores[1], $valores[0]))
+      //dd($valores);
+      if((count($valores) == 3 && checkdate($valores[1], $valores[2], $valores[0]))
         ||($fecha==null)) return true;
         return false;
     }
 
-<<<<<<< HEAD
-=======
+
     private function doSearchingQuery($constraints) {
         $query = Actividad::query();
         $fields = array_keys($constraints);
@@ -215,7 +219,6 @@ class ActividadController extends Controller {
         return $query->paginate(10);
     }
 
->>>>>>> 22368a2a883240e9f1c97ed72e340ca97f22c164
     private function validateInput($request) {
         $this->validate($request, [
             'nombre' => 'required|max:50',

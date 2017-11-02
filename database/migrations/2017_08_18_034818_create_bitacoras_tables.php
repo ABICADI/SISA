@@ -14,7 +14,7 @@ class CreateBitacorasTables extends Migration {
             $table->string('actividad', 25);
             $table->string('anterior', 550)->nullable();
             $table->string('nuevo', 1000)->nullable();
-            $table->string('fecha')->nullable();
+            $table->date('fecha')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

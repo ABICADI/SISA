@@ -142,6 +142,11 @@
             autoclose: true,
             format: 'yyyy-mm-dd'
           });
+          $('#fecha2').datepicker({
+            autoclose: true,
+            format: 'yyyy-mm-dd'
+          });
+
         });
       </script>
 

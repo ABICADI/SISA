@@ -121,7 +121,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" value="{{ $actividad->fecha }}" placeholder="30/01/1990" name="fecha" class="form-control pull-right" id="fechaNacimiento" required>
+                            <input type="text" value="{{ $actividad->fecha }}" placeholder="30/01/1990" name="fecha" class="form-control pull-right" id="fecha2" required>
                         </div>
                     </div>
             </div>
