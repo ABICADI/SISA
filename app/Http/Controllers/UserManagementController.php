@@ -155,7 +155,7 @@ class UserManagementController extends Controller {
     private function validateInput($request) {
         $this->validate($request, [
             'username' => 'required|min:6|max:20|unique:users',
-            'email' => 'email|max:125|unique:users|nullable',
+            'email' => 'email|max:125|nullable',
             'password' => 'required|min:8|confirmed',
             'dpi' => 'required|digits:13|unique:users',
             'nombre1' => 'required|max:30',

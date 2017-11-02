@@ -19,10 +19,10 @@ class ReportController extends Controller {
         date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
-        $to = date($format, strtotime("+366 days"));
+        $to = date($format, strtotime("-30 days"));
         $constraints = [
-            'from' => $now,
-            'to' => $to
+              'from' => $to,
+              'to' => $now,
         ];
         $actividades = $this->getRangoAcitividad($constraints);
         if($actividades->count()==0){
@@ -70,7 +70,6 @@ class ReportController extends Controller {
     }
 
     private function getRangoAcitividad($constraints) {
-
         if($constraints['from'] == '' || $constraints['to'] == ''){
           $actividades = Actividad::join('users', 'actividades.user_id', '=', 'users.id')
                           ->select('actividades.*', 'users.nombre1 as Nombre1', 'users.nombre2 as Nombre2', 'users.nombre3 as Nombre3', 'users.apellido1 as Apellido1', 'users.apellido2 as Apellido2', 'users.apellido3 as Apellido3')
@@ -86,6 +85,7 @@ class ReportController extends Controller {
                         ->where('fecha', '>=', $constraints['from'])
                         ->where('fecha', '<=', $constraints['to'])
                         ->get();
+                        //dd($actividades);
         return $actividades;
         }
     }
