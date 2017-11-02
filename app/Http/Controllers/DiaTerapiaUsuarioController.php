@@ -91,7 +91,7 @@ class DiaTerapiaUsuarioController extends Controller {
         $this->validateUpdate($request);
         $evaluar_dia = $request->diasemana;
         $evaluar_terapia = $request->terapia;
-        if(collect($evaluar_dia)->isEmpty()==true || collect($evaluar_terapia)->isEmpty()==true && $request->dia_default==null && $request->terapia_default==null){
+        if(collect($evaluar_dia)->isEmpty()==true && collect($evaluar_terapia)->isEmpty()==true && $request->dia_default==null && $request->terapia_default==null){
           $user = User::join('municipios', 'users.municipio_id', '=', 'municipios.id')
                       ->join('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
                       ->select('users.*', 'municipios.nombre as Municipio', 'departamentos.nombre as Departamento')
@@ -505,7 +505,8 @@ class DiaTerapiaUsuarioController extends Controller {
                   $bitacora->fecha = $now;
                   $bitacora->save();
         }else{
-            $cadena = DiaSemana::findOrFail($request->dia_default);
+            $cadena = DiaSemana::find($request->dia_default);
+            $bitacora = new Bitacora();
             $bitacora->usuario = $log;
             $bitacora->nombre_tabla = 'USUARIO DIA SEMANA';
             $bitacora->actividad = 'ACTUALIZAR';
@@ -550,7 +551,7 @@ class DiaTerapiaUsuarioController extends Controller {
                     $bitacora->fecha = $now;
                     $bitacora->save();
         }else{
-          $cadena = Terapia::findOrFail($request->terapia_default);
+          $cadena = Terapia::find($request->terapia_default);
                     $bitacora = new Bitacora();
                     $bitacora->usuario = $log;
                     $bitacora->nombre_tabla = 'USUARIO TERAPIA';
