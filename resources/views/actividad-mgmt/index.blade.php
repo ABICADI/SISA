@@ -80,7 +80,7 @@
                 <tr role="row" class="odd">
                   <td class="sorting_1">{{ $actividad->nombre }}</td>
                   <td class="sorting_1">{{ $actividad->users_nombre1 }} {{ $actividad->users_nombre2 }} {{ $actividad->users_nombre3 }} {{ $actividad->users_apellido1 }} {{ $actividad->users_apellido2 }} {{ $actividad->users_apellido3 }}</td>
-                  <td class="hidden-xs">{{ $actividad->direccion }} - {{ $actividad->municipios_nombre }}, {{ $actividad->departamentos_nombre }}  </td>
+                  <td class="hidden-xs">{{ $actividad->departamentos_nombre }}, {{ $actividad->municipios_nombre }}, {{ $actividad->direccion }}</td>
                   <td class="hidden-xs">{{ $actividad->fecha }}</td>
                   <td>
                         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)

@@ -22,8 +22,8 @@ class ActividadController extends Controller {
     public function index() {
         $actividades = DB::table('actividades')
         ->leftJoin('users', 'actividades.user_id', '=', 'users.id')
-        ->leftJoin('departamentos', 'actividades.departamento_id', '=', 'departamentos.id')
         ->leftJoin('municipios', 'actividades.municipio_id', '=', 'municipios.id')
+        ->leftJoin('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
         ->select('actividades.*', 'users.nombre1 as users_nombre1', 'users.nombre2 as users_nombre2', 'users.nombre3 as users_nombre3', 'users.apellido1 as users_apellido1', 'users.apellido2 as users_apellido2', 'users.apellido3 as users_apellido3', 'users.username as users_username', 'departamentos.nombre as departamentos_nombre', 'municipios.nombre as municipios_nombre')
         ->paginate(10);
 
@@ -34,9 +34,8 @@ class ActividadController extends Controller {
         $users = User::select('id', 'nombre1', 'nombre2', 'nombre3', 'apellido1', 'apellido2', 'apellido3')
         ->where('users.estado_id','!=','2')->orderBy('nombre1', 'asc')->get();
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        $municipios = Municipio::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
 
-        return view('actividad-mgmt/create', ['users' => $users, 'departamentos' => $departamentos, 'municipios' => $municipios]);
+        return view('actividad-mgmt/create', ['users' => $users, 'departamentos' => $departamentos]);
     }
 
     public function store(Request $request){
@@ -47,7 +46,6 @@ class ActividadController extends Controller {
         $actividad->descripcion = $request['descripcion'];
         $actividad->fecha = $request['fecha'];
         $actividad->user_id = $request['user_id'];
-        $actividad->departamento_id = $request['departamento_id'];
         $actividad->municipio_id = $request['municipio_id'];
 
         if($actividad->save()){
@@ -70,13 +68,17 @@ class ActividadController extends Controller {
 
         $users = User::select('id', 'nombre1', 'nombre2', 'nombre3', 'apellido1', 'apellido2', 'apellido3')
         ->where('users.estado_id','!=','2')->orderBy('nombre1', 'asc')->get();
-        $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+        $departamentos = Municipio::join('departamentos', 'municipios.departamento_id', 'departamentos.id')
+                                  ->select('departamentos.id as id', 'departamentos.nombre as nombre')
+                                  ->where('municipios.id', '=', $actividad->municipio_id)->get();
         $municipios = Municipio::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
         return view('actividad-mgmt/view', ['actividad' => $actividad, 'users' => $users, 'departamentos' => $departamentos, 'municipios' => $municipios]);
     }
 
     public function edit($id) {
-        $actividad = Actividad::find($id);
+        $actividad = Actividad::join('municipios', 'actividades.municipio_id', 'municipios.id')
+                              ->join('departamentos', 'municipios.departamento_id', 'departamentos.id')
+                              ->select('actividades.*', 'municipios.nombre as Municipio', 'departamentos.nombre as Departamento')->find($id);
         if ($actividad == null || count($actividad) == 0) {
             Flash('¡Error al cargar Actividades!')->error();
             return redirect()->intended('/sisa/actividad-management');
@@ -85,7 +87,7 @@ class ActividadController extends Controller {
         $users = User::select('id', 'nombre1', 'nombre2', 'nombre3', 'apellido1', 'apellido2', 'apellido3')
         ->where('users.estado_id','!=','2')->orderBy('nombre1', 'asc')->get();
         $departamentos = Departamento::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
-        $municipios = Municipio::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
+        $municipios = Municipio::select('id', 'nombre')->where('id', '=', $actividad->municipio_id)->get();
         return view('actividad-mgmt/edit', ['actividad' => $actividad, 'users' => $users, 'departamentos' => $departamentos, 'municipios' => $municipios]);
     }
 
@@ -98,8 +100,7 @@ class ActividadController extends Controller {
         $actividad->descripcion = $request['descripcion'];
         $actividad->fecha = $request['fecha'];
         $actividad->user_id = $request['user_id'];
-        $actividad->departamento_id = $request['departamento_id'];
-        $actividad->municipio_id = $request['municipio_id'];
+        $actividad->municipio_id = $request['municipio_paciente'];
         $this->updateActividadBitacora($request, $id);
             if($actividad->save()){
                 Flash('¡La Actividad se ha actualizado Exitosamente!')->success();
@@ -113,9 +114,9 @@ class ActividadController extends Controller {
             'fechaInicio' => $request['fecha_inicio'],
             'fechaFin' => $request['fecha_fin']
         ];
-  
+
         $nombre = strtoupper($request['nombre1']);
-        
+
         $fechaInicio = $request['fecha_inicio'];
         $fechaFin = $request['fecha_fin'];
 
@@ -125,14 +126,14 @@ class ActividadController extends Controller {
             ->leftJoin('municipios', 'actividades.municipio_id', '=', 'municipios.id')
             ->leftJoin('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
             ->select(DB::raw('users.nombre1 as users_nombre1,
-                              users.nombre2 as users_nombre2, 
-                              users.nombre3 as users_nombre3, 
-                              users.apellido1 as users_apellido1, 
-                              users.apellido2 as users_apellido2, 
+                              users.nombre2 as users_nombre2,
+                              users.nombre3 as users_nombre3,
+                              users.apellido1 as users_apellido1,
+                              users.apellido2 as users_apellido2,
                               users.apellido3 as users_apellido3,
                               users.username as users_username,
                               departamentos.nombre as departamentos_nombre,
-                              municipios.nombre as municipios_nombre, 
+                              municipios.nombre as municipios_nombre,
                               actividades.*'))
             ->whereRaw("(actividades.nombre like '%$nombre%')")
             ->orWhereRaw("(users.nombre1 like '%$nombre%')")
@@ -146,7 +147,7 @@ class ActividadController extends Controller {
             ->orWhereRaw("(municipios.nombre like '%$nombre%')")
             ->orWhereRaw("(departamentos.nombre like '%$nombre%')")
             ->paginate(10);
-        } 
+        }
 
           else if($this->validar_fecha($fechaInicio)
             &&$this->validar_fecha($fechaInicio)){
@@ -155,14 +156,14 @@ class ActividadController extends Controller {
             ->leftJoin('municipios', 'actividades.municipio_id', '=', 'municipios.id')
             ->leftJoin('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
             ->select(DB::raw('users.nombre1 as users_nombre1,
-                              users.nombre2 as users_nombre2, 
-                              users.nombre3 as users_nombre3, 
-                              users.apellido1 as users_apellido1, 
-                              users.apellido2 as users_apellido2, 
+                              users.nombre2 as users_nombre2,
+                              users.nombre3 as users_nombre3,
+                              users.apellido1 as users_apellido1,
+                              users.apellido2 as users_apellido2,
                               users.apellido3 as users_apellido3,
                               users.username as users_username,
                               departamentos.nombre as departamentos_nombre,
-                              municipios.nombre as municipios_nombre, 
+                              municipios.nombre as municipios_nombre,
                               actividades.*'))
             ->whereRaw("(actividades.fecha::text like '%$fechaInicio%')")
             ->whereRaw("(actividades.fecha::text like '%$fechaFin%')")
@@ -175,18 +176,18 @@ class ActividadController extends Controller {
             ->leftJoin('municipios', 'actividades.municipio_id', '=', 'municipios.id')
             ->leftJoin('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
             ->select(DB::raw('users.nombre1 as users_nombre1,
-                              users.nombre2 as users_nombre2, 
-                              users.nombre3 as users_nombre3, 
-                              users.apellido1 as users_apellido1, 
-                              users.apellido2 as users_apellido2, 
+                              users.nombre2 as users_nombre2,
+                              users.nombre3 as users_nombre3,
+                              users.apellido1 as users_apellido1,
+                              users.apellido2 as users_apellido2,
                               users.apellido3 as users_apellido3,
                               users.username as users_username,
                               departamentos.nombre as departamentos_nombre,
-                              municipios.nombre as municipios_nombre, 
+                              municipios.nombre as municipios_nombre,
                               actividades.*'))
             ->paginate(10);
           }
-        
+
         $message = ' ';
         return view('actividad-mgmt/index', ['actividades' => $actividades, 'searchingVals' => $constraints]);
         //return view('tratamiento-mgmt/index', ['tratamientos' => $tratamientos, 'searchingVals' => $constraints, 'message' => $message]);
@@ -198,8 +199,6 @@ class ActividadController extends Controller {
         ||($fecha==null)) return true;
         return false;
     }
-
-
 
     private function doSearchingQuery($constraints) {
         $query = Actividad::query();
@@ -222,7 +221,6 @@ class ActividadController extends Controller {
             'descripcion' => 'max:500',
             'fecha' => 'required',
             'user_id' => 'required',
-            'departamento_id' => 'required',
             'municipio_id' => 'required',
         ]);
     }
@@ -234,8 +232,7 @@ class ActividadController extends Controller {
             'descripcion' => 'max:500',
             'fecha' => 'required',
             'user_id' => 'required',
-            'departamento_id' => 'required',
-            'municipio_id' => 'required',
+            'municipio_paciente' => 'required',
         ]);
     }
 
@@ -245,8 +242,8 @@ class ActividadController extends Controller {
         $format = 'd/m/Y';
         $now = date($format);
         $log = Auth::user()->username;
-        $departamento = Departamento::findOrFail($request['departamento_id']);
         $municipio = Municipio::findOrFail($request['municipio_id']);
+        $departamento = Departamento::findOrFail($municipio->departamento_id);
         $user = User::findOrFail($request['user_id']);
 
         $data = 'Nombre Actividad: ' . $request->nombre . ', Nombre Actividad: ' . $user->nombre1 .' '. $user->nombre2 .' '. $user->nombre3 .' '. $user->apellido1 .' '. $user->apellido2 .' '. $user->apellido3 . ', Direccion: ' . $departamento->nombre .' '. $municipio->nombre .' '. $request->direccion . ', Descripcion: ' . $request->descripcion . ', Fecha de la Actividad: ' . $request->fecha;
@@ -267,10 +264,10 @@ class ActividadController extends Controller {
         $now = date($format);
         $log = Auth::user()->username;
         $actividad = Actividad::findOrFail($id);
-        $departamentonew = Departamento::find($request['departamento_id']);
-        $departamentoold = Departamento::find($actividad->departamento_id);
-        $municipionew = Municipio::find($request['municipio_id']);
+        $departamentonew = Departamento::find($request['departamento_paciente']);
+        $municipionew = Municipio::find($request['municipio_paciente']);
         $municipioold = Municipio::find($actividad->municipio_id);
+        $departamentoold = Departamento::find($municipioold->departamento_id);
         $usernew = User::find($request['user_id']);
         $userold = User::find($actividad->user_id);
 
@@ -307,24 +304,13 @@ class ActividadController extends Controller {
             $bitacora->save();
         }
 
-        if($actividad->departamento_id != $request['departamento_id']){
+        if($actividad->municipio_id != $request['municipio_paciente']){
             $bitacora = new Bitacora();
             $bitacora->usuario = $log;
             $bitacora->nombre_tabla = 'ACTIVIDAD';
             $bitacora->actividad = 'ACTUALIZAR';
-            $bitacora->anterior = 'Departamento: ' . $departamentoold->nombre;
-            $bitacora->nuevo = 'Departamento: ' . $departamentonew->nombre;
-            $bitacora->fecha = $now;
-            $bitacora->save();
-        }
-
-        if($actividad->municipio_id != $request['municipio_id']){
-            $bitacora = new Bitacora();
-            $bitacora->usuario = $log;
-            $bitacora->nombre_tabla = 'ACTIVIDAD';
-            $bitacora->actividad = 'ACTUALIZAR';
-            $bitacora->anterior = 'Municipio: ' . $municipioold->nombre;
-            $bitacora->nuevo = 'Municipio: ' . $municipionew->nombre;
+            $bitacora->anterior = 'Departamento: ' . $departamentoold->nombre.', Municipio: ' . $municipioold->nombre;
+            $bitacora->nuevo = 'Departamento: ' . $departamentonew->nombre.', Municipio: ' . $municipionew->nombre;
             $bitacora->fecha = $now;
             $bitacora->save();
         }
@@ -357,13 +343,14 @@ class ActividadController extends Controller {
         date_default_timezone_set('america/guatemala');
         $format = 'd/m/Y';
         $now = date($format);
+        $user = Auth::user()->username;
         $actividadfin = Actividad::find($id);
         $encargado = User::find($actividadfin->user_id);
 
         $data = 'Nombre de la Actividad: ' . $actividadfin->nombre . ', Encargado: ' . $encargado->nombre1 .' '. $encargado->nombre2 .' '. $encargado->nombre3 .' '. $encargado->apellido1 .' '. $encargado->apellido2 .' '. $encargado->apellido3;
 
             $bitacora = new Bitacora();
-            $bitacora->usuario = 'Administrador';
+            $bitacora->usuario = $user;
             $bitacora->nombre_tabla = 'ACTIVIDAD';
             $bitacora->actividad = 'ELIMINAR';
             $bitacora->anterior = '';
