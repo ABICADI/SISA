@@ -8,11 +8,21 @@
   </div>
   <!-- /.box-header -->
 <div class="box-body">
-  {{ $slot }}
-  <button type="submit" class="btn btn-primary">
+  <table>
+    <tr>
+      <td valign="top">
+        {{ $slot }}
+      </td>
+      <td align="left" valign="top" class="col-md-3">
+        <button type="submit" class="btn btn-primary">
     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
     Buscar
   </button>
+      </td>
+    </tr>
+  </table>
+  
+  
   </div>
   <!-- /.box-body -->
 <div class="box-footer">

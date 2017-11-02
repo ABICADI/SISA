@@ -25,41 +25,29 @@
          {{ csrf_field() }}
 
          @component('layouts.search', ['title' => 'Buscar'])
-          <table id="example2" class="table table-responsive">
+          <table id="example2">
             <tr>
-            <td>
-            <div>
-                    <div>
-                        <input id="nombre1" type="text" class="form-control" placeholder="buscar por Actividad/Encargado/Lugar" name="nombre1" value="{{ old('nombre1') }}"  onKeyUp="this.value=this.value.toUpperCase();" >
-                    </div>
-            </div>
+            <td class="col-md-6">
+              <input id="nombre1" type="text" class="form-control" placeholder="buscar por Usuario/Tabla/Actividad" name="nombre1" value="{{ old('nombre1') }}"  onKeyUp="this.value=this.value.toUpperCase();" >
             </td>
-            <td>
-            <div>
-                    <div class="col-md-6">
-                        <div class="input-group date">
-                            <div class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                            </div>
-                            <input type="text" value="{{ old('fecha_inicio') }}" placeholder="Inicio" name="fecha_inicio" class="form-control pull-right" id="fechaInicio">
-                        </div>
+            <td class="col-md-3">
+                <div class="input-group date">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
                     </div>
-            </div>
+                    <input type="text" value="{{ old('fecha_inicio') }}" placeholder="Inicio" name="fecha_inicio" class="form-control pull-right" id="from">
+                </div>
             </td>
-            <td>
-            <div>
-                    <div class="col-md-6">
-                        <div class="input-group date">
-                            <div class="input-group-addon">
-                                <i class="fa fa-calendar"></i>
-                            </div>
-                            <input type="text" value="{{ old('fecha_fin') }}" placeholder="Fin" name="fecha_fin" class="form-control pull-right" id="fechaFin">
-                        </div>
+            <td class="col-md-3">
+                <div class="input-group date">
+                    <div class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
                     </div>
-            </div>
+                    <input type="text" value="{{ old('fecha_fin') }}" placeholder="Fin" name="fecha_fin" class="form-control pull-right" id="to">
+                </div>
             </td>
             </tr>
-        </table>
+          </table>
         @endcomponent
       </form>
     <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
