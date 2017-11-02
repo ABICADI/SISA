@@ -2,7 +2,7 @@
 
 @section('action-content')
 
-<div class="container">  
+<div class="container">
     <div class="row">
         <div class="col-md-35 col-md-offset-0">
             <div class="panel panel-default">
@@ -60,7 +60,7 @@
             <div class="form-group">
                 <label class="col-md-3 control-label"><label style="color:red">*</label> Departamento</label>
                     <div class="col-md-7">
-                        <select class="form-control" name="departamento_id" required autofocus>
+                        <select class="form-control" id="departamento_id" name="departamento_id" required autofocus>
                             <option value="" selected disabled>seleccione departamento</option>
                             @foreach ($departamentos as $departamento)
                                 <option value="{{$departamento->id}}">{{$departamento->nombre}}</option>
@@ -73,11 +73,8 @@
             <div class="form-group">
                 <label class="col-md-3 control-label"><label style="color:red">*</label> Municipio</label>
                     <div class="col-md-7">
-                        <select class="form-control" name="municipio_id" required autofocus>
+                        <select class="form-control" id="municipio_id" name="municipio_id" required autofocus>
                             <option value="" selected disabled>seleccione municipio</option>
-                            @foreach ($municipios as $municipio)
-                                <option value="{{$municipio->id}}">{{$municipio->nombre}}</option>
-                            @endforeach
                         </select>
                     </div>
             </div>
@@ -113,7 +110,7 @@
                         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i> 
+                                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-disk"></i>
                                     Guardar
                                 </button>
                             </div>

@@ -19,6 +19,13 @@
       </td>
       </tr>
   </table>
+  <table class="table responsive">
+    <tr>
+      <td>
+        {!! $group_municipio->render() !!}
+      </td>
+      </tr>
+  </table>
   <!-- /.box-body -->
 </div>
     </section>
