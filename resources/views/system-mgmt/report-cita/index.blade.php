@@ -8,6 +8,7 @@
         <div class="col-sm-4">
           <h3 class="box-title">Listado de Citas</h3>
         </div>
+        @if($si==0)
         <div class="col-sm-4">
             <form class="form-horizontal" role="form" method="POST" action="{{ route('report-cita.excel') }}">
                 {{ csrf_field() }}
@@ -32,6 +33,7 @@
                 </button>
             </form>
         </div>
+        @endif
     </div>
   </div>
   <!-- /.box-header -->

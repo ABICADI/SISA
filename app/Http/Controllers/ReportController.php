@@ -24,10 +24,14 @@ class ReportController extends Controller {
             'from' => $now,
             'to' => $to
         ];
-
         $actividades = $this->getRangoAcitividad($constraints);
+        if($actividades->count()==0){
+          $si=1;
+        }else {
+          $si=0;
+        }
         $message = '';
-        return view('system-mgmt/report-actividad/index', ['actividades' => $actividades, 'searchingVals' => $constraints, 'message' => $message]);
+        return view('system-mgmt/report-actividad/index', ['actividades' => $actividades, 'searchingVals' => $constraints, 'message' => $message, 'si' => $si]);
     }
 
     public function search(Request $request) {
@@ -37,10 +41,14 @@ class ReportController extends Controller {
               'from' => $request['from'],
               'to' => $request['to']
           ];
-
           $actividades = $this->getRangoAcitividad($constraints);
+          if($actividades->count()==0){
+            $si=1;
+          }else {
+            $si=0;
+          }
           $message = '';
-          return view('system-mgmt/report-actividad/index', ['actividades' => $actividades, 'searchingVals' => $constraints, 'message' => $message]);
+          return view('system-mgmt/report-actividad/index', ['actividades' => $actividades, 'searchingVals' => $constraints, 'message' => $message, 'si' => $si]);
         }
 
         if($request->from == '' || $request->to == ''){
@@ -49,8 +57,13 @@ class ReportController extends Controller {
               'to' => $request['to']
           ];
           $actividades = $this->getRangoAcitividad($constraints);
+          if($actividades->count()==0){
+            $si=1;
+          }else {
+            $si=0;
+          }
           $message = 'Rango de Fecha inválido';
-          return view('system-mgmt/report-actividad/index', ['actividades' => $actividades, 'searchingVals' => $constraints, 'message' => $message]);
+          return view('system-mgmt/report-actividad/index', ['actividades' => $actividades, 'searchingVals' => $constraints, 'message' => $message, 'si' => $si]);
         }
 
 
@@ -88,22 +101,39 @@ class ReportController extends Controller {
             'to' => $request['to']
         ];
         $actividades = $this->getExportingData($constraints);
-        $pdf = PDF::loadView('system-mgmt/report-actividad/pdf', ['actividades' => $actividades, 'searchingVals' => $constraints]);
-        return $pdf->download('reporte_actividad_del_'. $request['from'].'_al_'.$request['to'].'.pdf');
-        return view('system-mgmt/report-actividad/pdf', ['actividades' => $actividades, 'searchingVals' => $constraints]);
+        date_default_timezone_set('america/guatemala');
+        $format = 'Y-m-d H:i:s';
+        $now = date($format);
+          if($request['from'] != '' && $request['to'] != ''){
+              $title = 'Reporte de Actividades por Rango: de '.$request['from'].' al '.$request['to'];
+          }else{
+              $title = 'Reporte de Actividades';
+          }
+        $pdf = PDF::loadView('system-mgmt/report-actividad/pdf', ['actividades' => $actividades, 'searchingVals' => $constraints, 'title' => $title]);
+        return $pdf->download('reporte_actividad_'.$now.'.pdf');
+        return view('system-mgmt/report-actividad/pdf', ['actividades' => $actividades, 'searchingVals' => $constraints, 'title' => $title]);
     }
 
     private function prepareExportingData($request) {
+        date_default_timezone_set('america/guatemala');
+        $format = 'Y-m-d H:i:s';
+        $now = date($format);
         $author = Auth::user()->username;
         $actividades = $this->getExportingData(['from'=> $request['from'], 'to' => $request['to']]);
-        return Excel::create('reporte_actividad_del_'. $request['from'].'_al_'.$request['to'], function($excel) use($actividades, $request, $author) {
-
-
-        $excel->setTitle('Reporte de Actividades del '. $request['from'].' al '. $request['to']);
+        return Excel::create('reporte_actividad_del_'. $now, function($excel) use($actividades, $request, $author) {
+        date_default_timezone_set('america/guatemala');
+        $format = 'd-m-Y';
+        $now = date($format);
+          if($request['from'] != '' && $request['to'] != ''){
+              $title = 'Reporte de Actividades por Rango: de '.$request['from'].' al '.$request['to'];
+          }else{
+              $title = 'Reporte de Actividades';
+          }
+        $excel->setTitle($title);
         $excel->setCreator($author)
             ->setCompany('HoaDang');
         $excel->setDescription('Listado de Actividades');
-        $excel->sheet('Reporte', function($sheet) use($actividades) {
+        $excel->sheet('Reporte_'.$now, function($sheet) use($actividades) {
         $sheet->fromArray($actividades);
             });
         });

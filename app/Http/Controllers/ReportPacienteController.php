@@ -35,8 +35,13 @@ class ReportPacienteController extends Controller {
 	        $municipios = Municipio::select('id', 'nombre','departamento_id')->orderBy('nombre', 'asc')->get();
 	        $pagos = Pago::select('id', 'nombre')->orderBy('nombre', 'asc')->get();
 	        $pacientes = $this->getRangoPaciente($constraints);
+					if($pacientes->count()==0){
+						$si=1;
+					}else {
+						$si=0;
+					}
 	        $message = '';
-	        return view('system-mgmt/report-paciente/index', ['pacientes' => $pacientes, 'departamentos' => $departamentos, 'municipios' => $municipios, 'pagos' => $pagos, 'searchingVals' => $constraints, 'message' => $message]);
+	        return view('system-mgmt/report-paciente/index', ['pacientes' => $pacientes, 'departamentos' => $departamentos, 'municipios' => $municipios, 'pagos' => $pagos, 'searchingVals' => $constraints, 'message' => $message, 'si' => $si]);
 	    }
 
 	    public function search(Request $request) {
@@ -53,8 +58,13 @@ class ReportPacienteController extends Controller {
 									'pago' => $request['pago_id'],
 						];
 						$pacientes = $this->getRangoPaciente($constraints);
-	          $message = '';
-	          return view('system-mgmt/report-paciente/index', ['pacientes' => $pacientes, 'departamentos' => $departamentos, 'municipios' => $municipios, 'pagos' => $pagos, 'searchingVals' => $constraints, 'message' => $message]);
+						if($pacientes->count()==0){
+							$si=1;
+						}else {
+							$si=0;
+						}
+		        $message = '';
+		        return view('system-mgmt/report-paciente/index', ['pacientes' => $pacientes, 'departamentos' => $departamentos, 'municipios' => $municipios, 'pagos' => $pagos, 'searchingVals' => $constraints, 'message' => $message, 'si' => $si]);
 	        }
 
 	        if($request->from == '' || $request->to == ''){
@@ -66,8 +76,13 @@ class ReportPacienteController extends Controller {
 									'pago' => $request['pago_id'],
 						];
 	          $pacientes = $this->getRangoPaciente($constraints);
+						if($pacientes->count()==0){
+							$si=1;
+						}else {
+							$si=0;
+						}
 	          $message = 'Rango de Fecha inválido';
-	          return view('system-mgmt/report-paciente/index', ['pacientes' => $pacientes, 'departamentos' => $departamentos, 'municipios' => $municipios, 'pagos' => $pagos, 'searchingVals' => $constraints, 'message' => $message]);
+		        return view('system-mgmt/report-paciente/index', ['pacientes' => $pacientes, 'departamentos' => $departamentos, 'municipios' => $municipios, 'pagos' => $pagos, 'searchingVals' => $constraints, 'message' => $message, 'si' => $si]);
 	        }
 	    }
 

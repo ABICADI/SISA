@@ -8,6 +8,7 @@
         <div class="col-sm-4">
           <h3 class="box-title">Listado de Tratamientos</h3>
         </div>
+        @if($si==0)
         <div class="col-sm-4">
             <form class="form-horizontal" role="form" method="POST" action="{{ route('report-tratamiento.excel') }}">
                 {{ csrf_field() }}
@@ -29,6 +30,7 @@
             </form>
         </div>
     </div>
+    @endif
   </div>
   <!-- /.box-header -->
   <div class="box-body">
