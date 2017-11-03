@@ -279,7 +279,7 @@
                             <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                             </div>
-                            <input type="text" value="{{ $fecha }}" placeholder="30/01/1990" name="fecha_ingreso" class="form-control pull-right" id="fechaIngreso" required>
+                            <input type="text" value="{{ $fecha }}" placeholder="30/01/1990" name="fecha_ingreso" class="form-control pull-right" id="from" required>
                         </div>
                     </div>
             </div>
