@@ -47,36 +47,36 @@
       <form method="POST" action="{{ route('report-paciente.search') }}">
          {{ csrf_field() }}
          @component('layouts.search', ['title' => 'Buscar'])
-				 <div class="row">
-					 <table class="table responsive">
-						 <tr>
-							 <td>
-								 <label class="col-md-2 control-label">De</label>
-								 <div class="col-md-5">
-										 <div class="input-group date">
-												 <div class="input-group-addon">
-														 <i class="fa fa-calendar"></i>
-												 </div>
-												 <input type="text" value="{{$searchingVals['from']}}" name="from" class="form-control pull-right" id="from" placeholder="Fecha Ingreso">
-										 </div>
-								 </div>
-						 	 </td>
-							 <td>
-								 <label class="col-md-2 control-label">Hasta</label>
-								 <div class="col-md-6">
-										 <div class="input-group date">
-												 <div class="input-group-addon">
-														 <i class="fa fa-calendar"></i>
-												 </div>
-												 <input type="text" value="{{$searchingVals['to']}}" name="to" class="form-control pull-right" id="to" placeholder="Fecha Ingreso">
-										 </div>
-								 </div>
-						 	 </td>
-						 </tr>
-						 <tr>
-							 <td>
-								 <label class="col-md-3 control-label">Departamento</label>
-                     <div class="col-md-9">
+          <table  style="height:225px;">
+             <tr valign="bottom">
+               <td  class="col-md-6">
+                 <label>De</label>
+                 <div>
+                     <div class="input-group date">
+                         <div class="input-group-addon">
+                             <i class="fa fa-calendar"></i>
+                         </div>
+                         <input type="text" value="{{$searchingVals['from']}}" name="from" class="form-control pull-right" id="from" placeholder="Fecha Ingreso">
+                     </div>
+                 </div>
+               </td>
+               <td class="col-md-6">
+                 <label>Hasta</label>
+                 <div>
+                     <div class="input-group date">
+                         <div class="input-group-addon">
+                             <i class="fa fa-calendar"></i>
+                         </div>
+                         <input type="text" value="{{$searchingVals['to']}}" name="to" class="form-control pull-right" id="to" placeholder="Fecha Ingreso">
+                     </div>
+                 </div>
+               </td>
+             </tr>
+
+             <tr valign="bottom">
+               <td>
+                 <label class="col-md-3 control-label">Departamento</label>
+                     <div class="col-md-12">
                          <select class="form-control" name="departamento_id" id="departamento_id">
                              <option value="" selected>Ningun Departamento Seleccionado</option>
                              @foreach ($departamentos as $departamento)
@@ -84,20 +84,22 @@
                              @endforeach
                          </select>
                      </div>
-							 </td>
-							 <td>
-								 <label class="col-md-3 control-label">Municipio</label>
-                     <div class="col-md-9">
+               </td>
+               <td>
+                 <label class="col-md-3 control-label">Municipio</label>
+                     <div class="col-md-12">
                          <select class="form-control" name="municipio_id" id="municipio_id">
                              <option value="" selected>Ningun Municipio Seleccionado</option>
                          </select>
                      </div>
-							 </td>
-						 </tr>
-						 <tr>
+               </td>
+             </tr>
+
+						 <tr valign="bottom">
+              <td></td>
 							 <td>
 								 <label class="col-md-4 control-label">Tipo de Pago</label>
-                     <div class="col-md-7">
+                     <div class="col-md-12">
                          <select class="form-control" name="pago_id" id="pago_id">
                              <option value="" selected>Ningun Pago Seleccionado</option>
                              @foreach ($pagos as $pago)
@@ -108,7 +110,6 @@
 							 </td>
 						 </tr>
 				 	</table>
-				 </div>
          @endcomponent
       </form>
       {{ csrf_field() }}

@@ -45,7 +45,7 @@
       <form method="POST" action="{{ route('report-cita.search') }}">
          {{ csrf_field() }}
          @component('layouts.search', ['title' => 'Buscar'])
-         <table>
+         <table  style="height:140px;">
              <tr>
                <td  class="col-md-6">
                  <label>De</label>
@@ -70,11 +70,11 @@
                  </div>
                </td>
              </tr>
-            <div> </div>
-             <tr>
+
+             <tr valign="bottom">
                <td>
-                 <label class="col-md-2 control-label">Paciente</label>
-                     <div class="col-md-10">
+                 <label class="col-md-3 control-label">Paciente</label>
+                     <div class="col-md-12">
                          <select class="form-control" name="paciente_id" id="paciente_id">
                              <option value="0" selected>Ningun Paciente Seleccionado</option>
                              @foreach ($pacientes as $paciente)
@@ -84,8 +84,8 @@
                      </div>
                </td>
                <td>
-                 <label class="col-md-2 control-label">Terapia</label>
-                     <div class="col-md-10">
+                 <label class="col-md-3 control-label">Terapia</label>
+                     <div class="col-md-12">
                          <select class="form-control" name="terapia_id" id="terapia_id">
                              <option value="0" selected>Ninguna Terapia Seleccionada</option>
                              @foreach ($terapias as $terapia)
