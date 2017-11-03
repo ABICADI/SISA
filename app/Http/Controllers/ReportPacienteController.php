@@ -192,7 +192,8 @@ class ReportPacienteController extends Controller {
 						}
 						if($request['pago']==0 && $request['departamento']!=0 && $request['municipio']!=0){
 								$title = 'Reporte del Paciente por Departamento: '.$departamento->nombre.', y Municipio: '.$municipio->nombre;
-						}else{
+						}
+						if($request['pago']==0 && $request['departamento']==0 && $request['municipio']==0){
 								$title = 'Reporte del Paciente';
 						}
 					}
@@ -205,7 +206,8 @@ class ReportPacienteController extends Controller {
 						}
 						if($request['pago']==0 && $request['departamento']!=0 && $request['municipio']!=0){
 								$title = 'Reporte del Paciente por Rango: de '.$request['from'].' hasta '.$request['to'].', Departamento: '.$departamento->nombre.', y Municipio: '.$municipio->nombre;
-						}else{
+						}
+						if($request['pago']==0 && $request['departamento']==0 && $request['municipio']==0){
 								$title = 'Reporte del Paciente por Rango: de '.$request['from'].' hasta '.$request['to'];
 						}
 					}

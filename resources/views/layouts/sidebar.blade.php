@@ -5,7 +5,9 @@
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu">
         <!-- Optionally, you can add icons to the links -->
+        @if (4 != Auth::user()->rol_id)
         <li><a href="/sisa/dashboard"><i class="glyphicon glyphicon-home"></i> <span>Dashboard</span></a></li>
+        @endif
         @if (1 == Auth::user()->rol_id || 2 == Auth::user()->rol_id)
         <li><a href="{{ route('user-management.index') }}"><i class="fa fa-users"></i> <span>Empleado</span></a></li>
         <li><a href="{{ route('paciente-management.index') }}"><i class="fa fa-user"></i> <span>Paciente</span></a></li>
