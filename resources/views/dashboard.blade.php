@@ -118,6 +118,9 @@
 </script>
 </div>
   @endif
+</section>
+</div>
+</div>
   @include('layouts.footer')
 
  <!-- jQuery 2.1.3 -->

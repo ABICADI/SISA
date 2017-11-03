@@ -168,7 +168,7 @@
           });
           $('#fecha').datepicker({
             autoclose: true,
-            format: 'dd/mm/yyyy'
+            format: 'yyyy-mm-dd'
           });
           $('#fechaInicio').datepicker({
             autoclose: true,
@@ -269,6 +269,7 @@
             },
             navLinks: true, // can click day/week names to navigate views
             selectable: true,
+            eventLimit: true,
 
                   select: function(start){
                       start = moment(start.format());
