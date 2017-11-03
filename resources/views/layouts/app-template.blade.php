@@ -62,7 +62,7 @@
     @include('layouts.sidebar')
 
     @yield('content')
-
+    </div>
     <!-- Footer -->
     @include('layouts.footer')
     <!-- ./wrapper -->
