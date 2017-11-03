@@ -158,9 +158,19 @@
             </tr>
             <tr>
             <td>
+            <div class="col-md-6">
+                <label>
+                    <input type="checkbox" name="pass_edit" id="pass_edit" value="1" onchange="javascript:PasswordEdit()" />
+                    Editar Password
+                </label>
+            </div>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <div class="form-group" id="editar_password" style="display: none;">
             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                 <label for="password" class="col-md-4 control-label"><label style="color:red">*</label> Nueva Contraseña</label>
-
                     <div class="col-md-6">
                         <input id="password" type="password" class="form-control" name="password" autofocus>
 
@@ -171,14 +181,13 @@
                             @endif
                     </div>
             </div>
-            </td>
-            <td>
             <div class="form-group">
                 <label for="password-confirm" class="col-md-4 control-label"><label style="color:red">*</label> Confirmar Contraseña</label>
 
                     <div class="col-md-6">
                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autofocus>
                     </div>
+            </div>
             </div>
             </td>
             </tr>
