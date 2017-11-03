@@ -26,7 +26,6 @@ class UserManagementController extends Controller {
         ->leftJoin('rols', 'users.rol_id', '=', 'rols.id')
         ->leftJoin('estados', 'users.estado_id', '=', 'estados.id')
         ->select('users.*', 'rols.nombre as nombre', 'estados.id as estado_id')
-        ->where('users.estado_id','!=','2')
         ->where('users.id','!=','1')
         ->paginate(10);
 
@@ -119,7 +118,7 @@ class UserManagementController extends Controller {
         $format = 'd/m/Y';
         $now = date($format);
 
-        $user = User::findOrFail($id);
+        $user = User::find($id);
         $user->fecha_egreso = $now;
         $user->estado_id = '2';
         $user->password = bcrypt('W4@._@4taAsjW');

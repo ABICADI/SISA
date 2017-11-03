@@ -101,6 +101,18 @@
         }
     </script>
     <script type="text/javascript">
+        function PasswordEdit() {
+            element = document.getElementById("editar_password");
+            check = document.getElementById("pass_edit");
+            if (check.checked) {
+                element.style.display='block';
+            }
+            else {
+                element.style.display='none';
+            }
+        }
+    </script>
+    <script type="text/javascript">
         function EsconderDias() {
             element = document.getElementById("editar_dia");
             check = document.getElementById("dia_default");

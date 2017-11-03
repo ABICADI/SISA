@@ -10,8 +10,8 @@
 			 width: 100%;
 		 }
 		 td, th {
-			 border: solid 2px;
-			 padding: 10px 5px;
+			 border: solid 1px;
+			 padding: 5px 3px;
 		 }
 		 tr {
 			 text-align: center;
@@ -19,6 +19,8 @@
 		 .container {
 			 width: 100%;
 			 text-align: center;
+			 font-size:10px;
+			 font-family: "arial", serif;
 		 }
 	 </style>
  </head>
