@@ -46,7 +46,7 @@
 						 <tr>
 							 <td>
 								 <label class="col-md-2 control-label">De</label>
-								 <div class="col-md-5">
+								 <div class="col-md-7">
 										 <div class="input-group date">
 												 <div class="input-group-addon">
 														 <i class="fa fa-calendar"></i>

@@ -55,7 +55,7 @@
 												 <div class="input-group-addon">
 														 <i class="fa fa-calendar"></i>
 												 </div>
-												 <input type="text" name="from" class="form-control pull-right" id="fromm" placeholder="Fecha Ingreso">
+												 <input type="text" name="from" class="form-control pull-right" id="fromm" placeholder="Inicio">
 										 </div>
 								 </div>
 						 	 </td>
@@ -66,7 +66,7 @@
 												 <div class="input-group-addon">
 														 <i class="fa fa-calendar"></i>
 												 </div>
-												 <input type="text" name="to" class="form-control pull-right" id="too" placeholder="Fecha Ingreso">
+												 <input type="text" name="to" class="form-control pull-right" id="too" placeholder="Fin">
 										 </div>
 								 </div>
 						 	 </td>
@@ -74,7 +74,7 @@
              <tr>
                <td>
                  <label class="col-md-2 control-label">Paciente</label>
-                     <div class="col-md-6">
+                     <div class="col-md-10">
                          <select class="form-control" name="paciente_id" id="paciente_id">
                              <option value="0" selected>Ningun Paciente Seleccionado</option>
                              @foreach ($pacientes as $paciente)
@@ -85,7 +85,7 @@
                </td>
                <td>
                  <label class="col-md-2 control-label">Terapia</label>
-                     <div class="col-md-6">
+                     <div class="col-md-10">
                          <select class="form-control" name="terapia_id" id="terapia_id">
                              <option value="0" selected>Ninguna Terapia Seleccionada</option>
                              @foreach ($terapias as $terapia)

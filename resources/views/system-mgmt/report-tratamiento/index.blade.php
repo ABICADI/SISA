@@ -46,18 +46,18 @@
 						 <tr>
 							 <td>
 								 <label class="col-md-2 control-label">Paciente</label>
-                     <div class="col-md-6">
+                     <div class="col-md-9">
                          <select class="form-control" name="paciente_id" id="paciente_id">
                              <option value="" selected>Ningun Paciente Seleccionado</option>
                              @foreach ($pacientes as $paciente)
-                                 <option value="{{$paciente->id}}">{{$paciente->seguro_social}} | {{$paciente->nombre1}} {{$paciente->nombre2}} {{$paciente->nombre3}} {{$paciente->Apellido1}} {{$paciente->Apellido2}} {{$paciente->Apellido3}}</option>
+                                 <option value="{{$paciente->id}}">{{$paciente->nombre1}} {{$paciente->nombre2}} {{$paciente->nombre3}} {{$paciente->apellido1}} {{$paciente->apellido2}} {{$paciente->apellido3}}</option>
                              @endforeach
                          </select>
                      </div>
 							 </td>
 							 <td>
 								 <label class="col-md-2 control-label">Terapia</label>
-                     <div class="col-md-6">
+                     <div class="col-md-10">
                          <select class="form-control" name="terapia_id" id="terapia_id">
                              <option value="" selected>Ninguna Terapia Seleccionado</option>
                              @foreach ($terapias as $terapia)

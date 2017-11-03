@@ -25,7 +25,7 @@ class ReportTratamientoController extends Controller {
 									'paciente' => 0,
 									'terapia' => 0
 		        ];
-						$pacientes = Paciente::select('pacientes.*')->orderBy('nombre1', 'asc')->get();
+						$pacientes = Paciente::select('pacientes.id as id', 'pacientes.nombre1 as nombre1', 'pacientes.nombre2 as nombre2', 'pacientes.nombre3 as nombre3', 'pacientes.apellido1 as apellido1', 'pacientes.apellido2 as apellido2', 'pacientes.apellido3 as apellido3')->orderBy('nombre1', 'asc')->get();
 		        $terapias = Terapia::select('id', 'nombre')->where('id', '!=', 1)->orderBy('nombre', 'asc')->get();
 						$tratamientos = $this->getRangoTratamiento($constraints);
 						if($tratamientos->count()==0){
@@ -37,7 +37,7 @@ class ReportTratamientoController extends Controller {
 		    }
 
 		    public function search(Request $request) {
-							$pacientes = Paciente::select('pacientes.*')->orderBy('nombre1', 'asc')->get();
+							$pacientes = Paciente::select('pacientes.id as id', 'pacientes.nombre1 as nombre1', 'pacientes.nombre2 as nombre2', 'pacientes.nombre3 as nombre3', 'pacientes.apellido1 as apellido1', 'pacientes.apellido2 as apellido2', 'pacientes.apellido3 as apellido3')->orderBy('nombre1', 'asc')->get();
 							$terapias = Terapia::select('id', 'nombre')->where('id', '!=', 1)->orderBy('nombre', 'asc')->get();
 							$constraints = [
 										'paciente' => $request['paciente_id'],

@@ -63,7 +63,7 @@
 						 	 </td>
 							 <td>
 								 <label class="col-md-2 control-label">Hasta</label>
-								 <div class="col-md-5">
+								 <div class="col-md-6">
 										 <div class="input-group date">
 												 <div class="input-group-addon">
 														 <i class="fa fa-calendar"></i>
@@ -75,8 +75,8 @@
 						 </tr>
 						 <tr>
 							 <td>
-								 <label class="col-md-2 control-label">Departamento</label>
-                     <div class="col-md-6">
+								 <label class="col-md-3 control-label">Departamento</label>
+                     <div class="col-md-9">
                          <select class="form-control" name="departamento_id" id="departamento_id">
                              <option value="" selected>Ningun Departamento Seleccionado</option>
                              @foreach ($departamentos as $departamento)
@@ -86,8 +86,8 @@
                      </div>
 							 </td>
 							 <td>
-								 <label class="col-md-2 control-label">Municipio</label>
-                     <div class="col-md-6">
+								 <label class="col-md-3 control-label">Municipio</label>
+                     <div class="col-md-9">
                          <select class="form-control" name="municipio_id" id="municipio_id">
                              <option value="" selected>Ningun Municipio Seleccionado</option>
                          </select>
@@ -96,8 +96,8 @@
 						 </tr>
 						 <tr>
 							 <td>
-								 <label class="col-md-2 control-label">Tipo de Pago</label>
-                     <div class="col-md-5">
+								 <label class="col-md-4 control-label">Tipo de Pago</label>
+                     <div class="col-md-7">
                          <select class="form-control" name="pago_id" id="pago_id">
                              <option value="" selected>Ningun Pago Seleccionado</option>
                              @foreach ($pagos as $pago)
