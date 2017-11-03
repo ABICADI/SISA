@@ -45,32 +45,32 @@
       <form method="POST" action="{{ route('report-cita.search') }}">
          {{ csrf_field() }}
          @component('layouts.search', ['title' => 'Buscar'])
-				 <div class="row">
-					 <table class="table responsive">
-						 <tr>
-							 <td>
-								 <label class="col-md-2 control-label">De</label>
-								 <div class="col-md-5">
-										 <div class="input-group date">
-												 <div class="input-group-addon">
-														 <i class="fa fa-calendar"></i>
-												 </div>
-												 <input type="text" name="from" class="form-control pull-right" id="fromm" placeholder="Inicio">
-										 </div>
-								 </div>
-						 	 </td>
-							 <td>
-								 <label class="col-md-2 control-label">Hasta</label>
-								 <div class="col-md-6">
-										 <div class="input-group date">
-												 <div class="input-group-addon">
-														 <i class="fa fa-calendar"></i>
-												 </div>
-												 <input type="text" name="to" class="form-control pull-right" id="too" placeholder="Fin">
-										 </div>
-								 </div>
-						 	 </td>
-						 </tr>
+         <table>
+             <tr>
+               <td  class="col-md-6">
+                 <label>De</label>
+                 <div>
+                     <div class="input-group date">
+                         <div class="input-group-addon">
+                             <i class="fa fa-calendar"></i>
+                         </div>
+                         <input type="text" name="from" class="form-control pull-right" id="fromm" placeholder="Inicio">
+                     </div>
+                 </div>
+               </td>
+               <td class="col-md-6">
+                 <label>Hasta</label>
+                 <div>
+                     <div class="input-group date">
+                         <div class="input-group-addon">
+                             <i class="fa fa-calendar"></i>
+                         </div>
+                         <input type="text" name="to" class="form-control pull-right" id="too" placeholder="Fin">
+                     </div>
+                 </div>
+               </td>
+             </tr>
+            <div> </div>
              <tr>
                <td>
                  <label class="col-md-2 control-label">Paciente</label>
@@ -96,7 +96,6 @@
                </td>
              </tr>
 				 	</table>
-				 </div>
          @endcomponent
       </form>
       {{ csrf_field() }}

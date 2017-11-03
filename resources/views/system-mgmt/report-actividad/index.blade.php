@@ -41,12 +41,11 @@
       <form method="POST" action="{{ route('report-actividad.search') }}">
          {{ csrf_field() }}
          @component('layouts.search', ['title' => 'Buscar'])
-				 <div class="row">
-					 <table class="table responsive">
+					 <table>
 						 <tr>
-							 <td>
-								 <label class="col-md-2 control-label">De</label>
-								 <div class="col-md-7">
+							 <td  class="col-md-6">
+								 <label>De</label>
+								 <div>
 										 <div class="input-group date">
 												 <div class="input-group-addon">
 														 <i class="fa fa-calendar"></i>
@@ -55,9 +54,9 @@
 										 </div>
 								 </div>
 						 	 </td>
-							 <td>
-								 <label class="col-md-2 control-label">Hasta</label>
-								 <div class="col-md-6">
+							 <td class="col-md-6">
+								 <label>Hasta</label>
+								 <div>
 										 <div class="input-group date">
 												 <div class="input-group-addon">
 														 <i class="fa fa-calendar"></i>
@@ -68,7 +67,7 @@
 						 	 </td>
 						 </tr>
 				 	</table>
-				 </div>
+
          @endcomponent
       </form>
       {{ csrf_field() }}

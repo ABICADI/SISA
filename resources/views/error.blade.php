@@ -51,6 +51,8 @@
     </td>
     </tr>
 </table>
+</section>
+</div>
   <!-- Calendario Fin -->
   @endif
   @include('layouts.footer')
