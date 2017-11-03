@@ -233,29 +233,31 @@ class ReportPacienteController extends Controller {
 						date_default_timezone_set('america/guatemala');
 						$format = 'd-m-Y';
 						$now = date($format);
-						if($constraints['from'] == '' || $constraints['to'] == ''){
-							if($constraints['pago']!=0 && $constraints['departamento']!=0 && $constraints['municipio']!=0){
+						if($request['from'] == '' || $request['to'] == ''){
+							if($request['pago']!=0 && $request['departamento']!=0 && $request['municipio']!=0){
 									$title = 'Reporte del Paciente por Departamento: '.$departamento->nombre.', Municipio: '.$municipio->nombre.', y Pago: '.$pago->nombre;
 							}
-							if($constraints['pago']!=0 && $constraints['departamento']==0 && $constraints['municipio']==0){
+							if($request['pago']!=0 && $request['departamento']==0 && $request['municipio']==0){
 									$title = 'Reporte del Paciente por Pago: '.$pago->nombre;
 							}
-							if($constraints['pago']==0 && $constraints['departamento']!=0 && $constraints['municipio']!=0){
+							if($request['pago']==0 && $request['departamento']!=0 && $request['municipio']!=0){
 									$title = 'Reporte del Paciente por Departamento: '.$departamento->nombre.', y Municipio: '.$municipio->nombre;
-							}else{
+							}
+							if($request['pago']==0 && $request['departamento']==0 && $request['municipio']==0){
 									$title = 'Reporte del Paciente';
 							}
 						}
-						if($constraints['from'] != '' && $constraints['to'] != ''){
-							if($constraints['pago']!=0 && $constraints['departamento']!=0 && $constraints['municipio']!=0){
+						if($request['from'] != '' && $request['to'] != ''){
+							if($request['pago']!=0 && $request['departamento']!=0 && $request['municipio']!=0){
 									$title = 'Reporte del Paciente por Rango: de '.$request['from'].' hasta '.$request['to'].', Departamento: '.$departamento->nombre.', Municipio: '.$municipio->nombre.', y Pago: '.$pago->nombre;
 							}
-							if($constraints['pago']!=0 && $constraints['departamento']==0 && $constraints['municipio']==0){
+							if($request['pago']!=0 && $request['departamento']==0 && $request['municipio']==0){
 									$title = 'Reporte del Paciente por Rango: de '.$request['from'].' hasta '.$request['to'].', y Pago: '.$pago->nombre;
 							}
-							if($constraints['pago']==0 && $constraints['departamento']!=0 && $constraints['municipio']!=0){
+							if($request['pago']==0 && $request['departamento']!=0 && $request['municipio']!=0){
 									$title = 'Reporte del Paciente por Rango: de '.$request['from'].' hasta '.$request['to'].', Departamento: '.$departamento->nombre.', y Municipio: '.$municipio->nombre;
-							}else{
+							}
+							if($request['pago']==0 && $request['departamento']==0 && $request['municipio']==0){
 									$title = 'Reporte del Paciente por Rango: de '.$request['from'].' hasta '.$request['to'];
 							}
 						}
