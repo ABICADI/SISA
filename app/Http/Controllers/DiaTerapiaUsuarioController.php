@@ -91,7 +91,8 @@ class DiaTerapiaUsuarioController extends Controller {
         $this->validateUpdate($request);
         $evaluar_dia = $request->diasemana;
         $evaluar_terapia = $request->terapia;
-        if(collect($evaluar_dia)->isEmpty()==true && collect($evaluar_terapia)->isEmpty()==true && $request->dia_default==null && $request->terapia_default==null){
+        if(collect($evaluar_dia)->isEmpty()==true && collect($evaluar_terapia)->isEmpty()==true){
+          if($request->dia_default==null && $request->terapia_default==null){
           $user = User::join('municipios', 'users.municipio_id', '=', 'municipios.id')
                       ->join('departamentos', 'municipios.departamento_id', '=', 'departamentos.id')
                       ->select('users.*', 'municipios.nombre as Municipio', 'departamentos.nombre as Departamento')
@@ -151,17 +152,148 @@ class DiaTerapiaUsuarioController extends Controller {
 
                       Flash('¡Debe seleccionar al menos un Dia y una Terapia, caso contrario marcar NINGUNO donde no lo requiera!')->error()->important();
                       return view('users-mgmt/edit', ['user' => $user, 'rols' => $rols, 'departamentos' => $departamentos, 'municipios' => $municipios, 'estados' => $estados, 'diasemanas' => $diasemanas, 'terapias' => $terapias, 'userdiasemanas' => $userdiasemanas, 'usuarioterapias' => $usuarioterapias, 'generos' => $generos]);
-        }else{
-            $this->updatediaBitacora($request, $id);
-            $this->updateterapiaBitacora($request, $id);
 
-            $deleteDia = DB::table('userdiasemanas')
-            ->select('userdiasemanas.*')->where('userdiasemanas.user_id','=',$user->id);
-            $deleteDia->delete();
+          }if($request->dia_default==null && $request->terapia_default!=null){
+            dd("Vacio dia1 y terapia0");
 
-            $deleteTerapia = DB::table('userterapias')
-            ->select('userterapias.*')->where('userterapias.user_id','=',$user->id);
-            $deleteTerapia->delete();
+
+          }if($request->terapia_default==null && $request->dia_default!=null){
+            dd("Vacio dia0 y terapia1");
+
+            
+          }if($request->terapia_default!=null && $request->dia_default!=null){
+
+                  $this->updatediaBitacora($request, $id);
+                  $deleteDia = DB::table('userdiasemanas')
+                  ->select('userdiasemanas.*')->where('userdiasemanas.user_id','=',$user->id);
+                  $deleteDia->delete();
+
+                  $this->updateterapiaBitacora($request, $id);
+                  $deleteTerapia = DB::table('userterapias')
+                  ->select('userterapias.*')->where('userterapias.user_id','=',$user->id);
+                  $deleteTerapia->delete();
+
+                            $diausuario = new UsuarioDia();
+                            $diausuario->diasemana_id = 1;
+                            $diausuario->user_id = $user->id;
+                            $diausuario->save();
+                        
+                            $terapiausuario = new UsuarioTerapia();
+                            $terapiausuario->terapia_id = 1;
+                            $terapiausuario->user_id = $user->id;
+                            $terapiausuario->save(); 
+            
+          }
+        }
+        if(collect($evaluar_dia)->isEmpty()==false || collect($evaluar_terapia)->isEmpty()==false){
+            if($request->dia_default==null  && $request->terapia_default!=null){
+                  $this->updatediaBitacora($request, $id);
+                  $deleteDia = DB::table('userdiasemanas')
+                  ->select('userdiasemanas.*')->where('userdiasemanas.user_id','=',$user->id);
+                  $deleteDia->delete();
+                      
+                      $diasemanas = $request->diasemana;
+                      foreach ($diasemanas as $diasemana) {
+                          $diausuario = new UsuarioDia();
+                          $diausuario->diasemana_id = $diasemana;
+                          $diausuario->user_id = $user->id;
+                          $diausuario->save();
+                      }
+
+            }if($request->terapia_default==null && $request->dia_default!=null){
+                  $this->updateterapiaBitacora($request, $id);
+                  $deleteTerapia = DB::table('userterapias')
+                  ->select('userterapias.*')->where('userterapias.user_id','=',$user->id);
+                  $deleteTerapia->delete();
+
+                      $terapias = $request->terapia;
+                      foreach ($terapias as $terapia) {
+                          $terapiausuario = new UsuarioTerapia();
+                          $terapiausuario->terapia_id = $terapia;
+                          $terapiausuario->user_id = $user->id;
+                          $terapiausuario->save();
+                      }
+            }
+            if($request->terapia_default!=null && $request->dia_default!=null){
+                  $this->updatediaBitacora($request, $id);
+                  $deleteDia = DB::table('userdiasemanas')
+                  ->select('userdiasemanas.*')->where('userdiasemanas.user_id','=',$user->id);
+                  $deleteDia->delete();
+
+                  $this->updateterapiaBitacora($request, $id);
+                  $deleteTerapia = DB::table('userterapias')
+                  ->select('userterapias.*')->where('userterapias.user_id','=',$user->id);
+                  $deleteTerapia->delete();
+
+                  if(collect($evaluar_dia)->isEmpty()==false){
+                      $diasemanas = $request->diasemana;
+                      foreach ($diasemanas as $diasemana) {
+                          $diausuario = new UsuarioDia();
+                          $diausuario->diasemana_id = $diasemana;
+                          $diausuario->user_id = $user->id;
+                          $diausuario->save();
+                      }                    
+                  }else{
+                          $diausuario = new UsuarioDia();
+                          $diausuario->diasemana_id = 1;
+                          $diausuario->user_id = $user->id;
+                          $diausuario->save();
+                  }
+                  if(collect($evaluar_terapia)->isEmpty()==false){
+                        $terapias = $request->terapia;
+                        foreach ($terapias as $terapia) {
+                          $terapiausuario = new UsuarioTerapia();
+                          $terapiausuario->terapia_id = $terapia;
+                          $terapiausuario->user_id = $user->id;
+                          $terapiausuario->save();
+                        }                     
+                  }else{
+                          $terapiausuario = new UsuarioTerapia();
+                          $terapiausuario->terapia_id = 1;
+                          $terapiausuario->user_id = $user->id;
+                          $terapiausuario->save();
+                  }
+            }
+            if($request->terapia_default==null && $request->dia_default==null){
+                  $this->updatediaBitacora($request, $id);
+                  $deleteDia = DB::table('userdiasemanas')
+                  ->select('userdiasemanas.*')->where('userdiasemanas.user_id','=',$user->id);
+                  $deleteDia->delete();
+
+                  $this->updateterapiaBitacora($request, $id);
+                  $deleteTerapia = DB::table('userterapias')
+                  ->select('userterapias.*')->where('userterapias.user_id','=',$user->id);
+                  $deleteTerapia->delete();
+
+                  if(collect($evaluar_dia)->isEmpty()==false){
+                      $diasemanas = $request->diasemana;
+                      foreach ($diasemanas as $diasemana) {
+                          $diausuario = new UsuarioDia();
+                          $diausuario->diasemana_id = $diasemana;
+                          $diausuario->user_id = $user->id;
+                          $diausuario->save();
+                      }                    
+                  }else{
+                          $diausuario = new UsuarioDia();
+                          $diausuario->diasemana_id = 1;
+                          $diausuario->user_id = $user->id;
+                          $diausuario->save();
+                  }
+                  if(collect($evaluar_terapia)->isEmpty()==false){
+                        $terapias = $request->terapia;
+                        foreach ($terapias as $terapia) {
+                          $terapiausuario = new UsuarioTerapia();
+                          $terapiausuario->terapia_id = $terapia;
+                          $terapiausuario->user_id = $user->id;
+                          $terapiausuario->save();
+                        }                     
+                  }else{
+                          $terapiausuario = new UsuarioTerapia();
+                          $terapiausuario->terapia_id = 1;
+                          $terapiausuario->user_id = $user->id;
+                          $terapiausuario->save();
+                  }           
+            }
         }
 
         if($request['municipio_paciente']!=0){
@@ -185,36 +317,6 @@ class DiaTerapiaUsuarioController extends Controller {
         }
         $user->estado_id = $request['estado_id'];
         $user->genero_id = $request['genero_id'];
-
-        if($request->terapia_default==null){
-          $terapias = $request->terapia;
-          foreach ($terapias as $terapia) {
-              $terapiausuario = new UsuarioTerapia();
-              $terapiausuario->terapia_id = $terapia;
-              $terapiausuario->user_id = $user->id;
-              $terapiausuario->save();
-          }
-        }else{
-              $terapiausuario = new UsuarioTerapia();
-              $terapiausuario->terapia_id = 1;
-              $terapiausuario->user_id = $user->id;
-              $terapiausuario->save();
-        }
-
-        if($request->dia_default==null){
-          $diasemanas = $request->diasemana;
-          foreach ($diasemanas as $diasemana) {
-              $diausuario = new UsuarioDia();
-              $diausuario->diasemana_id = $diasemana;
-              $diausuario->user_id = $user->id;
-              $diausuario->save();
-          }
-        }else{
-          $diausuario = new UsuarioDia();
-          $diausuario->diasemana_id = 1;
-          $diausuario->user_id = $user->id;
-          $diausuario->save();
-        }
 
         if ($request['password'] != null && strlen($request['password']) > 0) {
             $this->validatePassword($request);
