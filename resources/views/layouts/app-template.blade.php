@@ -269,6 +269,7 @@
             },
             navLinks: true, // can click day/week names to navigate views
             selectable: true,
+            eventLimit: true,
 
                   select: function(start){
                       start = moment(start.format());
