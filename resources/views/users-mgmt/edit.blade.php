@@ -402,14 +402,13 @@
                                         <table id="example2" class="table table-responsive" role="grid" aria-describedby="example2_info">
                                             <tr>
                                             @foreach ($diasemanas as $diasemana)
+                                            @if($diasemana->id!=1)
                                             <?php $cont = 0; ?>
                                             @foreach ($userdiasemanas as $userdiasemana)
 
                                             @if($diasemana->id == $userdiasemana->diasemana_id)
-                                            @if($userdiasemana->diasemana_id!=1)
                                             <td role="row"><input type="checkbox" id="{{$diasemana->id}}" name="diasemana[]" value="{{$diasemana->id}}" checked>  {{ $userdiasemana->nombre_dia }}</td>
                                             <?php $cont = 1; ?>
-                                            @endif
                                             @endif
                                             @endforeach
                                             <?php if($cont < 1) {?>
@@ -417,6 +416,7 @@
                                             <td role="row"><input type="checkbox" id="{{$diasemana->id}}" name="diasemana[]" value="{{$diasemana->id}}">  {{ $diasemana->nombre }}</td>
                                             @endif
                                             <?php }?>
+                                            @endif
                                             @endforeach
                                             </tr>
                                         </table>
@@ -461,14 +461,13 @@
                                     <div class="col-sm-10">
                                         <table id="example2" class="table table-responsive" role="grid" aria-describedby="example2_info" style="text-align:center;">
                                             @foreach ($terapias as $terapia)
+                                            @if($terapia->id!=1)
                                             <?php $cont = 0; ?>
                                             @foreach ($usuarioterapias as $usuarioterapia)
-                                            <tr class="col-md-3"  role="row">
+                                            <tr class="col-md-5"  role="row">
                                             @if($terapia->id == $usuarioterapia->terapia_id)
-                                            @if($usuarioterapia->terapia_id!=1)
                                             <td><input type="checkbox" id="{{$terapia->id}}" name="terapia[]" value="{{$terapia->id}}" checked>  {{ $usuarioterapia->terapia_nombre }}</td>
                                             <?php $cont = 1; ?>
-                                            @endif
                                             @endif
                                             @endforeach
                                             <?php if($cont < 1) {?>
@@ -476,6 +475,7 @@
                                             <td><input type="checkbox" id="{{$terapia->id}}" name="terapia[]" value="{{$terapia->id}}">  {{ $terapia->nombre }}</td>
                                             @endif
                                             <?php }?>
+                                            @endif
                                             @endforeach
                                             </tr>
                                         </table>

@@ -180,7 +180,9 @@ class DiaTerapiaUsuarioController extends Controller {
         $user->fecha_nacimiento = $request['fecha_nacimiento'];
         $user->fecha_ingreso = $request['fecha_ingreso'];
         $user->telefono = $request['telefono'];
-        $user->rol_id = $request['rol_id'];
+        if($id!=1){
+          $user->rol_id = $request['rol_id'];
+        }
         $user->estado_id = $request['estado_id'];
         $user->genero_id = $request['genero_id'];
 

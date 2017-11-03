@@ -31,7 +31,7 @@ class GraficaCitaController extends Controller{
 					->responsive(true)
 					->dimensions(10, 5)
 					->elementLabel("Cantidad")
-					->colors(['#00a01c', '#009b95', '#f1b401', '#2e3ec7', '#222d32']);
+					->colors(['#00a01c', '#009b95', '#f1b401', '#2e3ec7', '#ff3713']);
 
 			$grafica_registro = Charts::multiDatabase('line', 'highcharts')
           ->title('Gráfica de Citas registradas en SISA')
