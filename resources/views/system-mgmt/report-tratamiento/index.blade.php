@@ -41,12 +41,11 @@
       <form method="POST" action="{{ route('report-tratamiento.search') }}">
          {{ csrf_field() }}
          @component('layouts.search', ['title' => 'Buscar'])
-				 <div class="row">
-					 <table class="table responsive">
-						 <tr>
-							 <td>
-								 <label class="col-md-2 control-label">Paciente</label>
-                     <div class="col-md-9">
+          <table>
+             <tr valign="bottom">
+               <td>
+                 <label class="col-md-3 control-label">Paciente</label>
+                     <div class="col-md-12">
                          <select class="form-control" name="paciente_id" id="paciente_id">
                              <option value="" selected>Ningun Paciente Seleccionado</option>
                              @foreach ($pacientes as $paciente)
@@ -54,10 +53,10 @@
                              @endforeach
                          </select>
                      </div>
-							 </td>
-							 <td>
-								 <label class="col-md-2 control-label">Terapia</label>
-                     <div class="col-md-10">
+               </td>
+               <td>
+                 <label class="col-md-3 control-label">Tratamiento</label>
+                     <div class="col-md-12">
                          <select class="form-control" name="terapia_id" id="terapia_id">
                              <option value="" selected>Ninguna Terapia Seleccionado</option>
                              @foreach ($terapias as $terapia)
@@ -65,10 +64,9 @@
                              @endforeach
                          </select>
                      </div>
-							 </td>
-						 </tr>
-				 	</table>
-				 </div>
+               </td>
+             </tr>
+          </table>
          @endcomponent
       </form>
     <div id="example2_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
